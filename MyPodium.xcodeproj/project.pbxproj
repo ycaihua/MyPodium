@@ -10,12 +10,10 @@
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D4487251B02DE260061EF86 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487241B02DE260061EF86 /* ViewController.m */; };
-		2D4487281B02DE260061EF86 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487261B02DE260061EF86 /* Main.storyboard */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
 		2D44872D1B02DE260061EF86 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D44872B1B02DE260061EF86 /* LaunchScreen.xib */; };
 		2D4487391B02DE260061EF86 /* MyPodiumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487381B02DE260061EF86 /* MyPodiumTests.m */; };
 		2D4487441B02DE370061EF86 /* Objective-C.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487421B02DE370061EF86 /* Objective-C.gitignore */; };
-		2D4487451B02DE370061EF86 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487431B02DE370061EF86 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +34,6 @@
 		2D4487211B02DE260061EF86 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2D4487231B02DE260061EF86 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2D4487241B02DE260061EF86 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		2D4487271B02DE260061EF86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2D4487291B02DE260061EF86 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2D44872C1B02DE260061EF86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		2D4487321B02DE260061EF86 /* MyPodiumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyPodiumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,7 +88,6 @@
 				2D4487211B02DE260061EF86 /* AppDelegate.m */,
 				2D4487231B02DE260061EF86 /* ViewController.h */,
 				2D4487241B02DE260061EF86 /* ViewController.m */,
-				2D4487261B02DE260061EF86 /* Main.storyboard */,
 				2D4487291B02DE260061EF86 /* Images.xcassets */,
 				2D44872B1B02DE260061EF86 /* LaunchScreen.xib */,
 				2D44871C1B02DE260061EF86 /* Supporting Files */,
@@ -205,7 +201,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D4487281B02DE260061EF86 /* Main.storyboard in Resources */,
 				2D44872D1B02DE260061EF86 /* LaunchScreen.xib in Resources */,
 				2D4487441B02DE370061EF86 /* Objective-C.gitignore in Resources */,
 				2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */,
@@ -228,7 +223,6 @@
 			files = (
 				2D4487251B02DE260061EF86 /* ViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
-				2D4487451B02DE370061EF86 /* README.md in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,14 +246,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		2D4487261B02DE260061EF86 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				2D4487271B02DE260061EF86 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		2D44872B1B02DE260061EF86 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
