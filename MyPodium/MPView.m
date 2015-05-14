@@ -30,6 +30,7 @@
     [self addSubview: self.responderButton];
     [self sendSubviewToBack:self.responderButton];
     [self createResponderButtonConstraints];
+    [self.responderButton addTarget:self action:@selector(responderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) createResponderButtonConstraints {
@@ -63,6 +64,21 @@
                                                            constant:0.0f],
                              ];
     [self addConstraints: constraints];
+}
+
+//Button event: for all subviews, if they
+//are a textfield, resign first responder.
+//Should work automatically if both MPView and
+//MPViewController are subclassed (?).
+- (void)responderButtonPressed:(id)sender {
+    NSLog(@"Responder button press");
+    for(UIView* subview in self.subviews) {
+        if ([subview isKindOfClass:[UITextField class]]) {
+            UITextField* currentField = (UITextField*) subview;
+            [currentField resignFirstResponder];
+        }
+        
+    }
 }
 
 @end

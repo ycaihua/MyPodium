@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MPViewController.h"
+#import "MPLoginViewController.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -19,17 +20,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Initialize Parse.
+    // Initialize Parse
     [Parse setApplicationId:@"95c3Lfclp8RvaoM4CSwCVO8LnW1FRxOyG2sJww4w"
                   clientKey:@"RwbEu9xjjIqdMcvmSDdPqoaWSv8Grh2sf4jfAFdB"];
     
-    // [Optional] Track statistics around application opens.
+    // [Optional] Track statistics around application opens
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
-    [self.window setRootViewController:[[MPViewController alloc] init]];
+    if([PFUser currentUser]) {
+        //For the time being, log the user out
+        //because we don't have the necessary VC built yet
+        [PFUser logOut];
+        [self.window setRootViewController:[[MPLoginViewController alloc] init]];
+    }
+    else {
+        [self.window setRootViewController:[[MPLoginViewController alloc] init]];
+    }
     [self.window makeKeyAndVisible];
     return YES;
 }

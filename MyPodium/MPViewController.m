@@ -23,23 +23,8 @@
     self = [super init];
     if(self) {
         MPView* newView = [[MPView alloc] init];
-        [newView.responderButton addTarget:self action:@selector(responderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         self.view = newView;
     }
     return self;
-}
-
-//Button event: for all subviews, if they
-//are a textfield, resign first responder.
-//Should work automatically if both MPView and
-//MPViewController are subclassed (?).
-- (void)responderButtonPressed:(id)sender {
-    for(UIView* subview in self.view.subviews) {
-        if ([subview isKindOfClass:[UITextField class]]) {
-            UITextField* currentField = (UITextField*) subview;
-            [currentField resignFirstResponder];
-        }
-
-    }
 }
 @end

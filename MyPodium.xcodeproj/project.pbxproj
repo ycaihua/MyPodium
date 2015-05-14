@@ -33,6 +33,7 @@
 		2D4487711B039D9D0061EF86 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487701B039D9D0061EF86 /* Social.framework */; };
 		2D4487741B03A2290061EF86 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487731B03A2290061EF86 /* Parse.framework */; };
 		2D4487791B0546580061EF86 /* MPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487781B0546580061EF86 /* MPView.m */; };
+		2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44877C1B054E0F0061EF86 /* MPLoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,8 @@
 		2D4487731B03A2290061EF86 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		2D4487771B0546580061EF86 /* MPView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPView.h; sourceTree = "<group>"; };
 		2D4487781B0546580061EF86 /* MPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPView.m; sourceTree = "<group>"; };
+		2D44877B1B054E0F0061EF86 /* MPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLoginViewController.h; sourceTree = "<group>"; };
+		2D44877C1B054E0F0061EF86 /* MPLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +196,8 @@
 		2D4487471B039B600061EF86 /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
+				2D44877B1B054E0F0061EF86 /* MPLoginViewController.h */,
+				2D44877C1B054E0F0061EF86 /* MPLoginViewController.m */,
 			);
 			name = LoginRegister;
 			sourceTree = "<group>";
@@ -346,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
 				2D44874A1B039B7E0061EF86 /* MPViewController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
