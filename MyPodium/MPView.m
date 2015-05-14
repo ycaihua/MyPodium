@@ -61,7 +61,7 @@
                                                              toItem:self
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1.0f
-                                                           constant:0.0f],
+                                                           constant:0.0f]
                              ];
     [self addConstraints: constraints];
 }

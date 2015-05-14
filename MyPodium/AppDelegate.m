@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MPViewController.h"
 #import "MPLoginViewController.h"
 #import <Parse/Parse.h>
 

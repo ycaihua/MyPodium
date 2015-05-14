@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPViewController.h"
 
-@interface MPLoginViewController : MPViewController
+@interface MPLoginViewController : UIViewController
 
 @end

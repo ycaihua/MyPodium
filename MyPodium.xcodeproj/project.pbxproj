@@ -13,7 +13,6 @@
 		2D44872D1B02DE260061EF86 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D44872B1B02DE260061EF86 /* LaunchScreen.xib */; };
 		2D4487391B02DE260061EF86 /* MyPodiumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487381B02DE260061EF86 /* MyPodiumTests.m */; };
 		2D4487441B02DE370061EF86 /* Objective-C.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487421B02DE370061EF86 /* Objective-C.gitignore */; };
-		2D44874A1B039B7E0061EF86 /* MPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487491B039B7E0061EF86 /* MPViewController.m */; };
 		2D4487511B039C410061EF86 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44874C1B039C410061EF86 /* Bolts.framework */; };
 		2D4487531B039C410061EF86 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44874E1B039C410061EF86 /* ParseCrashReporting.framework */; };
 		2D4487541B039C410061EF86 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44874F1B039C410061EF86 /* ParseFacebookUtilsV4.framework */; };
@@ -34,6 +33,7 @@
 		2D4487741B03A2290061EF86 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487731B03A2290061EF86 /* Parse.framework */; };
 		2D4487791B0546580061EF86 /* MPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487781B0546580061EF86 /* MPView.m */; };
 		2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44877C1B054E0F0061EF86 /* MPLoginViewController.m */; };
+		2D4487801B0550580061EF86 /* MPLoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44877F1B0550580061EF86 /* MPLoginView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,8 +59,6 @@
 		2D4487381B02DE260061EF86 /* MyPodiumTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPodiumTests.m; sourceTree = "<group>"; };
 		2D4487421B02DE370061EF86 /* Objective-C.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Objective-C.gitignore"; path = "../Objective-C.gitignore"; sourceTree = "<group>"; };
 		2D4487431B02DE370061EF86 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		2D4487481B039B7E0061EF86 /* MPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPViewController.h; sourceTree = "<group>"; };
-		2D4487491B039B7E0061EF86 /* MPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPViewController.m; sourceTree = "<group>"; };
 		2D44874C1B039C410061EF86 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D44874E1B039C410061EF86 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D44874F1B039C410061EF86 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -83,6 +81,8 @@
 		2D4487781B0546580061EF86 /* MPView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPView.m; sourceTree = "<group>"; };
 		2D44877B1B054E0F0061EF86 /* MPLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLoginViewController.h; sourceTree = "<group>"; };
 		2D44877C1B054E0F0061EF86 /* MPLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLoginViewController.m; sourceTree = "<group>"; };
+		2D44877E1B0550580061EF86 /* MPLoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLoginView.h; sourceTree = "<group>"; };
+		2D44877F1B0550580061EF86 /* MPLoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLoginView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,8 +186,6 @@
 		2D4487461B039B540061EF86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2D4487481B039B7E0061EF86 /* MPViewController.h */,
-				2D4487491B039B7E0061EF86 /* MPViewController.m */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
 			);
 			name = Controller;
@@ -247,6 +245,8 @@
 		2D44877A1B054BFF0061EF86 /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
+				2D44877E1B0550580061EF86 /* MPLoginView.h */,
+				2D44877F1B0550580061EF86 /* MPLoginView.m */,
 			);
 			name = LoginRegister;
 			sourceTree = "<group>";
@@ -353,7 +353,7 @@
 			files = (
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
-				2D44874A1B039B7E0061EF86 /* MPViewController.m in Sources */,
+				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 			);

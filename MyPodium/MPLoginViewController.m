@@ -7,6 +7,7 @@
 //
 
 #import "MPLoginViewController.h"
+#import "MPLoginView.h"
 
 @interface MPLoginViewController ()
 
@@ -17,7 +18,7 @@
 - (id) init {
     self = [super init];
     if(self) {
-        
+        self.view = [[MPLoginView alloc] init];
     }
     return self;
 }
