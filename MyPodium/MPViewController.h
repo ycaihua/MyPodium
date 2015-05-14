@@ -15,6 +15,4 @@
 
 @interface MPViewController : UIViewController
 
-@property MPView* mpView;
-
 @end

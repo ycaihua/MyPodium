@@ -22,9 +22,9 @@
 - (id) init {
     self = [super init];
     if(self) {
-        self.mpView = [[MPView alloc] init];
-        self.view = self.mpView;
-        [self.mpView.responderButton addTarget:self action:@selector(responderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        MPView* newView = [[MPView alloc] init];
+        [newView.responderButton addTarget:self action:@selector(responderButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        self.view = newView;
     }
     return self;
 }
@@ -34,7 +34,7 @@
 //Should work automatically if both MPView and
 //MPViewController are subclassed (?).
 - (void)responderButtonPressed:(id)sender {
-    for(UIView* subview in self.mpView.subviews) {
+    for(UIView* subview in self.view.subviews) {
         if ([subview isKindOfClass:[UITextField class]]) {
             UITextField* currentField = (UITextField*) subview;
             [currentField resignFirstResponder];
