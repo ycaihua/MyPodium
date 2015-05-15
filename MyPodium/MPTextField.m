@@ -39,6 +39,8 @@
     [self setBorderStyle:UITextBorderStyleLine];
     [self setFont: [UIFont fontWithName:@"Lato-Bold" size:15.0f]];
     [self setClearButtonMode:UITextFieldViewModeWhileEditing];
+    [self setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [self setAutocorrectionType: UITextAutocorrectionTypeNo];
 }
 
 //Overridden. Placeholder text always uppercase

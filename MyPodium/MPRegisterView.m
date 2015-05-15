@@ -35,7 +35,7 @@
 
 - (void) makeTitleLabel {
     self.titleLabel = [[CNLabel alloc] initWithText:@"REGISTER"];
-    self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:32.0f];
+    self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:30.0f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.titleLabel];

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPRegisterViewController : UIViewController
+@interface MPRegisterViewController : UIViewController <UITextFieldDelegate>
 
 @end
