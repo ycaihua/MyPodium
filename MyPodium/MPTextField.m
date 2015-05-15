@@ -26,6 +26,15 @@
     return self;
 }
 
+- (id) initWithPlaceholder: (NSString*) text {
+    self = [super init];
+    if(self) {
+        [self applyDefaultStyle];
+        [self setPlaceholder: text];
+    }
+    return self;
+}
+
 - (void) applyDefaultStyle {
     [self setBorderStyle:UITextBorderStyleLine];
     [self setFont: [UIFont fontWithName:@"Lato-Bold" size:15.0f]];

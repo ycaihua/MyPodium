@@ -7,11 +7,20 @@
 //
 
 #import "MPRegisterViewController.h"
+#import "MPRegisterView.h"
 
 @interface MPRegisterViewController ()
 
 @end
 
 @implementation MPRegisterViewController
+
+- (id) init {
+    self = [super init];
+    if(self) {
+        self.view = [[MPRegisterView alloc] init];
+    }
+    return self;
+}
 
 @end

@@ -10,4 +10,6 @@
 
 @interface MPTextField : UITextField
 
+- (id) initWithPlaceholder: (NSString*) text;
+
 @end
