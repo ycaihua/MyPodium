@@ -11,7 +11,6 @@
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
 		2D44872D1B02DE260061EF86 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D44872B1B02DE260061EF86 /* LaunchScreen.xib */; };
-		2D4487391B02DE260061EF86 /* MyPodiumTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487381B02DE260061EF86 /* MyPodiumTests.m */; };
 		2D4487441B02DE370061EF86 /* Objective-C.gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487421B02DE370061EF86 /* Objective-C.gitignore */; };
 		2D4487511B039C410061EF86 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44874C1B039C410061EF86 /* Bolts.framework */; };
 		2D4487531B039C410061EF86 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44874E1B039C410061EF86 /* ParseCrashReporting.framework */; };
@@ -52,16 +51,6 @@
 		2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487DC1B0656340061EF86 /* NSString+MPString.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		2D4487331B02DE260061EF86 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 2D4487111B02DE260061EF86 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2D4487181B02DE260061EF86;
-			remoteInfo = MyPodium;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,9 +59,6 @@
 		2D4487211B02DE260061EF86 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2D4487291B02DE260061EF86 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2D44872C1B02DE260061EF86 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		2D4487321B02DE260061EF86 /* MyPodiumTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyPodiumTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D4487371B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2D4487381B02DE260061EF86 /* MyPodiumTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyPodiumTests.m; sourceTree = "<group>"; };
 		2D4487421B02DE370061EF86 /* Objective-C.gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "Objective-C.gitignore"; path = "../Objective-C.gitignore"; sourceTree = "<group>"; };
 		2D4487431B02DE370061EF86 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		2D44874C1B039C410061EF86 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -151,13 +137,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2D44872F1B02DE260061EF86 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -165,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				2D44871B1B02DE260061EF86 /* MyPodium */,
-				2D4487351B02DE260061EF86 /* MyPodiumTests */,
 				2D44871A1B02DE260061EF86 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -174,7 +152,6 @@
 			isa = PBXGroup;
 			children = (
 				2D4487191B02DE260061EF86 /* MyPodium.app */,
-				2D4487321B02DE260061EF86 /* MyPodiumTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,23 +181,6 @@
 			children = (
 				2D44871D1B02DE260061EF86 /* Info.plist */,
 				2D44871E1B02DE260061EF86 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		2D4487351B02DE260061EF86 /* MyPodiumTests */ = {
-			isa = PBXGroup;
-			children = (
-				2D4487381B02DE260061EF86 /* MyPodiumTests.m */,
-				2D4487361B02DE260061EF86 /* Supporting Files */,
-			);
-			path = MyPodiumTests;
-			sourceTree = "<group>";
-		};
-		2D4487361B02DE260061EF86 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				2D4487371B02DE260061EF86 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -359,24 +319,6 @@
 			productReference = 2D4487191B02DE260061EF86 /* MyPodium.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D4487311B02DE260061EF86 /* MyPodiumTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2D44873F1B02DE260061EF86 /* Build configuration list for PBXNativeTarget "MyPodiumTests" */;
-			buildPhases = (
-				2D44872E1B02DE260061EF86 /* Sources */,
-				2D44872F1B02DE260061EF86 /* Frameworks */,
-				2D4487301B02DE260061EF86 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				2D4487341B02DE260061EF86 /* PBXTargetDependency */,
-			);
-			name = MyPodiumTests;
-			productName = MyPodiumTests;
-			productReference = 2D4487321B02DE260061EF86 /* MyPodiumTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -388,10 +330,6 @@
 				TargetAttributes = {
 					2D4487181B02DE260061EF86 = {
 						CreatedOnToolsVersion = 6.3.1;
-					};
-					2D4487311B02DE260061EF86 = {
-						CreatedOnToolsVersion = 6.3.1;
-						TestTargetID = 2D4487181B02DE260061EF86;
 					};
 				};
 			};
@@ -409,7 +347,6 @@
 			projectRoot = "";
 			targets = (
 				2D4487181B02DE260061EF86 /* MyPodium */,
-				2D4487311B02DE260061EF86 /* MyPodiumTests */,
 			);
 		};
 /* End PBXProject section */
@@ -430,13 +367,6 @@
 				2D44872D1B02DE260061EF86 /* LaunchScreen.xib in Resources */,
 				2D4487441B02DE370061EF86 /* Objective-C.gitignore in Resources */,
 				2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		2D4487301B02DE260061EF86 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,23 +393,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		2D44872E1B02DE260061EF86 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2D4487391B02DE260061EF86 /* MyPodiumTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		2D4487341B02DE260061EF86 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2D4487181B02DE260061EF86 /* MyPodium */;
-			targetProxy = 2D4487331B02DE260061EF86 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		2D44872B1B02DE260061EF86 /* LaunchScreen.xib */ = {
@@ -611,40 +525,6 @@
 			};
 			name = Release;
 		};
-		2D4487401B02DE260061EF86 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MyPodiumTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyPodium.app/MyPodium";
-			};
-			name = Debug;
-		};
-		2D4487411B02DE260061EF86 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = MyPodiumTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MyPodium.app/MyPodium";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -662,15 +542,6 @@
 			buildConfigurations = (
 				2D44873D1B02DE260061EF86 /* Debug */,
 				2D44873E1B02DE260061EF86 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		2D44873F1B02DE260061EF86 /* Build configuration list for PBXNativeTarget "MyPodiumTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2D4487401B02DE260061EF86 /* Debug */,
-				2D4487411B02DE260061EF86 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
