@@ -9,6 +9,8 @@
 #import "MPLoginViewController.h"
 #import "MPLoginView.h"
 #import "MPErrorAlerter.h"
+#import "MPRegisterViewController.h"
+#import "MPForgotPasswordViewController.h"
 #import <Parse/Parse.h>
 
 @interface MPLoginViewController ()
@@ -28,7 +30,17 @@
 
 - (void) addControlActions {
     MPLoginView* view = (MPLoginView*)self.view;
-    [view.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.loginButton addTarget:self
+                         action:@selector(loginButtonPressed:)
+               forControlEvents:UIControlEventTouchUpInside];
+    [view.registerButton addTarget:self
+                            action:@selector(registerButtonPressed:)
+                  forControlEvents:UIControlEventTouchUpInside];
+    [view.forgotPasswordButton addTarget:self
+                                  action:@selector(forgotPasswordButtonPressed:)
+                        forControlEvents:UIControlEventTouchUpInside];
+    [view.usernameField setDelegate:self];
+    [view.passwordField setDelegate:self];
 }
 
 - (void) loginButtonPressed: (id) sender {
@@ -50,5 +62,29 @@
 
 - (void) login {
     
+}
+
+- (void) registerButtonPressed: (id) sender {
+    MPRegisterViewController* destination = [[MPRegisterViewController alloc] init];
+    [self presentViewController:destination animated:TRUE completion:nil];
+}
+
+- (void) forgotPasswordButtonPressed: (id) sender {
+    MPForgotPasswordViewController* destination = [[MPForgotPasswordViewController alloc] init];
+    [self presentViewController:destination animated:TRUE completion:nil];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MPLoginView* view = (MPLoginView*)self.view;
+    
+    if([textField isEqual:view.usernameField] &&
+       (view.passwordField.text.length == 0)) {
+        [view.passwordField becomeFirstResponder];
+    }
+    else {
+        [textField resignFirstResponder];
+        [self performSelector:@selector(loginButtonPressed:) withObject:self];
+    }
+    return YES;
 }
 @end

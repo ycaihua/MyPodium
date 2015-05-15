@@ -1,5 +1,5 @@
 //
-//  MPLoginViewController.h
+//  MPRegisterViewController.h
 //  MyPodium
 //
 //  Created by Connor Neville on 5/14/15.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPLoginViewController : UIViewController <UITextFieldDelegate>
+@interface MPRegisterViewController : UIViewController
 
 @end

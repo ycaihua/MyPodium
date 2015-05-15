@@ -46,6 +46,8 @@
 		2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487981B057C150061EF86 /* UIColor+MPColor.m */; };
 		2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44879B1B05829C0061EF86 /* CNLabel.m */; };
 		2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44879E1B0585E60061EF86 /* MPErrorAlerter.m */; };
+		2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487D31B05A3980061EF86 /* MPRegisterViewController.m */; };
+		2D4487D71B05A7030061EF86 /* MPForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487D61B05A7030061EF86 /* MPForgotPasswordViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -111,6 +113,10 @@
 		2D44879B1B05829C0061EF86 /* CNLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNLabel.m; sourceTree = "<group>"; };
 		2D44879D1B0585E60061EF86 /* MPErrorAlerter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPErrorAlerter.h; sourceTree = "<group>"; };
 		2D44879E1B0585E60061EF86 /* MPErrorAlerter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPErrorAlerter.m; sourceTree = "<group>"; };
+		2D4487D21B05A3980061EF86 /* MPRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterViewController.h; sourceTree = "<group>"; };
+		2D4487D31B05A3980061EF86 /* MPRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterViewController.m; sourceTree = "<group>"; };
+		2D4487D51B05A7030061EF86 /* MPForgotPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPForgotPasswordViewController.h; sourceTree = "<group>"; };
+		2D4487D61B05A7030061EF86 /* MPForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPForgotPasswordViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +232,10 @@
 			children = (
 				2D44877B1B054E0F0061EF86 /* MPLoginViewController.h */,
 				2D44877C1B054E0F0061EF86 /* MPLoginViewController.m */,
+				2D4487D21B05A3980061EF86 /* MPRegisterViewController.h */,
+				2D4487D31B05A3980061EF86 /* MPRegisterViewController.m */,
+				2D4487D51B05A7030061EF86 /* MPForgotPasswordViewController.h */,
+				2D4487D61B05A7030061EF86 /* MPForgotPasswordViewController.m */,
 			);
 			name = LoginRegister;
 			sourceTree = "<group>";
@@ -427,8 +437,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D4487D71B05A7030061EF86 /* MPForgotPasswordViewController.m in Sources */,
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
+				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,

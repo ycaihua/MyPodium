@@ -153,6 +153,7 @@
     self.loginButton.backgroundColor = [UIColor MPBlackColor];
     [self.loginButton setTitle:@"LOG IN" forState:UIControlStateNormal];
     [self.loginButton setTitleColor:[UIColor MPGreenColor] forState:UIControlStateNormal];
+    [self.loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     self.loginButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.loginButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.loginButton];
@@ -190,6 +191,7 @@
     self.forgotPasswordButton.backgroundColor = [UIColor MPBlackColor];
     [self.forgotPasswordButton setTitle:@"FORGOT PASSWORD" forState:UIControlStateNormal];
     [self.forgotPasswordButton setTitleColor:[UIColor MPRedColor] forState:UIControlStateNormal];
+    [self.forgotPasswordButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     self.forgotPasswordButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:18.0f];
     self.forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.forgotPasswordButton];
@@ -263,6 +265,7 @@
     self.registerButton.backgroundColor = [UIColor MPBlackColor];
     [self.registerButton setTitle:@"REGISTER" forState:UIControlStateNormal];
     [self.registerButton setTitleColor:[UIColor MPYellowColor] forState:UIControlStateNormal];
+    [self.registerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     self.registerButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.registerButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.registerButton];
