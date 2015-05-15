@@ -7,11 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MPView.h"
 #import "CNLabel.h"
+#import "MPTextField.h"
 
-@interface MPRegisterView : UIView
+@interface MPRegisterView : MPView
 
 @property CNLabel* titleLabel;
-@property UITextField* usernameField;
+@property MPTextField* usernameField;
+@property CNLabel* usernameLabel;
+@property MPTextField* passwordField;
+@property CNLabel* passwordLabel;
+@property MPTextField* emailField;
+@property CNLabel* emailLabel;
+@property UIButton* registerButton;
+@property CNLabel* descriptorLabel;
+@property UIButton* goBackButton;
 
 @end

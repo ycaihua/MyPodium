@@ -49,6 +49,7 @@
 		2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487D31B05A3980061EF86 /* MPRegisterViewController.m */; };
 		2D4487D71B05A7030061EF86 /* MPForgotPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487D61B05A7030061EF86 /* MPForgotPasswordViewController.m */; };
 		2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487D91B05AAC30061EF86 /* MPRegisterView.m */; };
+		2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487DC1B0656340061EF86 /* NSString+MPString.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,8 @@
 		2D4487D61B05A7030061EF86 /* MPForgotPasswordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPForgotPasswordViewController.m; sourceTree = "<group>"; };
 		2D4487D81B05AAC30061EF86 /* MPRegisterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterView.h; sourceTree = "<group>"; };
 		2D4487D91B05AAC30061EF86 /* MPRegisterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterView.m; sourceTree = "<group>"; };
+		2D4487DB1B0656340061EF86 /* NSString+MPString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MPString.h"; sourceTree = "<group>"; };
+		2D4487DC1B0656340061EF86 /* NSString+MPString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MPString.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -330,6 +333,8 @@
 				2D44879E1B0585E60061EF86 /* MPErrorAlerter.m */,
 				2D4487971B057C150061EF86 /* UIColor+MPColor.h */,
 				2D4487981B057C150061EF86 /* UIColor+MPColor.m */,
+				2D4487DB1B0656340061EF86 /* NSString+MPString.h */,
+				2D4487DC1B0656340061EF86 /* NSString+MPString.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */,
+				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,

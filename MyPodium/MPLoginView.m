@@ -15,30 +15,32 @@
 - (id) init {
     self = [super init];
     if(self) {
-        [self createLogoView];
-        [self createUsernameField];
-        [self createPasswordField];
-        [self createLoginButton];
-        [self createForgotPasswordButton];
-        [self createRegisterLabel];
-        [self createRegisterButton];
+        [self makeControls];
     }
     return self;
 }
 
-- (void) createLogoView {
+- (void) makeControls {
+    [self makeLogoView];
+    [self makeUsernameField];
+    [self makePasswordField];
+    [self makeLoginButton];
+    [self makeForgotPasswordButton];
+    [self makeRegisterLabel];
+    [self makeRegisterButton];
+}
+
+- (void) makeLogoView {
     UIImage* image = [UIImage imageNamed:@"logo600_flat.png"];
     self.logoView = [[UIImageView alloc] initWithImage:image];
     self.logoView.image = image;
     self.logoView.translatesAutoresizingMaskIntoConstraints = FALSE;
     self.logoView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.logoView];
-    [self createLogoViewConstraints];
+    [self makeLogoViewConstraints];
 }
 
-//We don't need a constraint for height, because the
-//content mode is set above to aspect fit
-- (void) createLogoViewConstraints {
+- (void) makeLogoViewConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.logoView
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -65,15 +67,14 @@
 
 }
 
-- (void) createUsernameField {
-    self.usernameField = [[MPTextField alloc] init];
-    self.usernameField.placeholder = @"username";
+- (void) makeUsernameField {
+    self.usernameField = [[MPTextField alloc] initWithPlaceholder:@"username"];
     self.usernameField.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.usernameField];
-    [self createUsernameFieldConstraints];
+    [self makeUsernameFieldConstraints];
 }
 
-- (void) createUsernameFieldConstraints {
+- (void) makeUsernameFieldConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.usernameField
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -106,16 +107,15 @@
     [self addConstraints: constraints];
 }
 
-- (void) createPasswordField {
-    self.passwordField = [[MPTextField alloc] init];
-    self.passwordField.placeholder = @"password";
+- (void) makePasswordField {
+    self.passwordField = [[MPTextField alloc] initWithPlaceholder:@"password"];
     self.passwordField.translatesAutoresizingMaskIntoConstraints = FALSE;
     self.passwordField.secureTextEntry = TRUE;
     [self addSubview:self.passwordField];
-    [self createPasswordFieldConstraints];
+    [self makePasswordFieldConstraints];
 }
 
-- (void) createPasswordFieldConstraints {
+- (void) makePasswordFieldConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.passwordField
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -148,7 +148,7 @@
     [self addConstraints: constraints];
 }
 
-- (void) createLoginButton {
+- (void) makeLoginButton {
     self.loginButton = [[UIButton alloc] init];
     self.loginButton.backgroundColor = [UIColor MPBlackColor];
     [self.loginButton setTitle:@"LOG IN" forState:UIControlStateNormal];
@@ -157,10 +157,10 @@
     self.loginButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.loginButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.loginButton];
-    [self createLoginButtonConstraints];
+    [self makeLoginButtonConstraints];
 }
 
-- (void) createLoginButtonConstraints {
+- (void) makeLoginButtonConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.loginButton
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -186,7 +186,7 @@
     [self addConstraints: constraints];
 }
 
-- (void) createForgotPasswordButton {
+- (void) makeForgotPasswordButton {
     self.forgotPasswordButton = [[UIButton alloc] init];
     self.forgotPasswordButton.backgroundColor = [UIColor MPBlackColor];
     [self.forgotPasswordButton setTitle:@"FORGOT PASSWORD" forState:UIControlStateNormal];
@@ -195,10 +195,10 @@
     self.forgotPasswordButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:18.0f];
     self.forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.forgotPasswordButton];
-    [self createForgotPasswordButtonConstraints];
+    [self makeForgotPasswordButtonConstraints];
 }
 
-- (void) createForgotPasswordButtonConstraints {
+- (void) makeForgotPasswordButtonConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.forgotPasswordButton
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -224,17 +224,17 @@
     [self addConstraints: constraints];
 }
 
-- (void) createRegisterLabel {
+- (void) makeRegisterLabel {
     self.registerLabel = [[CNLabel alloc] initWithText:@"Don't have an account yet? Register one with just your email."];
     self.registerLabel.textAlignment = NSTextAlignmentCenter;
     self.registerLabel.textColor = [UIColor MPBlackColor];
     self.registerLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
     self.registerLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview: self.registerLabel];
-    [self createRegisterLabelConstraints];
+    [self makeRegisterLabelConstraints];
 }
 
-- (void) createRegisterLabelConstraints {
+- (void) makeRegisterLabelConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.registerLabel
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
@@ -260,7 +260,7 @@
     [self addConstraints: constraints];
 }
 
-- (void) createRegisterButton {
+- (void) makeRegisterButton {
     self.registerButton = [[UIButton alloc] init];
     self.registerButton.backgroundColor = [UIColor MPBlackColor];
     [self.registerButton setTitle:@"REGISTER" forState:UIControlStateNormal];
@@ -269,10 +269,10 @@
     self.registerButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.registerButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.registerButton];
-    [self createRegisterButtonConstraints];
+    [self makeRegisterButtonConstraints];
 }
 
-- (void) createRegisterButtonConstraints {
+- (void) makeRegisterButtonConstraints {
     NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.registerButton
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
