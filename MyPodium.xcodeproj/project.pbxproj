@@ -43,6 +43,7 @@
 		2D4487931B0556A40061EF86 /* Oswald-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D44878B1B0556770061EF86 /* Oswald-Bold.ttf */; };
 		2D4487941B0556A40061EF86 /* Oswald-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D44878C1B0556770061EF86 /* Oswald-Light.ttf */; };
 		2D4487951B0556A40061EF86 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D44878D1B0556770061EF86 /* Oswald-Regular.ttf */; };
+		2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487981B057C150061EF86 /* UIColor+MPColor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		2D44878B1B0556770061EF86 /* Oswald-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Bold.ttf"; sourceTree = "<group>"; };
 		2D44878C1B0556770061EF86 /* Oswald-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Light.ttf"; sourceTree = "<group>"; };
 		2D44878D1B0556770061EF86 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
+		2D4487971B057C150061EF86 /* UIColor+MPColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MPColor.h"; sourceTree = "<group>"; };
+		2D4487981B057C150061EF86 /* UIColor+MPColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MPColor.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +164,7 @@
 		2D44871B1B02DE260061EF86 /* MyPodium */ = {
 			isa = PBXGroup;
 			children = (
+				2D4487961B057BFE0061EF86 /* Categories */,
 				2D4487851B05565F0061EF86 /* Fonts */,
 				2D4487761B0546140061EF86 /* Model */,
 				2D4487751B05460F0061EF86 /* View */,
@@ -296,6 +300,15 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		2D4487961B057BFE0061EF86 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				2D4487971B057C150061EF86 /* UIColor+MPColor.h */,
+				2D4487981B057C150061EF86 /* UIColor+MPColor.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -404,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,

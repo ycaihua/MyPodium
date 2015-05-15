@@ -15,5 +15,7 @@
 @property UIImageView* logoView;
 @property UITextField* usernameField;
 @property UITextField* passwordField;
+@property UIButton* loginButton;
+@property UIButton* forgotPasswordButton;
 
 @end

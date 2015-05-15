@@ -76,7 +76,6 @@
             UITextField* currentField = (UITextField*) subview;
             [currentField resignFirstResponder];
         }
-        
     }
 }
 

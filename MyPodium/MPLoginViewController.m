@@ -19,8 +19,17 @@
     self = [super init];
     if(self) {
         self.view = [[MPLoginView alloc] init];
+        [self addControlActions];
     }
     return self;
 }
 
+- (void) addControlActions {
+    MPLoginView* view = (MPLoginView*)self.view;
+    [view.loginButton addTarget:self action:@selector(loginButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) loginButtonPressed: (id) sender {
+    NSLog(@"Login button press");
+}
 @end
