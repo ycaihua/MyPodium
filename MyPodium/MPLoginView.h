@@ -13,5 +13,7 @@
 @interface MPLoginView : MPView
 
 @property UIImageView* logoView;
+@property UITextField* usernameField;
+@property UITextField* passwordField;
 
 @end

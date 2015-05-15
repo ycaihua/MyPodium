@@ -71,7 +71,6 @@
 //Should work automatically if both MPView and
 //MPViewController are subclassed (?).
 - (void)responderButtonPressed:(id)sender {
-    NSLog(@"Responder button press");
     for(UIView* subview in self.subviews) {
         if ([subview isKindOfClass:[UITextField class]]) {
             UITextField* currentField = (UITextField*) subview;
