@@ -9,6 +9,7 @@
 //
 
 #import "MPView.h"
+#import "CNLabel.h"
 
 @interface MPLoginView : MPView
 
@@ -17,5 +18,7 @@
 @property UITextField* passwordField;
 @property UIButton* loginButton;
 @property UIButton* forgotPasswordButton;
+@property CNLabel* registerLabel;
+@property UIButton* registerButton;
 
 @end

@@ -44,6 +44,8 @@
 		2D4487941B0556A40061EF86 /* Oswald-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D44878C1B0556770061EF86 /* Oswald-Light.ttf */; };
 		2D4487951B0556A40061EF86 /* Oswald-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D44878D1B0556770061EF86 /* Oswald-Regular.ttf */; };
 		2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487981B057C150061EF86 /* UIColor+MPColor.m */; };
+		2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44879B1B05829C0061EF86 /* CNLabel.m */; };
+		2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44879E1B0585E60061EF86 /* MPErrorAlerter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,10 @@
 		2D44878D1B0556770061EF86 /* Oswald-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Regular.ttf"; sourceTree = "<group>"; };
 		2D4487971B057C150061EF86 /* UIColor+MPColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MPColor.h"; sourceTree = "<group>"; };
 		2D4487981B057C150061EF86 /* UIColor+MPColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MPColor.m"; sourceTree = "<group>"; };
+		2D44879A1B05829C0061EF86 /* CNLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CNLabel.h; sourceTree = "<group>"; };
+		2D44879B1B05829C0061EF86 /* CNLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CNLabel.m; sourceTree = "<group>"; };
+		2D44879D1B0585E60061EF86 /* MPErrorAlerter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPErrorAlerter.h; sourceTree = "<group>"; };
+		2D44879E1B0585E60061EF86 /* MPErrorAlerter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPErrorAlerter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,7 +170,7 @@
 		2D44871B1B02DE260061EF86 /* MyPodium */ = {
 			isa = PBXGroup;
 			children = (
-				2D4487961B057BFE0061EF86 /* Categories */,
+				2D4487961B057BFE0061EF86 /* Utility */,
 				2D4487851B05565F0061EF86 /* Fonts */,
 				2D4487761B0546140061EF86 /* Model */,
 				2D4487751B05460F0061EF86 /* View */,
@@ -279,6 +285,8 @@
 		2D4487811B05553D0061EF86 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				2D44879A1B05829C0061EF86 /* CNLabel.h */,
+				2D44879B1B05829C0061EF86 /* CNLabel.m */,
 				2D4487821B05554F0061EF86 /* MPTextField.h */,
 				2D4487831B05554F0061EF86 /* MPTextField.m */,
 			);
@@ -300,13 +308,15 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		2D4487961B057BFE0061EF86 /* Categories */ = {
+		2D4487961B057BFE0061EF86 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
+				2D44879D1B0585E60061EF86 /* MPErrorAlerter.h */,
+				2D44879E1B0585E60061EF86 /* MPErrorAlerter.m */,
 				2D4487971B057C150061EF86 /* UIColor+MPColor.h */,
 				2D4487981B057C150061EF86 /* UIColor+MPColor.m */,
 			);
-			name = Categories;
+			name = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -422,8 +432,10 @@
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
+				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
+				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

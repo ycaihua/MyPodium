@@ -21,6 +21,7 @@
         [self createLoginButton];
         [self createForgotPasswordButton];
         [self createRegisterLabel];
+        [self createRegisterButton];
     }
     return self;
 }
@@ -42,9 +43,9 @@
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
-                                                          attribute:NSLayoutAttributeTopMargin
+                                                          attribute:NSLayoutAttributeTop
                                                          multiplier:1.0f
-                                                           constant:0.0f],
+                                                           constant:-10.0f],
                              [NSLayoutConstraint constraintWithItem:self.logoView
                                                           attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
@@ -79,7 +80,7 @@
                                                              toItem:self.logoView
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0f
-                                                           constant:-30.0f],
+                                                           constant:-40.0f],
                              [NSLayoutConstraint constraintWithItem:self.usernameField
                                                           attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
@@ -222,6 +223,75 @@
 }
 
 - (void) createRegisterLabel {
-    
+    self.registerLabel = [[CNLabel alloc] initWithText:@"Don't have an account yet? Register one with just your email."];
+    self.registerLabel.textAlignment = NSTextAlignmentCenter;
+    self.registerLabel.textColor = [UIColor MPBlackColor];
+    self.registerLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
+    self.registerLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview: self.registerLabel];
+    [self createRegisterLabelConstraints];
+}
+
+- (void) createRegisterLabelConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.registerLabel
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.forgotPasswordButton
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:8.0f],
+                             [NSLayoutConstraint constraintWithItem:self.registerLabel
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.registerLabel
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f]
+                             ];
+    [self addConstraints: constraints];
+}
+
+- (void) createRegisterButton {
+    self.registerButton = [[UIButton alloc] init];
+    self.registerButton.backgroundColor = [UIColor MPBlackColor];
+    [self.registerButton setTitle:@"REGISTER" forState:UIControlStateNormal];
+    [self.registerButton setTitleColor:[UIColor MPYellowColor] forState:UIControlStateNormal];
+    self.registerButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
+    self.registerButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.registerButton];
+    [self createRegisterButtonConstraints];
+}
+
+- (void) createRegisterButtonConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.registerButton
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.registerLabel
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:8.0f],
+                             [NSLayoutConstraint constraintWithItem:self.registerButton
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.registerButton
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1.0f
+                                                           constant:0.0f]
+                             ];
+    [self addConstraints: constraints];
 }
 @end
