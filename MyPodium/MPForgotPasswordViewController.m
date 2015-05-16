@@ -7,11 +7,20 @@
 //
 
 #import "MPForgotPasswordViewController.h"
+#import "MPForgotPasswordView.h"
 
 @interface MPForgotPasswordViewController ()
 
 @end
 
 @implementation MPForgotPasswordViewController
+
+- (id) init {
+    self = [super init];
+    if(self) {
+        self.view = [[MPForgotPasswordView alloc] init];
+    }
+    return self;
+}
 
 @end

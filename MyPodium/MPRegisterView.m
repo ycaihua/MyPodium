@@ -49,7 +49,7 @@
                                                              toItem:self
                                                           attribute:NSLayoutAttributeTopMargin
                                                          multiplier:1.0f
-                                                           constant:14.0f],
+                                                           constant:18.0f],
                              [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
@@ -82,7 +82,7 @@
                                                              toItem:self.titleLabel
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0f
-                                                           constant:0.0f],
+                                                           constant:8.0f],
                              [NSLayoutConstraint constraintWithItem:self.usernameField
                                                           attribute:NSLayoutAttributeCenterX
                                                           relatedBy:NSLayoutRelationEqual
@@ -109,8 +109,7 @@
 }
 
 - (void) makeUsernameLabel {
-    self.usernameLabel = [[CNLabel alloc] initWithText:@"4-12 characters: letters, numbers and underscores"];
-    self.usernameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
+    self.usernameLabel = [[MPLabel alloc] initWithText:@"4-12 letters, numbers and underscores"];
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
     self.usernameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.usernameLabel];
@@ -185,8 +184,7 @@
 }
 
 - (void) makePasswordLabel {
-    self.passwordLabel = [[CNLabel alloc] initWithText:@"6-16 characters"];
-    self.passwordLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
+    self.passwordLabel = [[MPLabel alloc] initWithText:@"6-16 characters"];
     self.passwordLabel.textAlignment = NSTextAlignmentCenter;
     self.passwordLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.passwordLabel];
@@ -260,8 +258,7 @@
 }
 
 - (void) makeEmailLabel {
-    self.emailLabel = [[CNLabel alloc] initWithText:@"will only be used to reset your password if needed"];
-    self.emailLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
+    self.emailLabel = [[MPLabel alloc] initWithText:@"must be a valid email"];
     self.emailLabel.textAlignment = NSTextAlignmentCenter;
     self.emailLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.emailLabel];
@@ -313,7 +310,7 @@
                                                              toItem:self.emailLabel
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0f
-                                                           constant:5.0f],
+                                                           constant:12.0f],
                              [NSLayoutConstraint constraintWithItem:self.registerButton
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
@@ -333,8 +330,7 @@
 }
 
 - (void) makeDescriptorLabel {
-    self.descriptorLabel = [[CNLabel alloc] initWithText:@"Once you register, you can use the app right away. A verification email will be sent so that you can reset your password if you forget it."];
-    self.descriptorLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
+    self.descriptorLabel = [[MPLabel alloc] initWithText:@"Once you register, we'll send you a verification email, then you're all set."];
     self.descriptorLabel.textAlignment = NSTextAlignmentLeft;
     self.descriptorLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.descriptorLabel];
@@ -348,7 +344,7 @@
                                                              toItem:self.registerButton
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0f
-                                                           constant:5.0f],
+                                                           constant:12.0f],
                              [NSLayoutConstraint constraintWithItem:self.descriptorLabel
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
@@ -386,7 +382,7 @@
                                                              toItem:self.descriptorLabel
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0f
-                                                           constant:5.0f],
+                                                           constant:12.0f],
                              [NSLayoutConstraint constraintWithItem:self.goBackButton
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual

@@ -225,10 +225,8 @@
 }
 
 - (void) makeRegisterLabel {
-    self.registerLabel = [[CNLabel alloc] initWithText:@"Don't have an account yet? Register one with just your email."];
+    self.registerLabel = [[MPLabel alloc] initWithText:@"Don't have an account yet? Register one with just your email."];
     self.registerLabel.textAlignment = NSTextAlignmentCenter;
-    self.registerLabel.textColor = [UIColor MPBlackColor];
-    self.registerLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
     self.registerLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview: self.registerLabel];
     [self makeRegisterLabelConstraints];
