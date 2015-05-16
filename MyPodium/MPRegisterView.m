@@ -146,6 +146,7 @@
 - (void) makePasswordField {
     self.passwordField = [[MPTextField alloc] initWithPlaceholder:@"password"];
     self.passwordField.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.passwordField.secureTextEntry = TRUE;
     [self addSubview:self.passwordField];
     [self makePasswordFieldConstraints];
 }

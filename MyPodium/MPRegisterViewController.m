@@ -30,6 +30,7 @@
 - (void) addControlActions {
     MPRegisterView* view = (MPRegisterView*) self.view;
     [view.registerButton addTarget:self action:@selector(registerButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.goBackButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.usernameField setDelegate: self];
     [view.passwordField setDelegate: self];
     [view.emailField setDelegate: self];
@@ -37,6 +38,7 @@
 
 - (void) registerButtonPressed: (id) sender {
     MPRegisterView* view = (MPRegisterView*) self.view;
+    [self.view performSelector:@selector(responderButtonPressed:) withObject:self];
     NSString* username = view.usernameField.text.lowercaseString;
     NSString* password = view.passwordField.text;
     NSString* email = view.emailField.text.lowercaseString;
@@ -81,12 +83,12 @@
                 [alerter checkErrorCondition:true withMessage:@"A query error has occurred and was reported. Sorry about that."];
             }
             else {
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:@"Your account has been registered. We'll bring you back to the login screen now." preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action){}];
-                [alert addAction: action];
-                [self presentViewController:alert animated:TRUE completion:^() {
-                    NSLog(@"Completion");
+                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Success" message:@"Your account has been registered. We'll bring you back to the login screen now." preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action){
+                    [self dismissViewControllerAnimated:TRUE completion:nil];
                 }];
+                [alert addAction: action];
+                [self presentViewController:alert animated:TRUE completion:nil];
             }
         }];
     }
@@ -101,9 +103,14 @@
         [view.emailField becomeFirstResponder];
     }
     else {
+        [textField resignFirstResponder];
         [self performSelector:@selector(registerButtonPressed:) withObject:self];
     }
     return YES;
+}
+
+- (void) goBackButtonPressed: (id) sender {
+    [self dismissViewControllerAnimated:TRUE completion:nil];
 }
 
 @end

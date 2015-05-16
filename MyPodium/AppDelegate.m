@@ -19,9 +19,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
+    NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:path];
     // Initialize Parse
-    [Parse setApplicationId:@"95c3Lfclp8RvaoM4CSwCVO8LnW1FRxOyG2sJww4w"
-                  clientKey:@"RwbEu9xjjIqdMcvmSDdPqoaWSv8Grh2sf4jfAFdB"];
+    [Parse setApplicationId:[plist objectForKey:@"ParseAppId"]
+                  clientKey:[plist objectForKey:@"ParseClientKey"]];
     
     // [Optional] Track statistics around application opens
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

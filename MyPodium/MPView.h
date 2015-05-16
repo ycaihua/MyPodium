@@ -19,5 +19,6 @@
 @property UIButton* responderButton;
 
 - (id) init;
+- (void)responderButtonPressed:(id)sender;
 
 @end
