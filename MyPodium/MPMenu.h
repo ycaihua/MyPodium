@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CNLabel.h"
 
 @interface MPMenu : UIView
+
+@property UIButton* sidebarButton;
+@property CNLabel* titleLabel;
+@property CNLabel* subtitleLabel;
 
 @end
