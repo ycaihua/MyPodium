@@ -51,6 +51,14 @@
 		2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487DC1B0656340061EF86 /* NSString+MPString.m */; };
 		2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487DF1B079FBD0061EF86 /* MPForgotPasswordView.m */; };
 		2D4487E31B07A6B70061EF86 /* MPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487E21B07A6B70061EF86 /* MPLabel.m */; };
+		2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487E61B0836C20061EF86 /* MPMenuView.m */; };
+		2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487E91B0837240061EF86 /* MPMenu.m */; };
+		2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487ED1B0839D30061EF86 /* MPMenuViewController.m */; };
+		2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F01B083A930061EF86 /* MPSidebarViewController.m */; };
+		2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F31B083B050061EF86 /* MMDrawerBarButtonItem.m */; };
+		2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F51B083B050061EF86 /* MMDrawerController.m */; };
+		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
+		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +123,23 @@
 		2D4487DF1B079FBD0061EF86 /* MPForgotPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPForgotPasswordView.m; sourceTree = "<group>"; };
 		2D4487E11B07A6B70061EF86 /* MPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLabel.h; sourceTree = "<group>"; };
 		2D4487E21B07A6B70061EF86 /* MPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLabel.m; sourceTree = "<group>"; };
+		2D4487E51B0836C20061EF86 /* MPMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMenuView.h; sourceTree = "<group>"; };
+		2D4487E61B0836C20061EF86 /* MPMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMenuView.m; sourceTree = "<group>"; };
+		2D4487E81B0837240061EF86 /* MPMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMenu.h; sourceTree = "<group>"; };
+		2D4487E91B0837240061EF86 /* MPMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMenu.m; sourceTree = "<group>"; };
+		2D4487EC1B0839D30061EF86 /* MPMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMenuViewController.h; sourceTree = "<group>"; };
+		2D4487ED1B0839D30061EF86 /* MPMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMenuViewController.m; sourceTree = "<group>"; };
+		2D4487EF1B083A930061EF86 /* MPSidebarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarViewController.h; sourceTree = "<group>"; };
+		2D4487F01B083A930061EF86 /* MPSidebarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSidebarViewController.m; sourceTree = "<group>"; };
+		2D4487F31B083B050061EF86 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
+		2D4487F41B083B050061EF86 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
+		2D4487F51B083B050061EF86 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
+		2D4487F61B083B050061EF86 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
+		2D4487F71B083B050061EF86 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
+		2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
+		2D4487F91B083B050061EF86 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
+		2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +219,7 @@
 		2D4487461B039B540061EF86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
 			);
 			name = Controller;
@@ -215,6 +241,7 @@
 		2D44874B1B039C2D0061EF86 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				2D4487F21B083ADC0061EF86 /* MMDrawerController */,
 				2D4487731B03A2290061EF86 /* Parse.framework */,
 				2D4487701B039D9D0061EF86 /* Social.framework */,
 				2D44876E1B039D940061EF86 /* Accounts.framework */,
@@ -240,6 +267,7 @@
 		2D4487751B05460F0061EF86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
 				2D44877A1B054BFF0061EF86 /* LoginRegister */,
 				2D4487771B0546580061EF86 /* MPView.h */,
@@ -307,6 +335,44 @@
 				2D4487DC1B0656340061EF86 /* NSString+MPString.m */,
 			);
 			name = Utility;
+			sourceTree = "<group>";
+		};
+		2D4487E41B0836610061EF86 /* SidebarAndMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2D4487E51B0836C20061EF86 /* MPMenuView.h */,
+				2D4487E61B0836C20061EF86 /* MPMenuView.m */,
+				2D4487E81B0837240061EF86 /* MPMenu.h */,
+				2D4487E91B0837240061EF86 /* MPMenu.m */,
+			);
+			name = SidebarAndMenu;
+			sourceTree = "<group>";
+		};
+		2D4487EB1B08387B0061EF86 /* SidebarAndMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2D4487EC1B0839D30061EF86 /* MPMenuViewController.h */,
+				2D4487ED1B0839D30061EF86 /* MPMenuViewController.m */,
+				2D4487EF1B083A930061EF86 /* MPSidebarViewController.h */,
+				2D4487F01B083A930061EF86 /* MPSidebarViewController.m */,
+			);
+			name = SidebarAndMenu;
+			sourceTree = "<group>";
+		};
+		2D4487F21B083ADC0061EF86 /* MMDrawerController */ = {
+			isa = PBXGroup;
+			children = (
+				2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */,
+				2D4487F31B083B050061EF86 /* MMDrawerBarButtonItem.m */,
+				2D4487F41B083B050061EF86 /* MMDrawerController.h */,
+				2D4487F51B083B050061EF86 /* MMDrawerController.m */,
+				2D4487F61B083B050061EF86 /* MMDrawerController+Subclass.h */,
+				2D4487F71B083B050061EF86 /* MMDrawerVisualState.h */,
+				2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */,
+				2D4487F91B083B050061EF86 /* UIViewController+MMDrawerController.h */,
+				2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */,
+			);
+			name = MMDrawerController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,8 +455,12 @@
 			files = (
 				2D4487D71B05A7030061EF86 /* MPForgotPasswordViewController.m in Sources */,
 				2D4487E31B07A6B70061EF86 /* MPLabel.m in Sources */,
+				2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */,
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
+				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
+				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
+				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
@@ -398,8 +468,12 @@
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
+				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
+				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
+				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
+				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 			);

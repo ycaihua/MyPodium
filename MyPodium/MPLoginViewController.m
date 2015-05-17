@@ -11,6 +11,9 @@
 #import "MPErrorAlerter.h"
 #import "MPRegisterViewController.h"
 #import "MPForgotPasswordViewController.h"
+#import "MPMenuViewController.h"
+#import "MPSidebarViewController.h"
+#import "MMDrawerController.h"
 #import <Parse/Parse.h>
 
 @interface MPLoginViewController ()
@@ -62,8 +65,33 @@
     }];
 }
 
+//If login is successful, create target MMDrawerController
+//and its children
 - (void) login {
+    MPMenuViewController *center = [[MPMenuViewController alloc] initWithTitle:[PFUser currentUser].username.uppercaseString subtitle:@"friends"];
     
+    //Will need to be the menu
+    MPSidebarViewController *left = [[MPSidebarViewController alloc] init];
+    
+    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController: center leftDrawerViewController: left];
+    
+    drawer.closeDrawerGestureModeMask = MMCloseDrawerGestureModeCustom;
+    drawer.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
+    //Custom gesture to close sidebar on any touch of center
+    [drawer setGestureShouldRecognizeTouchBlock:^BOOL(MMDrawerController *drawerController, UIGestureRecognizer *gesture, UITouch *touch) {
+        
+        BOOL shouldRecognizeTouch = NO;
+        if(drawerController.openSide == MMDrawerSideLeft &&
+           ([gesture isKindOfClass:[UITapGestureRecognizer class]] ||
+            [gesture isKindOfClass:[UIPanGestureRecognizer class]])){
+               UIView * customView = [drawerController.centerViewController view];
+               CGPoint location = [touch locationInView:customView];
+               shouldRecognizeTouch = (CGRectContainsPoint(customView.bounds, location));
+           }
+        return shouldRecognizeTouch;
+    }];
+    
+    [self presentViewController:drawer animated:YES completion: nil];
 }
 
 - (void) registerButtonPressed: (id) sender {
