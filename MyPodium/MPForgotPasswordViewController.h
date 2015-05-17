@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPForgotPasswordViewController : UIViewController
+@interface MPForgotPasswordViewController : UIViewController <UITextFieldDelegate>
 
 @end

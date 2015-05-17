@@ -49,6 +49,8 @@
     
     [alerter checkErrorCondition:(view.usernameField.text.length == 0) withMessage:@"Please enter a username."];
     [alerter checkErrorCondition:(view.passwordField.text.length == 0) withMessage:@"Please enter a password."];
+    if([alerter hasFoundError]) return;
+    
     [PFUser logInWithUsernameInBackground:view.usernameField.text
                                  password:view.passwordField.text
                                     block:^(PFUser *user, NSError *error) {

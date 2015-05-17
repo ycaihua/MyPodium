@@ -44,7 +44,7 @@
                                                              toItem:self
                                                           attribute:NSLayoutAttributeTopMargin
                                                          multiplier:1.0f
-                                                           constant:14.0f],
+                                                           constant:18.0f],
                              [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
