@@ -17,14 +17,10 @@
 
 @implementation MPMenuViewController
 
-- (id) initWithTitle: (NSString*) title subtitle: (NSString*) subtitle {
+- (id) init {
     self = [super init];
     if(self) {
-        MPMenuView* menuView = [[MPMenuView alloc] init];
-        menuView.menu.titleLabel.text = title;
-        menuView.menu.subtitleLabel.text = subtitle;
-        self.view = menuView;
-        
+        self.view = [[MPMenuView alloc] init];
     }
     return self;
 }

@@ -59,6 +59,8 @@
 		2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F51B083B050061EF86 /* MMDrawerController.m */; };
 		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
+		2D4488031B0986A10061EF86 /* MPFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4488021B0986A10061EF86 /* MPFriendsView.m */; };
+		2D4488071B0987150061EF86 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4488061B0987150061EF86 /* MPFriendsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +142,10 @@
 		2D4487F91B083B050061EF86 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		2D4488011B0986A10061EF86 /* MPFriendsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsView.h; sourceTree = "<group>"; };
+		2D4488021B0986A10061EF86 /* MPFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsView.m; sourceTree = "<group>"; };
+		2D4488051B0987150061EF86 /* MPFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsViewController.h; sourceTree = "<group>"; };
+		2D4488061B0987150061EF86 /* MPFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +225,7 @@
 		2D4487461B039B540061EF86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2D4488041B0986FB0061EF86 /* Friends */,
 				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
 			);
@@ -267,6 +274,7 @@
 		2D4487751B05460F0061EF86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D4488001B09868B0061EF86 /* Friends */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
 				2D44877A1B054BFF0061EF86 /* LoginRegister */,
@@ -375,6 +383,24 @@
 			name = MMDrawerController;
 			sourceTree = "<group>";
 		};
+		2D4488001B09868B0061EF86 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				2D4488011B0986A10061EF86 /* MPFriendsView.h */,
+				2D4488021B0986A10061EF86 /* MPFriendsView.m */,
+			);
+			name = Friends;
+			sourceTree = "<group>";
+		};
+		2D4488041B0986FB0061EF86 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				2D4488051B0987150061EF86 /* MPFriendsViewController.h */,
+				2D4488061B0987150061EF86 /* MPFriendsViewController.m */,
+			);
+			name = Friends;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -473,7 +499,9 @@
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
+				2D4488071B0987150061EF86 /* MPFriendsViewController.m in Sources */,
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
+				2D4488031B0986A10061EF86 /* MPFriendsView.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 			);

@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MMDrawerController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
++ (MMDrawerController*) makeLoggedInRootController;
 
 @end
 

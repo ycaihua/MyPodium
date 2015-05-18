@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "MPLoginViewController.h"
+#import "MPFriendsViewController.h"
+#import "MPSidebarViewController.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -31,16 +33,43 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     if([PFUser currentUser]) {
-        //For the time being, log the user out
-        //because we don't have the necessary VC built yet
-        [PFUser logOut];
-        [self.window setRootViewController:[[MPLoginViewController alloc] init]];
+        [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     else {
         [self.window setRootViewController:[[MPLoginViewController alloc] init]];
     }
     [self.window makeKeyAndVisible];
     return YES;
+}
+
++ (MMDrawerController*) makeLoggedInRootController {
+    MPFriendsViewController *center = [[MPFriendsViewController alloc] init];
+    
+    //Will need to be the menu
+    MPSidebarViewController *left = [[MPSidebarViewController alloc] init];
+    
+    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:center leftDrawerViewController:left];
+    
+    //Actions have to be added to MPMenuViewController after it has
+    //a drawer container (above)
+    [center addControlActions];
+    
+    drawer.closeDrawerGestureModeMask = MMCloseDrawerGestureModeCustom;
+    drawer.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
+    //Custom gesture to close sidebar on any touch of center
+    [drawer setGestureShouldRecognizeTouchBlock:^BOOL(MMDrawerController *drawerController, UIGestureRecognizer *gesture, UITouch *touch) {
+        BOOL shouldRecognizeTouch = NO;
+        if(drawerController.openSide == MMDrawerSideLeft &&
+           ([gesture isKindOfClass:[UITapGestureRecognizer class]] ||
+            [gesture isKindOfClass:[UIPanGestureRecognizer class]])){
+               UIView * customView = [drawerController.centerViewController view];
+               CGPoint location = [touch locationInView:customView];
+               shouldRecognizeTouch = (CGRectContainsPoint(customView.bounds, location));
+           }
+        return shouldRecognizeTouch;
+    }];
+    
+    return drawer;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
