@@ -64,7 +64,14 @@
 }
 
 - (void) login {
-    [self presentViewController:[AppDelegate makeLoggedInRootController] animated:YES completion: nil];
+    AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
+    MMDrawerController* target = [AppDelegate makeLoggedInRootController];
+    delegate.window.rootViewController = target;
+    [UIView transitionWithView:delegate.window
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{ delegate.window.rootViewController = target; }
+                    completion:nil];
 }
 
 - (void) registerButtonPressed: (id) sender {
