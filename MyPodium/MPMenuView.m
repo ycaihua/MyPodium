@@ -19,6 +19,18 @@
     return self;
 }
 
+- (id) initWithTitleText: (NSString*) titleText subtitleText: (NSString*) subtitleText {
+    self = [super init];
+    if(self) {
+        self.backgroundColor = [UIColor whiteColor];
+        [self makeControls];
+        self.menu.titleLabel.text = titleText;
+        self.menu.subtitleLabel.text = subtitleText;
+    }
+    return self;
+    
+}
+
 - (void) makeControls {
     [self makeMenu];
 }

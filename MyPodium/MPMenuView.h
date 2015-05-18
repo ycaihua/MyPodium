@@ -12,4 +12,6 @@
 
 @property MPMenu* menu;
 
+- (id) initWithTitleText: (NSString*) titleText subtitleText: (NSString*) subtitleText;
+
 @end

@@ -61,6 +61,8 @@
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
 		2D4488031B0986A10061EF86 /* MPFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4488021B0986A10061EF86 /* MPFriendsView.m */; };
 		2D4488071B0987150061EF86 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4488061B0987150061EF86 /* MPFriendsViewController.m */; };
+		2D44880C1B0A630D0061EF86 /* MPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44880B1B0A630D0061EF86 /* MPProfileViewController.m */; };
+		2D44880F1B0A66E40061EF86 /* MPProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44880E1B0A66E40061EF86 /* MPProfileView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -146,6 +148,10 @@
 		2D4488021B0986A10061EF86 /* MPFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsView.m; sourceTree = "<group>"; };
 		2D4488051B0987150061EF86 /* MPFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsViewController.h; sourceTree = "<group>"; };
 		2D4488061B0987150061EF86 /* MPFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsViewController.m; sourceTree = "<group>"; };
+		2D44880A1B0A630D0061EF86 /* MPProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPProfileViewController.h; sourceTree = "<group>"; };
+		2D44880B1B0A630D0061EF86 /* MPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileViewController.m; sourceTree = "<group>"; };
+		2D44880D1B0A66E40061EF86 /* MPProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPProfileView.h; sourceTree = "<group>"; };
+		2D44880E1B0A66E40061EF86 /* MPProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +231,7 @@
 		2D4487461B039B540061EF86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2D4488091B0A62DC0061EF86 /* Profile */,
 				2D4488041B0986FB0061EF86 /* Friends */,
 				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
@@ -274,6 +281,7 @@
 		2D4487751B05460F0061EF86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D4488081B0A62D60061EF86 /* Profile */,
 				2D4488001B09868B0061EF86 /* Friends */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
@@ -401,6 +409,24 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
+		2D4488081B0A62D60061EF86 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				2D44880D1B0A66E40061EF86 /* MPProfileView.h */,
+				2D44880E1B0A66E40061EF86 /* MPProfileView.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
+		2D4488091B0A62DC0061EF86 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				2D44880A1B0A630D0061EF86 /* MPProfileViewController.h */,
+				2D44880B1B0A630D0061EF86 /* MPProfileViewController.m */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -490,10 +516,12 @@
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
+				2D44880C1B0A630D0061EF86 /* MPProfileViewController.m in Sources */,
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
+				2D44880F1B0A66E40061EF86 /* MPProfileView.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
