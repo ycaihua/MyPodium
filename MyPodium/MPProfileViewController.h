@@ -7,7 +7,11 @@
 //
 
 #import "MPMenuViewController.h"
+#import <Parse/Parse.h>
+#import <UIKit/UIKit.h>
 
 @interface MPProfileViewController : MPMenuViewController
+
+- (id) initWithUser: (PFUser*) user;
 
 @end

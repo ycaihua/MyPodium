@@ -13,12 +13,7 @@
 - (id) init {
     self = [super initWithTitleText:@"USERNAME" subtitleText:@"profile"];
     if(self) {
-        [self makeControls];
     }
     return self;
-}
-
-- (void) makeControls {
-    
 }
 @end

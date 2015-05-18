@@ -12,10 +12,8 @@
 @implementation MPFriendsView
 
 - (id) init {
-    self = [super init];
+    self = [super initWithTitleText:[PFUser currentUser].username subtitleText:@"friends list"];
     if(self) {
-        self.menu.titleLabel.text = [PFUser currentUser].username;
-        self.menu.subtitleLabel.text = @"friends list";
     }
     return self;
 }

@@ -8,7 +8,6 @@
 
 #import "MPProfileViewController.h"
 #import "MPProfileView.h"
-#import <Parse/Parse.h>
 
 @interface MPProfileViewController ()
 
@@ -21,6 +20,16 @@
     if(self) {
         MPProfileView* view = [[MPProfileView alloc] init];
         view.menu.titleLabel.text = [user.username uppercaseString];
+        self.view = view;
+    }
+    return self;
+}
+
+- (id) init {
+    self = [super init];
+    if(self) {
+        MPProfileView* view = [[MPProfileView alloc] init];
+        view.menu.titleLabel.text = [[PFUser currentUser].username uppercaseString];
         self.view = view;
     }
     return self;
