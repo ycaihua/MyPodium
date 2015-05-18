@@ -11,5 +11,6 @@
 @interface MPMenuViewController : UIViewController
 
 - (id) initWithTitle: (NSString*) title subtitle: (NSString*) subtitle;
+- (void) addControlActions;
 
 @end
