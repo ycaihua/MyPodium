@@ -19,9 +19,9 @@
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    NSLog(@"didFinishLaunching");
     NSString *path = [[NSBundle mainBundle] pathForResource:@"Info" ofType:@"plist"];
     NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:path];
     // Initialize Parse
@@ -29,7 +29,7 @@
                   clientKey:[plist objectForKey:@"ParseClientKey"]];
     
     // [Optional] Track statistics around application opens
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
