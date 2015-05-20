@@ -7,7 +7,12 @@
 //
 
 #import "MPMenuView.h"
+#import "MPProfileSubview.h"
 
 @interface MPProfileView : MPMenuView
+
+@property MPProfileSubview* friendsSubview;
+@property MPProfileSubview* eventsSubview;
+@property MPProfileSubview* modesSubview;
 
 @end

@@ -16,5 +16,6 @@
 + (UIColor*) MPGreenColor;
 + (UIColor*) MPYellowColor;
 + (UIColor*) MPRedColor;
++ (UIColor*) MPGrayColor;
 
 @end

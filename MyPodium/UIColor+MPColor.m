@@ -35,4 +35,8 @@
     return [UIColor colorFromHexString:@"#E93646"];
 }
 
++ (UIColor*) MPGrayColor {
+    return [UIColor colorFromHexString:@"#C4C4C4"];
+}
+
 @end

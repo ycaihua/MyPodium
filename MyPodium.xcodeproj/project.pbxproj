@@ -59,6 +59,7 @@
 		2D44880C1B0A630D0061EF86 /* MPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44880B1B0A630D0061EF86 /* MPProfileViewController.m */; };
 		2D44880F1B0A66E40061EF86 /* MPProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44880E1B0A66E40061EF86 /* MPProfileView.m */; };
 		2D8DAFA71B0C073B005607E4 /* MPProfileSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8DAFA61B0C073B005607E4 /* MPProfileSubview.m */; };
+		2D8DAFAA1B0C16E0005607E4 /* MPProfileSubviewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8DAFA91B0C16E0005607E4 /* MPProfileSubviewButton.m */; };
 		2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B371B0AC77B00AEF295 /* Bolts.framework */; };
 		2D9A4B3C1B0AC77B00AEF295 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */; };
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
@@ -150,6 +151,8 @@
 		2D44880E1B0A66E40061EF86 /* MPProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileView.m; sourceTree = "<group>"; };
 		2D8DAFA51B0C073B005607E4 /* MPProfileSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPProfileSubview.h; sourceTree = "<group>"; };
 		2D8DAFA61B0C073B005607E4 /* MPProfileSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileSubview.m; sourceTree = "<group>"; };
+		2D8DAFA81B0C16E0005607E4 /* MPProfileSubviewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPProfileSubviewButton.h; sourceTree = "<group>"; };
+		2D8DAFA91B0C16E0005607E4 /* MPProfileSubviewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileSubviewButton.m; sourceTree = "<group>"; };
 		2D9A4B371B0AC77B00AEF295 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -419,6 +422,8 @@
 				2D44880E1B0A66E40061EF86 /* MPProfileView.m */,
 				2D8DAFA51B0C073B005607E4 /* MPProfileSubview.h */,
 				2D8DAFA61B0C073B005607E4 /* MPProfileSubview.m */,
+				2D8DAFA81B0C16E0005607E4 /* MPProfileSubviewButton.h */,
+				2D8DAFA91B0C16E0005607E4 /* MPProfileSubviewButton.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -528,6 +533,7 @@
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
+				2D8DAFAA1B0C16E0005607E4 /* MPProfileSubviewButton.m in Sources */,
 				2D44880F1B0A66E40061EF86 /* MPProfileView.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
