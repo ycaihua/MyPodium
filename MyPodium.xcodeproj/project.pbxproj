@@ -58,6 +58,7 @@
 		2D4488071B0987150061EF86 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4488061B0987150061EF86 /* MPFriendsViewController.m */; };
 		2D44880C1B0A630D0061EF86 /* MPProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44880B1B0A630D0061EF86 /* MPProfileViewController.m */; };
 		2D44880F1B0A66E40061EF86 /* MPProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44880E1B0A66E40061EF86 /* MPProfileView.m */; };
+		2D8DAFA71B0C073B005607E4 /* MPProfileSubview.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D8DAFA61B0C073B005607E4 /* MPProfileSubview.m */; };
 		2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B371B0AC77B00AEF295 /* Bolts.framework */; };
 		2D9A4B3C1B0AC77B00AEF295 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */; };
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
@@ -147,6 +148,8 @@
 		2D44880B1B0A630D0061EF86 /* MPProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileViewController.m; sourceTree = "<group>"; };
 		2D44880D1B0A66E40061EF86 /* MPProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPProfileView.h; sourceTree = "<group>"; };
 		2D44880E1B0A66E40061EF86 /* MPProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileView.m; sourceTree = "<group>"; };
+		2D8DAFA51B0C073B005607E4 /* MPProfileSubview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPProfileSubview.h; sourceTree = "<group>"; };
+		2D8DAFA61B0C073B005607E4 /* MPProfileSubview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPProfileSubview.m; sourceTree = "<group>"; };
 		2D9A4B371B0AC77B00AEF295 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -414,6 +417,8 @@
 			children = (
 				2D44880D1B0A66E40061EF86 /* MPProfileView.h */,
 				2D44880E1B0A66E40061EF86 /* MPProfileView.m */,
+				2D8DAFA51B0C073B005607E4 /* MPProfileSubview.h */,
+				2D8DAFA61B0C073B005607E4 /* MPProfileSubview.m */,
 			);
 			name = Profile;
 			sourceTree = "<group>";
@@ -512,6 +517,7 @@
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
+				2D8DAFA71B0C073B005607E4 /* MPProfileSubview.m in Sources */,
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
