@@ -24,10 +24,13 @@
 //(don't want to have to call [super makeControls] again).
 - (void) makeProfileControls {
     [self makeFriendsSubview];
+    [self makeEventsSubview];
+    [self makeModesSubview];
 }
 
 - (void) makeFriendsSubview {
     self.friendsSubview = [[MPProfileSubview alloc] init];
+    self.friendsSubview.sidebarButton.subtitleLabel.text = @"FRIENDS";
     self.friendsSubview.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.friendsSubview];
     [self makeFriendsSubviewConstraints];
@@ -66,4 +69,87 @@
     [self addConstraints: constraints];
     
 }
+
+- (void) makeEventsSubview {
+    self.eventsSubview = [[MPProfileSubview alloc] init];
+    self.eventsSubview.sidebarButton.subtitleLabel.text = @"EVENTS";
+    self.eventsSubview.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.eventsSubview];
+    [self makeEventsSubviewConstraints];
+}
+
+- (void) makeEventsSubviewConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.eventsSubview
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.friendsSubview
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:8.0f],
+                             [NSLayoutConstraint constraintWithItem:self.eventsSubview
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.eventsSubview
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.eventsSubview
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:0.25f
+                                                           constant:0.0f]
+                             ];
+    [self addConstraints: constraints];
+}
+
+- (void) makeModesSubview {
+    self.modesSubview = [[MPProfileSubview alloc] init];
+    self.modesSubview.sidebarButton.subtitleLabel.text = @"GAME MODES";
+    self.modesSubview.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.modesSubview];
+    [self makeModesSubviewConstraints];
+}
+
+- (void) makeModesSubviewConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.eventsSubview
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:8.0f],
+                             [NSLayoutConstraint constraintWithItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:0.25f
+                                                           constant:0.0f]
+                             ];
+    [self addConstraints: constraints];
+}
+
 @end

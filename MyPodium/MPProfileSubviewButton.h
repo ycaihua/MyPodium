@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CNLabel.h"
 
 @interface MPProfileSubviewButton : UIButton
+
+@property CNLabel* numericTitleLabel;
+@property CNLabel* subtitleLabel;
+@property CNLabel* tapToViewLabel;
+@property UIView* grayBorder;
 
 @end

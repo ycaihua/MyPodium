@@ -7,6 +7,7 @@
 //
 
 #import "MPProfileSubviewButton.h"
+#import "UIColor+MPColor.h"
 
 @implementation MPProfileSubviewButton
 
@@ -26,6 +27,142 @@
 }
 
 - (void) makeControls {
+    [self makeNumericTitleLabel];
+    [self makeSubtitleLabel];
+    [self makeTapToViewLabel];
+    [self makeGrayBorder];
+}
+
+- (void) makeNumericTitleLabel {
+    self.numericTitleLabel = [[CNLabel alloc] initWithText:@"1"];
+    self.numericTitleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:32.0f];
+    self.numericTitleLabel.textColor = [UIColor MPYellowColor];
+    self.numericTitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview: self.numericTitleLabel];
+    [self makeNumericTitleLabelConstraints];
+}
+
+- (void) makeNumericTitleLabelConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.numericTitleLabel
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.numericTitleLabel
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f]                             ];
+    [self addConstraints: constraints];
+}
+
+- (void) makeSubtitleLabel {
+    self.subtitleLabel = [[CNLabel alloc] initWithText:@"SUBTITLE"];
+    self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Regular" size:10.0f];
+    self.subtitleLabel.textColor = [UIColor MPYellowColor];
+    self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview: self.subtitleLabel];
+    [self makeSubtitleLabelConstraints];
+}
+
+- (void) makeSubtitleLabelConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.numericTitleLabel
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f]                             ];
+    [self addConstraints: constraints];
+}
+
+- (void) makeTapToViewLabel {
+    self.tapToViewLabel = [[CNLabel alloc] initWithText:@"TAP TO VIEW"];
+    self.tapToViewLabel.font = [UIFont fontWithName:@"Oswald-Light" size:10.0f];
+    self.tapToViewLabel.textColor = [UIColor MPBlackColor];
+    self.tapToViewLabel.textAlignment = NSTextAlignmentCenter;
+    self.tapToViewLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview: self.tapToViewLabel];
+    [self makeTapToViewLabelConstraints];
+}
+
+- (void) makeTapToViewLabelConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.tapToViewLabel
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.tapToViewLabel
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.tapToViewLabel
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f]
+                             ];
+    [self addConstraints: constraints];
     
 }
+
+- (void) makeGrayBorder {
+    self.grayBorder = [[UIView alloc] init];
+    self.grayBorder.backgroundColor = [UIColor MPGrayColor];
+    self.grayBorder.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.grayBorder];
+    [self makeGrayBorderConstraints];
+}
+
+- (void) makeGrayBorderConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.grayBorder
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.grayBorder
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.grayBorder
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.grayBorder
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:nil
+                                                          attribute:NSLayoutAttributeNotAnAttribute
+                                                         multiplier:1.0f
+                                                           constant:1.0f]
+                             ];
+    [self addConstraints: constraints];
+}
+
 @end

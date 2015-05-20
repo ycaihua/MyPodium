@@ -23,6 +23,7 @@
 - (void) makeControls {
     [self makeYellowBorder];
     [self makeGrayBorder];
+    [self makeSidebarButton];
 }
 
 - (void) makeYellowBorder {
@@ -103,6 +104,46 @@
                                                           attribute:NSLayoutAttributeNotAnAttribute
                                                          multiplier:1.0f
                                                            constant:1.0f]
+                             ];
+    [self addConstraints: constraints];
+}
+
+- (void) makeSidebarButton {
+    self.sidebarButton = [[MPProfileSubviewButton alloc] init];
+    self.sidebarButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview: self.sidebarButton];
+    [self makeSidebarButtonConstraints];
+}
+
+- (void) makeSidebarButtonConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                          attribute:NSLayoutAttributeWidth
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeWidth
+                                                         multiplier:0.25f
+                                                           constant:0.0f]
                              ];
     [self addConstraints: constraints];
 }

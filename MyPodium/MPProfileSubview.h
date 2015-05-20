@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "CNLabel.h"
+#import "MPProfileSubviewButton.h"
 
 @interface MPProfileSubview : UIView
 
 @property UIView* yellowBorder;
 @property UIView* grayBorder;
-@property CNLabel* numericTitleLabel;
-@property CNLabel* subtitleLabel;
+@property MPProfileSubviewButton* sidebarButton;
 
 @end
