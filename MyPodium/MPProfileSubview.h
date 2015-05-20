@@ -12,7 +12,7 @@
 
 @interface MPProfileSubview : UIView
 
-@property UIView* yellowBorder;
+@property UIView* sideBorder;
 @property UIView* grayBorder;
 @property MPProfileSubviewButton* sidebarButton;
 

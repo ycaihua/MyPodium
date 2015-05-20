@@ -21,42 +21,42 @@
 }
 
 - (void) makeControls {
-    [self makeYellowBorder];
+    [self makeSideBorder];
     [self makeGrayBorder];
     [self makeSidebarButton];
 }
 
-- (void) makeYellowBorder {
-    self.yellowBorder = [[UIView alloc] init];
-    self.yellowBorder.backgroundColor = [UIColor MPYellowColor];
-    self.yellowBorder.translatesAutoresizingMaskIntoConstraints = FALSE;
-    [self addSubview:self.yellowBorder];
-    [self makeYellowBorderConstraints];
+- (void) makeSideBorder {
+    self.sideBorder = [[UIView alloc] init];
+    self.sideBorder.backgroundColor = [UIColor MPGreenColor];
+    self.sideBorder.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.sideBorder];
+    [self makeSideBorderConstraints];
 }
 
-- (void) makeYellowBorderConstraints {
-    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.yellowBorder
+- (void) makeSideBorderConstraints {
+    NSArray* constraints = @[[NSLayoutConstraint constraintWithItem:self.sideBorder
                                                           attribute:NSLayoutAttributeTop
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeTop
                                                          multiplier:1.0f
                                                            constant:0.0f],
-                             [NSLayoutConstraint constraintWithItem:self.yellowBorder
+                             [NSLayoutConstraint constraintWithItem:self.sideBorder
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeLeading
                                                          multiplier:1.0f
                                                            constant:0.0f],
-                             [NSLayoutConstraint constraintWithItem:self.yellowBorder
+                             [NSLayoutConstraint constraintWithItem:self.sideBorder
                                                           attribute:NSLayoutAttributeHeight
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeHeight
                                                          multiplier:1.0f
                                                            constant:0.0f],
-                             [NSLayoutConstraint constraintWithItem:self.yellowBorder
+                             [NSLayoutConstraint constraintWithItem:self.sideBorder
                                                           attribute:NSLayoutAttributeWidth
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:nil
@@ -86,7 +86,7 @@
                              [NSLayoutConstraint constraintWithItem:self.grayBorder
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.yellowBorder
+                                                             toItem:self.sideBorder
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1.0f
                                                            constant:0.0f],

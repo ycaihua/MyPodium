@@ -36,7 +36,7 @@
 - (void) makeNumericTitleLabel {
     self.numericTitleLabel = [[CNLabel alloc] initWithText:@"1"];
     self.numericTitleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:32.0f];
-    self.numericTitleLabel.textColor = [UIColor MPYellowColor];
+    self.numericTitleLabel.textColor = [UIColor MPGreenColor];
     self.numericTitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview: self.numericTitleLabel];
     [self makeNumericTitleLabelConstraints];
@@ -63,7 +63,7 @@
 - (void) makeSubtitleLabel {
     self.subtitleLabel = [[CNLabel alloc] initWithText:@"SUBTITLE"];
     self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Regular" size:10.0f];
-    self.subtitleLabel.textColor = [UIColor MPYellowColor];
+    self.subtitleLabel.textColor = [UIColor MPGreenColor];
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview: self.subtitleLabel];
     [self makeSubtitleLabelConstraints];
