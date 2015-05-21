@@ -60,10 +60,10 @@
                                                            constant:0.0f],
                              [NSLayoutConstraint constraintWithItem:self.friendsSubview
                                                           attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
+                                                          relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeHeight
-                                                         multiplier:0.25f
+                                                         multiplier:0.15f
                                                            constant:0.0f]
                              ];
     [self addConstraints: constraints];
@@ -102,10 +102,10 @@
                                                            constant:0.0f],
                              [NSLayoutConstraint constraintWithItem:self.eventsSubview
                                                           attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
+                                                          relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeHeight
-                                                         multiplier:0.25f
+                                                         multiplier:0.15f
                                                            constant:0.0f]
                              ];
     [self addConstraints: constraints];
@@ -143,11 +143,33 @@
                                                            constant:0.0f],
                              [NSLayoutConstraint constraintWithItem:self.modesSubview
                                                           attribute:NSLayoutAttributeHeight
-                                                          relatedBy:NSLayoutRelationEqual
+                                                          relatedBy:NSLayoutRelationGreaterThanOrEqual
                                                              toItem:self
                                                           attribute:NSLayoutAttributeHeight
-                                                         multiplier:0.25f
+                                                         multiplier:0.15f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeBottomMargin
+                                                         multiplier:1.0f
+                                                           constant:-10.0f],
+                             [NSLayoutConstraint constraintWithItem:self.eventsSubview
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:1.0f
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.friendsSubview
+                                                          attribute:NSLayoutAttributeHeight
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.modesSubview
+                                                          attribute:NSLayoutAttributeHeight
+                                                         multiplier:1.0f
                                                            constant:0.0f]
+                             
                              ];
     [self addConstraints: constraints];
 }
