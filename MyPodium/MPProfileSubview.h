@@ -15,5 +15,6 @@
 @property UIView* sideBorder;
 @property UIView* grayBorder;
 @property MPProfileSubviewButton* sidebarButton;
+@property UIView* contentTable;
 
 @end

@@ -21,6 +21,7 @@
         MPProfileView* view = [[MPProfileView alloc] init];
         view.menu.titleLabel.text = [user.username uppercaseString];
         self.view = view;
+        [self addProfileControlActions];
     }
     return self;
 }
@@ -31,8 +32,13 @@
         MPProfileView* view = [[MPProfileView alloc] init];
         view.menu.titleLabel.text = [[PFUser currentUser].username uppercaseString];
         self.view = view;
+        [self addProfileControlActions];
     }
     return self;
+}
+
+- (void) addProfileControlActions {
+    MPProfileView* view = (MPProfileView*) view;
 }
 
 @end
