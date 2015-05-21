@@ -56,19 +56,16 @@
 }
 
 - (void) sidebarButtonPressDown: (id) sender {
-    NSLog(@"touch down");
     MPProfileSubviewButton* button = (MPProfileSubviewButton*) sender;
     [button applyPressDownStyle];
 }
 
 - (void) sidebarButtonTouchCancel: (id) sender {
-    NSLog(@"touch cancel");
     MPProfileSubviewButton* button = (MPProfileSubviewButton*) sender;
     [button revertPressDownStyle];
 }
 
 - (void) sidebarButtonTouchUpInside: (id) sender {
-    NSLog(@"touch up inside");
     MPProfileSubviewButton* button = (MPProfileSubviewButton*) sender;
     [button revertPressDownStyle];
     //Should also segue
