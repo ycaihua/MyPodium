@@ -191,4 +191,14 @@
     [self setBackgroundColor:[UIColor clearColor]];
 }
 
+- (void) setHighlighted:(BOOL)highlighted {
+    [super setHighlighted: highlighted];
+    if(highlighted) {
+        [self applyPressDownStyle];
+    }
+    else {
+        [self revertPressDownStyle];
+    }
+}
+
 @end
