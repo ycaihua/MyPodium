@@ -12,6 +12,8 @@
 
 @interface MPProfileViewController : MPMenuViewController
 
+@property PFUser* user;
+
 - (id) initWithUser: (PFUser*) user;
 
 @end

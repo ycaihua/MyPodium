@@ -8,6 +8,7 @@
 
 #import "MPProfileViewController.h"
 #import "MPProfileView.h"
+#import "MPProfileFriendsSubviewController.h"
 
 @interface MPProfileViewController ()
 
@@ -21,6 +22,7 @@
         MPProfileView* view = [[MPProfileView alloc] init];
         view.menu.titleLabel.text = [user.username uppercaseString];
         self.view = view;
+        self.user = user;
         [self addProfileControlActions];
     }
     return self;
@@ -32,12 +34,19 @@
         MPProfileView* view = [[MPProfileView alloc] init];
         view.menu.titleLabel.text = [[PFUser currentUser].username uppercaseString];
         self.view = view;
+        self.user = [PFUser currentUser];
         [self addProfileControlActions];
     }
     return self;
 }
 
 - (void) addProfileControlActions {
+    MPProfileView* view = (MPProfileView*) self.view;
+    MPProfileFriendsSubviewController* friendsController =
+    [[MPProfileFriendsSubviewController alloc] initWithUser: self.user];
+    [friendsController setView: view.friendsSubview.contentTable];
+    [view.friendsSubview.contentTable setDataSource: friendsController];
+    [view.friendsSubview.contentTable setDelegate: friendsController];
 }
 
 - (void) sidebarButtonPressDown: (id) sender {
