@@ -16,4 +16,7 @@
 @property CNLabel* tapToViewLabel;
 @property UIView* grayBorder;
 
+- (void) applyPressDownStyle;
+- (void) revertPressDownStyle;
+
 @end

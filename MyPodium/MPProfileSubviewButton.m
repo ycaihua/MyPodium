@@ -83,7 +83,15 @@
                                                              toItem:self
                                                           attribute:NSLayoutAttributeLeadingMargin
                                                          multiplier:1.0f
-                                                           constant:0.0f]                             ];
+                                                           constant:0.0f],
+                             [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:self
+                                                          attribute:NSLayoutAttributeTrailingMargin
+                                                         multiplier:1.0f
+                                                           constant:0.0f]
+                             ];
     [self addConstraints: constraints];
 }
 
@@ -163,6 +171,24 @@
                                                            constant:1.0f]
                              ];
     [self addConstraints: constraints];
+}
+
+- (void) applyPressDownStyle {
+    [self.tapToViewLabel displayMessage:@"VIEW ALL" revertAfter:false withColor:[UIColor whiteColor]];
+    [self.subtitleLabel displayMessage:self.subtitleLabel.text revertAfter:FALSE withColor:[UIColor whiteColor]];
+    self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
+    self.subtitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:14.0f];
+    [self.numericTitleLabel setTextColor: [UIColor clearColor]];
+    [self setBackgroundColor:[UIColor MPBlackColor]];
+}
+
+- (void) revertPressDownStyle {
+    [self.tapToViewLabel displayMessage:@"TAP TO VIEW ALL" revertAfter:false withColor:[UIColor MPBlackColor]];
+    [self.subtitleLabel displayMessage:self.subtitleLabel.text revertAfter:FALSE withColor:[UIColor MPGreenColor]];
+    self.subtitleLabel.textAlignment = NSTextAlignmentLeft;
+    self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Regular" size:10.0f];
+    [self.numericTitleLabel setTextColor: [UIColor MPGreenColor]];
+    [self setBackgroundColor:[UIColor clearColor]];
 }
 
 @end
