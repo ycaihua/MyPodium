@@ -17,10 +17,11 @@
 
 @implementation MPMenuViewController
 
-- (id) init {
+- (id) initWithActions: (BOOL) addActions {
     self = [super init];
     if(self) {
         self.view = [[MPMenuView alloc] init];
+        if(addActions) [self addControlActions];
     }
     return self;
 }

@@ -8,9 +8,8 @@
 
 #import "AppDelegate.h"
 #import "MPLoginViewController.h"
-#import "MPProfileViewController.h"
-#import "MPFriendsViewController.h"
 #import "MPSidebarViewController.h"
+#import "MPHomeViewController.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -46,7 +45,7 @@
 }
 
 + (MMDrawerController*) makeLoggedInRootController {
-    MPProfileViewController *center = [[MPProfileViewController alloc] init];
+    MPHomeViewController *center = [[MPHomeViewController alloc] init];
     
     //Will need to be the menu
     MPSidebarViewController *left = [[MPSidebarViewController alloc] init];

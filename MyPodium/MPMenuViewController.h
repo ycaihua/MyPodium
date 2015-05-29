@@ -10,6 +10,8 @@
 
 @interface MPMenuViewController : UIViewController
 
+- (id) initWithActions: (BOOL) addActions;
+
 - (void) addControlActions;
 
 @end
