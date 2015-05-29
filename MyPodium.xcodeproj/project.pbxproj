@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */; };
 		2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */; };
+		2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */; };
+		2D2D5AD11B18E34800C46B53 /* MPButtonWithSubtitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AD01B18E34800C46B53 /* MPButtonWithSubtitle.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -68,6 +70,10 @@
 		2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeViewController.m; sourceTree = "<group>"; };
 		2D2D5AC91B18D2F400C46B53 /* MPHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeView.h; sourceTree = "<group>"; };
 		2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeView.m; sourceTree = "<group>"; };
+		2D2D5ACC1B18DBCC00C46B53 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
+		2D2D5ACF1B18E34800C46B53 /* MPButtonWithSubtitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPButtonWithSubtitle.h; sourceTree = "<group>"; };
+		2D2D5AD01B18E34800C46B53 /* MPButtonWithSubtitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPButtonWithSubtitle.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -331,6 +337,8 @@
 				2D4487831B05554F0061EF86 /* MPTextField.m */,
 				2D4487E11B07A6B70061EF86 /* MPLabel.h */,
 				2D4487E21B07A6B70061EF86 /* MPLabel.m */,
+				2D2D5ACF1B18E34800C46B53 /* MPButtonWithSubtitle.h */,
+				2D2D5AD01B18E34800C46B53 /* MPButtonWithSubtitle.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -359,6 +367,8 @@
 				2D4487981B057C150061EF86 /* UIColor+MPColor.m */,
 				2D4487DB1B0656340061EF86 /* NSString+MPString.h */,
 				2D4487DC1B0656340061EF86 /* NSString+MPString.m */,
+				2D2D5ACC1B18DBCC00C46B53 /* NSMutableArray+Shuffling.h */,
+				2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -487,6 +497,7 @@
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
+				2D2D5AD11B18E34800C46B53 /* MPButtonWithSubtitle.m in Sources */,
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
@@ -498,6 +509,7 @@
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
+				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,

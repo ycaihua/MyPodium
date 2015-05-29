@@ -7,7 +7,17 @@
 //
 
 #import "MPMenuView.h"
+#import "MPButtonWithSubtitle.h"
 
 @interface MPHomeView : MPMenuView
+
+//Each of 4 buttons will have a random background
+//color, done by shuffling below mutable array
+@property NSMutableArray* buttonColors;
+
+@property MPButtonWithSubtitle* friendsButton;
+@property MPButtonWithSubtitle* teamsButton;
+@property MPButtonWithSubtitle* gameModesButton;
+@property MPButtonWithSubtitle* eventsButton;
 
 @end
