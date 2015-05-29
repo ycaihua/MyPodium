@@ -47,10 +47,17 @@
 }
 
 - (void) logOutButtonPressed: (id) sender {
-    [PFUser logOut];
-    //Should wrap in AlertController to confirm with user
-    AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
-    [delegate resetRootControllerOnLogOut];
+    
+    UIAlertController* logOutConfirmation = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        [PFUser logOut];
+        AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
+        [delegate resetRootControllerOnLogOut];
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
+    [logOutConfirmation addAction: cancelAction];
+    [logOutConfirmation addAction: confirmAction];
+    [self presentViewController: logOutConfirmation animated: true completion:nil];
 }
 
 @end
