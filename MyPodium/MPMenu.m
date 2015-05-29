@@ -38,11 +38,18 @@
     [self addSubview: self.subtitleLabel];
     
     //self.sidebarButton
-    UIImage *btnImage = [UIImage imageNamed:@"barIcon38.png"];
+    UIImage *sidebarImg = [UIImage imageNamed:@"barIcon38.png"];
     self.sidebarButton = [[UIButton alloc] init];
-    [self.sidebarButton setImage:btnImage forState:UIControlStateNormal];
+    [self.sidebarButton setImage:sidebarImg forState:UIControlStateNormal];
     self.sidebarButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.sidebarButton];
+    
+    //self.logOutButton
+    UIImage* logOutImg = [UIImage imageNamed:@"logOutIcon38.png"];
+    self.logOutButton = [[UIButton alloc] init];
+    [self.logOutButton setImage:logOutImg forState:UIControlStateNormal];
+    self.logOutButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.logOutButton];
 }
 
 - (void) makeControlConstraints {
@@ -85,6 +92,21 @@
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeBaseline
+                                                        multiplier:1.0f
+                                                          constant:2.0f],
+                            //self.logOutButton
+                            [NSLayoutConstraint constraintWithItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeTrailingMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.logOutButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.subtitleLabel

@@ -10,6 +10,8 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MPMenuView.h"
+#import "AppDelegate.h"
+#import <Parse/Parse.h>
 
 @interface MPMenuViewController ()
 
@@ -36,11 +38,19 @@
 - (void) addControlActions {
     MPMenuView* view = (MPMenuView*) self.view;
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.menu.logOutButton addTarget:self action:@selector(logOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) menuButtonPressed: (id) sender {
     MMDrawerController* container = self.mm_drawerController;
     [container toggleDrawerSide:MMDrawerSideLeft animated:true completion:nil];
+}
+
+- (void) logOutButtonPressed: (id) sender {
+    [PFUser logOut];
+    //Should wrap in AlertController to confirm with user
+    AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
+    [delegate resetRootControllerOnLogOut];
 }
 
 @end

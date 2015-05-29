@@ -12,6 +12,7 @@
 @interface MPMenu : UIView
 
 @property UIButton* sidebarButton;
+@property UIButton* logOutButton;
 @property CNLabel* titleLabel;
 @property CNLabel* subtitleLabel;
 
