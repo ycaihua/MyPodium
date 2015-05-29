@@ -17,7 +17,7 @@
 
 @property MPButtonWithSubtitle* friendsButton;
 @property MPButtonWithSubtitle* teamsButton;
-@property MPButtonWithSubtitle* gameModesButton;
+@property MPButtonWithSubtitle* modesButton;
 @property MPButtonWithSubtitle* eventsButton;
 
 @end
