@@ -10,8 +10,8 @@
 
 @interface MPMenuViewController : UIViewController
 
-- (id) initWithActions: (BOOL) addActions;
-
+//This method is made public because, if the controller's
+//drawer isn't connected, it isn't called on init
 - (void) addControlActions;
 
 @end

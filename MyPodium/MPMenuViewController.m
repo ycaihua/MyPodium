@@ -17,11 +17,13 @@
 
 @implementation MPMenuViewController
 
-- (id) initWithActions: (BOOL) addActions {
+//Adding control actions require the drawer controller to be
+//connected.
+- (id) init {
     self = [super init];
     if(self) {
         self.view = [[MPMenuView alloc] init];
-        if(addActions) [self addControlActions];
+        if(self.mm_drawerController) [self addControlActions];
     }
     return self;
 }
@@ -31,9 +33,6 @@
     return UIStatusBarStyleLightContent;
 }
 
-//NOTE: addControlActions NOT called on construction because the containing
-//mmDrawerController is nil until after login is complete (therefore
-//this method is public and called later)
 - (void) addControlActions {
     MPMenuView* view = (MPMenuView*) self.view;
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
