@@ -12,4 +12,7 @@
 
 - (id) initWithPlaceholder: (NSString*) text;
 
++ (float) standardWidth;
++ (float) standardHeight;
+
 @end

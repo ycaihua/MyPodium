@@ -58,4 +58,6 @@
     return CGRectInset( bounds , 10 , 10 );
 }
 
++ (float) standardWidth { return 190.0f; }
++ (float) standardHeight { return 35.0f; }
 @end

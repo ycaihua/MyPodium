@@ -105,14 +105,14 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:190.0f],
+                                                         constant:[MPTextField standardWidth]],
                            [NSLayoutConstraint constraintWithItem:self.emailField
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:35.0f],
+                                                         constant:[MPTextField standardHeight]],
                            //self.descriptorLabel
                            [NSLayoutConstraint constraintWithItem:self.descriptorLabel
                                                         attribute:NSLayoutAttributeTop

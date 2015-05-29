@@ -134,14 +134,14 @@
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:190.0f],
+                                                          constant:[MPTextField standardWidth]],
                             [NSLayoutConstraint constraintWithItem:self.usernameField
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:35.0f],
+                                                          constant:[MPTextField standardHeight]],
                             //self.usernameLabel
                             [NSLayoutConstraint constraintWithItem:self.usernameLabel
                                                          attribute:NSLayoutAttributeTop
@@ -185,14 +185,14 @@
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:190.0f],
+                                                          constant:[MPTextField standardWidth]],
                             [NSLayoutConstraint constraintWithItem:self.passwordField
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:35.0f],
+                                                          constant:[MPTextField standardHeight]],
                             //self.passwordLabel
                             [NSLayoutConstraint constraintWithItem:self.passwordLabel
                                                          attribute:NSLayoutAttributeTop
@@ -236,14 +236,14 @@
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:190.0f],
+                                                          constant:[MPTextField standardWidth]],
                             [NSLayoutConstraint constraintWithItem:self.emailField
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:35.0f],
+                                                          constant:[MPTextField standardHeight]],
                             //self.emailLabel
                             [NSLayoutConstraint constraintWithItem:self.emailLabel
                                                          attribute:NSLayoutAttributeTop

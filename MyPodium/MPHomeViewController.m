@@ -18,7 +18,7 @@
 - (id) init {
     //This is the one VC that can be initialized before its drawer
     //controller, so don't add menu actions on init.
-    self = [super initWithActions:NO];
+    self = [super init];
     if(self) {
         self.view = [[MPHomeView alloc] init];
     }

@@ -122,14 +122,14 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:190.0f],
+                                                         constant:[MPTextField standardWidth]],
                            [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:35.0f],
+                                                         constant:[MPTextField standardHeight]],
                            //self.passwordField
                            [NSLayoutConstraint constraintWithItem:self.passwordField
                                                         attribute:NSLayoutAttributeTop
@@ -151,14 +151,14 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:190.0f],
+                                                         constant:[MPTextField standardWidth]],
                            [NSLayoutConstraint constraintWithItem:self.passwordField
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:35.0f],
+                                                         constant:[MPTextField standardHeight]],
                            //self.loginButton
                            [NSLayoutConstraint constraintWithItem:self.loginButton
                                                         attribute:NSLayoutAttributeTop
