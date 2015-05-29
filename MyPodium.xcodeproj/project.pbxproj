@@ -295,7 +295,6 @@
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
 				2D44877A1B054BFF0061EF86 /* LoginRegister */,
-				2D4487771B0546580061EF86 /* MPView.h */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -311,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				2D4487781B0546580061EF86 /* MPView.m */,
+				2D4487771B0546580061EF86 /* MPView.h */,
 				2D44877E1B0550580061EF86 /* MPLoginView.h */,
 				2D44877F1B0550580061EF86 /* MPLoginView.m */,
 				2D4487D81B05AAC30061EF86 /* MPRegisterView.h */,

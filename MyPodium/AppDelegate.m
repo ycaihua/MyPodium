@@ -34,9 +34,9 @@
     self.window.backgroundColor = [UIColor whiteColor];
     if([PFUser currentUser]) {
         //Uncomment to force log out:
-        //[PFUser logOut];
-        //[self.window setRootViewController:[[MPLoginViewController alloc] init]];
-        [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
+        [PFUser logOut];
+        [self.window setRootViewController:[[MPLoginViewController alloc] init]];
+        //[self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     else {
         [self.window setRootViewController:[[MPLoginViewController alloc] init]];
