@@ -63,6 +63,7 @@
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
 		2D9A4B3E1B0AC77B00AEF295 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */; };
 		2D9A4B401B0AC7B900AEF295 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */; };
+		2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,6 +153,8 @@
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		2DE9FC8D1B190FE600F748C9 /* MPHomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeButton.h; sourceTree = "<group>"; };
+		2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +200,8 @@
 			children = (
 				2D2D5AC91B18D2F400C46B53 /* MPHomeView.h */,
 				2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */,
+				2DE9FC8D1B190FE600F748C9 /* MPHomeButton.h */,
+				2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -517,6 +522,7 @@
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
+				2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

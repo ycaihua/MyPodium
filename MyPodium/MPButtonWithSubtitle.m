@@ -19,6 +19,11 @@
     return self;
 }
 
+- (void) setCombinedTextColor: (UIColor*) textColor {
+    [self setTitleColor: textColor forState:UIControlStateNormal];
+    self.subtitleLabel.textColor = textColor;
+}
+
 - (void) makeSubtitle {
     self.subtitleLabel = [[UILabel alloc] init];
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = NO;

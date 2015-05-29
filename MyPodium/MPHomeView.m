@@ -30,19 +30,17 @@
     UIFont* subtitleFont = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     
     //self.friendsButton
-    self.friendsButton = [[MPButtonWithSubtitle alloc] init];
+    self.friendsButton = [[MPHomeButton alloc] init];
     self.friendsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.friendsButton.titleLabel.font = titleFont;
     self.friendsButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.friendsButton setTitle:@"0" forState:UIControlStateNormal];
     self.friendsButton.backgroundColor = self.buttonColors[0];
     if([self.friendsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.friendsButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
-        self.friendsButton.subtitleLabel.textColor = [UIColor whiteColor];
+        [self.friendsButton setCombinedTextColor: [UIColor whiteColor]];
     }
     else {
-        [self.friendsButton setTitleColor: [UIColor MPBlackColor] forState:UIControlStateNormal];
-        self.friendsButton.subtitleLabel.textColor = [UIColor MPBlackColor];
+        [self.friendsButton setCombinedTextColor: [UIColor MPBlackColor]];
         self.friendsButton.layer.borderColor = [UIColor MPBlackColor].CGColor;
         self.friendsButton.layer.borderWidth = 2.0f;
     }
@@ -53,19 +51,17 @@
     [self addSubview: self.friendsButton];
     
     //self.teamsButton
-    self.teamsButton = [[MPButtonWithSubtitle alloc] init];
+    self.teamsButton = [[MPHomeButton alloc] init];
     self.teamsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.teamsButton.titleLabel.font = titleFont;
     self.teamsButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.teamsButton setTitle:@"0" forState:UIControlStateNormal];
     self.teamsButton.backgroundColor = self.buttonColors[1];
     if([self.teamsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.teamsButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
-        self.teamsButton.subtitleLabel.textColor = [UIColor whiteColor];
+        [self.teamsButton setCombinedTextColor: [UIColor whiteColor]];
     }
     else {
-        [self.teamsButton setTitleColor: [UIColor MPBlackColor] forState:UIControlStateNormal];
-        self.teamsButton.subtitleLabel.textColor = [UIColor MPBlackColor];
+        [self.teamsButton setCombinedTextColor: [UIColor MPBlackColor]];
         self.teamsButton.layer.borderColor = [UIColor MPBlackColor].CGColor;
         self.teamsButton.layer.borderWidth = 2.0f;
     }
@@ -76,19 +72,17 @@
     [self addSubview: self.teamsButton];
     
     //self.gameModesButton
-    self.modesButton = [[MPButtonWithSubtitle alloc] init];
+    self.modesButton = [[MPHomeButton alloc] init];
     self.modesButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.modesButton.titleLabel.font = titleFont;
     self.modesButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.modesButton setTitle:@"0" forState:UIControlStateNormal];
     self.modesButton.backgroundColor = self.buttonColors[2];
     if([self.modesButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.modesButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
-        self.modesButton.subtitleLabel.textColor = [UIColor whiteColor];
+        [self.modesButton setCombinedTextColor: [UIColor whiteColor]];
     }
     else {
-        [self.modesButton setTitleColor: [UIColor MPBlackColor] forState:UIControlStateNormal];
-        self.modesButton.subtitleLabel.textColor = [UIColor MPBlackColor];
+        [self.modesButton setCombinedTextColor: [UIColor MPBlackColor]];
         self.modesButton.layer.borderColor = [UIColor MPBlackColor].CGColor;
         self.modesButton.layer.borderWidth = 2.0f;
     }
@@ -99,19 +93,17 @@
     [self addSubview: self.modesButton];
     
     //self.eventsButton
-    self.eventsButton = [[MPButtonWithSubtitle alloc] init];
+    self.eventsButton = [[MPHomeButton alloc] init];
     self.eventsButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.eventsButton.titleLabel.font = titleFont;
     self.eventsButton.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self.eventsButton setTitle:@"0" forState:UIControlStateNormal];
     self.eventsButton.backgroundColor = self.buttonColors[3];
     if([self.eventsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.eventsButton setTitleColor: [UIColor whiteColor] forState:UIControlStateNormal];
-        self.eventsButton.subtitleLabel.textColor = [UIColor whiteColor];
+        [self.eventsButton setCombinedTextColor: [UIColor whiteColor]];
     }
     else {
-        [self.eventsButton setTitleColor: [UIColor MPBlackColor] forState:UIControlStateNormal];
-        self.eventsButton.subtitleLabel.textColor = [UIColor MPBlackColor];
+        [self.eventsButton setCombinedTextColor: [UIColor MPBlackColor]];
         self.eventsButton.layer.borderColor = [UIColor MPBlackColor].CGColor;
         self.eventsButton.layer.borderWidth = 2.0f;
     }

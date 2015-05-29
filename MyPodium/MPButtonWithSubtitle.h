@@ -12,4 +12,7 @@
 
 @property UILabel* subtitleLabel;
 
+//Set color of title and subtitle
+- (void) setCombinedTextColor: (UIColor*) textColor;
+
 @end
