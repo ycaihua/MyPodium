@@ -14,7 +14,8 @@
     self = [super init];
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self makeControls];
+        [self makeMenu];
+        [self makeMenuConstraints];
     }
     return self;
 }
@@ -23,23 +24,18 @@
     self = [super init];
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
-        [self makeControls];
+        [self makeMenu];
+        [self makeMenuConstraints];
         self.menu.titleLabel.text = titleText;
         self.menu.subtitleLabel.text = subtitleText;
     }
     return self;
-    
-}
-
-- (void) makeControls {
-    [self makeMenu];
 }
 
 - (void) makeMenu {
     self.menu = [[MPMenu alloc] init];
     self.menu.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview: self.menu];
-    [self makeMenuConstraints];
 }
 
 - (void) makeMenuConstraints {
