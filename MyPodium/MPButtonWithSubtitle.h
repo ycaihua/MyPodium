@@ -10,6 +10,7 @@
 
 @interface MPButtonWithSubtitle : UIButton
 
+@property UILabel* customTitleLabel;
 @property UILabel* subtitleLabel;
 
 //Set color of title and subtitle

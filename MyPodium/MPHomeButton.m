@@ -14,14 +14,12 @@
 - (id) init {
     self = [super init];
     if(self) {
-        self.titleLabel.textAlignment = NSTextAlignmentCenter;
-        self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:44.0f];
-        [self setTitle:@"0" forState:UIControlStateNormal];
+        self.customTitleLabel.textAlignment = NSTextAlignmentCenter;
+        self.customTitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:44.0f];
+        self.customTitleLabel.text = @"0";
         self.layer.borderColor = [UIColor MPBlackColor].CGColor;
         self.layer.borderWidth = 2.0f;
         self.subtitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
-        self.translatesAutoresizingMaskIntoConstraints = NO;
-        self.titleEdgeInsets = UIEdgeInsetsMake(-50, 0, 0, 0);
     }
     return self;
 }

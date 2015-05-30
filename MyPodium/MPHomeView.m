@@ -102,10 +102,10 @@
                             [NSLayoutConstraint constraintWithItem:self.friendsButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterY
+                                                            toItem:self.modesButton
+                                                         attribute:NSLayoutAttributeTop
                                                         multiplier:1.0f
-                                                          constant:0],
+                                                          constant:-(2*buttonPadding)],
                             //self.teamsButton
                             [NSLayoutConstraint constraintWithItem:self.teamsButton
                                                          attribute:NSLayoutAttributeLeading
@@ -131,10 +131,10 @@
                             [NSLayoutConstraint constraintWithItem:self.teamsButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterY
+                                                            toItem:self.eventsButton
+                                                         attribute:NSLayoutAttributeTop
                                                         multiplier:1.0f
-                                                          constant:0],
+                                                          constant:-(2*buttonPadding)],
                             //self.gameModesButton
                             [NSLayoutConstraint constraintWithItem:self.modesButton
                                                          attribute:NSLayoutAttributeLeading
@@ -153,10 +153,10 @@
                             [NSLayoutConstraint constraintWithItem:self.modesButton
                                                          attribute:NSLayoutAttributeTop
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterY
+                                                            toItem:self.friendsButton
+                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:buttonPadding*2],
+                                                          constant:2*buttonPadding],
                             [NSLayoutConstraint constraintWithItem:self.modesButton
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
@@ -164,6 +164,13 @@
                                                          attribute:NSLayoutAttributeHeight
                                                         multiplier:1.0f
                                                           constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.modesButton
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeBottomMargin
+                                                        multiplier:1.0f
+                                                          constant:-buttonPadding],
                             //self.eventsButton
                             [NSLayoutConstraint constraintWithItem:self.eventsButton
                                                          attribute:NSLayoutAttributeLeading
@@ -182,10 +189,10 @@
                             [NSLayoutConstraint constraintWithItem:self.eventsButton
                                                          attribute:NSLayoutAttributeTop
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterY
+                                                            toItem:self.teamsButton
+                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:buttonPadding*2],
+                                                          constant:2*buttonPadding],
                             [NSLayoutConstraint constraintWithItem:self.eventsButton
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
@@ -193,6 +200,13 @@
                                                          attribute:NSLayoutAttributeHeight
                                                         multiplier:1.0f
                                                           constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.eventsButton
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeBottomMargin
+                                                        multiplier:1.0f
+                                                          constant:-buttonPadding],
                             ]];
 }
 
