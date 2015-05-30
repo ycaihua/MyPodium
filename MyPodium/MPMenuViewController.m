@@ -30,11 +30,6 @@
     return self;
 }
 
-- (UIStatusBarStyle) preferredStatusBarStyle
-{
-    return UIStatusBarStyleLightContent;
-}
-
 - (void) addControlActions {
     MPMenuView* view = (MPMenuView*) self.view;
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -50,9 +45,8 @@
     
     UIAlertController* logOutConfirmation = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        [PFUser logOut];
         AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
-        [delegate resetRootControllerOnLogOut];
+        [delegate logOut];
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
     [logOutConfirmation addAction: cancelAction];

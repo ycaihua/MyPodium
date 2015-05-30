@@ -14,7 +14,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 + (MMDrawerController*) makeLoggedInRootController;
-- (void) resetRootControllerOnLogOut;
+- (void) logOut;
 
 @end
 

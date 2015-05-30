@@ -26,6 +26,10 @@
     [Parse setApplicationId:[plist objectForKey:@"ParseAppId"]
                   clientKey:[plist objectForKey:@"ParseClientKey"]];
     
+    //Display status bar in landscape
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    
     // [Optional] Track statistics around application opens
     //[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
@@ -38,10 +42,15 @@
         [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     else {
-        [self.window setRootViewController:[[MPLoginViewController alloc] init]];
+        [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
     }
     [self.window makeKeyAndVisible];
     return YES;
+}
+
++ (MPLoginViewController*) makeLoggedOutRootController {
+    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault];
+    return [[MPLoginViewController alloc] init];
 }
 
 + (MMDrawerController*) makeLoggedInRootController {
@@ -55,6 +64,8 @@
     //Actions have to be added to MPMenuViewController after it has
     //a drawer container (above)
     [center addControlActions];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
     
     drawer.closeDrawerGestureModeMask = MMCloseDrawerGestureModeCustom;
     drawer.openDrawerGestureModeMask = MMOpenDrawerGestureModePanningCenterView;
@@ -74,9 +85,9 @@
     return drawer;
 }
 
-- (void)resetRootControllerOnLogOut {
+- (void)logOut {
     if([PFUser currentUser]) [PFUser logOut];
-    [self.window setRootViewController:[[MPLoginViewController alloc] init]];
+    [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
     [self.window makeKeyAndVisible];
 }
 
