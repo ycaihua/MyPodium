@@ -64,6 +64,7 @@
 		2D9A4B3E1B0AC77B00AEF295 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */; };
 		2D9A4B401B0AC7B900AEF295 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */; };
 		2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */; };
+		2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC911B194BB200F748C9 /* MPSidebarView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -155,6 +156,8 @@
 		2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		2DE9FC8D1B190FE600F748C9 /* MPHomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeButton.h; sourceTree = "<group>"; };
 		2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeButton.m; sourceTree = "<group>"; };
+		2DE9FC901B194BB200F748C9 /* MPSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarView.h; sourceTree = "<group>"; };
+		2DE9FC911B194BB200F748C9 /* MPSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSidebarView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -385,6 +388,8 @@
 				2D4487E61B0836C20061EF86 /* MPMenuView.m */,
 				2D4487E81B0837240061EF86 /* MPMenu.h */,
 				2D4487E91B0837240061EF86 /* MPMenu.m */,
+				2DE9FC901B194BB200F748C9 /* MPSidebarView.h */,
+				2DE9FC911B194BB200F748C9 /* MPSidebarView.m */,
 			);
 			name = SidebarAndMenu;
 			sourceTree = "<group>";
@@ -521,6 +526,7 @@
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
+				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 				2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */,
 			);

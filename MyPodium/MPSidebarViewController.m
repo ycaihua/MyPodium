@@ -7,6 +7,7 @@
 //
 
 #import "MPSidebarViewController.h"
+#import "MPSidebarView.h"
 
 @interface MPSidebarViewController ()
 
@@ -17,9 +18,14 @@
 - (id) init {
     self = [super init];
     if(self) {
-        
+        self.view = [[MPSidebarView alloc] init];
     }
     return self;
+}
+
+- (UIStatusBarStyle) preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 @end
