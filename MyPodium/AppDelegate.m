@@ -42,7 +42,8 @@
         [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     else {
-        [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
+        //[self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
+        [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     [self.window makeKeyAndVisible];
     return YES;
@@ -63,7 +64,7 @@
     
     //Actions have to be added to MPMenuViewController after it has
     //a drawer container (above)
-    [center addControlActions];
+    [center addMenuActions];
     
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
     
@@ -85,7 +86,7 @@
     return drawer;
 }
 
-- (void)logOut {
+- (void) logOut {
     if([PFUser currentUser]) [PFUser logOut];
     [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
     [self.window makeKeyAndVisible];

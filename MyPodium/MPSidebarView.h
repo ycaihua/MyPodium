@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPSidebarView : UITableView
+@interface MPSidebarView : UIView
+
+@property UIImageView* logoView;
+@property UITableView* sidebarTable;
 
 @end

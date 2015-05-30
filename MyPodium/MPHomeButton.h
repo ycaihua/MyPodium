@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPButtonWithSubtitle.h"
+#import "MPDualLabelButton.h"
 
-@interface MPHomeButton : MPButtonWithSubtitle
+@interface MPHomeButton : MPDualLabelButton
 
 @end

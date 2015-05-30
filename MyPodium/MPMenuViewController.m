@@ -25,12 +25,12 @@
     self = [super init];
     if(self) {
         self.view = [[MPMenuView alloc] init];
-        if(self.mm_drawerController) [self addControlActions];
+        if(self.mm_drawerController) [self addMenuActions];
     }
     return self;
 }
 
-- (void) addControlActions {
+- (void) addMenuActions {
     MPMenuView* view = (MPMenuView*) self.view;
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.logOutButton addTarget:self action:@selector(logOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -42,15 +42,14 @@
 }
 
 - (void) logOutButtonPressed: (id) sender {
-    
     UIAlertController* logOutConfirmation = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Log Out" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
         AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
         [delegate logOut];
     }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleCancel handler:nil];
-    [logOutConfirmation addAction: cancelAction];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [logOutConfirmation addAction: confirmAction];
+    [logOutConfirmation addAction: cancelAction];
     [self presentViewController: logOutConfirmation animated: true completion:nil];
 }
 

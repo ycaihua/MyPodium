@@ -170,7 +170,7 @@
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
-                                                          constant:-buttonPadding],
+                                                          constant:-(buttonPadding*2)],
                             //self.eventsButton
                             [NSLayoutConstraint constraintWithItem:self.eventsButton
                                                          attribute:NSLayoutAttributeLeading
@@ -206,7 +206,7 @@
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
-                                                          constant:-buttonPadding],
+                                                          constant:-(buttonPadding*2)],
                             ]];
 }
 

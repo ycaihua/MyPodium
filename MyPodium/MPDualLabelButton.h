@@ -1,5 +1,5 @@
 //
-//  MPButtonWithSubtitle.h
+//  MPDualLabelButton.h
 //  MyPodium
 //
 //  Created by Connor Neville on 5/29/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPButtonWithSubtitle : UIButton
+@interface MPDualLabelButton : UIButton
 
 @property UILabel* customTitleLabel;
 @property UILabel* subtitleLabel;

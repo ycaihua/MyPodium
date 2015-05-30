@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPSidebarViewController : UIViewController
+@interface MPSidebarViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
++ (NSString*) sidebarReuseIdentifier;
 
 @end

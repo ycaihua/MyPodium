@@ -12,6 +12,6 @@
 
 //This method is made public because, if the controller's
 //drawer isn't connected, it isn't called on init
-- (void) addControlActions;
+- (void) addMenuActions;
 
 @end
