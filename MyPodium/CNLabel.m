@@ -45,6 +45,10 @@ static const int DEFAULT_ANIM_DELAY = 3;
 }
 
 //Methods
+- (void) setText:(NSString *)text {
+    [super setText:text];
+    [self setPersistentText: text];
+}
 
 //Gets correct height after allowing wrapping. User can
 //change to other wrap options (ie. [myLabel
@@ -62,7 +66,7 @@ static const int DEFAULT_ANIM_DELAY = 3;
     //Pre-animation setup
     self.alpha = 0;
     //Label content/color change
-    [self setText: newText];
+    [super setText: newText];
     //Set persistent text if not a temporary message
     if(!revertAfter)
         [self setPersistentText: newText];
@@ -84,7 +88,7 @@ static const int DEFAULT_ANIM_DELAY = 3;
     //Pre-animation setup
     self.alpha = 0;
     //Label content/color change
-    [self setText: newText];
+    [super setText: newText];
     //Set persistent text if not a temporary message
     if(!revertAfter)
         [self setPersistentText: newText];
