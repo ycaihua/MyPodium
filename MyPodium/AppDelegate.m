@@ -55,16 +55,18 @@
 }
 
 + (MMDrawerController*) makeLoggedInRootController {
-    MPHomeViewController *center = [[MPHomeViewController alloc] init];
-    
+    return [AppDelegate makeDrawerWithCenterController:[[MPHomeViewController alloc] init]];
+}
+
++ (MMDrawerController*) makeDrawerWithCenterController: (MPMenuViewController*) centerController {
     //Will need to be the menu
     MPSidebarViewController *left = [[MPSidebarViewController alloc] init];
     
-    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:center leftDrawerViewController:left];
+    MMDrawerController* drawer = [[MMDrawerController alloc] initWithCenterViewController:centerController leftDrawerViewController:left];
     
     //Actions have to be added to MPMenuViewController after it has
     //a drawer container (above)
-    [center addMenuActions];
+    [centerController addMenuActions];
     
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
     
@@ -84,6 +86,7 @@
     }];
     
     return drawer;
+    
 }
 
 - (void) logOut {

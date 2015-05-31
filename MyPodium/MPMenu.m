@@ -22,13 +22,19 @@
     return self;
 }
 
+- (void) displayTitlePressMessage {
+    [self.subtitleLabel displayMessage:@"Tap on menu title to go back" revertAfter:YES withColor:[UIColor MPYellowColor]];
+}
+
 - (void) makeControls {
-    //self.titleLabel
-    self.titleLabel = [[CNLabel alloc] initWithText:@"TITLE"];
-    [self.titleLabel setFont: [UIFont fontWithName:@"Oswald-Bold" size:18.0f]];
-    [self.titleLabel setTextColor: [UIColor whiteColor]];
-    self.titleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
-    [self addSubview: self.titleLabel];
+    //self.titleButton
+    self.titleButton = [[UIButton alloc] init];
+    [self.titleButton setTitle:@"TITLE" forState:UIControlStateNormal];
+    [self.titleButton.titleLabel setFont: [UIFont fontWithName:@"Oswald-Bold" size:18.0f]];
+    [self.titleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.titleButton setTitleColor:[UIColor MPYellowColor] forState:UIControlStateHighlighted];
+    self.titleButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview: self.titleButton];
     
     //self.subtitleLabel
     self.subtitleLabel = [[CNLabel alloc] initWithText:@"subtitle"];
@@ -53,19 +59,19 @@
 }
 
 - (void) makeControlConstraints {
-    [self addConstraints: @[//self.titleLabel
-                            [NSLayoutConstraint constraintWithItem:self.titleLabel
+    [self addConstraints: @[//self.titleButton
+                            [NSLayoutConstraint constraintWithItem:self.titleButton
                                                          attribute:NSLayoutAttributeCenterX
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeCenterX
                                                         multiplier:1.0f
                                                           constant:0.0f],
-                             [NSLayoutConstraint constraintWithItem:self.titleLabel
+                             [NSLayoutConstraint constraintWithItem:self.titleButton
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
                                                              toItem:self.subtitleLabel
-                                                          attribute:NSLayoutAttributeTop
+                                                          attribute:NSLayoutAttributeTopMargin
                                                          multiplier:1.0f
                                                            constant:0.0f],
                             //self.subtitleLabel

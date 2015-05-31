@@ -13,7 +13,9 @@
 
 @property UIButton* sidebarButton;
 @property UIButton* logOutButton;
-@property CNLabel* titleLabel;
+@property UIButton* titleButton;
 @property CNLabel* subtitleLabel;
+
+- (void) displayTitlePressMessage;
 
 @end

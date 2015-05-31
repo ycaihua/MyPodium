@@ -26,7 +26,7 @@
         self.backgroundColor = [UIColor whiteColor];
         [self makeMenu];
         [self makeMenuConstraints];
-        self.menu.titleLabel.text = titleText;
+        [self.menu.titleButton setTitle:titleText forState:UIControlStateNormal];
         self.menu.subtitleLabel.text = subtitleText;
     }
     return self;

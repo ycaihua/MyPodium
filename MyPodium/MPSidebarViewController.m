@@ -61,14 +61,17 @@
 - (void) cellButtonPressed: (id) sender {
     MPSidebarButton* buttonSender = (MPSidebarButton*) sender;
     //Make sure there is an item in array for index
-    if(buttonSender.rowIndex >= 0 && buttonSender.rowIndex < [MPSidebarViewController cellControllerTargets].count) {
+    //The -1 is because the last index is "Log Out"
+    if(buttonSender.rowIndex >= 0 && buttonSender.rowIndex <
+       [MPSidebarViewController cellControllerTargets].count - 1) {
         MMDrawerController* container = self.mm_drawerController;
-        UIViewController* destination = [MPSidebarViewController cellControllerTargets][buttonSender.rowIndex];
+        MPMenuViewController* destination = [MPSidebarViewController cellControllerTargets][buttonSender.rowIndex];
         if([destination isKindOfClass: [MPMenuViewController class]]) {
             //We want to keep drawer structure in tact
-            MPMenuViewController* destWithMenu = (MPMenuViewController*) destination;
-            [container setCenterViewController:destWithMenu withCloseAnimation:true completion:nil];
-            [destWithMenu addMenuActions];
+            MMDrawerController* destinationContainer =
+            [AppDelegate makeDrawerWithCenterController:destination];
+            [container presentViewController:destinationContainer animated:true completion:nil];
+            [destination addMenuActions];
         }
         else {
             AppDelegate* delegate = [[UIApplication sharedApplication] delegate];

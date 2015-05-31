@@ -32,8 +32,23 @@
 
 - (void) addMenuActions {
     MPMenuView* view = (MPMenuView*) self.view;
+    MMDrawerController* container = self.mm_drawerController;
+    if(container.presentingViewController) {
+        [view.menu displayTitlePressMessage];
+        [view.menu.titleButton addTarget:self action:@selector(titleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.logOutButton addTarget:self action:@selector(logOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) titleButtonPressed: (id) sender {
+    MMDrawerController* container = self.mm_drawerController;
+    [container dismissViewControllerAnimated:true completion:nil];
+    //In order to display the current controller, the presenter has
+    //its menu open, so close it
+    MMDrawerController* presenter = (MMDrawerController*)container.presentingViewController;
+    [presenter toggleDrawerSide:MMDrawerSideLeft animated:true completion:nil];
+    
 }
 
 - (void) menuButtonPressed: (id) sender {
