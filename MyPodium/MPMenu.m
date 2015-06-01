@@ -23,7 +23,7 @@
 }
 
 - (void) displayTitlePressMessageForPageName: (NSString*) pageName {
-    [self.subtitleLabel displayMessage:[NSString stringWithFormat: @"Tap above to go back to %@",
+    [self.subtitleLabel displayMessage:[NSString stringWithFormat: @"Tap above to return to %@",
                                         pageName] revertAfter:YES withColor:[UIColor MPYellowColor]];
 }
 
