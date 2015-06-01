@@ -22,8 +22,9 @@
     return self;
 }
 
-- (void) displayTitlePressMessage {
-    [self.subtitleLabel displayMessage:@"Tap on menu title to go back" revertAfter:YES withColor:[UIColor MPYellowColor]];
+- (void) displayTitlePressMessageForPageName: (NSString*) pageName {
+    [self.subtitleLabel displayMessage:[NSString stringWithFormat: @"Tap above to go back to %@",
+                                        pageName] revertAfter:YES withColor:[UIColor MPYellowColor]];
 }
 
 - (void) makeControls {

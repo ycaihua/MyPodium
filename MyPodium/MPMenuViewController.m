@@ -35,7 +35,11 @@
     MMDrawerController* container = self.mm_drawerController;
     //If the controller is not part of the root container
     if(container.presentingViewController) {
-        [view.menu displayTitlePressMessage];
+        MMDrawerController* presentingContainer = (MMDrawerController*)container.presentingViewController;
+        MPMenuViewController* presentingMenu = (MPMenuViewController*)presentingContainer.centerViewController;
+        MPMenuView* presentingMenuView = (MPMenuView*)presentingMenu.view;
+        [view.menu displayTitlePressMessageForPageName:
+         presentingMenuView.menu.subtitleLabel.persistentText];
         [view.menu.titleButton addTarget:self action:@selector(titleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -60,6 +64,9 @@
 - (void) logOutButtonPressed: (id) sender {
     UIAlertController* logOutConfirmation = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Log Out" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Hacky solution to "menu-leak bug" - see readme
+        [self presentViewController: [[UIViewController alloc] init] animated:NO completion:nil];
+        
         AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
         [delegate logOut];
     }];

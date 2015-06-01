@@ -16,6 +16,6 @@
 @property UIButton* titleButton;
 @property CNLabel* subtitleLabel;
 
-- (void) displayTitlePressMessage;
+- (void) displayTitlePressMessageForPageName: (NSString*) pageName;
 
 @end

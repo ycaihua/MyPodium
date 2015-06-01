@@ -15,6 +15,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 + (MMDrawerController*) makeLoggedInRootController;
++ (MMDrawerController*) makeLoggedOutRootController;
 + (MMDrawerController*) makeDrawerWithCenterController: (MPMenuViewController*) centerController;
 - (void) logOut;
 

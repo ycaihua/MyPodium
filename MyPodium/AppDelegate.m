@@ -39,11 +39,16 @@
         //Uncomment to force log out:
         //[PFUser logOut];
         //[self.window setRootViewController:[[MPLoginViewController alloc] init]];
+        
+        //Default behavior:
         [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     else {
-        //[self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
+        //Uncomment to bypass login (unsafe once Parse implemented):
         [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
+        
+        //Default behavior:
+        //[self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
     }
     [self.window makeKeyAndVisible];
     return YES;
@@ -51,7 +56,8 @@
 
 + (MPLoginViewController*) makeLoggedOutRootController {
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault];
-    return [[MPLoginViewController alloc] init];
+    MPLoginViewController* newVC = [[MPLoginViewController alloc] init];
+    return newVC;
 }
 
 + (MMDrawerController*) makeLoggedInRootController {
@@ -91,7 +97,11 @@
 
 - (void) logOut {
     if([PFUser currentUser]) [PFUser logOut];
-    [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
+    [UIView transitionWithView:self.window
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromLeft
+                    animations:^{ self.window.rootViewController = [AppDelegate makeLoggedOutRootController]; }
+                    completion:nil];
     [self.window makeKeyAndVisible];
 }
 
