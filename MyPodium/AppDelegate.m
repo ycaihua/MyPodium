@@ -44,11 +44,12 @@
         [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
     }
     else {
-        //Uncomment to bypass login (unsafe once Parse implemented):
-        [self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
+        //Uncomment to bypass login (unsafe once Parse implemented,
+        //useful in meantime to skip login or if no internet connection):
+        //[self.window setRootViewController:[AppDelegate makeLoggedInRootController]];
         
         //Default behavior:
-        //[self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
+        [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
     }
     [self.window makeKeyAndVisible];
     return YES;
