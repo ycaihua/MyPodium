@@ -45,6 +45,16 @@
     if(!cell) {
         cell = [[MPSidebarViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSidebarViewController sidebarReuseIdentifier]];
     }
+    
+    //Get destination based on array
+    MPMenuViewController* destination = [MPSidebarViewController cellControllerTargets][indexPath.row];
+    //Get current container
+    MMDrawerController* container = self.mm_drawerController;
+    MPMenuViewController* current = (MPMenuViewController*)[container centerViewController];
+    if([[current class] isEqual: [destination class]]) {
+        [cell applyCurrentlyOpenStyle];
+    }
+    
     [cell.cellButton addTarget:self action:@selector(cellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell updateWithRow: (int)indexPath.row];
     return cell;
@@ -61,22 +71,32 @@
 - (void) cellButtonPressed: (id) sender {
     MPSidebarButton* buttonSender = (MPSidebarButton*) sender;
     //Make sure there is an item in array for index
-    //The -1 is because the last index is "Log Out"
     if(buttonSender.rowIndex >= 0 && buttonSender.rowIndex <
-       [MPSidebarViewController cellControllerTargets].count - 1) {
-        MMDrawerController* container = self.mm_drawerController;
+       [MPSidebarViewController cellControllerTargets].count) {
+        //Get destination based on array
         MPMenuViewController* destination = [MPSidebarViewController cellControllerTargets][buttonSender.rowIndex];
-        if([destination isKindOfClass: [MPMenuViewController class]]) {
+        //Get current container
+        MMDrawerController* container = self.mm_drawerController;
+        MPMenuViewController* current = (MPMenuViewController*)[container centerViewController];
+        //Accessing same controller as already open, just toggle
+        if([[destination class] isEqual: [current class]]) {
+            [container toggleDrawerSide:MMDrawerSideLeft animated:true completion:nil];
+        }
+        //Accessing other menuized controller
+        else if([destination isKindOfClass: [MPMenuViewController class]]) {
             //We want to keep drawer structure in tact
+            //Create new drawer with new center
+            //AppDelegate method should specify sidebar as left drawer
             MMDrawerController* destinationContainer =
             [AppDelegate makeDrawerWithCenterController:destination];
+            
             [container presentViewController:destinationContainer animated:true completion:nil];
             [destination addMenuActions];
         }
+        //Log out
         else {
             AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
             [delegate logOut];
-            //Log out user, reset root controller
         }
     }
 }
@@ -85,13 +105,13 @@
 
 + (NSArray*) cellControllerTargets {
     return @[[[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
-             [[MPHomeViewController alloc] init],
+             [[MPMenuViewController alloc] init],
+             [[MPMenuViewController alloc] init],
+             [[MPMenuViewController alloc] init],
+             [[MPMenuViewController alloc] init],
+             [[MPMenuViewController alloc] init],
+             [[MPMenuViewController alloc] init],
+             [[MPMenuViewController alloc] init],
              [[MPRegisterViewController alloc] init]
              ];
 }

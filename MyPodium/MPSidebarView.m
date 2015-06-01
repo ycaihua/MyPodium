@@ -33,7 +33,7 @@
     self.sidebarTable = [[UITableView alloc] init];
     self.sidebarTable.backgroundColor = [UIColor clearColor];
     self.sidebarTable.translatesAutoresizingMaskIntoConstraints = NO;
-    self.sidebarTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.sidebarTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.sidebarTable.separatorColor = [UIColor MPYellowColor];
     self.sidebarTable.scrollEnabled = YES;
     [self addSubview: self.sidebarTable];
@@ -62,7 +62,7 @@
                                                             toItem:self.logoView
                                                          attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:5.0f],
                             [NSLayoutConstraint constraintWithItem:self.sidebarTable
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual

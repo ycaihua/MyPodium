@@ -11,7 +11,9 @@
 @interface MPSidebarButton : MPDualLabelButton
 
 @property int rowIndex;
+@property BOOL currentlyOpen;
 
 - (void) cellButtonPressed: (id) sender;
+- (void) applyCurrentlyOpenStyle;
 
 @end

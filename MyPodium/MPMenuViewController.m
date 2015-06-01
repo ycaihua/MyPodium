@@ -33,6 +33,7 @@
 - (void) addMenuActions {
     MPMenuView* view = (MPMenuView*) self.view;
     MMDrawerController* container = self.mm_drawerController;
+    //If the controller is not part of the root container
     if(container.presentingViewController) {
         [view.menu displayTitlePressMessage];
         [view.menu.titleButton addTarget:self action:@selector(titleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

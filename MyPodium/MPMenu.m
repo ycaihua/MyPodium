@@ -41,6 +41,7 @@
     self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:12.0f];
     self.subtitleLabel.textColor = [UIColor whiteColor];
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.subtitleLabel.animationDelay = 2;
     [self addSubview: self.subtitleLabel];
     
     //self.sidebarButton

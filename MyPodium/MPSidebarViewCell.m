@@ -32,6 +32,11 @@
     }
 }
 
+- (void) applyCurrentlyOpenStyle {
+    [self setBackgroundColor: [UIColor MPYellowColor]];
+    [self.cellButton applyCurrentlyOpenStyle];
+}
+
 - (void) updateWithRow: (int) row {
     self.cellButton.rowIndex = row;
     self.cellButton.customTitleLabel.text = [MPSidebarViewCell cellLabelStrings][row];
@@ -58,6 +63,13 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.cellButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeTrailingMargin
                                                         multiplier:1.0f
                                                           constant:0.0f]
                             ]];
