@@ -67,6 +67,7 @@
 		2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC911B194BB200F748C9 /* MPSidebarView.m */; };
 		2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC941B19D92100F748C9 /* MPSidebarViewCell.m */; };
 		2DE9FC981B1A000B00F748C9 /* MPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC971B1A000B00F748C9 /* MPSidebarButton.m */; };
+		2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD01B1D5F1500F748C9 /* MPFriendsModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -164,6 +165,8 @@
 		2DE9FC941B19D92100F748C9 /* MPSidebarViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSidebarViewCell.m; sourceTree = "<group>"; };
 		2DE9FC961B1A000B00F748C9 /* MPSidebarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarButton.h; sourceTree = "<group>"; };
 		2DE9FC971B1A000B00F748C9 /* MPSidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSidebarButton.m; sourceTree = "<group>"; };
+		2DE9FCCF1B1D5F1500F748C9 /* MPFriendsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsModel.h; sourceTree = "<group>"; };
+		2DE9FCD01B1D5F1500F748C9 /* MPFriendsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +239,7 @@
 			children = (
 				2D4487961B057BFE0061EF86 /* Utility */,
 				2D4487851B05565F0061EF86 /* Fonts */,
+				2DE9FCCE1B1D5E4000F748C9 /* Model */,
 				2D4487751B05460F0061EF86 /* View */,
 				2D4487461B039B540061EF86 /* Controller */,
 				2D44874B1B039C2D0061EF86 /* Framework */,
@@ -423,6 +427,15 @@
 			name = MMDrawerController;
 			sourceTree = "<group>";
 		};
+		2DE9FCCE1B1D5E4000F748C9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2DE9FCCF1B1D5F1500F748C9 /* MPFriendsModel.h */,
+				2DE9FCD01B1D5F1500F748C9 /* MPFriendsModel.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -506,6 +519,7 @@
 				2D4487E31B07A6B70061EF86 /* MPLabel.m in Sources */,
 				2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */,
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
+				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,

@@ -10,6 +10,7 @@
 #import "MPLoginViewController.h"
 #import "MPSidebarViewController.h"
 #import "MPHomeViewController.h"
+#import "MPFriendsModel.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -62,6 +63,7 @@
 }
 
 + (MMDrawerController*) makeLoggedInRootController {
+    [MPFriendsModel testMethods];
     return [AppDelegate makeDrawerWithCenterController:[[MPHomeViewController alloc] init]];
 }
 
