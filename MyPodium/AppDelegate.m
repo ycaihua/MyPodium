@@ -63,7 +63,6 @@
 }
 
 + (MMDrawerController*) makeLoggedInRootController {
-    [MPFriendsModel testMethods];
     return [AppDelegate makeDrawerWithCenterController:[[MPHomeViewController alloc] init]];
 }
 

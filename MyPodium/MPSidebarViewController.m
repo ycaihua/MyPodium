@@ -9,8 +9,11 @@
 #import "MPSidebarViewController.h"
 #import "MPSidebarView.h"
 #import "MPSidebarViewCell.h"
+
 #import "MPHomeViewController.h"
 #import "MPRegisterViewController.h"
+#import "MPFriendsViewController.h"
+
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "AppDelegate.h"
@@ -105,7 +108,7 @@
 
 + (NSArray*) cellControllerTargets {
     return @[[[MPHomeViewController alloc] init],
-             [[MPMenuViewController alloc] init],
+             [[MPFriendsViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPMenuViewController alloc] init],
