@@ -10,4 +10,6 @@
 
 @interface MPFriendsView : MPMenuView
 
+@property UITableView* friendsTable;
+
 @end

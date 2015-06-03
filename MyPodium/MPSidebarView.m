@@ -34,8 +34,8 @@
     self.sidebarTable.backgroundColor = [UIColor clearColor];
     self.sidebarTable.translatesAutoresizingMaskIntoConstraints = NO;
     self.sidebarTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.sidebarTable.separatorColor = [UIColor MPYellowColor];
     self.sidebarTable.scrollEnabled = YES;
+    self.sidebarTable.delaysContentTouches = NO;
     [self addSubview: self.sidebarTable];
 }
 
