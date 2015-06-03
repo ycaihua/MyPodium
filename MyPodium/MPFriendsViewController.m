@@ -46,6 +46,7 @@
               forCellReuseIdentifier:[MPFriendsViewController sidebarReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
+                [view.loadingHeader removeFromSuperview];
                 [table reloadData];
             });
         });

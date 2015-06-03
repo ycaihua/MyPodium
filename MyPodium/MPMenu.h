@@ -18,4 +18,6 @@
 
 - (void) displayTitlePressMessageForPageName: (NSString*) pageName;
 
++ (CGFloat) height;
+
 @end

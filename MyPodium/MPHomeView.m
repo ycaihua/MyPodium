@@ -13,7 +13,7 @@
 @implementation MPHomeView
 
 - (id) init {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:@"Home"];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:@"Testing multiline subtitle label. Testing multiline subtitle label."];
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
         self.buttonColors = @[[UIColor MPBlackColor], [UIColor MPGreenColor],

@@ -29,6 +29,23 @@
     });
 }
 
++ (void) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
+                              sender, receiver];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    NSArray* results = [query findObjects];
+    if(results.count > 1) {
+        NSLog(@"acceptRequestFromUser found multiple results");
+        return;
+    }
+    else if(results.count == 0) {
+        NSLog(@"acceptRequestFromUser found multiple results");
+        return;
+    }
+    
+    
+}
+
 + (NSArray*) incomingPendingRequestsForUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];

@@ -33,8 +33,23 @@
 
 - (void) updateForUser:(PFUser *)user {
     [self.friendUsernameLabel setText: [user username]];
-    if(user[@"realName"])
+    if(user[@"realName"]) {
         [self.friendRealNameLabel setText: user[@"realName"]];
+        for(NSLayoutConstraint *constraint in self.constraints) {
+            if([constraint.firstItem isEqual: self.friendUsernameLabel] &&
+               constraint.firstAttribute == NSLayoutAttributeCenterY)
+                [self removeConstraint: constraint];
+        }
+        [self addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self.solidColorView
+                                      attribute:NSLayoutAttributeTopMargin
+                                     multiplier:1.0f
+                                       constant:0.0f]];
+        [self setNeedsDisplay];
+    }
 }
 
 - (void) updateForIncomingRequest {
@@ -63,14 +78,14 @@
     
     //self.friendUsernameLabel
     self.friendUsernameLabel = [[CNLabel alloc] initWithText:@"username"];
-    self.friendUsernameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:14.0f];
+    self.friendUsernameLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.friendUsernameLabel.textColor = [UIColor MPBlackColor];
     self.friendUsernameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self.solidColorView addSubview: self.friendUsernameLabel];
     
     //self.friendRealNameLabel
     self.friendRealNameLabel = [[CNLabel alloc] initWithText:@""];
-    self.friendRealNameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:12.0f];
+    self.friendRealNameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:11.0f];
     self.friendRealNameLabel.textColor = [UIColor MPBlackColor];
     self.friendRealNameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self.solidColorView addSubview: self.friendRealNameLabel];
@@ -187,6 +202,14 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           //Will be removed if a user's real name is specified
+                           [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            //self.friendRealNameLabel
                            [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
                                                         attribute:NSLayoutAttributeLeading
@@ -196,10 +219,10 @@
                                                        multiplier:1.0f
                                                          constant:5.0f],
                            [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.friendUsernameLabel
                                                         attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            //self.redButton
@@ -259,32 +282,8 @@
                                                            toItem:self.greenButton
                                                         attribute:NSLayoutAttributeHeight
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:0.0f]
                            ]];
-    //Conditional constraints
-    //If real name is blank, friendUsernameLabel aligns
-    //center Y to center Y
-    //Otherwise, it aligns baseline to center Y
-    if([self.friendRealNameLabel.text isEqualToString: @""]) {
-        [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
-                                      attribute:NSLayoutAttributeCenterY
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:self
-                                      attribute:NSLayoutAttributeCenterY
-                                     multiplier:1.0f
-                                       constant:0.0f]];
-    }
-    else {
-        [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
-                                      attribute:NSLayoutAttributeBaseline
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:self
-                                      attribute:NSLayoutAttributeCenterY
-                                     multiplier:1.0f
-                                       constant:0.0f]];
-    }
 }
 
 + (CGFloat) cellHeight { return 60.0f; }

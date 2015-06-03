@@ -7,9 +7,11 @@
 //
 
 #import "MPMenuView.h"
+#import "MPFriendsHeader.h"
 
 @interface MPFriendsView : MPMenuView
 
+@property MPFriendsHeader* loadingHeader;
 @property UITableView* friendsTable;
 
 @end

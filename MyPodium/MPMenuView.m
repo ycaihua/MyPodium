@@ -66,7 +66,7 @@
                                                              toItem:nil
                                                           attribute:NSLayoutAttributeNotAnAttribute
                                                          multiplier:1.0f
-                                                           constant:70.0f]
+                                                           constant:[MPMenu height]]
                              ];
     [self addConstraints: constraints];
 }

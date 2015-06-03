@@ -42,13 +42,17 @@
     self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:12.0f];
     self.subtitleLabel.textColor = [UIColor whiteColor];
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
     self.subtitleLabel.animationDelay = 2;
+    self.subtitleLabel.numberOfLines = 2;
     [self addSubview: self.subtitleLabel];
     
     //self.sidebarButton
     UIImage *sidebarImg = [UIImage imageNamed:@"barIcon38.png"];
+    UIImage* sidebarHighlightedImg = [UIImage imageNamed:@"barIcon_highlighted38.png"];
     self.sidebarButton = [[UIButton alloc] init];
     [self.sidebarButton setImage:sidebarImg forState:UIControlStateNormal];
+    [self.sidebarButton setImage:sidebarHighlightedImg forState:UIControlStateHighlighted];
     self.sidebarButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.sidebarButton];
     
@@ -63,12 +67,19 @@
 - (void) makeControlConstraints {
     [self addConstraints: @[//self.titleButton
                             [NSLayoutConstraint constraintWithItem:self.titleButton
-                                                         attribute:NSLayoutAttributeCenterX
+                                                         attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterX
+                                                            toItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeTrailing
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:5.0f],
+                            [NSLayoutConstraint constraintWithItem:self.titleButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0f
+                                                          constant:-5.0f],
                              [NSLayoutConstraint constraintWithItem:self.titleButton
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
@@ -78,14 +89,21 @@
                                                            constant:0.0f],
                             //self.subtitleLabel
                             [NSLayoutConstraint constraintWithItem:self.subtitleLabel
-                                                         attribute:NSLayoutAttributeCenterX
+                                                         attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterX
+                                                            toItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeTrailing
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:5.0f],
                             [NSLayoutConstraint constraintWithItem:self.subtitleLabel
-                                                         attribute:NSLayoutAttributeBaseline
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0f
+                                                          constant:-5.0f],
+                            [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
@@ -103,9 +121,23 @@
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.subtitleLabel
-                                                         attribute:NSLayoutAttributeBaseline
+                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:2.0f],
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:38.0f],
+                            [NSLayoutConstraint constraintWithItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:38.0f],
                             //self.logOutButton
                             [NSLayoutConstraint constraintWithItem:self.logOutButton
                                                          attribute:NSLayoutAttributeTrailing
@@ -117,11 +149,27 @@
                             [NSLayoutConstraint constraintWithItem:self.logOutButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self.subtitleLabel
-                                                         attribute:NSLayoutAttributeBaseline
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
-                                                          constant:2.0f]
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:38.0f],
+                            [NSLayoutConstraint constraintWithItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:38.0f],
                             ]];
 }
+
++ (CGFloat) height { return 80.0f; }
 
 @end
