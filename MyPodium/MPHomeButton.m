@@ -26,7 +26,7 @@
     //self.customTitleLabel
     self.customTitleLabel.textAlignment = NSTextAlignmentCenter;
     self.customTitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:44.0f];
-    self.customTitleLabel.text = @"0";
+    self.customTitleLabel.text = @"-";
     
     //self.subtitleLabel
     self.subtitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];

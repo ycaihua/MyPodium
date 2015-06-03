@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "MMDrawerController.h"
 #import "MPMenuViewController.h"
+#import "MPLoginViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 + (MMDrawerController*) makeLoggedInRootController;
-+ (MMDrawerController*) makeLoggedOutRootController;
++ (MPLoginViewController*) makeLoggedOutRootController;
 + (MMDrawerController*) makeDrawerWithCenterController: (MPMenuViewController*) centerController;
 - (void) logOut;
 
 @end
-

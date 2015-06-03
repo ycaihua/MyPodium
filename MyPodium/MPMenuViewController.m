@@ -66,9 +66,6 @@
 - (void) logOutButtonPressed: (id) sender {
     UIAlertController* logOutConfirmation = [UIAlertController alertControllerWithTitle:@"Log Out" message:@"Are you sure you want to log out?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Log Out" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Hacky solution to "menu-leak bug" - see readme
-        [self presentViewController: [[UIViewController alloc] init] animated:NO completion:nil];
-        
         AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
         [delegate logOut];
     }];

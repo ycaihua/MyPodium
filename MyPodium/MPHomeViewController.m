@@ -8,6 +8,8 @@
 
 #import "MPHomeViewController.h"
 #import "MPHomeView.h"
+#import "MPFriendsModel.h"
+#import "CNLabel.h"
 
 @interface MPHomeViewController ()
 
@@ -18,7 +20,16 @@
 - (id) init {
     self = [super init];
     if(self) {
-        self.view = [[MPHomeView alloc] init];
+        MPHomeView* view = [[MPHomeView alloc] init];
+        self.view = view;
+            dispatch_queue_t backgroundQueue = dispatch_queue_create("HomeLabelsQueue", 0);
+            dispatch_async(backgroundQueue, ^{
+                NSArray* friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [view.friendsButton.customTitleLabel setText:
+                     [NSString stringWithFormat:@"%lu", (unsigned long)friends.count]];
+                });
+            });
     }
     return self;
 }

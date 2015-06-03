@@ -12,7 +12,7 @@
 @implementation MPFriendsView
 
 - (id) init {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:@"Friends"];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPFriendsView defaultSubtitle]];
     if(self) {
         self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
@@ -90,4 +90,6 @@
                                                          constant:0.0f],
                            ]];
 }
+
++ (NSString*) defaultSubtitle { return @"Friends"; }
 @end

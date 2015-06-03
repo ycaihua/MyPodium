@@ -104,7 +104,10 @@
     [UIView transitionWithView:self.window
                       duration:0.5
                        options:UIViewAnimationOptionTransitionFlipFromLeft
-                    animations:^{ self.window.rootViewController = [AppDelegate makeLoggedOutRootController]; }
+                    animations:^{
+                        MPLoginViewController* newVC = [AppDelegate makeLoggedOutRootController];
+                        self.window.rootViewController = newVC;
+                    }
                     completion:nil];
     [self.window makeKeyAndVisible];
 }

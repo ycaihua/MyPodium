@@ -110,9 +110,6 @@
     MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
     NSIndexPath* indexPath = buttonSender.indexPath;
     
-    //Save, because we want to display a message that won't
-    //revert after at a given time, but will after execution
-    NSString* defaultTitle = view.menu.subtitleLabel.text;
     [view.menu.subtitleLabel displayMessage:@"Loading..."
                                 revertAfter:FALSE
                                   withColor:[UIColor MPYellowColor]];
@@ -143,7 +140,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             //Update UI, based on success
             if(acceptSuccess) {
-                view.menu.subtitleLabel.persistentText = defaultTitle;
+                view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
                 view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                 [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:
                                                          @"You accepted a friend request from %@.", sender.username]
@@ -152,7 +149,7 @@
                 [view.friendsTable reloadData];
             }
             else {
-                view.menu.subtitleLabel.persistentText = defaultTitle;
+                view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
                 view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                 [view.menu.subtitleLabel displayMessage:@"There was an error accepting the request. Please try again later."
                                             revertAfter:TRUE

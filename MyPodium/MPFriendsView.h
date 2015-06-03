@@ -14,4 +14,6 @@
 @property MPFriendsHeader* loadingHeader;
 @property UITableView* friendsTable;
 
++ (NSString*) defaultSubtitle;
+
 @end
