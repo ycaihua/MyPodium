@@ -15,11 +15,17 @@
 @property UIView* solidColorView;
 @property UIView* bottomBorder;
 @property UIView* leadingBorder;
+
 @property CNLabel* friendUsernameLabel;
 @property CNLabel* friendRealNameLabel;
-@property UIButton* infoButton;
+
+//Should be: check if incoming pending, info otherwise
+@property UIButton* greenButton;
+//Should be: minus
+@property UIButton* redButton;
 
 - (void) updateForUser: (PFUser*) user;
+- (void) updateForIncomingRequest;
 
 + (CGFloat) cellHeight;
 @end

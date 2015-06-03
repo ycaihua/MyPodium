@@ -14,7 +14,7 @@
 - (id) initWithText: (NSString*) text {
     self = [super init];
     if(self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
         [self.headerLabel setText: text];

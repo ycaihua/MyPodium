@@ -21,6 +21,8 @@
 - (id) init {
     self = [super init];
     if(self) {
+        MPFriendsView* view = [[MPFriendsView alloc] init];
+        self.view = view;
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
             self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
@@ -39,13 +41,12 @@
                 [self.sectionHeaderNames addObject:@"MY FRIENDS"];
             
             dispatch_async(dispatch_get_main_queue(), ^{
-                MPFriendsView* view = [[MPFriendsView alloc] init];
                 UITableView* table = view.friendsTable;
                 [table registerClass:[MPFriendsCell class]
               forCellReuseIdentifier:[MPFriendsViewController sidebarReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
-                self.view = view;
+                [table reloadData];
             });
         });
     }
@@ -60,6 +61,7 @@
     }
     
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"INCOMING REQUESTS"]) {
+        [cell updateForIncomingRequest];
         [cell updateForUser: self.incomingPendingList[indexPath.row]];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"OUTGOING REQUESTS"]) {

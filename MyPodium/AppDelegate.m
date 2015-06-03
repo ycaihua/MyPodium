@@ -74,7 +74,9 @@
     
     //Actions have to be added to MPMenuViewController after it has
     //a drawer container (above)
-    [centerController addMenuActions];
+    if(!centerController.menuActionsAdded) {
+        [centerController addMenuActions];
+    }
     
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleLightContent];
     

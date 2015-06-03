@@ -33,6 +33,13 @@
 
 - (void) updateForUser:(PFUser *)user {
     [self.friendUsernameLabel setText: [user username]];
+    if(user[@"realName"])
+        [self.friendRealNameLabel setText: user[@"realName"]];
+}
+
+- (void) updateForIncomingRequest {
+    UIImage* check = [UIImage imageNamed:@"button_check_green60.png"];
+    [self.greenButton setImage: check forState:UIControlStateNormal];
 }
 
 - (void) makeControls {
@@ -61,6 +68,28 @@
     self.friendUsernameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self.solidColorView addSubview: self.friendUsernameLabel];
     
+    //self.friendRealNameLabel
+    self.friendRealNameLabel = [[CNLabel alloc] initWithText:@""];
+    self.friendRealNameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:12.0f];
+    self.friendRealNameLabel.textColor = [UIColor MPBlackColor];
+    self.friendRealNameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self.solidColorView addSubview: self.friendRealNameLabel];
+    
+    //self.redButton
+    UIImage* minus = [UIImage imageNamed:@"button_minus_red60.png"];
+    self.redButton = [[UIButton alloc] init];
+    [self.redButton setImage: minus forState:UIControlStateNormal];
+    self.redButton.backgroundColor = [UIColor MPRedColor];
+    self.redButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.redButton];
+    
+    //self.greenButton
+    UIImage* info = [UIImage imageNamed:@"button_info_green60.png"];
+    self.greenButton = [[UIButton alloc] init];
+    [self.greenButton setImage: info forState:UIControlStateNormal];
+    self.greenButton.backgroundColor = [UIColor MPGreenColor];
+    self.greenButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.greenButton];
 }
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.solidColorView
@@ -158,14 +187,104 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
-                                                        attribute:NSLayoutAttributeCenterY
+                           //self.friendRealNameLabel
+                           [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
+                                                        attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeCenterY
+                                                           toItem:self.leadingBorder
+                                                        attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
-                                                         constant:0.0f]
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.friendUsernameLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.redButton
+                           [NSLayoutConstraint constraintWithItem:self.redButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.redButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.redButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.redButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.redButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.greenButton
+                           [NSLayoutConstraint constraintWithItem:self.greenButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.redButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.greenButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.greenButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.greenButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.greenButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            ]];
+    //Conditional constraints
+    //If real name is blank, friendUsernameLabel aligns
+    //center Y to center Y
+    //Otherwise, it aligns baseline to center Y
+    if([self.friendRealNameLabel.text isEqualToString: @""]) {
+        [self addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                      attribute:NSLayoutAttributeCenterY
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self
+                                      attribute:NSLayoutAttributeCenterY
+                                     multiplier:1.0f
+                                       constant:0.0f]];
+    }
+    else {
+        [self addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                      attribute:NSLayoutAttributeBaseline
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self
+                                      attribute:NSLayoutAttributeCenterY
+                                     multiplier:1.0f
+                                       constant:0.0f]];
+    }
 }
 
 + (CGFloat) cellHeight { return 60.0f; }

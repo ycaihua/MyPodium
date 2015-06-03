@@ -25,6 +25,7 @@
     self = [super init];
     if(self) {
         self.view = [[MPMenuView alloc] init];
+        self.menuActionsAdded = NO;
         if(self.mm_drawerController) [self addMenuActions];
     }
     return self;
@@ -44,6 +45,7 @@
     }
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.logOutButton addTarget:self action:@selector(logOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.menuActionsAdded = TRUE;
 }
 
 - (void) titleButtonPressed: (id) sender {
