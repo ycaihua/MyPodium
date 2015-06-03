@@ -14,6 +14,7 @@
 + (void) testMethods;
 
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
++ (BOOL) denyRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 
 + (NSArray*) incomingPendingRequestsForUser: (PFUser*) user;
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user;

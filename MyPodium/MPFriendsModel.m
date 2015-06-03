@@ -45,7 +45,23 @@
     PFObject* friendObject = results[0];
     friendObject[@"accepted"] = [NSNumber numberWithBool: TRUE];
     return [friendObject save];
-    
+}
+
++ (BOOL) denyRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
+                              sender, receiver];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    NSArray* results = [query findObjects];
+    if(results.count > 1) {
+        NSLog(@"denyRequestFromUser found multiple results");
+        return false;
+    }
+    else if(results.count == 0) {
+        NSLog(@"denyRequestFromUser found multiple results");
+        return false;
+    }
+    PFObject* friendObject = results[0];
+    return [friendObject delete];
 }
 
 + (NSArray*) incomingPendingRequestsForUser:(PFUser *)user {
