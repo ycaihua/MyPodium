@@ -101,14 +101,31 @@
 
 - (void) logOut {
     if([PFUser currentUser]) [PFUser logOut];
+    
+    UIViewController *previousRootViewController = self.window.rootViewController;
+    
+    // Nasty hack to fix http://stackoverflow.com/questions/26763020/leaking-views-when-changing-rootviewcontroller-inside-transitionwithview
+    // The presenting view controllers view doesn't get removed from the window as its currently transistioning and presenting a view controller
+    for (UIView *subview in self.window.subviews) {
+        if ([subview isKindOfClass:NSClassFromString(@"UITransitionView")]) {
+            [subview removeFromSuperview];
+        }
+    }
+    // Allow the view controller to be deallocated
+    [previousRootViewController dismissViewControllerAnimated:NO completion:^{
+        // Remove the root view in case it's still showing
+        [previousRootViewController.view removeFromSuperview];
+    }];
+    
     [UIView transitionWithView:self.window
                       duration:0.5
                        options:UIViewAnimationOptionTransitionFlipFromLeft
                     animations:^{
-                        MPLoginViewController* newVC = [AppDelegate makeLoggedOutRootController];
-                        self.window.rootViewController = newVC;
+                        self.window.rootViewController =
+                        [AppDelegate makeLoggedOutRootController];
                     }
                     completion:nil];
+    
     [self.window makeKeyAndVisible];
 }
 
