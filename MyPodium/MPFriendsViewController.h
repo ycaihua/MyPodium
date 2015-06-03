@@ -16,4 +16,8 @@
 
 @property NSMutableArray* sectionHeaderNames;
 
++ (NSString*) incomingPendingHeader;
++ (NSString*) outgoingPendingHeader;
++ (NSString*) friendsHeader;
+
 @end

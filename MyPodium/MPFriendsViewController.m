@@ -31,21 +31,21 @@
             [view.loadingHeader.headerLabel displayMessage:@"LOADING REQUESTS..." revertAfter:NO];
             self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
             if(self.incomingPendingList.count > 0)
-                [self.sectionHeaderNames addObject:@"INCOMING REQUESTS"];
+                [self.sectionHeaderNames addObject:[MPFriendsViewController incomingPendingHeader]];
             
             self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
             if(self.outgoingPendingList.count > 0)
-                [self.sectionHeaderNames addObject:@"OUTGOING REQUESTS"];
+                [self.sectionHeaderNames addObject:[MPFriendsViewController outgoingPendingHeader]];
             
             [view.loadingHeader.headerLabel displayMessage:@"LOADING FRIENDS..." revertAfter:NO];
             self.friendsList = [MPFriendsModel friendsForUser:user];
             if(self.friendsList.count > 0)
-                [self.sectionHeaderNames addObject:@"MY FRIENDS"];
+                [self.sectionHeaderNames addObject:[MPFriendsViewController friendsHeader]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 UITableView* table = view.friendsTable;
                 [table registerClass:[MPFriendsCell class]
-              forCellReuseIdentifier:[MPFriendsViewController sidebarReuseIdentifier]];
+              forCellReuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
                 [view.loadingHeader removeFromSuperview];
@@ -58,20 +58,22 @@
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MPFriendsCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                           [MPFriendsViewController sidebarReuseIdentifier] forIndexPath:indexPath];
+                           [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
     if(!cell) {
-        cell = [[MPFriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController sidebarReuseIdentifier]];
+        cell = [[MPFriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
     }
     
     cell.greenButton.indexPath = indexPath;
     cell.redButton.indexPath = indexPath;
     
-    if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"INCOMING REQUESTS"]) {
+    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+        [MPFriendsViewController incomingPendingHeader]]) {
         [cell updateForIncomingRequest];
         [cell updateForUser: self.incomingPendingList[indexPath.row]];
         [cell.greenButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"OUTGOING REQUESTS"]) {
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPFriendsViewController outgoingPendingHeader]]) {
         [cell updateForUser: self.outgoingPendingList[indexPath.row]];
     }
     else {
@@ -86,10 +88,12 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([self.sectionHeaderNames[section] isEqualToString:@"INCOMING REQUESTS"]) {
+    if([self.sectionHeaderNames[section] isEqualToString:
+        [MPFriendsViewController incomingPendingHeader]]) {
         return self.incomingPendingList.count;
     }
-    else if([self.sectionHeaderNames[section] isEqualToString:@"OUTGOING REQUESTS"]) {
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPFriendsViewController outgoingPendingHeader]]) {
         return self.outgoingPendingList.count;
     }
     else {
@@ -106,7 +110,8 @@
                                 revertAfter:FALSE
                                   withColor:[UIColor MPYellowColor]];
     
-    if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"INCOMING REQUESTS"]) {
+    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+        [MPFriendsViewController incomingPendingHeader]]) {
         dispatch_queue_t backgroundQueue = dispatch_queue_create("AcceptFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
             PFUser* sender = self.incomingPendingList[indexPath.row];
@@ -115,13 +120,15 @@
                 NSMutableArray* newIncomingList = self.incomingPendingList.mutableCopy;
                 [newIncomingList removeObject: sender];
                 if(newIncomingList.count == 0)
-                    [self.sectionHeaderNames removeObject:@"INCOMING REQUESTS"];
+                    [self.sectionHeaderNames removeObject:
+                     [MPFriendsViewController incomingPendingHeader]];
                 self.incomingPendingList = newIncomingList;
                 
                 NSMutableArray* newFriends = self.friendsList.mutableCopy;
                 [newFriends addObject: sender];
                 if(newFriends.count == 1) {
-                    [self.sectionHeaderNames addObject:@"MY FRIENDS"];
+                    [self.sectionHeaderNames addObject:
+                     [MPFriendsViewController friendsHeader]];
                 }
                 self.friendsList = newFriends;
             }
@@ -147,7 +154,8 @@
         });
 
     }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"OUTGOING REQUESTS"]) {
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPFriendsViewController outgoingPendingHeader]]) {
     }
     else {
     }
@@ -165,5 +173,8 @@
     return [[MPFriendsHeader alloc] initWithText:self.sectionHeaderNames[section]];
 }
 
-+ (NSString*) sidebarReuseIdentifier { return @"FriendsCell"; }
++ (NSString*) incomingPendingHeader { return @"INCOMING FRIEND REQUESTS"; }
++ (NSString*) outgoingPendingHeader { return @"OUTGOING FRIEND REQUESTS"; }
++ (NSString*) friendsHeader { return @"MY FRIENDS"; }
++ (NSString*) friendsReuseIdentifier { return @"FriendsCell"; }
 @end
