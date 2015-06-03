@@ -72,6 +72,7 @@
 		2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD81B1E561600F748C9 /* MPFriendsViewController.m */; };
 		2DE9FCDC1B1EB19700F748C9 /* MPFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */; };
 		2DE9FCDF1B1EB8BE00F748C9 /* MPFriendsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */; };
+		2DE9FCE21B1F996000F748C9 /* MPFriendsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -179,6 +180,8 @@
 		2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsCell.m; sourceTree = "<group>"; };
 		2DE9FCDD1B1EB8BE00F748C9 /* MPFriendsHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsHeader.h; sourceTree = "<group>"; };
 		2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsHeader.m; sourceTree = "<group>"; };
+		2DE9FCE01B1F996000F748C9 /* MPFriendsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsButton.h; sourceTree = "<group>"; };
+		2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +462,8 @@
 				2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */,
 				2DE9FCDD1B1EB8BE00F748C9 /* MPFriendsHeader.h */,
 				2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */,
+				2DE9FCE01B1F996000F748C9 /* MPFriendsButton.h */,
+				2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -578,6 +583,7 @@
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DE9FCDC1B1EB19700F748C9 /* MPFriendsCell.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
+				2DE9FCE21B1F996000F748C9 /* MPFriendsButton.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,

@@ -11,6 +11,7 @@
 #import "MPFriendsCell.h"
 #import "MPFriendsHeader.h"
 #import "MPFriendsModel.h"
+#import "UIColor+MPColor.h"
 
 @interface MPFriendsViewController ()
 
@@ -27,7 +28,7 @@
         dispatch_async(backgroundQueue, ^{
             self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
             PFUser* user = [PFUser currentUser];
-            
+            [view.loadingHeader.headerLabel displayMessage:@"LOADING REQUESTS..." revertAfter:NO];
             self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
             if(self.incomingPendingList.count > 0)
                 [self.sectionHeaderNames addObject:@"INCOMING REQUESTS"];
@@ -36,6 +37,7 @@
             if(self.outgoingPendingList.count > 0)
                 [self.sectionHeaderNames addObject:@"OUTGOING REQUESTS"];
             
+            [view.loadingHeader.headerLabel displayMessage:@"LOADING FRIENDS..." revertAfter:NO];
             self.friendsList = [MPFriendsModel friendsForUser:user];
             if(self.friendsList.count > 0)
                 [self.sectionHeaderNames addObject:@"MY FRIENDS"];
@@ -61,9 +63,13 @@
         cell = [[MPFriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController sidebarReuseIdentifier]];
     }
     
+    cell.greenButton.indexPath = indexPath;
+    cell.redButton.indexPath = indexPath;
+    
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"INCOMING REQUESTS"]) {
         [cell updateForIncomingRequest];
         [cell updateForUser: self.incomingPendingList[indexPath.row]];
+        [cell.greenButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"OUTGOING REQUESTS"]) {
         [cell updateForUser: self.outgoingPendingList[indexPath.row]];
@@ -89,8 +95,62 @@
     else {
         return self.friendsList.count;
     }
+}
 
+- (void) acceptIncomingButtonPressed: (id) sender {
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
+    NSIndexPath* indexPath = buttonSender.indexPath;
+    NSString* defaultTitle = view.menu.subtitleLabel.text;
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
     
+    if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"INCOMING REQUESTS"]) {
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("AcceptFriendQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            PFUser* sender = self.incomingPendingList[indexPath.row];
+            BOOL acceptSuccess = [MPFriendsModel acceptRequestFromUser: sender toUser:[PFUser currentUser]];
+            if(acceptSuccess) {
+                NSMutableArray* newIncomingList = self.incomingPendingList.mutableCopy;
+                [newIncomingList removeObject: sender];
+                if(newIncomingList.count == 0)
+                    [self.sectionHeaderNames removeObject:@"INCOMING REQUESTS"];
+                self.incomingPendingList = newIncomingList;
+                
+                NSMutableArray* newFriends = self.friendsList.mutableCopy;
+                [newFriends addObject: sender];
+                if(newFriends.count == 1) {
+                    [self.sectionHeaderNames addObject:@"MY FRIENDS"];
+                }
+                self.friendsList = newFriends;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(acceptSuccess) {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:
+                                                             @"You accepted a friend request from %@.", sender.username]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.friendsTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error accepting the request. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.friendsTable reloadData];
+                }
+            });
+        });
+
+    }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:@"OUTGOING REQUESTS"]) {
+    }
+    else {
+    }
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

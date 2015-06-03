@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CNLabel.h"
+#import "MPFriendsButton.h"
 #import <Parse/Parse.h>
 
 @interface MPFriendsCell : UITableViewCell
@@ -20,9 +21,9 @@
 @property CNLabel* friendRealNameLabel;
 
 //Should be: check if incoming pending, info otherwise
-@property UIButton* greenButton;
+@property MPFriendsButton* greenButton;
 //Should be: minus
-@property UIButton* redButton;
+@property MPFriendsButton* redButton;
 
 - (void) updateForUser: (PFUser*) user;
 - (void) updateForIncomingRequest;

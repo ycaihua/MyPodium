@@ -48,7 +48,22 @@
                                       attribute:NSLayoutAttributeTopMargin
                                      multiplier:1.0f
                                        constant:0.0f]];
-        [self setNeedsDisplay];
+    }
+    else {
+        [self.friendRealNameLabel setText:@""];
+        for(NSLayoutConstraint *constraint in self.constraints) {
+            if([constraint.firstItem isEqual: self.friendUsernameLabel] &&
+               constraint.firstAttribute == NSLayoutAttributeTop)
+                [self removeConstraint: constraint];
+        }
+        [self addConstraint:
+         [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                      attribute:NSLayoutAttributeCenterY
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:self
+                                      attribute:NSLayoutAttributeCenterY
+                                     multiplier:1.0f
+                                       constant:0.0f]];
     }
 }
 
@@ -92,7 +107,7 @@
     
     //self.redButton
     UIImage* minus = [UIImage imageNamed:@"button_minus_red60.png"];
-    self.redButton = [[UIButton alloc] init];
+    self.redButton = [[MPFriendsButton alloc] init];
     [self.redButton setImage: minus forState:UIControlStateNormal];
     self.redButton.backgroundColor = [UIColor MPRedColor];
     self.redButton.translatesAutoresizingMaskIntoConstraints = FALSE;
@@ -100,7 +115,7 @@
     
     //self.greenButton
     UIImage* info = [UIImage imageNamed:@"button_info_green60.png"];
-    self.greenButton = [[UIButton alloc] init];
+    self.greenButton = [[MPFriendsButton alloc] init];
     [self.greenButton setImage: info forState:UIControlStateNormal];
     self.greenButton.backgroundColor = [UIColor MPGreenColor];
     self.greenButton.translatesAutoresizingMaskIntoConstraints = FALSE;

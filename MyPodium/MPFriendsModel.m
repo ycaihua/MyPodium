@@ -29,20 +29,22 @@
     });
 }
 
-+ (void) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
++ (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
                               sender, receiver];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {
         NSLog(@"acceptRequestFromUser found multiple results");
-        return;
+        return false;
     }
     else if(results.count == 0) {
         NSLog(@"acceptRequestFromUser found multiple results");
-        return;
+        return false;
     }
-    
+    PFObject* friendObject = results[0];
+    friendObject[@"accepted"] = [NSNumber numberWithBool: TRUE];
+    return [friendObject save];
     
 }
 
