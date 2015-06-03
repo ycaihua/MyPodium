@@ -39,10 +39,10 @@
 - (void) makeControlConstraints {
     [self addConstraints: @[//self.customTitleLabel
                             [NSLayoutConstraint constraintWithItem:self.customTitleLabel
-                                                         attribute:NSLayoutAttributeBottom
+                                                         attribute:NSLayoutAttributeCenterY
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeBottom
+                                                         attribute:NSLayoutAttributeCenterY
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.customTitleLabel
@@ -87,18 +87,31 @@
 - (void) applyCurrentlyOpenStyle {
     self.currentlyOpen = TRUE;
     [self.customTitleLabel setTextColor:[UIColor MPBlackColor]];
+    [self setBackgroundColor: [UIColor MPYellowColor]];
     self.subtitleLabel.text = @"OPEN";
+}
+
+- (void) applyHighlightedStyle {
+    [self.customTitleLabel setTextColor:[UIColor MPBlackColor]];
+    [self setBackgroundColor: [UIColor MPGreenColor]];
+    self.subtitleLabel.text = @"";
+}
+
+- (void) applyDefaultStyle {
+    [self.customTitleLabel setTextColor:[UIColor whiteColor]];
+    [self setBackgroundColor: [UIColor MPBlackColor]];
 }
 
 - (void) setHighlighted:(BOOL)highlighted {
     [super setHighlighted: highlighted];
-    if(self.currentlyOpen)
-        return;
-    if(highlighted) {
-        [self setCombinedTextColor: [UIColor MPYellowColor]];
+    if(self.currentlyOpen) {
+        self.backgroundColor = [UIColor MPGreenColor];
+    }
+    else if(highlighted) {
+        [self applyHighlightedStyle];
     }
     else {
-        [self setCombinedTextColor: [UIColor whiteColor]];
+        [self applyDefaultStyle];
     }
 }
 

@@ -55,7 +55,7 @@
     MMDrawerController* container = self.mm_drawerController;
     MPMenuViewController* current = (MPMenuViewController*)[container centerViewController];
     if([[current class] isEqual: [destination class]]) {
-        [cell applyCurrentlyOpenStyle];
+        [cell.cellButton applyCurrentlyOpenStyle];
     }
     
     [cell.cellButton addTarget:self action:@selector(cellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -69,6 +69,10 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [MPSidebarViewCell cellLabelStrings].count;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MPSidebarViewCell cellHeight];
 }
 
 - (void) cellButtonPressed: (id) sender {

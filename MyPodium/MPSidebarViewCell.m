@@ -32,11 +32,6 @@
     }
 }
 
-- (void) applyCurrentlyOpenStyle {
-    [self setBackgroundColor: [UIColor MPYellowColor]];
-    [self.cellButton applyCurrentlyOpenStyle];
-}
-
 - (void) updateWithRow: (int) row {
     self.cellButton.rowIndex = row;
     self.cellButton.customTitleLabel.text = [MPSidebarViewCell cellLabelStrings][row];
@@ -66,6 +61,13 @@
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeTopMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.cellButton
                                                          attribute:NSLayoutAttributeTrailing
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
@@ -74,6 +76,8 @@
                                                           constant:0.0f]
                             ]];
 }
+
++ (CGFloat) cellHeight { return 45.0f; }
 
 + (NSArray*) cellLabelStrings {
     return @[@"Home", @"Friends", @"Teams", @"Events",

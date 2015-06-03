@@ -14,8 +14,8 @@
 @property MPSidebarButton* cellButton;
 
 - (void) updateWithRow: (int) row;
-- (void) applyCurrentlyOpenStyle;
 
 + (NSArray*) cellLabelStrings;
++ (CGFloat) cellHeight;
 
 @end
