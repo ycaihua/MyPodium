@@ -60,7 +60,7 @@
          [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
                                       attribute:NSLayoutAttributeCenterY
                                       relatedBy:NSLayoutRelationEqual
-                                         toItem:self
+                                         toItem:self.solidColorView
                                       attribute:NSLayoutAttributeCenterY
                                      multiplier:1.0f
                                        constant:0.0f]];
@@ -70,6 +70,11 @@
 - (void) updateForIncomingRequest {
     UIImage* check = [UIImage imageNamed:@"button_check_green60.png"];
     [self.greenButton setImage: check forState:UIControlStateNormal];
+}
+
+- (void) updateForFriendOrOutgoingRequest {
+    UIImage* info = [UIImage imageNamed:@"button_info_green60.png"];
+    [self.greenButton setImage: info forState:UIControlStateNormal];
 }
 
 - (void) makeControls {
@@ -110,6 +115,7 @@
     self.redButton = [[MPFriendsButton alloc] init];
     [self.redButton setImage: minus forState:UIControlStateNormal];
     self.redButton.backgroundColor = [UIColor MPRedColor];
+    self.redButton.contentMode = UIViewContentModeCenter;
     self.redButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.redButton];
     
@@ -118,6 +124,7 @@
     self.greenButton = [[MPFriendsButton alloc] init];
     [self.greenButton setImage: info forState:UIControlStateNormal];
     self.greenButton.backgroundColor = [UIColor MPGreenColor];
+    self.redButton.contentMode = UIViewContentModeCenter;
     self.greenButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.greenButton];
 }
@@ -143,14 +150,14 @@
                                                            toItem:self
                                                         attribute:NSLayoutAttributeTopMargin
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:4.0f],
                            [NSLayoutConstraint constraintWithItem:self.solidColorView
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:4.0f],
                            //self.bottomBorder
                            [NSLayoutConstraint constraintWithItem:self.bottomBorder
                                                         attribute:NSLayoutAttributeLeading

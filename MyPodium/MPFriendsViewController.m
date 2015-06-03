@@ -28,7 +28,6 @@
         dispatch_async(backgroundQueue, ^{
             self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
             PFUser* user = [PFUser currentUser];
-            [view.loadingHeader.headerLabel displayMessage:@"LOADING REQUESTS..." revertAfter:NO];
             self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
             if(self.incomingPendingList.count > 0)
                 [self.sectionHeaderNames addObject:[MPFriendsViewController incomingPendingHeader]];
@@ -37,7 +36,6 @@
             if(self.outgoingPendingList.count > 0)
                 [self.sectionHeaderNames addObject:[MPFriendsViewController outgoingPendingHeader]];
             
-            [view.loadingHeader.headerLabel displayMessage:@"LOADING FRIENDS..." revertAfter:NO];
             self.friendsList = [MPFriendsModel friendsForUser:user];
             if(self.friendsList.count > 0)
                 [self.sectionHeaderNames addObject:[MPFriendsViewController friendsHeader]];
@@ -79,9 +77,11 @@
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
              [MPFriendsViewController outgoingPendingHeader]]) {
         [cell updateForUser: self.outgoingPendingList[indexPath.row]];
+        [cell updateForFriendOrOutgoingRequest];
     }
     else {
         [cell updateForUser: self.friendsList[indexPath.row]];
+        [cell updateForFriendOrOutgoingRequest];
     }
     
     return cell;
@@ -184,12 +184,12 @@
         //Background thread
         dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPFriendsModel denyRequestFromUser: sender toUser:[PFUser currentUser]];
+            BOOL denySuccess = [MPFriendsModel denyRequestFromUser: userSender toUser:[PFUser currentUser]];
             //If accept success, first update controller data
             //from model data
             if(denySuccess) {
                 NSMutableArray* newIncomingList = self.incomingPendingList.mutableCopy;
-                [newIncomingList removeObject: sender];
+                [newIncomingList removeObject: userSender];
                 if(newIncomingList.count == 0)
                     [self.sectionHeaderNames removeObject:
                      [MPFriendsViewController incomingPendingHeader]];

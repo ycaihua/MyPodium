@@ -27,6 +27,7 @@
 
 - (void) updateForUser: (PFUser*) user;
 - (void) updateForIncomingRequest;
+- (void) updateForFriendOrOutgoingRequest;
 
 + (CGFloat) cellHeight;
 @end
