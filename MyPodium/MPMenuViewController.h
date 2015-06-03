@@ -10,8 +10,6 @@
 
 @interface MPMenuViewController : UIViewController
 
-@property BOOL menuActionsAdded;
-
 //This method is made public because, if the controller's
 //drawer isn't connected, it isn't called on init
 - (void) addMenuActions;
