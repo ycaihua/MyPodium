@@ -7,13 +7,14 @@
 //
 
 #import "MPFriendsView.h"
+#import "UIColor+MPColor.h"
 
 @implementation MPFriendsView
 
 - (id) init {
     self = [super initWithTitleText:@"MY PODIUM" subtitleText:@"Friends"];
     if(self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
     }
@@ -24,7 +25,7 @@
     self.friendsTable = [[UITableView alloc] init];
     self.friendsTable.backgroundColor = [UIColor clearColor];
     self.friendsTable.translatesAutoresizingMaskIntoConstraints = NO;
-    self.friendsTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.friendsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.friendsTable.scrollEnabled = YES;
     [self addSubview: self.friendsTable];
 }

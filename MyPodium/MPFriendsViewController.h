@@ -8,6 +8,12 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPFriendsViewController : MPMenuViewController
+@interface MPFriendsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property NSArray* incomingPendingList;
+@property NSArray* outgoingPendingList;
+@property NSArray* friendsList;
+
+@property NSMutableArray* sectionHeaderNames;
 
 @end

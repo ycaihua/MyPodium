@@ -33,21 +33,44 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
-    return [query findObjects];
+    [query includeKey:@"sender"];
+    NSArray* matches = [query findObjects];
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
+    for(PFObject* object in matches) {
+        [results addObject:object[@"sender"]];
+    }
+    return results;
 }
 
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
-    return [query findObjects];
+    [query includeKey:@"receiver"];
+    NSArray* matches = [query findObjects];
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
+    for(PFObject* object in matches) {
+        [results addObject:object[@"receiver"]];
+    }
+    return results;
 }
 
 + (NSArray*) friendsForUser: (PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) OR "
                               "(receiver = %@)) AND (accepted = %@)", user, user, [NSNumber numberWithBool:true]];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
-    return [query findObjects];
+    [query includeKey:@"sender"];
+    [query includeKey:@"receiver"];
+    NSArray* matches = [query findObjects];
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
+    for(PFObject* object in matches) {
+        PFUser* sender = object[@"sender"];
+        if([sender.objectId isEqualToString: user.objectId])
+            [results addObject: object[@"receiver"]];
+        else
+            [results addObject: object[@"sender"]];
+    }
+    return results;
 }
 
 @end

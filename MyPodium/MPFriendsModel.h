@@ -13,5 +13,7 @@
 
 + (void) testMethods;
 + (NSArray*) incomingPendingRequestsForUser: (PFUser*) user;
++ (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user;
++ (NSArray*) friendsForUser:(PFUser*)user;
 
 @end
