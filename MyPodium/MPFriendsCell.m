@@ -70,11 +70,15 @@
 - (void) updateForIncomingRequest {
     UIImage* check = [UIImage imageNamed:@"button_check_green60.png"];
     [self.greenButton setImage: check forState:UIControlStateNormal];
+    UIImage* checkHighlighted = [UIImage imageNamed:@"button_check_green_highlighted60.png"];
+    [self.greenButton setImage: checkHighlighted forState:UIControlStateHighlighted];
 }
 
 - (void) updateForFriendOrOutgoingRequest {
     UIImage* info = [UIImage imageNamed:@"button_info_green60.png"];
     [self.greenButton setImage: info forState:UIControlStateNormal];
+    UIImage* infoHighlighted = [UIImage imageNamed:@"button_info_green_highlighted60.png"];
+    [self.greenButton setImage: infoHighlighted forState:UIControlStateHighlighted];
 }
 
 - (void) makeControls {
@@ -111,19 +115,21 @@
     [self.solidColorView addSubview: self.friendRealNameLabel];
     
     //self.redButton
-    UIImage* minus = [UIImage imageNamed:@"button_minus_red60.png"];
     self.redButton = [[MPFriendsButton alloc] init];
+    UIImage* minus = [UIImage imageNamed:@"button_minus_red60.png"];
     [self.redButton setImage: minus forState:UIControlStateNormal];
-    self.redButton.backgroundColor = [UIColor MPRedColor];
+    UIImage* minusHighlighted = [UIImage imageNamed:@"button_minus_red_highlighted60.png"];
+    [self.redButton setImage: minusHighlighted forState:UIControlStateHighlighted];
     self.redButton.contentMode = UIViewContentModeCenter;
     self.redButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.redButton];
     
     //self.greenButton
-    UIImage* info = [UIImage imageNamed:@"button_info_green60.png"];
     self.greenButton = [[MPFriendsButton alloc] init];
+    UIImage* info = [UIImage imageNamed:@"button_info_green60.png"];
     [self.greenButton setImage: info forState:UIControlStateNormal];
-    self.greenButton.backgroundColor = [UIColor MPGreenColor];
+    UIImage* infoHighlighted = [UIImage imageNamed:@"button_info_green_highlighted60.png"];
+    [self.greenButton setImage: infoHighlighted forState:UIControlStateHighlighted];
     self.redButton.contentMode = UIViewContentModeCenter;
     self.greenButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.greenButton];
