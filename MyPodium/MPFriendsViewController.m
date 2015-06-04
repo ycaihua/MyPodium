@@ -76,12 +76,20 @@
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
              [MPFriendsViewController outgoingPendingHeader]]) {
-        [cell updateForUser: self.outgoingPendingList[indexPath.row]];
+        //Update button type - outgoing and friends are same images
         [cell updateForFriendOrOutgoingRequest];
+        //Update data for appropriate user
+        [cell updateForUser: self.outgoingPendingList[indexPath.row]];
+        //Add targets
+        [cell.redButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
-        [cell updateForUser: self.friendsList[indexPath.row]];
+        //Update button type - outgoing and friends are same images
         [cell updateForFriendOrOutgoingRequest];
+        //Update data for appropriate user
+        [cell updateForUser: self.friendsList[indexPath.row]];
+        //Add targets
+        [cell.redButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -181,7 +189,7 @@
         //Background thread
         dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPFriendsModel denyRequestFromUser: userSender toUser:[PFUser currentUser]];
+            BOOL denySuccess = [MPFriendsModel removeRequestFromUser: userSender toUser:[PFUser currentUser]];
             //If accept success, first update controller data
             //from model data
             if(denySuccess) {
@@ -218,6 +226,126 @@
     [confirmDenyAlert addAction: confirmAction];
     [confirmDenyAlert addAction: cancelAction];
     [self presentViewController: confirmDenyAlert animated: true completion:nil];
+}
+
+- (void) cancelOutgoingButtonPressed: (id) sender {
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
+    NSIndexPath* indexPath = buttonSender.indexPath;
+    PFUser* receiver = self.outgoingPendingList[indexPath.row];
+    
+    //Save, because we want to display a message that won't
+    //revert after at a given time, but will after execution
+    NSString* defaultTitle = view.menu.subtitleLabel.text;
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
+    
+    UIAlertController* confirmCancelAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", receiver.username]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("CancelFriendQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL denySuccess = [MPFriendsModel removeRequestFromUser: [PFUser currentUser] toUser:receiver];
+            //If accept success, first update controller data
+            //from model data
+            if(denySuccess) {
+                NSMutableArray* newOutgoingList = self.outgoingPendingList.mutableCopy;
+                [newOutgoingList removeObject: receiver];
+                if(newOutgoingList.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPFriendsViewController outgoingPendingHeader]];
+                self.incomingPendingList = newOutgoingList;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(denySuccess) {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat: @"You cancelled your friend request to %@.", receiver.username]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.friendsTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error cancelling the request. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.friendsTable reloadData];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [confirmCancelAlert addAction: confirmAction];
+    [confirmCancelAlert addAction: cancelAction];
+    [self presentViewController: confirmCancelAlert animated: true completion:nil];
+}
+
+- (void) removeFriendButtonPressed: (id) sender {
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
+    NSIndexPath* indexPath = buttonSender.indexPath;
+    PFUser* other = self.friendsList[indexPath.row];
+    
+    //Save, because we want to display a message that won't
+    //revert after at a given time, but will after execution
+    NSString* defaultTitle = view.menu.subtitleLabel.text;
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
+    
+    UIAlertController* confirmRemoveAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("RemoveFriendQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL removeSuccess = [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
+            //If accept success, first update controller data
+            //from model data
+            if(removeSuccess) {
+                NSMutableArray* newFriendsList = self.friendsList.mutableCopy;
+                [newFriendsList removeObject: other];
+                if(newFriendsList.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPFriendsViewController friendsHeader]];
+                self.friendsList = newFriendsList;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(removeSuccess) {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat: @"You removed %@ as a friend.", other.username]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.friendsTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the friend. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.friendsTable reloadData];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [confirmRemoveAlert addAction: confirmAction];
+    [confirmRemoveAlert addAction: cancelAction];
+    [self presentViewController: confirmRemoveAlert animated: true completion:nil];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

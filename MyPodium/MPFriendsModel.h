@@ -14,7 +14,8 @@
 + (void) testMethods;
 
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
-+ (BOOL) denyRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
++ (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
++ (BOOL) removeFriendRelationWithFirstUser: (PFUser*) first secondUser: (PFUser*) second;
 
 + (NSArray*) incomingPendingRequestsForUser: (PFUser*) user;
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user;
