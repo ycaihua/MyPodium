@@ -1,6 +1,25 @@
 # MyPodium
 iOS Application for creating tournaments, leagues and other events with custom stat tracking.
 
+##About the App
+There exist several web and mobile apps out there that help the user create tournaments or leagues, with varying levels of flexibility. This is a service that can definitely be expanded on. MyPodium does so, first, by allowing the user to create "events," a term used to describe created tournaments, leagues, [ladders](http://en.wikipedia.org/wiki/Ladder_tournament) or individual matches. Second, all of those events are compatible with single-player competitors, or teams of players. Third, with the exception of tournaments, events can allow for more than two opponents in a free-for-all style, and, if that is the case, allow for more than one winner. Finally, and most importantly, once the user is done with the specification of the event, MyPodium uses game modes to allow the event to track statistics of the user's choice, and present a wealth of statistical information and charts about the event. This means the user can see in-depth information about their own poker league, tennis ladder, or video game tournament all in the same way.
+
+##Terminology
+- **Participant**: a competitor in an event. Can be either an individual player or a team of players.
+
+- **Event**: a match, tournament, league or ladder.
+
+- **Match**: a single competition with one or more winning participants and one or more losing participants.
+
+- **Tournament**: a type of event where participants are paired in head-to-head matches, eliminating the loser from contention until an overall winner is declared.
+
+- **League**: a type of event where participants are organized into matches over multiple rounds without elimination. The overall winner is declared based on final record.
+
+- **Ladder**: a type of event where participants can organize their own matches according to their own schedule. Winners gain points on a ladder according to a formula. The event can be ended by the creator at any time, or at a fixed date, at which point the winner is the highest scorer. *The formula is a variant of the [elo system](http://en.wikipedia.org/wiki/Elo_rating_system), which in effect gives more points for a lower ranked participant beating a higher ranked one, and the converse.*
+
+- **Mode**: a specification of what the event is for - possibly a sport, card, board, video game or something else entirely. Modes have an optional time limit per match, and an optional list of statistic names (all statistics are integers). 
+
+##About the Development
 This is a re-creation of the MyPodium Application. The previous attempt had a completed login and registration system and implemented a few things after login, but it was remade for a few reasons:
 - To implement UI completely programmatically (more control, cleaner split between view/controller for MVC)
 - To make sure the .gitignore ignored sensitive information just as much as it needed to
