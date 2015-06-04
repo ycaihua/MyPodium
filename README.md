@@ -6,17 +6,11 @@ There exist several web and mobile apps out there that help the user create tour
 
 ##Terminology
 - **Participant**: a competitor in an event. Can be either an individual player or a team of players.
-
 - **Event**: a match, tournament, league or ladder.
-
 - **Match**: a single competition with one or more winning participants and one or more losing participants.
-
 - **Tournament**: a type of event where participants are paired in head-to-head matches, eliminating the loser from contention until an overall winner is declared.
-
 - **League**: a type of event where participants are organized into matches over multiple rounds without elimination. The overall winner is declared based on final record.
-
 - **Ladder**: a type of event where participants can organize their own matches according to their own schedule. Winners gain points on a ladder according to a formula. The event can be ended by the creator at any time, or at a fixed date, at which point the winner is the highest scorer. *The formula is a variant of the [elo system](http://en.wikipedia.org/wiki/Elo_rating_system), which in effect gives more points for a lower ranked participant beating a higher ranked one, and the converse.*
-
 - **Mode**: a specification of what the event is for - possibly a sport, card, board, video game or something else entirely. Modes have an optional time limit per match, and an optional list of statistic names (all statistics are integers). 
 
 ##About the Development
