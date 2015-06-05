@@ -36,16 +36,9 @@
             self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
             PFUser* user = [PFUser currentUser];
             self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
-            if(self.incomingPendingList.count > 0)
-                [self.sectionHeaderNames addObject:[MPFriendsViewController incomingPendingHeader]];
-            
             self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
-            if(self.outgoingPendingList.count > 0)
-                [self.sectionHeaderNames addObject:[MPFriendsViewController outgoingPendingHeader]];
-            
             self.friendsList = [MPFriendsModel friendsForUser:user];
-            if(self.friendsList.count > 0)
-                [self.sectionHeaderNames addObject:[MPFriendsViewController friendsHeader]];
+            [self updateUnfilteredHeaders];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Table UI init once data is retrieved
@@ -60,6 +53,16 @@
         });
     }
     return self;
+}
+
+- (void) updateUnfilteredHeaders {
+    self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
+    if(self.incomingPendingList.count > 0)
+        [self.sectionHeaderNames addObject:[MPFriendsViewController incomingPendingHeader]];
+    if(self.outgoingPendingList.count > 0)
+        [self.sectionHeaderNames addObject:[MPFriendsViewController outgoingPendingHeader]];
+    if(self.friendsList.count > 0)
+        [self.sectionHeaderNames addObject:[MPFriendsViewController friendsHeader]];
 }
 
 #pragma mark table view data/delegate
@@ -442,6 +445,7 @@
     NSString* filterString = view.filterSearch.searchField.text;
     if(filterString.length == 0) {
         self.isFiltered = NO;
+        [self updateUnfilteredHeaders];
         [view.friendsTable reloadData];
         return;
     }
@@ -467,6 +471,8 @@
             [self.incomingPendingFilteredList addObject:user];
         }
     }
+    if(self.incomingPendingFilteredList.count == 0)
+        [self.sectionHeaderNames removeObject:[MPFriendsViewController incomingPendingHeader]];
     
     //Filter outgoing pending
     for (PFUser* user in self.outgoingPendingList)
@@ -481,6 +487,8 @@
             [self.outgoingPendingFilteredList addObject:user];
         }
     }
+    if(self.outgoingPendingFilteredList.count == 0)
+        [self.sectionHeaderNames removeObject:[MPFriendsViewController outgoingPendingHeader]];
     
     //Filter friends
     for (PFUser* user in self.friendsList)
@@ -495,6 +503,8 @@
             [self.friendsFilteredList addObject:user];
         }
     }
+    if(self.friendsFilteredList.count == 0)
+        [self.sectionHeaderNames removeObject:[MPFriendsViewController friendsHeader]];
     
     [view.friendsTable reloadData];
 }
@@ -503,6 +513,7 @@
 
 - (BOOL) textFieldShouldClear:(UITextField *)textField {
     self.isFiltered = NO;
+    [self updateUnfilteredHeaders];
     MPFriendsView* view = (MPFriendsView*) self.view;
     [view.friendsTable reloadData];
     return YES;
