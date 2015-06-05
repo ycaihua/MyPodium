@@ -12,6 +12,7 @@
 #import "MPGlobalModel.h"
 #import "MPUserCell.h"
 #import "MPTableHeader.h"
+#import "UIColor+MPColor.h"
 
 @interface MPUserSearchViewController ()
 
@@ -46,15 +47,14 @@
 #pragma mark table view data/delegate
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"CellForRow");
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPUserSearchViewController noneFoundHeader]]) {
-        NSLog(@"Make blank");
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                 [MPUserSearchViewController blankReuseIdentifier] forIndexPath:indexPath];
         if(!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPUserSearchViewController blankReuseIdentifier]];
         }
+        cell.backgroundColor = [UIColor clearColor];
         return cell;
 
     }
@@ -176,14 +176,19 @@
         [view.searchTable reloadData];
         return;
     }
+    
+    MPUserSearchView* view = (MPUserSearchView*) self.view;
+    [view.menu.subtitleLabel displayMessage:@"Searching..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    [view.searchView.searchField resignFirstResponder];
+    
     dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
     dispatch_async(backgroundQueue, ^{
         self.matchingFriends = [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:string];
         self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateUnfilteredHeaders];
-            MPUserSearchView* view = (MPUserSearchView*) self.view;
             [view.searchTable reloadData];
+            [view.menu.subtitleLabel displayMessage:[MPUserSearchView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
         });
     });
 }
