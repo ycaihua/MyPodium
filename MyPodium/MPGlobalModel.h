@@ -12,5 +12,6 @@
 @interface MPGlobalModel : NSObject
 
 + (NSArray*) usersContainingString: (NSString*) string;
++ (NSArray*) userSearchContainingString: (NSString*) string forUser: (PFUser*) user;
 
 @end

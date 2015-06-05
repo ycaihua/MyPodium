@@ -9,7 +9,7 @@
 #import "MPFriendsViewController.h"
 #import "MPFriendsView.h"
 #import "MPUserCell.h"
-#import "MPFriendsHeader.h"
+#import "MPTableHeader.h"
 #import "MPFriendsModel.h"
 #import "UIColor+MPColor.h"
 
@@ -158,11 +158,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [MPFriendsHeader headerHeight];
+    return [MPTableHeader headerHeight];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[MPFriendsHeader alloc] initWithText:self.sectionHeaderNames[section]];
+    return [[MPTableHeader alloc] initWithText:self.sectionHeaderNames[section]];
 }
 
 #pragma mark button actions

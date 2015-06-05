@@ -38,7 +38,7 @@
     [self addSubview: self.friendsTable];
     
     //self.loadingHeader
-    self.loadingHeader = [[MPFriendsHeader alloc] initWithText:@"LOADING..."];
+    self.loadingHeader = [[MPTableHeader alloc] initWithText:@"LOADING..."];
     self.loadingHeader.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.loadingHeader];
 }
@@ -122,7 +122,8 @@
                                                            toItem:self
                                                         attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1.0f
-                                                         constant:0.0f],                           ]];
+                                                         constant:0.0f],
+                           ]];
 }
 
 + (NSString*) defaultSubtitle { return @"Friends"; }

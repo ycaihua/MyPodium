@@ -7,13 +7,13 @@
 //
 
 #import "MPMenuView.h"
-#import "MPFriendsHeader.h"
+#import "MPTableHeader.h"
 #import "MPSearchView.h"
 
 @interface MPFriendsView : MPMenuView
 
 @property MPSearchView* filterSearch;
-@property MPFriendsHeader* loadingHeader;
+@property MPTableHeader* loadingHeader;
 @property UITableView* friendsTable;
 
 + (NSString*) defaultSubtitle;

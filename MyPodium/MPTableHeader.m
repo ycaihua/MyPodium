@@ -1,15 +1,15 @@
 //
-//  MPFriendsHeader.m
+//  MPTableHeader.m
 //  MyPodium
 //
 //  Created by Connor Neville on 6/3/15.
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPFriendsHeader.h"
+#import "MPTableHeader.h"
 #import "UIColor+MPColor.h"
 
-@implementation MPFriendsHeader
+@implementation MPTableHeader
 
 - (id) initWithText: (NSString*) text {
     self = [super init];

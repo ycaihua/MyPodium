@@ -10,6 +10,8 @@
 #import "MPUserSearchView.h"
 #import "MPFriendsModel.h"
 #import "MPGlobalModel.h"
+#import "MPUserCell.h"
+#import "MPTableHeader.h"
 
 @interface MPUserSearchViewController ()
 
@@ -22,6 +24,16 @@
     if(self) {
         MPUserSearchView* view = [[MPUserSearchView alloc] init];
         self.view = view;
+        //table initUITableView* table = view.friendsTable;
+        [self updateUnfilteredHeaders];
+        UITableView* table = view.searchTable;
+        [table registerClass:[MPUserCell class]
+      forCellReuseIdentifier:[MPUserSearchViewController searchReuseIdentifier]];
+        [table registerClass:[UITableViewCell class]
+      forCellReuseIdentifier:[MPUserSearchViewController blankReuseIdentifier]];
+        table.delegate = self;
+        table.dataSource = self;
+        [table reloadData];
         //searchView init
         [view.searchView.searchButton addTarget:self
                                            action:@selector(searchButtonPressed:)
@@ -29,6 +41,85 @@
         view.searchView.searchField.delegate = self;
     }
     return self;
+}
+
+#pragma mark table view data/delegate
+
+- (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"CellForRow");
+    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+        [MPUserSearchViewController noneFoundHeader]]) {
+        NSLog(@"Make blank");
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                [MPUserSearchViewController blankReuseIdentifier] forIndexPath:indexPath];
+        if(!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPUserSearchViewController blankReuseIdentifier]];
+        }
+        return cell;
+
+    }
+    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                        [MPUserSearchViewController searchReuseIdentifier] forIndexPath:indexPath];
+    if(!cell) {
+        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPUserSearchViewController searchReuseIdentifier]];
+    }
+    
+    cell.indexPath = indexPath;
+    
+    PFUser* user;
+    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPUserSearchViewController friendsHeader]]) {
+        user = self.matchingFriends[indexPath.row];
+    }
+    else {
+        user = self.matchingUsers[indexPath.row];
+    }
+    [cell updateForUser: user];
+    
+    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+        [MPUserSearchViewController friendsHeader]]) {
+        //Update button types on incoming request
+        [cell.leftButton setImageString:@"info_green"];
+        //Add targets
+    }
+    else {
+        //Update button type - outgoing and friends are same images
+        [cell.leftButton setImageString:@"info_green"];
+        //Add targets
+    }
+    
+    return cell;
+}
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.sectionHeaderNames.count;
+}
+
+- (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if([self.sectionHeaderNames[section] isEqualToString:
+        [MPUserSearchViewController friendsHeader]]) {
+        return self.matchingFriends.count;
+    }
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPUserSearchViewController usersHeader]]) {
+        return self.matchingUsers.count;
+    }
+    else {
+        return 1;
+    }
+}
+
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MPUserCell cellHeight];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [MPTableHeader headerHeight];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[MPTableHeader alloc] initWithText:self.sectionHeaderNames[section]];
 }
 
 #pragma mark textfield delegate
@@ -80,12 +171,15 @@
     if(string.length == 0) {
         self.matchingFriends = @[];
         self.matchingUsers = @[];
+        [self updateUnfilteredHeaders];
+        MPUserSearchView* view = (MPUserSearchView*) self.view;
+        [view.searchTable reloadData];
         return;
     }
     dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
     dispatch_async(backgroundQueue, ^{
         self.matchingFriends = [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:string];
-        self.matchingUsers = [MPGlobalModel usersContainingString:string];
+        self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateUnfilteredHeaders];
             MPUserSearchView* view = (MPUserSearchView*) self.view;
@@ -99,5 +193,7 @@
 + (NSString*) friendsHeader { return @"FRIENDS"; }
 + (NSString*) usersHeader { return @"OTHER USERS"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
++ (NSString*) searchReuseIdentifier { return @"userSearchIdentifier"; }
++ (NSString*) blankReuseIdentifier { return @"blankIdentifier"; }
 
 @end

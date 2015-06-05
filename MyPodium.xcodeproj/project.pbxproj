@@ -70,7 +70,7 @@
 		2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD01B1D5F1500F748C9 /* MPFriendsModel.m */; };
 		2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD41B1E55E200F748C9 /* MPFriendsView.m */; };
 		2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD81B1E561600F748C9 /* MPFriendsViewController.m */; };
-		2DE9FCDF1B1EB8BE00F748C9 /* MPFriendsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */; };
+		2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */; };
 		2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */; };
 		2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */; };
 		2DE9FCED1B2157A300F748C9 /* MPImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */; };
@@ -180,8 +180,8 @@
 		2DE9FCD41B1E55E200F748C9 /* MPFriendsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsView.m; sourceTree = "<group>"; };
 		2DE9FCD71B1E561600F748C9 /* MPFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsViewController.h; sourceTree = "<group>"; };
 		2DE9FCD81B1E561600F748C9 /* MPFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsViewController.m; sourceTree = "<group>"; };
-		2DE9FCDD1B1EB8BE00F748C9 /* MPFriendsHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsHeader.h; sourceTree = "<group>"; };
-		2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsHeader.m; sourceTree = "<group>"; };
+		2DE9FCDD1B1EB8BE00F748C9 /* MPTableHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableHeader.h; sourceTree = "<group>"; };
+		2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableHeader.m; sourceTree = "<group>"; };
 		2DE9FCE41B20AC7F00F748C9 /* MPUserSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchView.h; sourceTree = "<group>"; };
 		2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchView.m; sourceTree = "<group>"; };
 		2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchViewController.h; sourceTree = "<group>"; };
@@ -370,6 +370,8 @@
 		2D4487811B05553D0061EF86 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				2DE9FCDD1B1EB8BE00F748C9 /* MPTableHeader.h */,
+				2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */,
 				2D4487781B0546580061EF86 /* MPView.m */,
 				2D4487771B0546580061EF86 /* MPView.h */,
 				2D44879A1B05829C0061EF86 /* CNLabel.h */,
@@ -478,8 +480,6 @@
 			children = (
 				2DE9FCD31B1E55E200F748C9 /* MPFriendsView.h */,
 				2DE9FCD41B1E55E200F748C9 /* MPFriendsView.m */,
-				2DE9FCDD1B1EB8BE00F748C9 /* MPFriendsHeader.h */,
-				2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -615,7 +615,7 @@
 				2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */,
 				2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
-				2DE9FCDF1B1EB8BE00F748C9 /* MPFriendsHeader.m in Sources */,
+				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
 				2DE9FCF01B21F5E800F748C9 /* MPSearchView.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,

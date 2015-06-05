@@ -1,5 +1,5 @@
 //
-//  MPFriendsHeader.h
+//  MPTableHeader.h
 //  MyPodium
 //
 //  Created by Connor Neville on 6/3/15.
@@ -10,7 +10,7 @@
 #import "CNLabel.h"
 #import "MPView.h"
 
-@interface MPFriendsHeader : MPView
+@interface MPTableHeader : MPView
 
 - (id) initWithText: (NSString*) text;
 
