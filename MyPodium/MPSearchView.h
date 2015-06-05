@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "MPTextField.h"
 #import "MPImageButton.h"
+#import "MPView.h"
 
-@interface MPSearchView : UIView
+@interface MPSearchView : MPView
 
 @property UIView* bottomBorder;
 @property MPTextField* searchField;

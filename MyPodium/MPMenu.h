@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CNLabel.h"
+#import "MPView.h"
 
-@interface MPMenu : UIView
+@interface MPMenu : MPView
 
 @property UIButton* sidebarButton;
 @property UIButton* logOutButton;

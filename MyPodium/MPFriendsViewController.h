@@ -13,6 +13,10 @@
 @property NSArray* incomingPendingList;
 @property NSArray* outgoingPendingList;
 @property NSArray* friendsList;
+@property BOOL isFiltered;
+@property NSMutableArray* incomingPendingFilteredList;
+@property NSMutableArray* outgoingPendingFilteredList;
+@property NSMutableArray* friendsFilteredList;
 
 @property NSMutableArray* sectionHeaderNames;
 

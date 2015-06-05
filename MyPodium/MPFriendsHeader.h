@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CNLabel.h"
+#import "MPView.h"
 
-@interface MPFriendsHeader : UIView
+@interface MPFriendsHeader : MPView
 
 - (id) initWithText: (NSString*) text;
 
