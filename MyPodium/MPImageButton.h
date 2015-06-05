@@ -16,4 +16,6 @@
 //arrow_yellow
 - (void) setImageString: (NSString*) imageString;
 
++ (CGFloat) standardWidthAndHeight;
+
 @end

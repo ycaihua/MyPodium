@@ -111,14 +111,12 @@
     //self.redButton
     self.redButton = [[MPFriendsButton alloc] init];
     [self.redButton setImageString:@"minus_red"];
-    self.redButton.contentMode = UIViewContentModeCenter;
     self.redButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.redButton];
     
     //self.greenButton
     self.greenButton = [[MPFriendsButton alloc] init];
     [self.greenButton setImageString:@"info_green"];
-    self.greenButton.contentMode = UIViewContentModeCenter;
     self.greenButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.greenButton];
 }

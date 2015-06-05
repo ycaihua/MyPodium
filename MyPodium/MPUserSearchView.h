@@ -8,10 +8,14 @@
 
 #import "MPMenuView.h"
 #import "MPTextField.h"
+#import "MPImageButton.h"
 
 @interface MPUserSearchView : MPMenuView
 
+@property UIView* searchView;
+@property UIView* searchViewBottomBorder;
 @property MPTextField* searchField;
+@property MPImageButton* searchButton;
 
 + (NSString*) defaultSubtitle;
 

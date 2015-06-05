@@ -68,13 +68,20 @@
 
 //Button event: for all subviews, if they
 //are a textfield, resign first responder.
-//Should work automatically if both MPView and
-//MPViewController are subclassed (?).
 - (void)responderButtonPressed:(id)sender {
-    for(UIView* subview in self.subviews) {
+    [MPView resignRespondersForSubviews: self];
+}
+
++ (void) resignRespondersForSubviews: (UIView*) view {
+    for(UIView* subview in view.subviews) {
         if ([subview isKindOfClass:[UITextField class]]) {
+            //Resign first responder
             UITextField* currentField = (UITextField*) subview;
             [currentField resignFirstResponder];
+        }
+        else if([subview isKindOfClass:[UIView class]]) {
+            //Recursive call
+            [MPView resignRespondersForSubviews: subview];
         }
     }
 }

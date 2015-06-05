@@ -7,8 +7,9 @@
 //
 
 #import "MPMenu.h"
+#import "MPView.h"
 
-@interface MPMenuView : UIView
+@interface MPMenuView : MPView
 
 @property MPMenu* menu;
 

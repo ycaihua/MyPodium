@@ -10,6 +10,14 @@
 
 @implementation MPImageButton
 
+- (id) init {
+    self = [super init];
+    if(self) {
+        self.contentMode = UIViewContentModeCenter;
+    }
+    return self;
+}
+
 - (void) setImageString: (NSString*) imageString {
     UIImage* defaultImage = [UIImage imageNamed:
                              [NSString stringWithFormat:@"button_%@60.png", imageString]];
@@ -18,5 +26,7 @@
                                 [NSString stringWithFormat:@"button_%@_highlighted60.png", imageString]];
     [self setImage: highlightedImage forState:UIControlStateHighlighted];
 }
+
++ (CGFloat) standardWidthAndHeight { return 60.0f; }
 
 @end
