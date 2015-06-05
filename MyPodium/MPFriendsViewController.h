@@ -8,7 +8,7 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPFriendsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource>
+@interface MPFriendsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property NSArray* incomingPendingList;
 @property NSArray* outgoingPendingList;

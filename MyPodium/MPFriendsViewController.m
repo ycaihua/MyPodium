@@ -28,6 +28,7 @@
         [view.filterSearch.searchButton addTarget:self
                                            action:@selector(filterSearchButtonPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
+        view.filterSearch.searchField.delegate = self;
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
             self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
@@ -427,6 +428,7 @@
 
 - (void) filterSearchButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
+    [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     if(filterString.length == 0) {
         self.isFiltered = NO;
@@ -485,6 +487,19 @@
     }
     
     [view.friendsTable reloadData];
+}
+
+- (BOOL) textFieldShouldClear:(UITextField *)textField {
+    self.isFiltered = NO;
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    [view.friendsTable reloadData];
+    return YES;
+}
+
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    [self filterSearchButtonPressed: nil];
+    return YES;
 }
 
 + (NSString*) incomingPendingHeader { return @"INCOMING FRIEND REQUESTS"; }
