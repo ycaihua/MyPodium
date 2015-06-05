@@ -8,6 +8,10 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPUserSearchViewController : MPMenuViewController
+@interface MPUserSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+
+@property NSArray* matchingFriends;
+@property NSArray* matchingUsers;
+@property NSMutableArray* sectionHeaderNames;
 
 @end

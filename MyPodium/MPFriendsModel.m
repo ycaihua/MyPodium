@@ -10,25 +10,6 @@
 
 @implementation MPFriendsModel
 
-+ (void) testMethods {
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
-    if(![PFUser currentUser]) {
-        NSLog(@"Log in a user to test MPFriendsModel");
-        return;
-    }
-    dispatch_async(backgroundQueue, ^{
-        PFUser* user = [PFUser currentUser];
-        NSArray* incomingPendingRequests = [MPFriendsModel incomingPendingRequestsForUser:user];
-        NSArray* outgoingPendingRequests = [MPFriendsModel outgoingPendingRequestsForUser:user];
-        NSArray* friends = [MPFriendsModel friendsForUser:user];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"Incoming requests for logged in user: %lu", (unsigned long)incomingPendingRequests.count);
-            NSLog(@"Outgoing requests for logged in user: %lu", (unsigned long)outgoingPendingRequests.count);
-            NSLog(@"Friends for logged in user: %lu", (unsigned long)friends.count);
-        });
-    });
-}
-
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
                               sender, receiver];
@@ -125,6 +106,19 @@
             [results addObject: object[@"sender"]];
     }
     return results;
+}
+
++ (NSArray*) friendsForUser: (PFUser*)user containingString: (NSString*) string {
+    NSArray* friends = [MPFriendsModel friendsForUser: user];
+    NSMutableArray* filteredFriends = [[NSMutableArray alloc] initWithCapacity:friends.count];
+    for(PFUser* friend in friends) {
+        NSString* username = friend.username;
+        NSString* realName = friend[@"realName"];
+        if(!realName) realName = @"";
+        if([username containsString: string] || [realName containsString: string])
+            [filteredFriends addObject: friend];
+    }
+    return filteredFriends;
 }
 
 @end

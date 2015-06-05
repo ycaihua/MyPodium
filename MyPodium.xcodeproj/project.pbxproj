@@ -72,11 +72,12 @@
 		2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD81B1E561600F748C9 /* MPFriendsViewController.m */; };
 		2DE9FCDC1B1EB19700F748C9 /* MPFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */; };
 		2DE9FCDF1B1EB8BE00F748C9 /* MPFriendsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */; };
-		2DE9FCE21B1F996000F748C9 /* MPFriendsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */; };
 		2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */; };
 		2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */; };
 		2DE9FCED1B2157A300F748C9 /* MPImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */; };
 		2DE9FCF01B21F5E800F748C9 /* MPSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */; };
+		2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */; };
+		2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF51B221AE600F748C9 /* MPUserCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -184,8 +185,6 @@
 		2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsCell.m; sourceTree = "<group>"; };
 		2DE9FCDD1B1EB8BE00F748C9 /* MPFriendsHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsHeader.h; sourceTree = "<group>"; };
 		2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsHeader.m; sourceTree = "<group>"; };
-		2DE9FCE01B1F996000F748C9 /* MPFriendsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsButton.h; sourceTree = "<group>"; };
-		2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsButton.m; sourceTree = "<group>"; };
 		2DE9FCE41B20AC7F00F748C9 /* MPUserSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchView.h; sourceTree = "<group>"; };
 		2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchView.m; sourceTree = "<group>"; };
 		2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchViewController.h; sourceTree = "<group>"; };
@@ -194,6 +193,10 @@
 		2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPImageButton.m; sourceTree = "<group>"; };
 		2DE9FCEE1B21F5E800F748C9 /* MPSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSearchView.h; sourceTree = "<group>"; };
 		2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSearchView.m; sourceTree = "<group>"; };
+		2DE9FCF11B22199800F748C9 /* MPGlobalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGlobalModel.h; sourceTree = "<group>"; };
+		2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGlobalModel.m; sourceTree = "<group>"; };
+		2DE9FCF41B221AE600F748C9 /* MPUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserCell.h; sourceTree = "<group>"; };
+		2DE9FCF51B221AE600F748C9 /* MPUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +385,8 @@
 				2D2D5AD01B18E34800C46B53 /* MPDualLabelButton.m */,
 				2DE9FCEB1B2157A300F748C9 /* MPImageButton.h */,
 				2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */,
+				2DE9FCF41B221AE600F748C9 /* MPUserCell.h */,
+				2DE9FCF51B221AE600F748C9 /* MPUserCell.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -465,6 +470,8 @@
 			children = (
 				2DE9FCCF1B1D5F1500F748C9 /* MPFriendsModel.h */,
 				2DE9FCD01B1D5F1500F748C9 /* MPFriendsModel.m */,
+				2DE9FCF11B22199800F748C9 /* MPGlobalModel.h */,
+				2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -478,8 +485,6 @@
 				2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */,
 				2DE9FCDD1B1EB8BE00F748C9 /* MPFriendsHeader.h */,
 				2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */,
-				2DE9FCE01B1F996000F748C9 /* MPFriendsButton.h */,
-				2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */,
 			);
 			name = Friends;
 			sourceTree = "<group>";
@@ -613,6 +618,7 @@
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */,
 				2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */,
+				2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
 				2DE9FCDF1B1EB8BE00F748C9 /* MPFriendsHeader.m in Sources */,
 				2DE9FCF01B21F5E800F748C9 /* MPSearchView.m in Sources */,
@@ -621,7 +627,6 @@
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DE9FCDC1B1EB19700F748C9 /* MPFriendsCell.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
-				2DE9FCE21B1F996000F748C9 /* MPFriendsButton.m in Sources */,
 				2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
@@ -632,6 +637,7 @@
 				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
+				2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */,
 				2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

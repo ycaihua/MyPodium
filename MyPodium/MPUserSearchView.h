@@ -12,6 +12,7 @@
 @interface MPUserSearchView : MPMenuView
 
 @property MPSearchView* searchView;
+@property UITableView* searchTable;
 
 + (NSString*) defaultSubtitle;
 

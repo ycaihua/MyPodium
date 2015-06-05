@@ -74,8 +74,7 @@
         cell = [[MPFriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
     }
     
-    cell.greenButton.indexPath = indexPath;
-    cell.redButton.indexPath = indexPath;
+    cell.indexPath = indexPath;
     
     PFUser* user;
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
@@ -106,21 +105,21 @@
         //Update button types on incoming request
         [cell updateForIncomingRequest];
         //Add targets
-        [cell.greenButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.redButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
              [MPFriendsViewController outgoingPendingHeader]]) {
         //Update button type - outgoing and friends are same images
         [cell updateForFriendOrOutgoingRequest];
         //Add targets
-        [cell.redButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
         //Update button type - outgoing and friends are same images
         [cell updateForFriendOrOutgoingRequest];
         //Add targets
-        [cell.redButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -170,8 +169,9 @@
 
 - (void) acceptIncomingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
-    NSIndexPath* indexPath = buttonSender.indexPath;
+    MPImageButton* buttonSender = (MPImageButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
     
     [view.menu.subtitleLabel displayMessage:@"Loading..."
                                 revertAfter:FALSE
@@ -235,8 +235,9 @@
 
 - (void) denyIncomingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
-    NSIndexPath* indexPath = buttonSender.indexPath;
+    MPImageButton* buttonSender = (MPImageButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
     
     PFUser* other;
     if(self.isFiltered) {
@@ -303,8 +304,9 @@
 
 - (void) cancelOutgoingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
-    NSIndexPath* indexPath = buttonSender.indexPath;
+    MPImageButton* buttonSender = (MPImageButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
     
     PFUser* other;
     if(self.isFiltered) {
@@ -371,8 +373,9 @@
 
 - (void) removeFriendButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPFriendsButton* buttonSender = (MPFriendsButton*) sender;
-    NSIndexPath* indexPath = buttonSender.indexPath;
+    MPImageButton* buttonSender = (MPImageButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
     
     PFUser* other;
     if(self.isFiltered) {
