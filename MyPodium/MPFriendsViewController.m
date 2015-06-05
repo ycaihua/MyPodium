@@ -525,6 +525,17 @@
     return YES;
 }
 
+- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField {
+    textField.text = @"";
+    [self textFieldShouldClear: textField];
+    return YES;
+}
+
+- (BOOL) textFieldShouldEndEditing:(UITextField *)textField {
+    [self filterSearchButtonPressed:nil];
+    return YES;
+}
+
 #pragma mark constants
 
 + (NSString*) incomingPendingHeader { return @"INCOMING FRIEND REQUESTS"; }

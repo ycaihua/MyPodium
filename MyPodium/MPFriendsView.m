@@ -79,7 +79,7 @@
                                                            toItem:self.filterSearch
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:36.0f],
+                                                         constant:-1.0f],
                            [NSLayoutConstraint constraintWithItem:self.loadingHeader
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
