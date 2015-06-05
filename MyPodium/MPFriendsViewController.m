@@ -12,6 +12,7 @@
 #import "MPTableHeader.h"
 #import "MPFriendsModel.h"
 #import "UIColor+MPColor.h"
+#import "UIButton+MPImage.h"
 
 @interface MPFriendsViewController ()
 
@@ -103,7 +104,7 @@
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPFriendsViewController incomingPendingHeader]]) {
         //Update button types on incoming request
-        [cell.leftButton setImageString:@"check_green"];
+        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
         //Add targets
         [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell.rightButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -111,13 +112,13 @@
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
              [MPFriendsViewController outgoingPendingHeader]]) {
         //Update button type - outgoing and friends are same images
-        [cell.leftButton setImageString:@"info_green"];
+        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         //Add targets
         [cell.rightButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
         //Update button type - outgoing and friends are same images
-        [cell.leftButton setImageString:@"info_green"];
+        [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         //Add targets
         [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -169,7 +170,7 @@
 
 - (void) acceptIncomingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPImageButton* buttonSender = (MPImageButton*) sender;
+    UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     
@@ -183,20 +184,20 @@
         
         PFUser* other;
         if(self.isFiltered) {
-            other = self.friendsFilteredList[indexPath.row];
+            other = self.incomingPendingFilteredList[indexPath.row];
         }
         else {
-            other = self.friendsList[indexPath.row];
+            other = self.incomingPendingList[indexPath.row];
         }
         
-        BOOL acceptSuccess = [MPFriendsModel acceptRequestFromUser: sender toUser:[PFUser currentUser]];
+        BOOL acceptSuccess = [MPFriendsModel acceptRequestFromUser: other toUser:[PFUser currentUser]];
         //If accept success, first update controller data
         //from model data
         if(acceptSuccess) {
             self.isFiltered = NO;
             
             NSMutableArray* newIncomingList = self.incomingPendingList.mutableCopy;
-            [newIncomingList removeObject: sender];
+            [newIncomingList removeObject: other];
             if(newIncomingList.count == 0)
                 [self.sectionHeaderNames removeObject:
                  [MPFriendsViewController incomingPendingHeader]];
@@ -235,16 +236,16 @@
 
 - (void) denyIncomingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPImageButton* buttonSender = (MPImageButton*) sender;
+    UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     
     PFUser* other;
     if(self.isFiltered) {
-        other = self.friendsFilteredList[indexPath.row];
+        other = self.incomingPendingFilteredList[indexPath.row];
     }
     else {
-        other = self.friendsList[indexPath.row];
+        other = self.incomingPendingList[indexPath.row];
     }
     
     //Save, because we want to display a message that won't
@@ -304,16 +305,16 @@
 
 - (void) cancelOutgoingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPImageButton* buttonSender = (MPImageButton*) sender;
+    UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     
     PFUser* other;
     if(self.isFiltered) {
-        other = self.friendsFilteredList[indexPath.row];
+        other = self.outgoingPendingFilteredList[indexPath.row];
     }
     else {
-        other = self.friendsList[indexPath.row];
+        other = self.outgoingPendingList[indexPath.row];
     }
     
     //Save, because we want to display a message that won't
@@ -373,7 +374,7 @@
 
 - (void) removeFriendButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
-    MPImageButton* buttonSender = (MPImageButton*) sender;
+    UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     

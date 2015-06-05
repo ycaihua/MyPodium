@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
 #import "CNLabel.h"
-#import "MPImageButton.h"
 
 @interface MPUserCell : UITableViewCell
 
@@ -20,8 +19,8 @@
 @property CNLabel* friendUsernameLabel;
 @property CNLabel* friendRealNameLabel;
 
-@property MPImageButton* leftButton;
-@property MPImageButton* rightButton;
+@property UIButton* leftButton;
+@property UIButton* rightButton;
 
 @property NSIndexPath* indexPath;
 

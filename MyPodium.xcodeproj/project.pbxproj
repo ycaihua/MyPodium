@@ -73,10 +73,10 @@
 		2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */; };
 		2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */; };
 		2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */; };
-		2DE9FCED1B2157A300F748C9 /* MPImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */; };
 		2DE9FCF01B21F5E800F748C9 /* MPSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */; };
 		2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */; };
 		2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF51B221AE600F748C9 /* MPUserCell.m */; };
+		2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,14 +186,14 @@
 		2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchView.m; sourceTree = "<group>"; };
 		2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchViewController.h; sourceTree = "<group>"; };
 		2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchViewController.m; sourceTree = "<group>"; };
-		2DE9FCEB1B2157A300F748C9 /* MPImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPImageButton.h; sourceTree = "<group>"; };
-		2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPImageButton.m; sourceTree = "<group>"; };
 		2DE9FCEE1B21F5E800F748C9 /* MPSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSearchView.h; sourceTree = "<group>"; };
 		2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSearchView.m; sourceTree = "<group>"; };
 		2DE9FCF11B22199800F748C9 /* MPGlobalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGlobalModel.h; sourceTree = "<group>"; };
 		2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGlobalModel.m; sourceTree = "<group>"; };
 		2DE9FCF41B221AE600F748C9 /* MPUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserCell.h; sourceTree = "<group>"; };
 		2DE9FCF51B221AE600F748C9 /* MPUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserCell.m; sourceTree = "<group>"; };
+		2DE9FCF71B224C1B00F748C9 /* UIButton+MPImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MPImage.h"; sourceTree = "<group>"; };
+		2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MPImage.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,8 +382,6 @@
 				2D4487E21B07A6B70061EF86 /* MPLabel.m */,
 				2D2D5ACF1B18E34800C46B53 /* MPDualLabelButton.h */,
 				2D2D5AD01B18E34800C46B53 /* MPDualLabelButton.m */,
-				2DE9FCEB1B2157A300F748C9 /* MPImageButton.h */,
-				2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */,
 				2DE9FCF41B221AE600F748C9 /* MPUserCell.h */,
 				2DE9FCF51B221AE600F748C9 /* MPUserCell.m */,
 			);
@@ -416,6 +414,8 @@
 				2D4487DC1B0656340061EF86 /* NSString+MPString.m */,
 				2D2D5ACC1B18DBCC00C46B53 /* NSMutableArray+Shuffling.h */,
 				2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */,
+				2DE9FCF71B224C1B00F748C9 /* UIButton+MPImage.h */,
+				2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -598,10 +598,10 @@
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
-				2DE9FCED1B2157A300F748C9 /* MPImageButton.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
+				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
 				2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */,
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,

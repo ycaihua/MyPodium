@@ -8,6 +8,7 @@
 
 #import "MPSearchView.h"
 #import "UIColor+MPColor.h"
+#import "UIButton+MPImage.h"
 
 @implementation MPSearchView
 
@@ -31,8 +32,8 @@
     self.searchField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.searchField];
     
-    self.searchButton = [[MPImageButton alloc] init];
-    [self.searchButton setImageString:@"arrow_green"];
+    self.searchButton = [[UIButton alloc] init];
+    [self.searchButton setImageString:@"arrow" withColorString:@"green" withHighlightedColorString:@"black"];
     self.searchButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.searchButton];
 }
@@ -124,7 +125,7 @@
                                     toItem:nil
                                  attribute:NSLayoutAttributeNotAnAttribute
                                 multiplier:1.0f
-                                  constant:[MPImageButton standardWidthAndHeight]]
+                                  constant:[UIButton standardWidthAndHeight]]
                            ]];
 };
 

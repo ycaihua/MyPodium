@@ -8,14 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "MPTextField.h"
-#import "MPImageButton.h"
 #import "MPView.h"
 
 @interface MPSearchView : MPView
 
 @property UIView* bottomBorder;
 @property MPTextField* searchField;
-@property MPImageButton* searchButton;
+@property UIButton* searchButton;
 
 + (CGFloat) standardHeight;
 

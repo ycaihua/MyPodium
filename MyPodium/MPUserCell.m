@@ -8,6 +8,7 @@
 
 #import "MPUserCell.h"
 #import "UIColor+MPColor.h"
+#import "UIButton+MPImage.h"
 
 @implementation MPUserCell
 
@@ -100,14 +101,14 @@
     [self.solidColorView addSubview: self.friendRealNameLabel];
     
     //self.rightButton
-    self.rightButton = [[MPImageButton alloc] init];
-    [self.rightButton setImageString:@"minus_red"];
+    self.rightButton = [[UIButton alloc] init];
+    [self.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
     self.rightButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.rightButton];
     
     //self.leftButton
-    self.leftButton = [[MPImageButton alloc] init];
-    [self.leftButton setImageString:@"info_green"];
+    self.leftButton = [[UIButton alloc] init];
+    [self.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
     self.leftButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.leftButton];
 }

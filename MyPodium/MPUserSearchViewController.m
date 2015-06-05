@@ -13,6 +13,7 @@
 #import "MPUserCell.h"
 #import "MPTableHeader.h"
 #import "UIColor+MPColor.h"
+#import "UIButton+MPImage.h"
 
 @interface MPUserSearchViewController ()
 
@@ -79,12 +80,12 @@
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPUserSearchViewController friendsHeader]]) {
         //Update button types on incoming request
-        [cell.leftButton setImageString:@"info_green"];
+        [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         //Add targets
     }
     else {
         //Update button type - outgoing and friends are same images
-        [cell.leftButton setImageString:@"info_green"];
+        [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         //Add targets
     }
     
