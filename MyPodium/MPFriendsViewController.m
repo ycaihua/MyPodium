@@ -24,11 +24,13 @@
     if(self) {
         MPFriendsView* view = [[MPFriendsView alloc] init];
         self.view = view;
+        //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
                                            action:@selector(filterSearchButtonPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
         view.filterSearch.searchField.delegate = self;
+        //Data init (in background)
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
             self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
@@ -46,6 +48,7 @@
                 [self.sectionHeaderNames addObject:[MPFriendsViewController friendsHeader]];
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                //Table UI init once data is retrieved
                 UITableView* table = view.friendsTable;
                 [table registerClass:[MPFriendsCell class]
               forCellReuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
@@ -58,6 +61,8 @@
     }
     return self;
 }
+
+#pragma mark table view data/delegate
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MPFriendsCell* cell = [tableView dequeueReusableCellWithIdentifier:
@@ -144,6 +149,21 @@
             return self.friendsList.count;
     }
 }
+
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MPFriendsCell cellHeight];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [MPFriendsHeader headerHeight];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[MPFriendsHeader alloc] initWithText:self.sectionHeaderNames[section]];
+}
+
+#pragma mark button actions
 
 - (void) acceptIncomingButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
@@ -414,17 +434,7 @@
     [self presentViewController: confirmRemoveAlert animated: true completion:nil];
 }
 
-- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPFriendsCell cellHeight];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return [MPFriendsHeader headerHeight];
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return [[MPFriendsHeader alloc] initWithText:self.sectionHeaderNames[section]];
-}
+#pragma mark search filtering
 
 - (void) filterSearchButtonPressed: (id) sender {
     MPFriendsView* view = (MPFriendsView*) self.view;
@@ -489,6 +499,8 @@
     [view.friendsTable reloadData];
 }
 
+#pragma mark textfield delegate
+
 - (BOOL) textFieldShouldClear:(UITextField *)textField {
     self.isFiltered = NO;
     MPFriendsView* view = (MPFriendsView*) self.view;
@@ -501,6 +513,8 @@
     [self filterSearchButtonPressed: nil];
     return YES;
 }
+
+#pragma mark constants
 
 + (NSString*) incomingPendingHeader { return @"INCOMING FRIEND REQUESTS"; }
 + (NSString*) outgoingPendingHeader { return @"OUTGOING FRIEND REQUESTS"; }
