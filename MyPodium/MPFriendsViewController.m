@@ -8,7 +8,7 @@
 
 #import "MPFriendsViewController.h"
 #import "MPFriendsView.h"
-#import "MPFriendsCell.h"
+#import "MPUserCell.h"
 #import "MPFriendsHeader.h"
 #import "MPFriendsModel.h"
 #import "UIColor+MPColor.h"
@@ -43,7 +43,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Table UI init once data is retrieved
                 UITableView* table = view.friendsTable;
-                [table registerClass:[MPFriendsCell class]
+                [table registerClass:[MPUserCell class]
               forCellReuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
@@ -68,10 +68,10 @@
 #pragma mark table view data/delegate
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MPFriendsCell* cell = [tableView dequeueReusableCellWithIdentifier:
+    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
                            [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
     if(!cell) {
-        cell = [[MPFriendsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
     }
     
     cell.indexPath = indexPath;
@@ -103,7 +103,7 @@
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPFriendsViewController incomingPendingHeader]]) {
         //Update button types on incoming request
-        [cell updateForIncomingRequest];
+        [cell.leftButton setImageString:@"check_green"];
         //Add targets
         [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell.rightButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -111,13 +111,13 @@
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
              [MPFriendsViewController outgoingPendingHeader]]) {
         //Update button type - outgoing and friends are same images
-        [cell updateForFriendOrOutgoingRequest];
+        [cell.leftButton setImageString:@"info_green"];
         //Add targets
         [cell.rightButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
         //Update button type - outgoing and friends are same images
-        [cell updateForFriendOrOutgoingRequest];
+        [cell.leftButton setImageString:@"info_green"];
         //Add targets
         [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -154,7 +154,7 @@
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPFriendsCell cellHeight];
+    return [MPUserCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
