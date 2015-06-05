@@ -8,9 +8,11 @@
 
 #import "MPMenuView.h"
 #import "MPFriendsHeader.h"
+#import "MPSearchView.h"
 
 @interface MPFriendsView : MPMenuView
 
+@property MPSearchView* filterSearch;
 @property MPFriendsHeader* loadingHeader;
 @property UITableView* friendsTable;
 

@@ -7,15 +7,11 @@
 //
 
 #import "MPMenuView.h"
-#import "MPTextField.h"
-#import "MPImageButton.h"
+#import "MPSearchView.h"
 
 @interface MPUserSearchView : MPMenuView
 
-@property UIView* searchView;
-@property UIView* searchViewBottomBorder;
-@property MPTextField* searchField;
-@property MPImageButton* searchButton;
+@property MPSearchView* searchView;
 
 + (NSString*) defaultSubtitle;
 

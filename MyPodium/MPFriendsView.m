@@ -22,6 +22,12 @@
 }
 
 - (void) makeControls {
+    //self.filterSearch
+    self.filterSearch = [[MPSearchView alloc] init];
+    [self.filterSearch.searchField setPlaceholder:@"FILTER FRIENDS"];
+    self.filterSearch.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.filterSearch];
+    
     //self.friendsTable
     self.friendsTable = [[UITableView alloc] init];
     self.friendsTable.backgroundColor = [UIColor clearColor];
@@ -37,14 +43,65 @@
     [self addSubview: self.loadingHeader];
 }
 - (void) makeControlConstraints {
-    [self addConstraints:@[//self.friendsTable
-                           [NSLayoutConstraint constraintWithItem:self.friendsTable
+    [self addConstraints:@[//self.filterSearch
+                           [NSLayoutConstraint constraintWithItem:self.filterSearch
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.menu
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:16.0f],
+                                                         constant:18.0f],
+                           [NSLayoutConstraint constraintWithItem:self.filterSearch
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.filterSearch
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.filterSearch
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[MPSearchView standardHeight]],
+                           //self.loadingHeader
+                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.filterSearch
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:36.0f],
+                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.friendsTable
+                           [NSLayoutConstraint constraintWithItem:self.friendsTable
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.filterSearch
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:8.0f],
                            [NSLayoutConstraint constraintWithItem:self.friendsTable
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
@@ -65,30 +122,7 @@
                                                            toItem:self
                                                         attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1.0f
-                                                         constant:0.0f],
-                           //self.loadingHeader
-                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.menu
-                                                        attribute:NSLayoutAttributeBottom
-                                                       multiplier:1.0f
-                                                         constant:38.0f],
-                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeLeadingMargin
-                                                       multiplier:1.0f
-                                                         constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
-                                                        attribute:NSLayoutAttributeTrailing
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeTrailingMargin
-                                                       multiplier:1.0f
-                                                         constant:0.0f],
-                           ]];
+                                                         constant:0.0f],                           ]];
 }
 
 + (NSString*) defaultSubtitle { return @"Friends"; }
