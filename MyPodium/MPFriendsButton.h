@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MPImageButton.h"
 
-@interface MPFriendsButton : UIButton
+@interface MPFriendsButton : MPImageButton
 
 @property NSIndexPath* indexPath;
 

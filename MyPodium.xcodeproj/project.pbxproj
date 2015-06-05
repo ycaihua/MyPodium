@@ -73,6 +73,9 @@
 		2DE9FCDC1B1EB19700F748C9 /* MPFriendsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDB1B1EB19700F748C9 /* MPFriendsCell.m */; };
 		2DE9FCDF1B1EB8BE00F748C9 /* MPFriendsHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */; };
 		2DE9FCE21B1F996000F748C9 /* MPFriendsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */; };
+		2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */; };
+		2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */; };
+		2DE9FCED1B2157A300F748C9 /* MPImageButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -182,6 +185,12 @@
 		2DE9FCDE1B1EB8BE00F748C9 /* MPFriendsHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsHeader.m; sourceTree = "<group>"; };
 		2DE9FCE01B1F996000F748C9 /* MPFriendsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFriendsButton.h; sourceTree = "<group>"; };
 		2DE9FCE11B1F996000F748C9 /* MPFriendsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsButton.m; sourceTree = "<group>"; };
+		2DE9FCE41B20AC7F00F748C9 /* MPUserSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchView.h; sourceTree = "<group>"; };
+		2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchView.m; sourceTree = "<group>"; };
+		2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchViewController.h; sourceTree = "<group>"; };
+		2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchViewController.m; sourceTree = "<group>"; };
+		2DE9FCEB1B2157A300F748C9 /* MPImageButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPImageButton.h; sourceTree = "<group>"; };
+		2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPImageButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -283,6 +292,7 @@
 			children = (
 				2D2D5AC41B18D29000C46B53 /* Home */,
 				2DE9FCD61B1E55F300F748C9 /* Friends */,
+				2DE9FCE71B20ACFB00F748C9 /* UserSearch */,
 				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
 			);
@@ -333,6 +343,7 @@
 			children = (
 				2D2D5AC81B18D2E600C46B53 /* Home */,
 				2DE9FCD21B1E55A700F748C9 /* Friends */,
+				2DE9FCE31B20AC6C00F748C9 /* UserSearch */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
 				2D44877A1B054BFF0061EF86 /* LoginRegister */,
@@ -366,6 +377,8 @@
 				2D4487E21B07A6B70061EF86 /* MPLabel.m */,
 				2D2D5ACF1B18E34800C46B53 /* MPDualLabelButton.h */,
 				2D2D5AD01B18E34800C46B53 /* MPDualLabelButton.m */,
+				2DE9FCEB1B2157A300F748C9 /* MPImageButton.h */,
+				2DE9FCEC1B2157A300F748C9 /* MPImageButton.m */,
 			);
 			name = Controls;
 			sourceTree = "<group>";
@@ -477,6 +490,24 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
+		2DE9FCE31B20AC6C00F748C9 /* UserSearch */ = {
+			isa = PBXGroup;
+			children = (
+				2DE9FCE41B20AC7F00F748C9 /* MPUserSearchView.h */,
+				2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */,
+			);
+			name = UserSearch;
+			sourceTree = "<group>";
+		};
+		2DE9FCE71B20ACFB00F748C9 /* UserSearch */ = {
+			isa = PBXGroup;
+			children = (
+				2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */,
+				2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */,
+			);
+			name = UserSearch;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -562,6 +593,7 @@
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
+				2DE9FCED1B2157A300F748C9 /* MPImageButton.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
@@ -584,12 +616,14 @@
 				2DE9FCDC1B1EB19700F748C9 /* MPFriendsCell.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
 				2DE9FCE21B1F996000F748C9 /* MPFriendsButton.m in Sources */,
+				2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
+				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 				2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */,

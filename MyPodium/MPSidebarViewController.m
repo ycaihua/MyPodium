@@ -13,6 +13,7 @@
 #import "MPHomeViewController.h"
 #import "MPRegisterViewController.h"
 #import "MPFriendsViewController.h"
+#import "MPUserSearchViewController.h"
 
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -115,7 +116,7 @@
              [[MPFriendsViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPMenuViewController alloc] init],
-             [[MPMenuViewController alloc] init],
+             [[MPUserSearchViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPMenuViewController alloc] init],
