@@ -453,64 +453,77 @@
         [view.friendsTable reloadData];
         return;
     }
-    
-    self.isFiltered = YES;
-    self.incomingPendingFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                        self.incomingPendingList.count];
-    self.outgoingPendingFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                        self.outgoingPendingList.count];
-    self.friendsFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                        self.friendsList.count];
-    
-    //Filter incoming pending
-    for (PFUser* user in self.incomingPendingList)
-    {
-        NSString* username = user.username;
-        NSString* realName = user[@"realName"];
-        if(!realName) realName = @"";
-        NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
-        NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-        if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
-        {
-            [self.incomingPendingFilteredList addObject:user];
-        }
-    }
-    if(self.incomingPendingFilteredList.count == 0)
-        [self.sectionHeaderNames removeObject:[MPFriendsViewController incomingPendingHeader]];
-    
-    //Filter outgoing pending
-    for (PFUser* user in self.outgoingPendingList)
-    {
-        NSString* username = user.username;
-        NSString* realName = user[@"realName"];
-        if(!realName) realName = @"";
-        NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
-        NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-        if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
-        {
-            [self.outgoingPendingFilteredList addObject:user];
-        }
-    }
-    if(self.outgoingPendingFilteredList.count == 0)
-        [self.sectionHeaderNames removeObject:[MPFriendsViewController outgoingPendingHeader]];
-    
-    //Filter friends
-    for (PFUser* user in self.friendsList)
-    {
-        NSString* username = user.username;
-        NSString* realName = user[@"realName"];
-        if(!realName) realName = @"";
-        NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
-        NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-        if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
-        {
-            [self.friendsFilteredList addObject:user];
-        }
-    }
-    if(self.friendsFilteredList.count == 0)
-        [self.sectionHeaderNames removeObject:[MPFriendsViewController friendsHeader]];
-    
+    [self filterListsWithString: filterString];
     [view.friendsTable reloadData];
+}
+
+- (void) filterListsWithString: (NSString*) filterString {
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("FilterQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        self.isFiltered = YES;
+        self.incomingPendingFilteredList = [[NSMutableArray alloc] initWithCapacity:
+                                            self.incomingPendingList.count];
+        self.outgoingPendingFilteredList = [[NSMutableArray alloc] initWithCapacity:
+                                            self.outgoingPendingList.count];
+        self.friendsFilteredList = [[NSMutableArray alloc] initWithCapacity:
+                                    self.friendsList.count];
+        
+        MPFriendsView* view = (MPFriendsView*) self.view;
+        [view.menu.subtitleLabel displayMessage:@"Filtering..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+        
+        //Filter incoming pending
+        for (PFUser* user in self.incomingPendingList)
+        {
+            NSString* username = user.username;
+            NSString* realName = user[@"realName"];
+            if(!realName) realName = @"";
+            NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
+            NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
+            if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
+            {
+                [self.incomingPendingFilteredList addObject:user];
+            }
+        }
+        if(self.incomingPendingFilteredList.count == 0)
+            [self.sectionHeaderNames removeObject:[MPFriendsViewController incomingPendingHeader]];
+        
+        //Filter outgoing pending
+        for (PFUser* user in self.outgoingPendingList)
+        {
+            NSString* username = user.username;
+            NSString* realName = user[@"realName"];
+            if(!realName) realName = @"";
+            NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
+            NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
+            if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
+            {
+                [self.outgoingPendingFilteredList addObject:user];
+            }
+        }
+        if(self.outgoingPendingFilteredList.count == 0)
+            [self.sectionHeaderNames removeObject:[MPFriendsViewController outgoingPendingHeader]];
+        
+        //Filter friends
+        for (PFUser* user in self.friendsList)
+        {
+            NSString* username = user.username;
+            NSString* realName = user[@"realName"];
+            if(!realName) realName = @"";
+            NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
+            NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
+            if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
+            {
+                [self.friendsFilteredList addObject:user];
+            }
+        }
+        if(self.friendsFilteredList.count == 0)
+            [self.sectionHeaderNames removeObject:[MPFriendsViewController friendsHeader]];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.friendsTable reloadData];
+            [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+        });
+    });
 }
 
 #pragma mark textfield delegate

@@ -81,11 +81,13 @@
         [MPUserSearchViewController friendsHeader]]) {
         //Update button types on incoming request
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
     }
     else {
         //Update button type - outgoing and friends are same images
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"plus" withColorString:@"yellow" withHighlightedColorString:@"black"];
         //Add targets
     }
     
