@@ -96,19 +96,19 @@
                                                        multiplier:1.0f
                                                          constant:4.0f],
                            [NSLayoutConstraint constraintWithItem:self.logoButton
-                                                        attribute:NSLayoutAttributeLeading
+                                                        attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                        attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.logoButton
-                                                        attribute:NSLayoutAttributeTrailing
+                                                        attribute:NSLayoutAttributeWidth
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                        attribute:NSLayoutAttributeWidth
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:-28.0f],
                            //self.logoTapLabel
                            [NSLayoutConstraint constraintWithItem:self.logoTapLabel
                                                         attribute:NSLayoutAttributeTrailing
@@ -277,9 +277,10 @@
 - (void) animateLogoMovement {
     for(NSLayoutConstraint* constraint in self.constraints) {
         if([constraint.firstItem isEqual: self.logoButton] &&
-           (constraint.firstAttribute == NSLayoutAttributeLeading ||
-            constraint.firstAttribute == NSLayoutAttributeTrailing)) {
-               [constraint setConstant:-118.0f];
+           (constraint.firstAttribute == NSLayoutAttributeCenterX)) {
+            //Constant found by trial and error to align logo with next screen
+            //(aligns on iPhone 4-5 screen size, not 6). Not a major issue
+            [constraint setConstant:-118.0f];
            }
     }
     [self setNeedsUpdateConstraints];
@@ -290,11 +291,9 @@
 }
 
 - (void) revertAnimation {
-    
     for(NSLayoutConstraint* constraint in self.constraints) {
         if([constraint.firstItem isEqual: self.logoButton] &&
-           (constraint.firstAttribute == NSLayoutAttributeLeading ||
-            constraint.firstAttribute == NSLayoutAttributeTrailing)) {
+           (constraint.firstAttribute == NSLayoutAttributeCenterX)) {
                [constraint setConstant:0.0f];
            }
     }
