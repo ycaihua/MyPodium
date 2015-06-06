@@ -11,6 +11,7 @@
 #import "MPErrorAlerter.h"
 #import "MPRegisterViewController.h"
 #import "MPForgotPasswordViewController.h"
+#import "MPHelpViewController.h"
 #import "AppDelegate.h"
 #import "Reachability.h"
 #import <Parse/Parse.h>
@@ -32,6 +33,9 @@
 
 - (void) addControlActions {
     MPLoginView* view = (MPLoginView*)self.view;
+    [view.logoButton addTarget:self
+                        action:@selector(logoButtonPressed:)
+              forControlEvents:UIControlEventTouchUpInside];
     [view.loginButton addTarget:self
                          action:@selector(loginButtonPressed:)
                forControlEvents:UIControlEventTouchUpInside];
@@ -43,6 +47,17 @@
                         forControlEvents:UIControlEventTouchUpInside];
     [view.usernameField setDelegate:self];
     [view.passwordField setDelegate:self];
+}
+
+- (void) logoButtonPressed: (id) sender {
+    MPLoginView* view = (MPLoginView*)self.view;
+    [view.logoButton setImage:[view.logoButton imageForState:UIControlStateHighlighted] forState:UIControlStateNormal];
+    [view animateLogoMovement];
+    [self performSelector:@selector(transitionToHelp:) withObject:self afterDelay:0.8];
+}
+
+- (void) transitionToHelp: (id) sender {
+    [self presentViewController:[[MPHelpViewController alloc] init] animated:NO completion:nil];
 }
 
 - (void) loginButtonPressed: (id) sender {

@@ -13,12 +13,16 @@
 
 @interface MPLoginView : MPView
 
-@property UIImageView* logoView;
+@property UIButton* logoButton;
+@property MPLabel* logoTapLabel;
 @property UITextField* usernameField;
 @property UITextField* passwordField;
 @property UIButton* loginButton;
 @property UIButton* forgotPasswordButton;
 @property MPLabel* registerLabel;
 @property UIButton* registerButton;
+
+- (void) animateLogoMovement;
+- (void) revertAnimation;
 
 @end

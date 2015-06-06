@@ -78,6 +78,8 @@
 		2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF51B221AE600F748C9 /* MPUserCell.m */; };
 		2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */; };
 		2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFB1B2275F800F748C9 /* Reachability.m */; };
+		2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */; };
+		2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +199,10 @@
 		2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MPImage.m"; sourceTree = "<group>"; };
 		2DE9FCFA1B2275F800F748C9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../../../../../../Downloads/Reachability/Reachability/Reachability.h; sourceTree = "<group>"; };
 		2DE9FCFB1B2275F800F748C9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../../../../../../Downloads/Reachability/Reachability/Reachability.m; sourceTree = "<group>"; };
+		2DE9FCFD1B2283DF00F748C9 /* MPHelpView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpView.h; sourceTree = "<group>"; };
+		2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpView.m; sourceTree = "<group>"; };
+		2DE9FD001B2288C600F748C9 /* MPHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpViewController.h; sourceTree = "<group>"; };
+		2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -314,6 +320,8 @@
 				2D4487D31B05A3980061EF86 /* MPRegisterViewController.m */,
 				2D4487D51B05A7030061EF86 /* MPForgotPasswordViewController.h */,
 				2D4487D61B05A7030061EF86 /* MPForgotPasswordViewController.m */,
+				2DE9FD001B2288C600F748C9 /* MPHelpViewController.h */,
+				2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */,
 			);
 			name = LoginRegister;
 			sourceTree = "<group>";
@@ -368,6 +376,8 @@
 				2D4487D91B05AAC30061EF86 /* MPRegisterView.m */,
 				2D4487DE1B079FBD0061EF86 /* MPForgotPasswordView.h */,
 				2D4487DF1B079FBD0061EF86 /* MPForgotPasswordView.m */,
+				2DE9FCFD1B2283DF00F748C9 /* MPHelpView.h */,
+				2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */,
 			);
 			name = LoginRegister;
 			sourceTree = "<group>";
@@ -603,6 +613,7 @@
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
+				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
@@ -633,6 +644,7 @@
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
+				2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,

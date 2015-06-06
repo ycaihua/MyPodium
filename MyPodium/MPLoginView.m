@@ -22,13 +22,21 @@
 }
 
 - (void) makeControls {
-    //self.logoView
-    UIImage* image = [UIImage imageNamed:@"logo600_flat.png"];
-    self.logoView = [[UIImageView alloc] initWithImage:image];
-    self.logoView.image = image;
-    self.logoView.translatesAutoresizingMaskIntoConstraints = FALSE;
-    self.logoView.contentMode = UIViewContentModeScaleAspectFit;
-    [self addSubview:self.logoView];
+    //self.logoButton
+    self.logoButton = [[UIButton alloc] init];
+    UIImage* image = [UIImage imageNamed:@"logo_cropped.png"];
+    [self.logoButton setImage:image forState:UIControlStateNormal];
+    UIImage* highlight = [UIImage imageNamed:@"logo_cropped_highlight.png"];
+    [self.logoButton setImage:highlight forState:UIControlStateHighlighted];
+    [self.logoButton setImage:highlight forState:UIControlStateSelected];
+    [self.logoButton.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    self.logoButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.logoButton];
+    
+    //self.logoTapLabel
+    self.logoTapLabel = [[MPLabel alloc] initWithText:@"tap above for help and information"];
+    self.logoTapLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.logoTapLabel];
     
     //self.usernameField
     self.usernameField = [[MPTextField alloc] initWithPlaceholder:@"username"];
@@ -80,35 +88,51 @@
 
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.logoView
-                           [NSLayoutConstraint constraintWithItem:self.logoView
+                           [NSLayoutConstraint constraintWithItem:self.logoButton
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeTop
+                                                        attribute:NSLayoutAttributeTopMargin
                                                        multiplier:1.0f
-                                                         constant:-10.0f],
-                           [NSLayoutConstraint constraintWithItem:self.logoView
-                                                        attribute:NSLayoutAttributeCenterX
+                                                         constant:4.0f],
+                           [NSLayoutConstraint constraintWithItem:self.logoButton
+                                                        attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeCenterX
+                                                        attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.logoView
-                                                        attribute:NSLayoutAttributeWidth
-                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                           [NSLayoutConstraint constraintWithItem:self.logoButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeWidth
+                                                        attribute:NSLayoutAttributeTrailingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
+                           //self.logoTapLabel
+                           [NSLayoutConstraint constraintWithItem:self.logoTapLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.logoTapLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.logoButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           
                            //self.usernameField
                            [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.logoView
+                                                           toItem:self.logoTapLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:-40.0f],
+                                                         constant:8.0f],
                            [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
@@ -248,5 +272,38 @@
                                                        multiplier:1.0f
                                                          constant:0.0f]
                            ]];
+}
+
+- (void) animateLogoMovement {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if([constraint.firstItem isEqual: self.logoButton] &&
+           (constraint.firstAttribute == NSLayoutAttributeLeading ||
+            constraint.firstAttribute == NSLayoutAttributeTrailing)) {
+               [constraint setConstant:-118.0f];
+           }
+    }
+    [self setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:0.75f animations:^{
+        [self layoutIfNeeded];
+    }];
+}
+
+- (void) revertAnimation {
+    
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if([constraint.firstItem isEqual: self.logoButton] &&
+           (constraint.firstAttribute == NSLayoutAttributeLeading ||
+            constraint.firstAttribute == NSLayoutAttributeTrailing)) {
+               [constraint setConstant:0.0f];
+           }
+    }
+    [self setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:0.75f animations:^{
+        [self layoutIfNeeded];
+    } completion:^(BOOL finished){
+        [self.logoButton setImage:[UIImage imageNamed:@"logo_cropped.png"] forState:UIControlStateNormal];
+    }];
 }
 @end

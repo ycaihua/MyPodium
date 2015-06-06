@@ -142,8 +142,7 @@
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     
-    if(networkStatus==NotReachable) {
-        NSLog(@"No current user upon returning");
+    if(networkStatus==NotReachable && [self.window.rootViewController isKindOfClass:[MPMenuViewController class]]) {
         [self logOut];
         UIAlertController* loggedOutAlert = [UIAlertController alertControllerWithTitle:@"Logged Out" message:@"It appears you no longer have a network connection, so we've brought you back to the login screen." preferredStyle:UIAlertControllerStyleAlert];
         [loggedOutAlert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil]];
