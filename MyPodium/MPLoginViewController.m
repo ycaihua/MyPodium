@@ -12,6 +12,7 @@
 #import "MPRegisterViewController.h"
 #import "MPForgotPasswordViewController.h"
 #import "AppDelegate.h"
+#import "Reachability.h"
 #import <Parse/Parse.h>
 
 @interface MPLoginViewController ()
@@ -50,6 +51,12 @@
     
     [alerter checkErrorCondition:(view.usernameField.text.length == 0) withMessage:@"Please enter a username."];
     [alerter checkErrorCondition:(view.passwordField.text.length == 0) withMessage:@"Please enter a password."];
+    
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    [alerter checkErrorCondition:(networkStatus==NotReachable) withMessage:@"No network connection was found. Please establish a connection and try again."];
+    
     if([alerter hasFoundError]) return;
     
     [PFUser logInWithUsernameInBackground:view.usernameField.text
@@ -58,7 +65,7 @@
         if (user) {
             [self login];
         } else {
-            [alerter checkErrorCondition:true withMessage:@"Your credentials didn't seem to work. Please try again or request a password reset if you don't remember your information."];
+            [alerter checkErrorCondition:true withMessage:@"We couldn't authenticate you. Please check over your login information and make sure you have a network connection."];
         }
     }];
 }

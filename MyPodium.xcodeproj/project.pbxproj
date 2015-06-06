@@ -77,6 +77,7 @@
 		2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */; };
 		2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF51B221AE600F748C9 /* MPUserCell.m */; };
 		2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */; };
+		2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFB1B2275F800F748C9 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -194,6 +195,8 @@
 		2DE9FCF51B221AE600F748C9 /* MPUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserCell.m; sourceTree = "<group>"; };
 		2DE9FCF71B224C1B00F748C9 /* UIButton+MPImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+MPImage.h"; sourceTree = "<group>"; };
 		2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+MPImage.m"; sourceTree = "<group>"; };
+		2DE9FCFA1B2275F800F748C9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Reachability.h; path = ../../../../../../Downloads/Reachability/Reachability/Reachability.h; sourceTree = "<group>"; };
+		2DE9FCFB1B2275F800F748C9 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Reachability.m; path = ../../../../../../Downloads/Reachability/Reachability/Reachability.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +321,8 @@
 		2D44874B1B039C2D0061EF86 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				2DE9FCFA1B2275F800F748C9 /* Reachability.h */,
+				2DE9FCFB1B2275F800F748C9 /* Reachability.m */,
 				2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */,
 				2D9A4B371B0AC77B00AEF295 /* Bolts.framework */,
 				2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */,
@@ -602,6 +607,7 @@
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
+				2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */,
 				2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */,
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,

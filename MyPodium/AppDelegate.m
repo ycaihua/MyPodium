@@ -11,6 +11,7 @@
 #import "MPSidebarViewController.h"
 #import "MPHomeViewController.h"
 #import "MPFriendsModel.h"
+#import "Reachability.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()
@@ -138,7 +139,16 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
+    
+    if(networkStatus==NotReachable) {
+        NSLog(@"No current user upon returning");
+        [self logOut];
+        UIAlertController* loggedOutAlert = [UIAlertController alertControllerWithTitle:@"Logged Out" message:@"It appears you no longer have a network connection, so we've brought you back to the login screen." preferredStyle:UIAlertControllerStyleAlert];
+        [loggedOutAlert addAction:[UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil]];
+        [self.window.rootViewController presentViewController:loggedOutAlert animated:YES completion:nil];
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
