@@ -58,6 +58,7 @@
 		2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F51B083B050061EF86 /* MMDrawerController.m */; };
 		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
+		2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0A71B23BD07006C500A /* MPHelpCell.m */; };
 		2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B371B0AC77B00AEF295 /* Bolts.framework */; };
 		2D9A4B3C1B0AC77B00AEF295 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */; };
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
@@ -164,6 +165,8 @@
 		2D4487F91B083B050061EF86 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		2D94D0A61B23BD07006C500A /* MPHelpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpCell.h; sourceTree = "<group>"; };
+		2D94D0A71B23BD07006C500A /* MPHelpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpCell.m; sourceTree = "<group>"; };
 		2D9A4B371B0AC77B00AEF295 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -378,6 +381,8 @@
 				2D4487DF1B079FBD0061EF86 /* MPForgotPasswordView.m */,
 				2DE9FCFD1B2283DF00F748C9 /* MPHelpView.h */,
 				2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */,
+				2D94D0A61B23BD07006C500A /* MPHelpCell.h */,
+				2D94D0A71B23BD07006C500A /* MPHelpCell.m */,
 			);
 			name = LoginRegister;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
+				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,

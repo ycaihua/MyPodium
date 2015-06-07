@@ -116,7 +116,6 @@
 }
 
 - (void) cellButtonPressed: (id) sender {
-    NSLog(@"Button press call on rowIndex %d", self.rowIndex);
 }
 
 @end

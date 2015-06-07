@@ -279,8 +279,17 @@
         if([constraint.firstItem isEqual: self.logoButton] &&
            (constraint.firstAttribute == NSLayoutAttributeCenterX)) {
             //Constant found by trial and error to align logo with next screen
-            //(aligns on iPhone 4-5 screen size, not 6). Not a major issue
-            [constraint setConstant:-118.0f];
+            //(needs to use leading as attribute instead of center to work on
+            //varying screen sizes)
+            [self removeConstraint:constraint];
+            [self addConstraint:
+             [NSLayoutConstraint constraintWithItem:self.logoButton
+                                          attribute:NSLayoutAttributeCenterX
+                                          relatedBy:NSLayoutRelationEqual
+                                             toItem:self
+                                          attribute:NSLayoutAttributeLeadingMargin
+                                         multiplier:1.1f
+                                           constant:28.0f]];
            }
     }
     [self setNeedsUpdateConstraints];
@@ -294,7 +303,15 @@
     for(NSLayoutConstraint* constraint in self.constraints) {
         if([constraint.firstItem isEqual: self.logoButton] &&
            (constraint.firstAttribute == NSLayoutAttributeCenterX)) {
-               [constraint setConstant:0.0f];
+            [self removeConstraint:constraint];
+            [self addConstraint:
+             [NSLayoutConstraint constraintWithItem:self.logoButton
+                                         attribute:NSLayoutAttributeCenterX
+                                         relatedBy:NSLayoutRelationEqual
+                                            toItem:self
+                                         attribute:NSLayoutAttributeCenterX
+                                        multiplier:1.0f
+                                          constant:0.0f]];
            }
     }
     [self setNeedsUpdateConstraints];
