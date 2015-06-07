@@ -14,6 +14,10 @@
 #import "MPTableHeader.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+#import "MPSearchView.h"
+#import "MPTextField.h"
+#import "MPMenu.h"
+#import "CNLabel.h"
 
 @interface MPUserSearchViewController ()
 

@@ -9,6 +9,7 @@
 #import "MPLoginView.h"
 #import "MPTextField.h"
 #import "UIColor+MPColor.h"
+#import "MPLabel.h"
 
 @implementation MPLoginView
 

@@ -8,6 +8,7 @@
 
 #import "MPHelpView.h"
 #import "UIColor+MPColor.h"
+#import "MPLabel.h"
 
 @implementation MPHelpView
 
@@ -15,7 +16,8 @@
     self = [super init];
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
-        self.bodyStrings = [self generateBodyStrings];
+        self.bodyStrings = [MPHelpView generateBodyStrings];
+        self.titleStrings = [MPHelpView generateTitleStrings];
         [self makeControls];
         [self makeControlConstraints];
     }
@@ -42,42 +44,22 @@
     self.buttonView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.buttonView];
     
-    //self.aboutButton
-    self.aboutButton = [[UIButton alloc] init];
-    [self.aboutButton setTitle:@"ABOUT" forState:UIControlStateNormal];
-    [self.aboutButton.titleLabel setFont: [UIFont fontWithName:@"Oswald-Bold" size:18.0f]];
-    [self.aboutButton setTitleColor:[UIColor MPGrayColor] forState:UIControlStateNormal];
-    [self.aboutButton setTitleColor:[UIColor MPYellowColor] forState:UIControlStateHighlighted];
-    self.aboutButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.buttonView addSubview: self.aboutButton];
-    
-    //self.termsButton
-    self.termsButton = [[UIButton alloc] init];
-    [self.termsButton setTitle:@"TERMS" forState:UIControlStateNormal];
-    [self.termsButton.titleLabel setFont: [UIFont fontWithName:@"Oswald-Bold" size:18.0f]];
-    [self.termsButton setTitleColor:[UIColor MPGrayColor] forState:UIControlStateNormal];
-    [self.termsButton setTitleColor:[UIColor MPYellowColor] forState:UIControlStateHighlighted];
-    self.termsButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.buttonView addSubview: self.termsButton];
-    
-    //self.faqButton
-    self.faqButton = [[UIButton alloc] init];
-    [self.faqButton setTitle:@"FAQ" forState:UIControlStateNormal];
-    [self.faqButton.titleLabel setFont: [UIFont fontWithName:@"Oswald-Bold" size:18.0f]];
-    [self.faqButton setTitleColor:[UIColor MPGrayColor] forState:UIControlStateNormal];
-    [self.faqButton setTitleColor:[UIColor MPYellowColor] forState:UIControlStateHighlighted];
-    self.faqButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.buttonView addSubview: self.faqButton];
+    self.tableButtons = @[[[UIButton alloc] init], [[UIButton alloc] init], [[UIButton alloc] init]];
+    for(int i = 0; i < self.tableButtons.count; i++) {
+        UIButton* current = self.tableButtons[i];
+        [current setTitle:self.titleStrings[i] forState:UIControlStateNormal];
+        [current.titleLabel setFont: [UIFont fontWithName:@"Oswald-Bold" size:18.0f]];
+        [current setTitleColor:[UIColor MPGrayColor] forState:UIControlStateNormal];
+        [current setTitleColor:[UIColor MPYellowColor] forState:UIControlStateHighlighted];
+        current.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.buttonView addSubview: current];
+    }
     
     //self.bodyTable
     self.bodyTable = [[UITableView alloc] init];
     self.bodyTable.translatesAutoresizingMaskIntoConstraints = NO;
-    self.bodyTable.layer.borderWidth = 1.0f;
-    self.bodyTable.layer.borderColor = [UIColor MPDarkGrayColor].CGColor;
     self.bodyTable.scrollEnabled = YES;
     [self addSubview: self.bodyTable];
-    
-    [self bringSubviewToFront:self.buttonView];
     
     //self.emailButton
     self.emailButton = [[UIButton alloc] init];
@@ -91,15 +73,14 @@
 }
 
 - (void) selectButton: (UIButton*) button {
-    int index;
-    if([button isEqual: self.aboutButton]) index = 0;
-    else if([button isEqual: self.termsButton]) index = 1;
-    else index = 2;
+    for(int i = 0; i < self.tableButtons.count; i++) {
+        if([self.tableButtons[i] isEqual: button])
+            [self.bodyTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:i] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
     
-    [self.bodyTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
-- (NSArray*) generateBodyStrings {
++ (NSArray*) generateBodyStrings {
     return @[
         (@"MyPodium is your all-in one organizer, scorekeeper and record keeper for any type of recreational competition you and your friends can think of. Once users sign up with just an email address, username and password, they can use the app to create events with a bunch of optional customization choices. MyPodium then takes care of the rest, providing a scoreboard for each match, keeping track of statistics of your choice and displaying charts and information based on those statistics.\n\n"
         "Every MyPodium user has a friends list, which they can use to comprise teams. Events can be leagues, tournaments, or ladders and can pit teams against each other or individual players. Events also need a game mode, which asks the user for information like a time limit or optional statistics to track. Through this system, users can create a truly unique system for their recreational events, and see a wealth of fun statistics about them."),
@@ -116,6 +97,10 @@
         "Game modes are like the topic of your event, and the list of statistics define what the app will track for you. For example, say two different groups of people wanted to host a basketball tournament. They'd both probably title the mode \"Basketball,\" but the first group might make a detailed tournament tracking points, rebounds, assists and steals, while the second might only track points.\n\n"
         "Have you considered adding [suggestion]?\n\n"
         "I am always looking to improve MyPodium. If you find any bugs, or ideas for new features, please feel free to use the button below to email me.")];
+}
+
++ (NSArray*) generateTitleStrings {
+    return @[@"ABOUT", @"TERMS", @"FAQ"];
 }
 
 - (void) makeControlConstraints {
@@ -192,45 +177,45 @@
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:40.0f],
-                           //self.aboutButton
-                           [NSLayoutConstraint constraintWithItem:self.aboutButton
+                           //self.tableButtons[0]
+                           [NSLayoutConstraint constraintWithItem:self.tableButtons[0]
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.buttonView
                                                         attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.aboutButton
+                           [NSLayoutConstraint constraintWithItem:self.tableButtons[0]
                                                         attribute:NSLayoutAttributeCenterY
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.buttonView
                                                         attribute:NSLayoutAttributeCenterY
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           //self.termsButton
-                           [NSLayoutConstraint constraintWithItem:self.termsButton
+                           //self.tableButtons[1]
+                           [NSLayoutConstraint constraintWithItem:self.tableButtons[1]
                                                         attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.buttonView
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.termsButton
+                           [NSLayoutConstraint constraintWithItem:self.tableButtons[1]
                                                         attribute:NSLayoutAttributeCenterY
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.buttonView
                                                         attribute:NSLayoutAttributeCenterY
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           //self.faqButton
-                           [NSLayoutConstraint constraintWithItem:self.faqButton
+                           //self.tableButtons[2]
+                           [NSLayoutConstraint constraintWithItem:self.tableButtons[2]
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.buttonView
                                                         attribute:NSLayoutAttributeTrailingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.faqButton
+                           [NSLayoutConstraint constraintWithItem:self.tableButtons[2]
                                                         attribute:NSLayoutAttributeCenterY
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.buttonView
@@ -258,7 +243,7 @@
                                                            toItem:self.buttonView
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:-1.0f],
+                                                         constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.bodyTable
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual

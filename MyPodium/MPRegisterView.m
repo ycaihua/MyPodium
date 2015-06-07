@@ -8,6 +8,8 @@
 
 #import "MPRegisterView.h"
 #import "UIColor+MPColor.h"
+#import "MPLabel.h"
+#import "MPTextField.h"
 
 @implementation MPRegisterView
 
@@ -23,7 +25,7 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[CNLabel alloc] initWithText:@"REGISTER"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"REGISTER"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:30.0f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;

@@ -9,10 +9,14 @@
 #import "MPFriendsViewController.h"
 #import "MPFriendsView.h"
 #import "MPUserCell.h"
-#import "MPTableHeader.h"
 #import "MPFriendsModel.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+#import "MPTableHeader.h"
+#import "MPSearchView.h"
+#import "MPTextField.h"
+#import "MPMenu.h"
+#import "CNLabel.h"
 
 @interface MPFriendsViewController ()
 

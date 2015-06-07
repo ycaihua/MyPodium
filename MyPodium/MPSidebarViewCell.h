@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPSidebarButton.h"
+@class MPSidebarButton;
 
 @interface MPSidebarViewCell : UITableViewCell
 

@@ -8,6 +8,8 @@
 
 #import "MPForgotPasswordView.h"
 #import "UIColor+MPColor.h"
+#import "MPLabel.h"
+#import "MPTextField.h"
 
 @implementation MPForgotPasswordView
 
@@ -23,7 +25,7 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[CNLabel alloc] initWithText:@"FORGOT PASSWORD"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"FORGOT PASSWORD"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:30.0f];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;

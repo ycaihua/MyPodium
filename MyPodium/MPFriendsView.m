@@ -8,6 +8,9 @@
 
 #import "MPFriendsView.h"
 #import "UIColor+MPColor.h"
+#import "MPTableHeader.h"
+#import "MPSearchView.h"
+#import "MPTextField.h"
 
 @implementation MPFriendsView
 

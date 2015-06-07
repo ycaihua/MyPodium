@@ -7,7 +7,7 @@
 //
 
 #import "MPMenuView.h"
-#import "MPHomeButton.h"
+@class MPHomeButton;
 
 @interface MPHomeView : MPMenuView
 

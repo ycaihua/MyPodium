@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CNLabel.h"
 #import "MPView.h"
+@class CNLabel;
 
 @interface MPMenu : MPView
 

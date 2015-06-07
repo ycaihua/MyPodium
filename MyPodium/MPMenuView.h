@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPMenu.h"
+@class MPMenu;
 #import "MPView.h"
 
 @interface MPMenuView : MPView

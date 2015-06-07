@@ -7,8 +7,8 @@
 //
 
 #import "MPMenuView.h"
-#import "MPTableHeader.h"
-#import "MPSearchView.h"
+@class MPSearchView;
+@class MPTableHeader;
 
 @interface MPFriendsView : MPMenuView
 

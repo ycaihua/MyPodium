@@ -7,6 +7,7 @@
 //
 
 #import "MPSearchView.h"
+#import "MPTextField.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
 

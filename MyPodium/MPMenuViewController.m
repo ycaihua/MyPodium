@@ -10,7 +10,9 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MPMenuView.h"
+#import "MPMenu.h"
 #import "AppDelegate.h"
+#import "CNLabel.h"
 #import <Parse/Parse.h>
 
 @interface MPMenuViewController ()

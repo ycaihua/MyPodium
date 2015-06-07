@@ -7,6 +7,7 @@
 //
 
 #import "MPHomeView.h"
+#import "MPHomeButton.h"
 #import "UIColor+MPColor.h"
 #import "NSMutableArray+Shuffling.h"
 

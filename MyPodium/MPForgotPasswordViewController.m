@@ -10,6 +10,8 @@
 #import "MPForgotPasswordView.h"
 #import "MPErrorAlerter.h"
 #import "NSString+MPString.h"
+#import "MPLabel.h"
+#import "MPTextField.h"
 #import <Parse/Parse.h>
 
 @interface MPForgotPasswordViewController ()

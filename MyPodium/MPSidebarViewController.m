@@ -9,6 +9,7 @@
 #import "MPSidebarViewController.h"
 #import "MPSidebarView.h"
 #import "MPSidebarViewCell.h"
+#import "MPSidebarButton.h"
 
 #import "MPHomeViewController.h"
 #import "MPRegisterViewController.h"

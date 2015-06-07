@@ -11,6 +11,7 @@
 #import "MPHelpView.h"
 #import "MPHelpCell.h"
 #import "MPTableHeader.h"
+#import "MPLabel.h"
 #import <MessageUI/MessageUI.h>
 
 @interface MPHelpViewController ()
@@ -34,9 +35,9 @@
 - (void) addControlActions {
     MPHelpView* view = (MPHelpView*) self.view;
     [view.logoButton addTarget:self action:@selector(logoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [view.aboutButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [view.termsButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [view.faqButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    for(UIButton* button in view.tableButtons) {
+        [button addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
     view.bodyTable.delegate = self;
     view.bodyTable.dataSource = self;
 }
@@ -93,15 +94,13 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString* text;
-    if(section == 0) text = @"ABOUT";
-    else if(section == 1) text = @"TERMS";
-    else text = @"FAQ";
-    MPTableHeader* header = [[MPTableHeader alloc] initWithText:text];
+    MPHelpView* view = (MPHelpView*) self.view;
+    MPTableHeader* header = [[MPTableHeader alloc] initWithText:view.titleStrings[section]];
     header.backgroundColor = [UIColor whiteColor];
     return header;
 }
 
+//Calculate height based on UILabel contents
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     MPHelpView* view = (MPHelpView*) self.view;
     NSString* textForIndex = view.bodyStrings[indexPath.section];

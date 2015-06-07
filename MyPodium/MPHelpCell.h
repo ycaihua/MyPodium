@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPLabel.h"
+@class MPLabel;
 
 @interface MPHelpCell : UITableViewCell
 

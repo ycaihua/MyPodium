@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MPTextField.h"
 #import "MPView.h"
+@class MPTextField;
 
 @interface MPSearchView : MPView
 

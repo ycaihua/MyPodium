@@ -7,7 +7,7 @@
 //
 
 #import "MPView.h"
-#import "MPLabel.h"
+@class MPLabel;
 
 @interface MPHelpView : MPView
 
@@ -15,15 +15,13 @@
 @property MPLabel* returnLabel;
 
 @property UIView* buttonView;
-
-@property UIButton* aboutButton;
-@property UIButton* termsButton;
-@property UIButton* faqButton;
+@property NSArray* tableButtons;
 
 @property UITableView* bodyTable;
 @property UIButton* emailButton;
 
 @property NSArray* bodyStrings;
+@property NSArray* titleStrings;
 
 - (void) selectButton: (UIButton*) button;
 

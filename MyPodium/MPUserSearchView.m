@@ -7,6 +7,7 @@
 //
 
 #import "MPUserSearchView.h"
+#import "MPSearchView.h"
 #import "UIColor+MPColor.h"
 
 @implementation MPUserSearchView

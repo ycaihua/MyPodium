@@ -10,8 +10,10 @@
 #import "MPHomeView.h"
 #import "MPFriendsModel.h"
 #import "MPFriendsViewController.h"
+#import "MPHomeButton.h"
 #import "CNLabel.h"
 #import "AppDelegate.h"
+#import "MMDrawerController.h"
 
 @interface MPHomeViewController ()
 

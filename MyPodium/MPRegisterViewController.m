@@ -10,6 +10,7 @@
 #import "MPRegisterView.h"
 #import "MPErrorAlerter.h"
 #import "NSString+MPString.h"
+#import "MPTextField.h"
 #import <Parse/Parse.h>
 
 @interface MPRegisterViewController ()

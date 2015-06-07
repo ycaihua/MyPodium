@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-#import "CNLabel.h"
+@class CNLabel;
 
 @interface MPUserCell : UITableViewCell
 

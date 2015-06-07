@@ -7,6 +7,7 @@
 //
 
 #import "MPHelpCell.h"
+#import "MPLabel.h"
 
 @implementation MPHelpCell
 
@@ -49,7 +50,7 @@
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.bodyLabel
                                                         attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1.0f

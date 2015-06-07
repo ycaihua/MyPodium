@@ -8,6 +8,7 @@
 
 #import "MPSidebarViewCell.h"
 #import "MPSidebarViewController.h"
+#import "MPSidebarButton.h"
 #import "UIColor+MPColor.h"
 
 @implementation MPSidebarViewCell

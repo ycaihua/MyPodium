@@ -8,13 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "MPView.h"
-#import "CNLabel.h"
-#import "MPLabel.h"
-#import "MPTextField.h"
+@class MPLabel;
+@class MPTextField;
 
 @interface MPForgotPasswordView : MPView
 
-@property CNLabel* titleLabel;
+@property MPLabel* titleLabel;
 @property MPTextField* emailField;
 @property MPLabel* descriptorLabel;
 @property UIButton* resetPasswordButton;

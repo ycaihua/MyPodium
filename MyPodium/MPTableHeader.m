@@ -8,6 +8,7 @@
 
 #import "MPTableHeader.h"
 #import "UIColor+MPColor.h"
+#import "CNLabel.h"
 
 @implementation MPTableHeader
 

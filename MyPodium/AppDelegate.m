@@ -12,6 +12,9 @@
 #import "MPHomeViewController.h"
 #import "MPFriendsModel.h"
 #import "Reachability.h"
+#import "MMDrawerController.h"
+#import "MPMenuViewController.h"
+#import "MPLoginViewController.h"
 #import <Parse/Parse.h>
 
 @interface AppDelegate ()

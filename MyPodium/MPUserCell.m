@@ -9,6 +9,7 @@
 #import "MPUserCell.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+#import "CNLabel.h"
 
 @implementation MPUserCell
 

@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MMDrawerController.h"
-#import "MPMenuViewController.h"
-#import "MPLoginViewController.h"
+@class MMDrawerController;
+@class MPMenuViewController;
+@class MPLoginViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
