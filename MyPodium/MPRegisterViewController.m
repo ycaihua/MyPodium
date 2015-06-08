@@ -11,6 +11,7 @@
 
 #import "MPRegisterView.h"
 #import "MPTextField.h"
+#import "MPLabel.h"
 
 #import "MPRegisterViewController.h"
 
@@ -42,27 +43,18 @@
 
 - (void) registerButtonPressed: (id) sender {
     MPRegisterView* view = (MPRegisterView*) self.view;
+    [view.titleLabel displayMessage:@"LOADING..." revertAfter:NO];
     [self.view performSelector:@selector(responderButtonPressed:) withObject:self];
     NSString* username = view.usernameField.text.lowercaseString;
     NSString* password = view.passwordField.text;
     NSString* email = view.emailField.text.lowercaseString;
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController:self];
-    PFQuery *nameQuery = [PFUser query];
-    PFQuery *emailQuery = [PFUser query];
     
     //Potential username errors: length boundaries, already
     //in use, illegal characters
     [alerter checkErrorCondition:(username.length < 4) withMessage:@"Your username must be at least 4 characters long."];
     [alerter checkErrorCondition:(username.length > 12) withMessage:@"Your username cannot be longer than 12 characters."];
     [alerter checkErrorCondition:!([username isValidUsername]) withMessage:@"Usernames must be alphanumeric (just letters and numbers)."];
-    
-    //We need synchronous queries (which might be slow),
-    //so if we already have an error, don't do the query
-    if([alerter hasFoundError]) return;
-    
-    [nameQuery whereKey:@"username" equalTo:username];
-    NSArray* usersWithUsername = [nameQuery findObjects];
-    [alerter checkErrorCondition:(usersWithUsername.count > 0) withMessage:@"That username is already in use. Please try another."];
     
     //Potential password errors: length boundaries
     [alerter checkErrorCondition:(password.length < 4) withMessage:@"Your password must be at least 4 characters long."];
@@ -71,31 +63,63 @@
     //Potential email errors: invalid email, already in use
     [alerter checkErrorCondition:!([email isValidEmail]) withMessage:@"You didn't enter a valid email."];
     
+    //No need to query if already found error
     if([alerter hasFoundError]) return;
     
-    [emailQuery whereKey:@"email" equalTo:email];
-    NSArray* usersWithEmail = [emailQuery findObjects];
-    [alerter checkErrorCondition:(usersWithEmail.count > 0) withMessage:@"That email is already in use: are you sure you haven't already registered?"];
-    
-    if(![alerter hasFoundError]) {
-        PFUser *user = [PFUser user];
-        user.username = username;
-        user.password = password;
-        user.email = email;
-        [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (error) {
-                [alerter checkErrorCondition:true withMessage:@"A query error has occurred and was reported. Sorry about that."];
-            }
-            else {
-                UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Success" message:@"Your account has been registered. We'll bring you back to the login screen now." preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action){
-                    [self dismissViewControllerAnimated:TRUE completion:nil];
-                }];
-                [alert addAction: action];
-                [self presentViewController:alert animated:TRUE completion:nil];
-            }
-        }];
-    }
+    dispatch_queue_t registerQueue = dispatch_queue_create("RegisterQueue", 0);
+    dispatch_async(registerQueue, ^{
+    //All query-related checks
+    PFQuery *nameQuery = [PFUser query];
+    [nameQuery whereKey:@"username" equalTo:username];
+    [nameQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            //Check username availability
+            [alerter checkErrorCondition:(objects.count > 0) withMessage:@"That username is already in use. Please try another."];
+            if([alerter hasFoundError])
+                [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+            PFQuery *emailQuery = [PFUser query];
+            [emailQuery whereKey:@"email" equalTo:email];
+            [emailQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+                if (!error) {
+                    //Check email availability
+                    [alerter checkErrorCondition:(objects.count > 0) withMessage:@"That email is already in use: are you sure you haven't already registered?"];
+                    if([alerter hasFoundError])
+                        [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+                    //Go back to main queue
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if(![alerter hasFoundError]) {
+                            PFUser *user = [PFUser user];
+                            user.username = username;
+                            user.password = password;
+                            user.email = email;
+                            [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                if (error) {
+                                    [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+                                    [alerter checkErrorCondition:true withMessage:@"Server error please try again later."];
+                                }
+                                else {
+                                    [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+                                    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Success" message:@"Your account has been registered. We'll bring you back to the login screen now." preferredStyle:UIAlertControllerStyleAlert];
+                                    UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action){
+                                        [self dismissViewControllerAnimated:TRUE completion:nil];
+                                    }];
+                                    [alert addAction: action];
+                                    [self presentViewController:alert animated:TRUE completion:nil];
+                                }
+                            }];
+                        }
+                    });
+                }
+                else {
+                    [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+                    [alerter checkErrorCondition:true withMessage:@"Server error: please try again later."];
+                }
+            }];
+        }else{
+            [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+            [alerter checkErrorCondition:true withMessage:@"Server error: please try again later."];
+        }
+    }];});
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -115,6 +139,15 @@
 
 - (void) goBackButtonPressed: (id) sender {
     [self dismissViewControllerAnimated:TRUE completion:nil];
+}
+
+//This controller shouldn't support landscape
+- (BOOL) shouldAutorotate {
+    return YES;
+}
+
+- (NSUInteger) supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 @end

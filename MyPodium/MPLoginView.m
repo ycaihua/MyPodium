@@ -106,7 +106,7 @@
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.logoButton
                                                         attribute:NSLayoutAttributeWidth
-                                                        relatedBy:NSLayoutRelationEqual
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeWidth
                                                        multiplier:1.0f

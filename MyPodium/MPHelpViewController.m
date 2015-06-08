@@ -116,4 +116,13 @@
 
 + (NSString*) helpReuseIdentifier { return @"helpIdentifier"; }
 
+//This controller shouldn't support landscape
+- (BOOL) shouldAutorotate {
+    return YES;
+}
+
+- (NSUInteger) supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 @end
