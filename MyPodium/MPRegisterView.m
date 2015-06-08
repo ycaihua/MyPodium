@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPRegisterView.h"
 #import "UIColor+MPColor.h"
+
+#import "MPRegisterView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 

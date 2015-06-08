@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPHomeButton.h"
 #import "UIColor+MPColor.h"
+
+#import "MPHomeButton.h"
 
 @implementation MPHomeButton
 

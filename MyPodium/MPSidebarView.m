@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPSidebarView.h"
 #import "UIColor+MPColor.h"
+
+#import "MPSidebarView.h"
 
 @implementation MPSidebarView
 

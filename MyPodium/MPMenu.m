@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPMenu.h"
 #import "UIColor+MPColor.h"
+
+#import "MPMenu.h"
 #import "CNLabel.h"
 
 @implementation MPMenu

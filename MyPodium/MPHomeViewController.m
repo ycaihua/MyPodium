@@ -6,14 +6,17 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPHomeViewController.h"
-#import "MPHomeView.h"
 #import "MPFriendsModel.h"
-#import "MPFriendsViewController.h"
+
+#import "MPHomeView.h"
 #import "MPHomeButton.h"
 #import "CNLabel.h"
-#import "AppDelegate.h"
+
 #import "MMDrawerController.h"
+#import "MPFriendsViewController.h"
+#import "MPHomeViewController.h"
+
+#import "AppDelegate.h"
 
 @interface MPHomeViewController ()
 

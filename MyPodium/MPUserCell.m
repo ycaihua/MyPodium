@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPUserCell.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+
+#import "MPUserCell.h"
 #import "CNLabel.h"
 
 @implementation MPUserCell

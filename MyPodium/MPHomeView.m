@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPHomeView.h"
-#import "MPHomeButton.h"
 #import "UIColor+MPColor.h"
 #import "NSMutableArray+Shuffling.h"
+
+#import "MPHomeView.h"
+#import "MPHomeButton.h"
 
 @implementation MPHomeView
 

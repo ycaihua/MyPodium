@@ -6,10 +6,11 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPSearchView.h"
-#import "MPTextField.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+
+#import "MPSearchView.h"
+#import "MPTextField.h"
 
 @implementation MPSearchView
 

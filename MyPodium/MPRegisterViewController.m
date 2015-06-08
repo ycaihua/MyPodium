@@ -6,11 +6,14 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPRegisterViewController.h"
-#import "MPRegisterView.h"
-#import "MPErrorAlerter.h"
 #import "NSString+MPString.h"
+#import "MPErrorAlerter.h"
+
+#import "MPRegisterView.h"
 #import "MPTextField.h"
+
+#import "MPRegisterViewController.h"
+
 #import <Parse/Parse.h>
 
 @interface MPRegisterViewController ()

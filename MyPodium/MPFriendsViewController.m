@@ -6,17 +6,20 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPFriendsViewController.h"
-#import "MPFriendsView.h"
-#import "MPUserCell.h"
-#import "MPFriendsModel.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+
+#import "MPFriendsModel.h"
+
+#import "MPFriendsView.h"
+#import "MPUserCell.h"
 #import "MPTableHeader.h"
 #import "MPSearchView.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
+
+#import "MPFriendsViewController.h"
 
 @interface MPFriendsViewController ()
 

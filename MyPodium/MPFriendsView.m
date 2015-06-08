@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPFriendsView.h"
 #import "UIColor+MPColor.h"
+
+#import "MPFriendsView.h"
 #import "MPTableHeader.h"
 #import "MPSearchView.h"
 #import "MPTextField.h"

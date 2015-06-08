@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPForgotPasswordView.h"
 #import "UIColor+MPColor.h"
+
+#import "MPForgotPasswordView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 

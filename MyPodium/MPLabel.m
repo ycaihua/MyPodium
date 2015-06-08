@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPLabel.h"
 #import "UIColor+MPColor.h"
+
+#import "MPLabel.h"
 
 @implementation MPLabel
 

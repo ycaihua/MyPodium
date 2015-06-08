@@ -6,8 +6,9 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPTableHeader.h"
 #import "UIColor+MPColor.h"
+
+#import "MPTableHeader.h"
 #import "CNLabel.h"
 
 @implementation MPTableHeader

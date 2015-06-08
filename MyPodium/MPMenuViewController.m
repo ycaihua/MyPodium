@@ -6,13 +6,15 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPMenuView.h"
+#import "MPMenu.h"
+#import "CNLabel.h"
+
 #import "MPMenuViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
-#import "MPMenuView.h"
-#import "MPMenu.h"
+
 #import "AppDelegate.h"
-#import "CNLabel.h"
 #import <Parse/Parse.h>
 
 @interface MPMenuViewController ()

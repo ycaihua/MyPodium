@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPSidebarViewCell.h"
-#import "MPSidebarViewController.h"
-#import "MPSidebarButton.h"
 #import "UIColor+MPColor.h"
+
+#import "MPSidebarViewCell.h"
+#import "MPSidebarButton.h"
 
 @implementation MPSidebarViewCell
 

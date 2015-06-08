@@ -6,12 +6,15 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPForgotPasswordViewController.h"
-#import "MPForgotPasswordView.h"
 #import "MPErrorAlerter.h"
 #import "NSString+MPString.h"
+
+#import "MPForgotPasswordView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
+
+#import "MPForgotPasswordViewController.h"
+
 #import <Parse/Parse.h>
 
 @interface MPForgotPasswordViewController ()

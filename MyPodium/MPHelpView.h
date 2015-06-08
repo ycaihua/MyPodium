@@ -7,6 +7,7 @@
 //
 
 #import "MPView.h"
+
 @class MPLabel;
 
 @interface MPHelpView : MPView

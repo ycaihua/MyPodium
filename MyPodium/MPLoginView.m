@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPLoginView.h"
 #import "MPTextField.h"
-#import "UIColor+MPColor.h"
 #import "MPLabel.h"
 
 @implementation MPLoginView

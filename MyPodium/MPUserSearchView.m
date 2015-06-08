@@ -6,9 +6,10 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPUserSearchView.h"
 #import "MPSearchView.h"
-#import "UIColor+MPColor.h"
 
 @implementation MPUserSearchView
 

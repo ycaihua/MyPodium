@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "MPView.h"
+
+#import <UIKit/UIKit.h>
+
 @class MPLabel;
 @class MPTextField;
 

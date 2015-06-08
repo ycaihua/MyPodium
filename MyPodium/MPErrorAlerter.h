@@ -12,6 +12,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 @interface MPErrorAlerter : NSObject
 
 @property BOOL hasFoundError;

@@ -6,18 +6,21 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPUserSearchViewController.h"
-#import "MPUserSearchView.h"
-#import "MPFriendsModel.h"
-#import "MPGlobalModel.h"
-#import "MPUserCell.h"
-#import "MPTableHeader.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+
+#import "MPFriendsModel.h"
+#import "MPGlobalModel.h"
+
+#import "MPUserSearchView.h"
+#import "MPUserCell.h"
+#import "MPTableHeader.h"
 #import "MPSearchView.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
+
+#import "MPUserSearchViewController.h"
 
 @interface MPUserSearchViewController ()
 

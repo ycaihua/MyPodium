@@ -7,6 +7,7 @@
 //
 
 #import "MPMenuView.h"
+
 @class MPSearchView;
 
 @interface MPUserSearchView : MPMenuView

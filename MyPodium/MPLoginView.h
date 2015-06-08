@@ -9,6 +9,7 @@
 //
 
 #import "MPView.h"
+
 @class MPLabel;
 
 @interface MPLoginView : MPView
