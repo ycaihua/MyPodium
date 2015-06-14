@@ -36,10 +36,12 @@
 
 - (void) updateForTeam:(PFObject *)team {
     [self.teamNameLabel setText: team[@"teamName"]];
-    PFUser* creator = team[@"creator"];
-    [self.teamOwnerLabel setText: [NSString stringWithFormat:@"owner: %@", creator.username]];
+    [team[@"creator"] fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+        PFUser* creator = (PFUser*)object;
+        [self.teamOwnerLabel setText: [NSString stringWithFormat:@"owner: %@", creator.username]];
+    }];
     NSArray* members = team[@"teamMembers"];
-    [self.numPlayersLabel setText:[NSString stringWithFormat:@"%d players", members.count]];
+    [self.numPlayersLabel setText:[NSString stringWithFormat:@"%lu players", (unsigned long)members.count]];
 }
 
 - (void) makeControls {

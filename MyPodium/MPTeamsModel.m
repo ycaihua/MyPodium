@@ -48,6 +48,15 @@
     return [teamInvite delete];
 }
 
+//To delete a team, should also delete all pending invites from team
++ (BOOL) deleteTeam:(PFObject *)team {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@)",
+                              team];
+    PFQuery *query = [PFQuery queryWithClassName:@"TeamInvites" predicate:predicate];
+    NSArray* invites = [query findObjects];
+    return ([PFObject deleteAll:invites] && [team delete]);
+}
+
 
 + (NSArray*) teamsCreatedByUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",

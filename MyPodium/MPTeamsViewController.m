@@ -120,9 +120,11 @@
              [MPTeamsViewController teamsOwnedHeader]]) {
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         //Add targets
+        [cell.rightButton addTarget:self action:@selector(deleteTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else {
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
     }
     
@@ -260,7 +262,7 @@
                                  preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
         //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyFriendQueue", 0);
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyTeamQueue", 0);
         dispatch_async(backgroundQueue, ^{
             BOOL denySuccess = [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
             //If accept success, first update controller data
@@ -289,6 +291,79 @@
                     view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:@"There was an error denying the request. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.teamsTable reloadData];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [confirmDenyAlert addAction: confirmAction];
+    [confirmDenyAlert addAction: cancelAction];
+    [self presentViewController: confirmDenyAlert animated: true completion:nil];
+}
+
+- (void) deleteTeamButtonPressed: (id) sender {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    
+    PFObject* other;
+    if(self.isFiltered) {
+        other = self.teamsOwnedFilteredList[indexPath.row];
+    }
+    else {
+        other = self.teamsOwnedList[indexPath.row];
+    }
+    
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
+    
+    UIAlertController* confirmDenyAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:[NSString stringWithFormat:@"Are you sure you want to delete your team, %@? This action cannot be undone.", other[@"teamName"]]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("DeleteTeamQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL denySuccess = [MPTeamsModel deleteTeam:other];
+            //If accept success, first update controller data
+            //from model data
+            if(denySuccess) {
+                self.isFiltered = NO;
+                NSMutableArray* newTeamsOwnedList = self.teamsOwnedList.mutableCopy;
+                [newTeamsOwnedList removeObject: other];
+                if(newTeamsOwnedList.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPTeamsViewController teamsOwnedHeader]];
+                self.teamsOwnedList = newTeamsOwnedList;
+                
+                NSMutableArray* newAllTeamsList = self.allTeamsList.mutableCopy;
+                [newAllTeamsList removeObject:other];
+                if(newAllTeamsList.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPTeamsViewController allTeamsHeader]];
+                self.allTeamsList = newAllTeamsList;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(denySuccess) {
+                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat: @"You deleted your team, %@.", other[@"teamName"]]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.teamsTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the team. Please try again later."
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPRedColor]];
                     [view.teamsTable reloadData];
