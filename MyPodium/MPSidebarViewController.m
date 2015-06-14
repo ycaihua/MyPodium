@@ -14,6 +14,7 @@
 #import "MPHomeViewController.h"
 #import "MPRegisterViewController.h"
 #import "MPFriendsViewController.h"
+#import "MPTeamsViewController.h"
 #import "MPUserSearchViewController.h"
 
 #import "MMDrawerController.h"
@@ -115,7 +116,7 @@
 + (NSArray*) cellControllerTargets {
     return @[[[MPHomeViewController alloc] init],
              [[MPFriendsViewController alloc] init],
-             [[MPMenuViewController alloc] init],
+             [[MPTeamsViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPUserSearchViewController alloc] init],
              [[MPMenuViewController alloc] init],
