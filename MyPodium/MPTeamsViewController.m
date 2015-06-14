@@ -246,10 +246,10 @@
     
     PFObject* other;
     if(self.isFiltered) {
-        other = self.invitesList[indexPath.row];
+        other = self.invitesFilteredList[indexPath.row];
     }
     else {
-        other = self.invitesFilteredList[indexPath.row];
+        other = self.invitesList[indexPath.row];
     }
     
     [view.menu.subtitleLabel displayMessage:@"Loading..."
@@ -298,7 +298,11 @@
             });
         });
     }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+        [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle]
+                                    revertAfter:FALSE
+                                      withColor:[UIColor whiteColor]];
+    }];
     [confirmDenyAlert addAction: confirmAction];
     [confirmDenyAlert addAction: cancelAction];
     [self presentViewController: confirmDenyAlert animated: true completion:nil];
@@ -371,7 +375,11 @@
             });
         });
     }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+        [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle]
+                                    revertAfter:FALSE
+                                      withColor:[UIColor whiteColor]];
+    }];
     [confirmDenyAlert addAction: confirmAction];
     [confirmDenyAlert addAction: cancelAction];
     [self presentViewController: confirmDenyAlert animated: true completion:nil];

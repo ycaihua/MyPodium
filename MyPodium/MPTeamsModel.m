@@ -84,7 +84,8 @@
     NSArray* matches = [query findObjects];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
     for(PFObject* object in matches) {
-        [results addObject:object[@"sender"]];
+        PFObject* team = object[@"sender"];
+        [results addObject:team];
     }
     return results;
 
