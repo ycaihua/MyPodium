@@ -21,6 +21,7 @@
 #import "CNLabel.h"
 
 #import "MPTeamsViewController.h"
+#import "MPMakeTeamViewController.h"
 
 @interface MPTeamsViewController ()
 
@@ -79,6 +80,7 @@
 - (void) makeControlActions {
     MPTeamsView* view = (MPTeamsView*) self.view;
     [view.searchButton addTarget: self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.makeTeamButton addTarget:self action:@selector(makeTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) searchButtonPressed: (id) sender {
@@ -93,6 +95,11 @@
     else {
         [view displaySearch];
     }
+}
+
+- (void) makeTeamButtonPressed: (id) sender {
+    MPMakeTeamViewController* destination = [[MPMakeTeamViewController alloc] init];
+    [self presentViewController:destination animated:true completion:nil];
 }
 
 #pragma mark table view data/delegate
