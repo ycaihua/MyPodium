@@ -13,6 +13,8 @@
 #import "MPTableHeader.h"
 #import "MPSearchView.h"
 #import "MPTextField.h"
+#import "MPMenu.h"
+#import "CNLabel.h"
 
 @implementation MPTeamsView
 
@@ -28,6 +30,11 @@
 }
 
 - (void) makeControls {
+    //self.loadingHeader
+    self.loadingHeader = [[MPTableHeader alloc] initWithText:@"LOADING..."];
+    self.loadingHeader.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.loadingHeader];
+    
     //self.filterSearch
     self.filterSearch = [[MPSearchView alloc] init];
     [self.filterSearch.searchField setPlaceholder:@"FILTER TEAMS"];
@@ -47,6 +54,8 @@
     self.searchButton = [[MPTeamsButton alloc] init];
     [self.searchButton setTitle:@"SHOW SEARCH" forState:UIControlStateNormal];
     self.searchButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.searchButton setBackgroundColor:[UIColor MPDarkGrayColor]];
+    [self.searchButton setEnabled:NO];
     [self addSubview:self.searchButton];
     
     //self.makeTeamButton
@@ -54,6 +63,13 @@
     [self.makeTeamButton setTitle:@"NEW TEAM" forState:UIControlStateNormal];
     self.makeTeamButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.makeTeamButton];
+}
+
+- (void) finishLoading {
+    [self.searchButton setEnabled:YES];
+    [self.searchButton setBackgroundColor:[UIColor MPBlackColor]];
+    [self.loadingHeader removeFromSuperview];
+    [self.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
 }
 
 - (void) displaySearch {
@@ -124,7 +140,29 @@
 }
 
 - (void) makeControlConstraints {
-    [self addConstraints:@[//self.teamsTable
+    [self addConstraints:@[//self.loadingHeader
+                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.menu
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:8.0f],
+                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.teamsTable
                            [NSLayoutConstraint constraintWithItem:self.teamsTable
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
@@ -152,7 +190,7 @@
                                                            toItem:self.searchButton
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:-5.0f],
                            //self.searchButton
                            [NSLayoutConstraint constraintWithItem:self.searchButton
                                                         attribute:NSLayoutAttributeBottom

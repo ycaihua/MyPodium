@@ -33,6 +33,7 @@
     if(self) {
         MPTeamsView* view = [[MPTeamsView alloc] init];
         self.view = view;
+        [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
@@ -56,6 +57,7 @@
               forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
+                [view finishLoading];
                 [table reloadData];
             });
         });

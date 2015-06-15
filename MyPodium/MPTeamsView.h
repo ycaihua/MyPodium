@@ -14,6 +14,7 @@
 
 @interface MPTeamsView : MPMenuView
 
+@property MPTableHeader* loadingHeader;
 @property MPSearchView* filterSearch;
 @property UITableView* teamsTable;
 @property MPTeamsButton* searchButton;
@@ -22,6 +23,7 @@
 @property BOOL searchAvailable;
 - (void) displaySearch;
 - (void) hideSearch;
+- (void) finishLoading;
 
 + (NSString*) defaultSubtitle;
 
