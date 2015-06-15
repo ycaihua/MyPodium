@@ -15,6 +15,7 @@
 #import "MPRegisterViewController.h"
 #import "MPFriendsViewController.h"
 #import "MPTeamsViewController.h"
+#import "MPMakeTeamViewController.h"
 #import "MPUserSearchViewController.h"
 
 #import "MMDrawerController.h"
@@ -117,6 +118,7 @@
     return @[[[MPHomeViewController alloc] init],
              [[MPFriendsViewController alloc] init],
              [[MPTeamsViewController alloc] init],
+             [[MPMakeTeamViewController alloc] init],
              [[MPMenuViewController alloc] init],
              [[MPUserSearchViewController alloc] init],
              [[MPMenuViewController alloc] init],

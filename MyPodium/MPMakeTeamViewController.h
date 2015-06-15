@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPMenuViewController.h"
+
 #import <UIKit/UIKit.h>
 
-@interface MPMakeTeamViewController : UIViewController
+@interface MPMakeTeamViewController : MPMenuViewController
 
 @end

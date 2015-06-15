@@ -81,7 +81,7 @@
 + (CGFloat) cellHeight { return 45.0f; }
 
 + (NSArray*) cellLabelStrings {
-    return @[@"Home", @"Friends", @"Teams", @"Events",
+    return @[@"Home", @"Friends", @"Teams", @"New Team", @"Events",
              @"User Search", @"Settings", @"Help", @"About",
              @"Log Out"];
 }

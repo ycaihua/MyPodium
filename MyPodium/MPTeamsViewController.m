@@ -23,6 +23,8 @@
 #import "MPTeamsViewController.h"
 #import "MPMakeTeamViewController.h"
 
+#import "AppDelegate.h"
+
 @interface MPTeamsViewController ()
 
 @end
@@ -99,7 +101,8 @@
 
 - (void) makeTeamButtonPressed: (id) sender {
     MPMakeTeamViewController* destination = [[MPMakeTeamViewController alloc] init];
-    [self presentViewController:destination animated:true completion:nil];
+    [self presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
+    [destination addMenuActions];
 }
 
 #pragma mark table view data/delegate
