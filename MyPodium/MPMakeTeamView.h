@@ -9,11 +9,15 @@
 #import "MPMenuView.h"
 
 @class MPTextField;
+@class MPTeamsButton;
+@class MPLabel;
 
 @interface MPMakeTeamView : MPMenuView
 
 @property MPTextField* teamNameField;
+@property MPLabel* instructionLabel;
 @property UITableView* playersTable;
-@property UIButton* submitButton;
+@property MPTeamsButton* goBackButton;
+@property MPTeamsButton* submitButton;
 
 @end
