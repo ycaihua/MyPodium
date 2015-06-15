@@ -39,11 +39,6 @@
     MMDrawerController* container = self.mm_drawerController;
     //If the controller is not part of the root container
     if(container.presentingViewController) {
-        MMDrawerController* presentingContainer = (MMDrawerController*)container.presentingViewController;
-        MPMenuViewController* presentingMenu = (MPMenuViewController*)presentingContainer.centerViewController;
-        MPMenuView* presentingMenuView = (MPMenuView*)presentingMenu.view;
-        [view.menu displayTitlePressMessageForPageName:
-         presentingMenuView.menu.subtitleLabel.persistentText];
         [view.menu.titleButton addTarget:self action:@selector(titleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
