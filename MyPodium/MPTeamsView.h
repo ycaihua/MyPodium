@@ -10,12 +10,18 @@
 
 @class MPSearchView;
 @class MPTableHeader;
+@class MPTeamsButton;
 
 @interface MPTeamsView : MPMenuView
 
 @property MPSearchView* filterSearch;
-@property MPTableHeader* loadingHeader;
 @property UITableView* teamsTable;
+@property MPTeamsButton* searchButton;
+@property MPTeamsButton* makeTeamButton;
+
+@property BOOL searchAvailable;
+- (void) displaySearch;
+- (void) hideSearch;
 
 + (NSString*) defaultSubtitle;
 

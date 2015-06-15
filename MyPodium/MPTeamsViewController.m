@@ -13,6 +13,7 @@
 
 #import "MPTeamsView.h"
 #import "MPTeamCell.h"
+#import "MPTeamsButton.h"
 #import "MPTableHeader.h"
 #import "MPSearchView.h"
 #import "MPTextField.h"
@@ -55,10 +56,10 @@
               forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
-                [view.loadingHeader removeFromSuperview];
                 [table reloadData];
             });
         });
+        [self makeControlActions];
     }
     return self;
 }
@@ -71,6 +72,25 @@
         [self.sectionHeaderNames addObject:[MPTeamsViewController teamsOwnedHeader]];
     if(self.allTeamsList.count > 0)
         [self.sectionHeaderNames addObject:[MPTeamsViewController allTeamsHeader]];
+}
+
+- (void) makeControlActions {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    [view.searchButton addTarget: self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) searchButtonPressed: (id) sender {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    if(view.searchAvailable) {
+        [view hideSearch];
+        view.filterSearch.searchField.text = @"";
+        self.isFiltered = NO;
+        [self updateUnfilteredHeaders];
+        [view.teamsTable reloadData];
+    }
+    else {
+        [view displaySearch];
+    }
 }
 
 #pragma mark table view data/delegate
@@ -126,6 +146,7 @@
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
+        [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -334,13 +355,101 @@
         //Background thread
         dispatch_queue_t backgroundQueue = dispatch_queue_create("DeleteTeamQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPTeamsModel deleteTeam:other];
-            //If accept success, first update controller data
+            BOOL deleteSuccess = [MPTeamsModel deleteTeam:other];
+            //If success, first update controller data
             //from model data
-            if(denySuccess) {
+            if(deleteSuccess) {
                 self.isFiltered = NO;
                 NSMutableArray* newTeamsOwnedList = self.teamsOwnedList.mutableCopy;
                 [newTeamsOwnedList removeObject: other];
+                if(newTeamsOwnedList.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPTeamsViewController teamsOwnedHeader]];
+                self.teamsOwnedList = newTeamsOwnedList;
+                
+                NSMutableArray* newAllTeamsList = self.allTeamsList.mutableCopy;
+                //Because "other" was accessed from teamsOwned, it won't pass the automatic
+                //equality test against the "same" team in allTeams. Manual search needed
+                for(PFObject* team in newAllTeamsList) {
+                    if([[team objectId] isEqualToString:[other objectId]])
+                        [newAllTeamsList removeObject: team];
+                }
+                if(newAllTeamsList.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPTeamsViewController allTeamsHeader]];
+                self.allTeamsList = newAllTeamsList;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(deleteSuccess) {
+                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat: @"You deleted your team, %@.", other[@"teamName"]]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.teamsTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the team. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.teamsTable reloadData];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+        [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle]
+                                    revertAfter:FALSE
+                                      withColor:[UIColor whiteColor]];
+    }];
+    [confirmDenyAlert addAction: confirmAction];
+    [confirmDenyAlert addAction: cancelAction];
+    [self presentViewController: confirmDenyAlert animated: true completion:nil];
+}
+
+- (void) leaveTeamButtonPressed: (id) sender {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    
+    PFObject* other;
+    if(self.isFiltered) {
+        other = self.allTeamsFilteredList[indexPath.row];
+    }
+    else {
+        other = self.allTeamsList[indexPath.row];
+    }
+    
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
+    
+    UIAlertController* confirmDenyAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:[NSString stringWithFormat:@"Are you sure you want to leave your team, %@? If you are the creator of the team, a random teammate will be promoted to creator.", other[@"teamName"]]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("LeaveTeamQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL leaveSuccess = [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
+            //If success, first update controller data
+            //from model data
+            if(leaveSuccess) {
+                self.isFiltered = NO;
+                NSMutableArray* newTeamsOwnedList = self.teamsOwnedList.mutableCopy;
+                //Because "other" was accessed from allTeams, it won't pass the automatic
+                //equality test against the "same" team in teamsOwned. Manual search needed
+                for(PFObject* team in newTeamsOwnedList) {
+                    if([[team objectId] isEqualToString:[other objectId]])
+                        [newTeamsOwnedList removeObject: team];
+                }
+                
                 if(newTeamsOwnedList.count == 0)
                     [self.sectionHeaderNames removeObject:
                      [MPTeamsViewController teamsOwnedHeader]];
@@ -355,11 +464,11 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
-                if(denySuccess) {
+                if(leaveSuccess) {
                     view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You deleted your team, %@.", other[@"teamName"]]
+                     [NSString stringWithFormat: @"You left your team, %@.", other[@"teamName"]]
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
                     [view.teamsTable reloadData];
@@ -367,7 +476,7 @@
                 else {
                     view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the team. Please try again later."
+                    [view.menu.subtitleLabel displayMessage:@"There was an error leaving the team. Please try again later."
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPRedColor]];
                     [view.teamsTable reloadData];

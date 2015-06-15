@@ -63,6 +63,7 @@
 		2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B01B279FD2006C500A /* MPTeamsView.m */; };
 		2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B41B27A10F006C500A /* MPTeamsViewController.m */; };
 		2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B71B27A451006C500A /* MPTeamCell.m */; };
+		2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */; };
 		2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B371B0AC77B00AEF295 /* Bolts.framework */; };
 		2D9A4B3C1B0AC77B00AEF295 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */; };
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
@@ -179,6 +180,8 @@
 		2D94D0B41B27A10F006C500A /* MPTeamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamsViewController.m; sourceTree = "<group>"; };
 		2D94D0B61B27A451006C500A /* MPTeamCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamCell.h; sourceTree = "<group>"; };
 		2D94D0B71B27A451006C500A /* MPTeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamCell.m; sourceTree = "<group>"; };
+		2D94D0B91B2E1213006C500A /* MPTeamsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamsButton.h; sourceTree = "<group>"; };
+		2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamsButton.m; sourceTree = "<group>"; };
 		2D9A4B371B0AC77B00AEF295 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -519,6 +522,8 @@
 			children = (
 				2D94D0AF1B279FD2006C500A /* MPTeamsView.h */,
 				2D94D0B01B279FD2006C500A /* MPTeamsView.m */,
+				2D94D0B91B2E1213006C500A /* MPTeamsButton.h */,
+				2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */,
 				2D94D0B61B27A451006C500A /* MPTeamCell.h */,
 				2D94D0B71B27A451006C500A /* MPTeamCell.m */,
 			);
@@ -707,6 +712,7 @@
 				2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
+				2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */,
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,

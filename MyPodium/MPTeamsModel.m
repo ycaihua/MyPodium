@@ -57,6 +57,24 @@
     return ([PFObject deleteAll:invites] && [team delete]);
 }
 
+//If you leave a team as the owner, elect new creator
++ (BOOL) leaveTeam: (PFObject*) team forUser: (PFUser*) user {
+    NSString* userId = [user objectId];
+    NSString* creatorId = [team[@"creator"] objectId];
+    if([creatorId isEqualToString: userId]) {
+        NSArray* members = team[@"teamMembers"];
+        int i = 0;
+        //find first member that isn't creator
+        while([members[i] isEqualToString: creatorId])
+            i++;
+        PFQuery* query = [PFUser query];
+        [query whereKey:@"objectId" equalTo:members[i]];
+        PFUser* userWithId = [query findObjects][0];
+        [team setObject:userWithId forKey:@"creator"];
+    }
+    [team removeObject: userId forKey:@"teamMembers"];
+    return [team save];
+}
 
 + (NSArray*) teamsCreatedByUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
