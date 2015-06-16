@@ -11,6 +11,7 @@
 
 @interface MPFriendsModel : NSObject
 
++ (BOOL) sendRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) removeFriendRelationWithFirstUser: (PFUser*) first secondUser: (PFUser*) second;

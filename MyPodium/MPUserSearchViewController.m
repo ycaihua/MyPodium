@@ -96,9 +96,141 @@
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"plus" withColorString:@"yellow" withHighlightedColorString:@"black"];
         //Add targets
+        [cell.rightButton addTarget:self action:@selector(addFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
+}
+
+- (void) removeFriendButtonPressed: (id) sender {
+    MPUserSearchView* view = (MPUserSearchView*)self.view;
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    
+    PFUser* other = self.matchingFriends[indexPath.row];
+    
+    //Save, because we want to display a message that won't
+    //revert after at a given time, but will after execution
+    NSString* defaultTitle = view.menu.subtitleLabel.text;
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
+    
+    UIAlertController* confirmRemoveAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("RemoveFriendQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL removeSuccess = [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
+            //If accept success, first update controller data
+            //from model data
+            if(removeSuccess) {
+                NSMutableArray* newMatchingFriends = self.matchingFriends.mutableCopy;
+                [newMatchingFriends removeObject: other];
+                if(newMatchingFriends.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPUserSearchViewController friendsHeader]];
+                self.matchingFriends = newMatchingFriends;
+                
+                NSMutableArray* newMatchingUsers = self.matchingUsers.mutableCopy;
+                [newMatchingUsers addObject:other];
+                if(newMatchingUsers.count == 1)
+                    [self.sectionHeaderNames addObject:
+                     [MPUserSearchViewController usersHeader]];
+                self.matchingUsers = newMatchingUsers;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(removeSuccess) {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat: @"You removed %@ as a friend.", other.username]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.searchTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the friend. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.searchTable reloadData];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [confirmRemoveAlert addAction: confirmAction];
+    [confirmRemoveAlert addAction: cancelAction];
+    [self presentViewController: confirmRemoveAlert animated: true completion:nil];
+}
+
+- (void) addFriendButtonPressed: (id) sender {
+    MPUserSearchView* view = (MPUserSearchView*)self.view;
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    
+    PFUser* other = self.matchingUsers[indexPath.row];
+    
+    //Save, because we want to display a message that won't
+    //revert after at a given time, but will after execution
+    NSString* defaultTitle = view.menu.subtitleLabel.text;
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:FALSE
+                                  withColor:[UIColor MPYellowColor]];
+    
+    UIAlertController* confirmRemoveAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:[NSString stringWithFormat:@"Send a friend request to %@?", other.username]
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("AddFriendQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL addSuccess = [MPFriendsModel sendRequestFromUser:[PFUser currentUser] toUser:other];
+            //If accept success, first update controller data
+            //from model data
+            if(addSuccess) {
+                NSMutableArray* newMatchingUsers = self.matchingUsers.mutableCopy;
+                [newMatchingUsers removeObject:other];
+                if(newMatchingUsers.count == 0)
+                    [self.sectionHeaderNames removeObject:
+                     [MPUserSearchViewController usersHeader]];
+                self.matchingUsers = newMatchingUsers;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(addSuccess) {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat: @"You sent a friend request to %@.", other.username]
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [view.searchTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error sending the request. Please try again later."
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.searchTable reloadData];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [confirmRemoveAlert addAction: confirmAction];
+    [confirmRemoveAlert addAction: cancelAction];
+    [self presentViewController: confirmRemoveAlert animated: true completion:nil];
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {

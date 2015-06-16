@@ -10,6 +10,14 @@
 
 @implementation MPFriendsModel
 
++ (BOOL) sendRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
+    PFObject* request = [PFObject objectWithClassName:@"Friends"
+                                           dictionary:@{@"sender":sender,
+                                                        @"receiver":receiver,
+                                                        @"accepted":[NSNumber numberWithBool:FALSE]}];
+    return [request save];
+}
+
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
                               sender, receiver];

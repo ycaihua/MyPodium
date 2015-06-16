@@ -22,6 +22,8 @@
     NSMutableArray* matches = [MPGlobalModel usersContainingString: string].mutableCopy;
     //Want to exclude the user, and all of user's friends
     NSMutableArray* exclude = [MPFriendsModel friendsForUser:user].mutableCopy;
+    [exclude addObjectsFromArray:[MPFriendsModel incomingPendingRequestsForUser: user]];
+    [exclude addObjectsFromArray:[MPFriendsModel outgoingPendingRequestsForUser: user]];
     //Get usernames of all users to exclude
     NSMutableArray* excludeUsernames = [[NSMutableArray alloc] initWithCapacity:exclude.count + 1];
     for(PFUser* user in exclude) {
