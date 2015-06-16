@@ -45,8 +45,6 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Table UI init once data is retrieved
                 UITableView* table = view.playersTable;
-                table.allowsSelection = YES;
-                table.allowsMultipleSelection = YES;
                 [table registerClass:[MPUserCell class]
               forCellReuseIdentifier:[MPMakeTeamViewController makeTeamReuseIdentifier]];
                 table.delegate = self;
@@ -104,6 +102,7 @@
     [self.selectedFriends addObject: friend];
     if(self.selectedFriends.count == 1)
         [view enableSubmitButton];
+    [view.teamNameField resignFirstResponder];
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -112,6 +111,7 @@
     [self.selectedFriends removeObject: friend];
     if(self.selectedFriends.count == 0)
         [view disableSubmitButton];
+    [view.teamNameField resignFirstResponder];
 }
 
 #pragma mark button events

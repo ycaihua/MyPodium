@@ -37,6 +37,8 @@
     self.searchTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchTable.scrollEnabled = YES;
     self.searchTable.delaysContentTouches = NO;
+    self.searchTable.allowsSelection = NO;
+    self.searchTable.allowsMultipleSelection = NO;
     [self addSubview: self.searchTable];
 }
 - (void) makeControlConstraints {

@@ -45,6 +45,8 @@
     self.playersTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.playersTable.scrollEnabled = YES;
     self.playersTable.delaysContentTouches = NO;
+    self.playersTable.allowsSelection = YES;
+    self.playersTable.allowsMultipleSelection = YES;
     [self addSubview: self.playersTable];
     
     //self.goBackButton
