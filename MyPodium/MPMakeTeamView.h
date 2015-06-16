@@ -20,4 +20,9 @@
 @property MPTeamsButton* goBackButton;
 @property MPTeamsButton* submitButton;
 
+- (void) enableSubmitButton;
+- (void) disableSubmitButton;
+
++ (NSString*) defaultSubtitle;
+
 @end

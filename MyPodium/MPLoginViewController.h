@@ -10,4 +10,6 @@
 
 @interface MPLoginViewController : UIViewController <UITextFieldDelegate>
 
++ (void) login;
+
 @end

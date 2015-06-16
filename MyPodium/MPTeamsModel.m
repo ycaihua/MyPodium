@@ -76,6 +76,20 @@
     return [team save];
 }
 
++ (BOOL) makeTeamWithCreator: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName {
+    PFObject* newTeam = [[PFObject alloc] initWithClassName:@"Team"];
+    newTeam[@"creator"] = user;
+    
+    newTeam[@"teamMembers"] = @[];
+    [newTeam addObject:[user objectId] forKey:@"teamMembers"];
+    for(PFUser* member in players) {
+        [newTeam addObject:[member objectId] forKey:@"teamMembers"];
+    }
+    
+    newTeam[@"teamName"] = teamName;
+    return [newTeam save];
+}
+
 + (NSArray*) teamsCreatedByUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
                               user];

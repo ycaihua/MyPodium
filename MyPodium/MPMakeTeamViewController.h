@@ -10,6 +10,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPMakeTeamViewController : MPMenuViewController
+@interface MPMakeTeamViewController : MPMenuViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
+@property NSArray* friends;
+@property NSMutableArray* selectedFriends;
 
 @end

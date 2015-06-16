@@ -23,6 +23,7 @@
 #import "MPTeamsViewController.h"
 #import "MPMakeTeamViewController.h"
 #import "MMDrawerController.h"
+#import "UIViewController+MMDrawerController.h"
 
 #import "AppDelegate.h"
 
@@ -37,37 +38,41 @@
     if(self) {
         MPTeamsView* view = [[MPTeamsView alloc] init];
         self.view = view;
-        [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+        [self loadDataAndUpdate];
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
                                            action:@selector(filterSearchButtonPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
-        view.filterSearch.searchField.delegate = self;
-        //Data init (in background)
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("TeamsQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-            PFUser* user = [PFUser currentUser];
-            self.invitesList = [MPTeamsModel teamsInvitingUser:user];
-            self.teamsOwnedList = [MPTeamsModel teamsCreatedByUser:user];
-            self.allTeamsList = [MPTeamsModel teamsContainingUser:user];
-            [self updateUnfilteredHeaders];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Table UI init once data is retrieved
-                UITableView* table = view.teamsTable;
-                [table registerClass:[MPTeamCell class]
-              forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
-                table.delegate = self;
-                table.dataSource = self;
-                [view finishLoading];
-                [table reloadData];
-            });
-        });
-        [self makeControlActions];
+        view.filterSearch.searchField.delegate = self;        [self makeControlActions];
     }
     return self;
+}
+
+- (void) loadDataAndUpdate {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    //Data init (in background)
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("TeamsQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
+        PFUser* user = [PFUser currentUser];
+        self.invitesList = [MPTeamsModel teamsInvitingUser:user];
+        self.teamsOwnedList = [MPTeamsModel teamsCreatedByUser:user];
+        self.allTeamsList = [MPTeamsModel teamsContainingUser:user];
+        [self updateUnfilteredHeaders];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //Table UI init once data is retrieved
+            UITableView* table = view.teamsTable;
+            [table registerClass:[MPTeamCell class]
+          forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+            table.delegate = self;
+            table.dataSource = self;
+            [view finishLoading];
+            [table reloadData];
+        });
+    });
 }
 
 - (void) updateUnfilteredHeaders {
@@ -383,9 +388,10 @@
                 NSMutableArray* newAllTeamsList = self.allTeamsList.mutableCopy;
                 //Because "other" was accessed from teamsOwned, it won't pass the automatic
                 //equality test against the "same" team in allTeams. Manual search needed
-                for(PFObject* team in newAllTeamsList) {
-                    if([[team objectId] isEqualToString:[other objectId]])
-                        [newAllTeamsList removeObject: team];
+                int removeIndex = -1;
+                for(int i = 0; i < newAllTeamsList.count; i++) {
+                    if([[newAllTeamsList[i] objectId] isEqualToString:[other objectId]])
+                        removeIndex = i;
                 }
                 if(newAllTeamsList.count == 0)
                     [self.sectionHeaderNames removeObject:
@@ -504,7 +510,7 @@
     }];
     [confirmDenyAlert addAction: confirmAction];
     [confirmDenyAlert addAction: cancelAction];
-    [self presentViewController: confirmDenyAlert animated: true completion:nil];
+    [self.mm_drawerController presentViewController: confirmDenyAlert animated: true completion:nil];
 }
 
 #pragma mark search filtering

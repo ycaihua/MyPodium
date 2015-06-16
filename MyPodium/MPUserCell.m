@@ -34,6 +34,28 @@
     }
 }
 
+- (void) applySelectedUserStyle {
+    self.solidColorView.backgroundColor = [UIColor MPGreenColor];
+    self.leadingBorder.backgroundColor = [UIColor clearColor];
+}
+
+- (void) applyDeselectedUserStyle {
+    self.solidColorView.backgroundColor = [UIColor whiteColor];
+    self.leadingBorder.backgroundColor = [UIColor MPYellowColor];
+}
+
+- (void) setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    if(selected) [self applySelectedUserStyle];
+    else [self applyDeselectedUserStyle];
+}
+
+- (void) setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+    if(selected) [self applySelectedUserStyle];
+    else [self applyDeselectedUserStyle];
+}
+
 - (void) updateForUser:(PFUser *)user {
     [self.friendUsernameLabel setText: [user username]];
     if(user[@"realName"]) {

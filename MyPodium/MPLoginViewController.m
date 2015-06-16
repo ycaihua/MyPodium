@@ -82,14 +82,14 @@
                                  password:view.passwordField.text
                                     block:^(PFUser *user, NSError *error) {
         if (user) {
-            [self login];
+            [MPLoginViewController login];
         } else {
             [alerter checkErrorCondition:true withMessage:@"We couldn't authenticate you. Please check over your login information and make sure you have a network connection."];
         }
     }];
 }
 
-- (void) login {
++ (void) login {
     AppDelegate* delegate = [[UIApplication sharedApplication] delegate];
     MMDrawerController* target = [AppDelegate makeLoggedInRootController];
     delegate.window.rootViewController = target;

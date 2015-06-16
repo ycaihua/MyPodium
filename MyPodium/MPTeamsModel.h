@@ -15,6 +15,7 @@
 + (BOOL) denyInviteFromTeam: (PFObject*) team forUser: (PFUser*) user;
 + (BOOL) deleteTeam: (PFObject*) team;
 + (BOOL) leaveTeam: (PFObject*) team forUser: (PFUser*) user;
++ (BOOL) makeTeamWithCreator: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName;
 
 + (NSArray*) teamsCreatedByUser: (PFUser*) user;
 + (NSArray*) teamsContainingUser: (PFUser*) user;

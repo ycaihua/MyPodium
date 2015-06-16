@@ -29,6 +29,8 @@
     //self.teamNameField
     self.teamNameField = [[MPTextField alloc] initWithPlaceholder:@"TEAM NAME"];
     self.teamNameField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.teamNameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    self.teamNameField.clearButtonMode = UITextFieldViewModeUnlessEditing;
     [self addSubview: self.teamNameField];
     
     //self.instructionLabel
@@ -45,6 +47,12 @@
     self.playersTable.delaysContentTouches = NO;
     [self addSubview: self.playersTable];
     
+    //self.goBackButton
+    self.goBackButton = [[MPTeamsButton alloc] init];
+    [self.goBackButton setTitle:@"GO BACK" forState:UIControlStateNormal];
+    self.goBackButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.goBackButton];
+    
     //self.submitButton
     self.submitButton = [[MPTeamsButton alloc] init];
     [self.submitButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
@@ -52,12 +60,16 @@
     [self.submitButton setBackgroundColor:[UIColor MPDarkGrayColor]];
     [self.submitButton setEnabled:NO];
     [self addSubview:self.submitButton];
-    
-    //self.goBackButton
-    self.goBackButton = [[MPTeamsButton alloc] init];
-    [self.goBackButton setTitle:@"GO BACK" forState:UIControlStateNormal];
-    self.goBackButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.goBackButton];
+}
+
+- (void) enableSubmitButton {
+    self.submitButton.backgroundColor = [UIColor MPBlackColor];
+    self.submitButton.enabled = YES;
+}
+
+- (void) disableSubmitButton {
+    self.submitButton.backgroundColor = [UIColor MPDarkGrayColor];
+    self.submitButton.enabled = NO;
 }
 
 - (void) makeControlConstraints {
@@ -141,35 +153,6 @@
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:-5.0f],
-                           //self.submitButton
-                           [NSLayoutConstraint constraintWithItem:self.submitButton
-                                                        attribute:NSLayoutAttributeBottom
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeBottom
-                                                       multiplier:1.0f
-                                                         constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.submitButton
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeLeading
-                                                       multiplier:1.0f
-                                                         constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.submitButton
-                                                        attribute:NSLayoutAttributeTrailing
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeCenterX
-                                                       multiplier:1.0f
-                                                         constant:-0.5f],
-                           [NSLayoutConstraint constraintWithItem:self.submitButton
-                                                        attribute:NSLayoutAttributeHeight
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:nil
-                                                        attribute:NSLayoutAttributeNotAnAttribute
-                                                       multiplier:1.0f
-                                                         constant:[MPTeamsButton defaultHeight]],
                            //self.goBackButton
                            [NSLayoutConstraint constraintWithItem:self.goBackButton
                                                         attribute:NSLayoutAttributeBottom
@@ -182,17 +165,46 @@
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.goBackButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0f
+                                                         constant:-0.5f],
+                           [NSLayoutConstraint constraintWithItem:self.goBackButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[MPTeamsButton defaultHeight]],
+                           //self.submitButton
+                           [NSLayoutConstraint constraintWithItem:self.submitButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.submitButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.5f],
-                           [NSLayoutConstraint constraintWithItem:self.goBackButton
+                           [NSLayoutConstraint constraintWithItem:self.submitButton
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.goBackButton
+                           [NSLayoutConstraint constraintWithItem:self.submitButton
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil

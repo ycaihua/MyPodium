@@ -22,6 +22,8 @@
 
 @property NSMutableArray* sectionHeaderNames;
 
+- (void) loadDataAndUpdate;
+
 + (NSString*) invitesHeader;
 + (NSString*) teamsOwnedHeader;
 + (NSString*) allTeamsHeader;
