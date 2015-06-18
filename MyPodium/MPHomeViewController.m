@@ -17,6 +17,7 @@
 #import "MPFriendsViewController.h"
 #import "MPTeamsViewController.h"
 #import "MPHomeViewController.h"
+#import "UIViewController+MMDrawerController.h"
 
 #import "AppDelegate.h"
 
@@ -55,13 +56,13 @@
 
 - (void) friendsButtonPressed: (id) sender {
     MPFriendsViewController* destination = [[MPFriendsViewController alloc] init];
-    [self presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
+    [self.mm_drawerController presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
     [destination addMenuActions];
 }
 
 - (void) teamsButtonPressed: (id) sender {
     MPTeamsViewController* destination = [[MPTeamsViewController alloc] init];
-    [self presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
+    [self.mm_drawerController presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
     [destination addMenuActions];
     
 }

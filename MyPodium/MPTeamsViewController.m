@@ -393,6 +393,7 @@
                     if([[newAllTeamsList[i] objectId] isEqualToString:[other objectId]])
                         removeIndex = i;
                 }
+                [newAllTeamsList removeObjectAtIndex:removeIndex];
                 if(newAllTeamsList.count == 0)
                     [self.sectionHeaderNames removeObject:
                      [MPTeamsViewController allTeamsHeader]];
@@ -462,13 +463,14 @@
             if(leaveSuccess) {
                 self.isFiltered = NO;
                 NSMutableArray* newTeamsOwnedList = self.teamsOwnedList.mutableCopy;
-                //Because "other" was accessed from allTeams, it won't pass the automatic
+                //Because "other" was accessed from allteams, it won't pass the automatic
                 //equality test against the "same" team in teamsOwned. Manual search needed
-                for(PFObject* team in newTeamsOwnedList) {
-                    if([[team objectId] isEqualToString:[other objectId]])
-                        [newTeamsOwnedList removeObject: team];
+                int removeIndex = -1;
+                for(int i = 0; i < newTeamsOwnedList.count; i++) {
+                    if([[newTeamsOwnedList[i] objectId] isEqualToString:[other objectId]])
+                        removeIndex = i;
                 }
-                
+                [newTeamsOwnedList removeObjectAtIndex:removeIndex];
                 if(newTeamsOwnedList.count == 0)
                     [self.sectionHeaderNames removeObject:
                      [MPTeamsViewController teamsOwnedHeader]];

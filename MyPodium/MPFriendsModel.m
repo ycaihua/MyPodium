@@ -72,6 +72,24 @@
     return [friendObject delete];
 }
 
++ (MPFriendStatus) friendStatusFromUser:(PFUser *)firstUser toUser:(PFUser *)secondUser {
+    if([firstUser.username isEqualToString: secondUser.username]) return MPFriendStatusSameUser;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@))"
+                              "OR ((sender = %@) AND (receiver = %@))",
+                              firstUser, secondUser, secondUser, firstUser];
+    PFQuery* query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    [query includeKey:@"sender"];
+    [query includeKey:@"receiver"];
+    NSArray* results = [query findObjects];
+    
+    if(results.count == 0) return MPFriendStatusNotFriends;
+    PFObject* friendObject = results[0];
+    if(friendObject[@"accepted"] == [NSNumber numberWithBool:FALSE]) return MPFriendStatusFriends;
+    PFUser* sender = friendObject[@"sender"];
+    if([sender.username isEqualToString: firstUser.username]) return MPFriendStatusOutgoingPending;
+    return MPFriendStatusIncomingPending;
+}
+
 + (NSArray*) incomingPendingRequestsForUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];

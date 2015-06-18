@@ -66,6 +66,8 @@
 		2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */; };
 		2D94D0BF1B2E99E0006C500A /* MPMakeTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0BE1B2E99E0006C500A /* MPMakeTeamView.m */; };
 		2D94D0C31B2F7F3B006C500A /* MPMakeTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0C21B2F7F3B006C500A /* MPMakeTeamViewController.m */; };
+		2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0C61B30E061006C500A /* MPUserProfileView.m */; };
+		2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0CA1B323812006C500A /* MPUserProfileViewController.m */; };
 		2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B371B0AC77B00AEF295 /* Bolts.framework */; };
 		2D9A4B3C1B0AC77B00AEF295 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */; };
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
@@ -188,6 +190,10 @@
 		2D94D0BE1B2E99E0006C500A /* MPMakeTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeTeamView.m; sourceTree = "<group>"; };
 		2D94D0C11B2F7F3B006C500A /* MPMakeTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeTeamViewController.h; sourceTree = "<group>"; };
 		2D94D0C21B2F7F3B006C500A /* MPMakeTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeTeamViewController.m; sourceTree = "<group>"; };
+		2D94D0C51B30E061006C500A /* MPUserProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserProfileView.h; sourceTree = "<group>"; };
+		2D94D0C61B30E061006C500A /* MPUserProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserProfileView.m; sourceTree = "<group>"; };
+		2D94D0C91B323812006C500A /* MPUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserProfileViewController.h; sourceTree = "<group>"; };
+		2D94D0CA1B323812006C500A /* MPUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserProfileViewController.m; sourceTree = "<group>"; };
 		2D9A4B371B0AC77B00AEF295 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -329,6 +335,7 @@
 				2D94D0A91B23CB35006C500A /* Help */,
 				2D2D5AC41B18D29000C46B53 /* Home */,
 				2DE9FCD61B1E55F300F748C9 /* Friends */,
+				2D94D0C81B3237F8006C500A /* UserProfile */,
 				2D94D0B21B27A0EE006C500A /* Teams */,
 				2D94D0C01B2F7F12006C500A /* MakeTeam */,
 				2DE9FCE71B20ACFB00F748C9 /* UserSearch */,
@@ -385,6 +392,7 @@
 				2D94D0AA1B23CB48006C500A /* Help */,
 				2D2D5AC81B18D2E600C46B53 /* Home */,
 				2DE9FCD21B1E55A700F748C9 /* Friends */,
+				2D94D0C41B30DFF6006C500A /* UserProfile */,
 				2D94D0AE1B279FB2006C500A /* Teams */,
 				2D94D0BC1B2E9991006C500A /* MakeTeam */,
 				2DE9FCE31B20AC6C00F748C9 /* UserSearch */,
@@ -565,6 +573,24 @@
 			name = MakeTeam;
 			sourceTree = "<group>";
 		};
+		2D94D0C41B30DFF6006C500A /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2D94D0C51B30E061006C500A /* MPUserProfileView.h */,
+				2D94D0C61B30E061006C500A /* MPUserProfileView.m */,
+			);
+			name = UserProfile;
+			sourceTree = "<group>";
+		};
+		2D94D0C81B3237F8006C500A /* UserProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2D94D0C91B323812006C500A /* MPUserProfileViewController.h */,
+				2D94D0CA1B323812006C500A /* MPUserProfileViewController.m */,
+			);
+			name = UserProfile;
+			sourceTree = "<group>";
+		};
 		2DE9FCCE1B1D5E4000F748C9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -705,6 +731,7 @@
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
+				2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */,
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
 				2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */,
 				2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */,
@@ -740,6 +767,7 @@
 				2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
+				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */,
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,

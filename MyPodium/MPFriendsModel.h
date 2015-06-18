@@ -11,10 +11,20 @@
 
 @interface MPFriendsModel : NSObject
 
+typedef NS_ENUM(NSInteger, MPFriendStatus) {
+    MPFriendStatusSameUser,
+    MPFriendStatusFriends,
+    MPFriendStatusNotFriends,
+    MPFriendStatusIncomingPending,
+    MPFriendStatusOutgoingPending
+};
+
 + (BOOL) sendRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) removeFriendRelationWithFirstUser: (PFUser*) first secondUser: (PFUser*) second;
+
++ (MPFriendStatus) friendStatusFromUser: (PFUser*) sender toUser: (PFUser*) toUser;
 
 + (NSArray*) incomingPendingRequestsForUser: (PFUser*) user;
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user;
