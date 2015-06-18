@@ -8,6 +8,7 @@
 
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+#import "MPControllerPresenter.h"
 
 #import "MPTeamsModel.h"
 
@@ -106,9 +107,7 @@
 }
 
 - (void) makeTeamButtonPressed: (id) sender {
-    MPMakeTeamViewController* destination = [[MPMakeTeamViewController alloc] init];
-    [self presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
-    [destination addMenuActions];
+    [MPControllerPresenter presentViewController:[[MPMakeTeamViewController alloc] init] fromController:self];
 }
 
 #pragma mark table view data/delegate

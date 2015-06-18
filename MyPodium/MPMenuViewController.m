@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPControllerPresenter.h"
+
 #import "MPMenuView.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
@@ -47,12 +49,7 @@
 
 - (void) titleButtonPressed: (id) sender {
     MMDrawerController* container = self.mm_drawerController;
-    [container dismissViewControllerAnimated:true completion:nil];
-    //In order to display the current controller, the presenter has
-    //its menu open, so close it
-    MMDrawerController* presenter = (MMDrawerController*)container.presentingViewController;
-    [presenter closeDrawerAnimated:NO completion:nil];
-    
+    [MPControllerPresenter dismissViewController: container];
 }
 
 - (void) menuButtonPressed: (id) sender {

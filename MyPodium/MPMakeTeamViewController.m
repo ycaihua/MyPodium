@@ -9,6 +9,7 @@
 #import "UIButton+MPImage.h"
 #import "UIColor+MPColor.h"
 #import "MPErrorAlerter.h"
+#import "MPControllerPresenter.h"
 
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
@@ -155,7 +156,7 @@
 }
 
 - (void) goBackButtonPressed: (id) sender {
-    [self dismissViewControllerAnimated:true completion:nil];
+    [MPControllerPresenter dismissViewController: self];
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {

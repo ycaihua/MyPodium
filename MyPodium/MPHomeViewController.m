@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPControllerPresenter.h"
+
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
 
@@ -55,16 +57,11 @@
 }
 
 - (void) friendsButtonPressed: (id) sender {
-    MPFriendsViewController* destination = [[MPFriendsViewController alloc] init];
-    [self.mm_drawerController presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
-    [destination addMenuActions];
+    [MPControllerPresenter presentViewController:[[MPFriendsViewController alloc] init] fromController:self];
 }
 
 - (void) teamsButtonPressed: (id) sender {
-    MPTeamsViewController* destination = [[MPTeamsViewController alloc] init];
-    [self.mm_drawerController presentViewController:[AppDelegate makeDrawerWithCenterController:destination] animated:true completion:nil];
-    [destination addMenuActions];
-    
+    [MPControllerPresenter presentViewController:[[MPTeamsViewController alloc] init] fromController:self];
 }
 
 @end

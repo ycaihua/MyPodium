@@ -28,8 +28,8 @@
     else
         [presenter presentViewController:toPresent animated:true completion:nil];
     
-    if([toPresent isKindOfClass:[MPMenuViewController class]])
-        [(MPMenuViewController*)toPresent addMenuActions];
+    if([controller isKindOfClass:[MPMenuViewController class]])
+        [(MPMenuViewController*)controller addMenuActions];
 }
 
 //Dismiss view controller. If controller has a drawer, call it on the drawer. If the presenter
@@ -40,7 +40,7 @@
     else
         [controller dismissViewControllerAnimated:true completion:nil];
     
-    id presenter = controller.presentingViewController;
+    UIViewController* presenter = controller.presentingViewController;
     SEL refresh = sel_registerName("refreshData:");
     if([presenter respondsToSelector:refresh]) {
         #pragma clang diagnostic push
@@ -48,6 +48,9 @@
         [presenter performSelector:refresh];
         #pragma clang diagnostic pop
     }
+    
+    if([presenter isKindOfClass:[MMDrawerController class]])
+        [(MMDrawerController*)presenter closeDrawerAnimated:NO completion:nil];
 }
 
 @end

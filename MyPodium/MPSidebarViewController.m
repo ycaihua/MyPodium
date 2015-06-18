@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPControllerPresenter.h"
+
 #import "MPSidebarViewController.h"
 #import "MPSidebarView.h"
 #import "MPSidebarViewCell.h"
@@ -95,14 +97,8 @@
         }
         //Accessing other menuized controller
         else if([destination isKindOfClass: [MPMenuViewController class]]) {
-            //We want to keep drawer structure in tact
-            //Create new drawer with new center
-            //AppDelegate method should specify sidebar as left drawer
-            MMDrawerController* destinationContainer =
-            [AppDelegate makeDrawerWithCenterController:destination];
-            
-            [container presentViewController:destinationContainer animated:true completion:nil];
-            [destination addMenuActions];
+            //MPControllerPresenter handles presenting menu controllers
+            [MPControllerPresenter presentViewController:destination fromController:self];
         }
         //Log out
         else {
