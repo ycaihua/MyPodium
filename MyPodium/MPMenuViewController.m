@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPControllerPresenter.h"
+#import "MPControllerManager.h"
 
 #import "MPMenuView.h"
 #import "MPMenu.h"
@@ -49,7 +49,7 @@
 
 - (void) titleButtonPressed: (id) sender {
     MMDrawerController* container = self.mm_drawerController;
-    [MPControllerPresenter dismissViewController: container];
+    [MPControllerManager dismissViewController: container];
 }
 
 - (void) menuButtonPressed: (id) sender {

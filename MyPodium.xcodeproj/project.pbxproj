@@ -68,7 +68,7 @@
 		2D94D0C31B2F7F3B006C500A /* MPMakeTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0C21B2F7F3B006C500A /* MPMakeTeamViewController.m */; };
 		2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0C61B30E061006C500A /* MPUserProfileView.m */; };
 		2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0CA1B323812006C500A /* MPUserProfileViewController.m */; };
-		2D94D0CE1B3268A4006C500A /* MPControllerPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0CD1B3268A4006C500A /* MPControllerPresenter.m */; };
+		2D94D0CE1B3268A4006C500A /* MPControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0CD1B3268A4006C500A /* MPControllerManager.m */; };
 		2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B371B0AC77B00AEF295 /* Bolts.framework */; };
 		2D9A4B3C1B0AC77B00AEF295 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */; };
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
@@ -195,8 +195,8 @@
 		2D94D0C61B30E061006C500A /* MPUserProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserProfileView.m; sourceTree = "<group>"; };
 		2D94D0C91B323812006C500A /* MPUserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserProfileViewController.h; sourceTree = "<group>"; };
 		2D94D0CA1B323812006C500A /* MPUserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserProfileViewController.m; sourceTree = "<group>"; };
-		2D94D0CC1B3268A4006C500A /* MPControllerPresenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPControllerPresenter.h; sourceTree = "<group>"; };
-		2D94D0CD1B3268A4006C500A /* MPControllerPresenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPControllerPresenter.m; sourceTree = "<group>"; };
+		2D94D0CC1B3268A4006C500A /* MPControllerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPControllerManager.h; sourceTree = "<group>"; };
+		2D94D0CD1B3268A4006C500A /* MPControllerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPControllerManager.m; sourceTree = "<group>"; };
 		2D9A4B371B0AC77B00AEF295 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		2D9A4B381B0AC77B00AEF295 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -468,8 +468,8 @@
 				2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */,
 				2DE9FCF71B224C1B00F748C9 /* UIButton+MPImage.h */,
 				2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */,
-				2D94D0CC1B3268A4006C500A /* MPControllerPresenter.h */,
-				2D94D0CD1B3268A4006C500A /* MPControllerPresenter.m */,
+				2D94D0CC1B3268A4006C500A /* MPControllerManager.h */,
+				2D94D0CD1B3268A4006C500A /* MPControllerManager.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -734,7 +734,7 @@
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
-				2D94D0CE1B3268A4006C500A /* MPControllerPresenter.m in Sources */,
+				2D94D0CE1B3268A4006C500A /* MPControllerManager.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
 				2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
-#import "MPControllerPresenter.h"
+#import "MPControllerManager.h"
 
 #import "MPTeamsModel.h"
 
@@ -107,7 +107,7 @@
 }
 
 - (void) makeTeamButtonPressed: (id) sender {
-    [MPControllerPresenter presentViewController:[[MPMakeTeamViewController alloc] init] fromController:self];
+    [MPControllerManager presentViewController:[[MPMakeTeamViewController alloc] init] fromController:self];
 }
 
 #pragma mark table view data/delegate

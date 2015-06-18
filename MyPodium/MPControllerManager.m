@@ -1,19 +1,19 @@
 //
-//  MPControllerPresenter.m
+//  MPControllerManager.m
 //  MyPodium
 //
 //  Created by Connor Neville on 6/17/15.
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPControllerPresenter.h"
+#import "MPControllerManager.h"
 
 #import "MPMenuViewController.h"
 
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
 
-@implementation MPControllerPresenter
+@implementation MPControllerManager
 
 //Present view controller, handling cases depending on whether the controller to present should contain a drawer,
 //whether the presenter is a drawer, and whether to add menu actions afterward

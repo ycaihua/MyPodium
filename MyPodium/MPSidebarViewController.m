@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPControllerPresenter.h"
+#import "MPControllerManager.h"
 
 #import "MPSidebarViewController.h"
 #import "MPSidebarView.h"
@@ -98,7 +98,7 @@
         //Accessing other menuized controller
         else if([destination isKindOfClass: [MPMenuViewController class]]) {
             //MPControllerPresenter handles presenting menu controllers
-            [MPControllerPresenter presentViewController:destination fromController:self];
+            [MPControllerManager presentViewController:destination fromController:self];
         }
         //Log out
         else {

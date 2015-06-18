@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPControllerPresenter.h"
+#import "MPControllerManager.h"
 
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
@@ -57,11 +57,11 @@
 }
 
 - (void) friendsButtonPressed: (id) sender {
-    [MPControllerPresenter presentViewController:[[MPFriendsViewController alloc] init] fromController:self];
+    [MPControllerManager presentViewController:[[MPFriendsViewController alloc] init] fromController:self];
 }
 
 - (void) teamsButtonPressed: (id) sender {
-    [MPControllerPresenter presentViewController:[[MPTeamsViewController alloc] init] fromController:self];
+    [MPControllerManager presentViewController:[[MPTeamsViewController alloc] init] fromController:self];
 }
 
 @end
