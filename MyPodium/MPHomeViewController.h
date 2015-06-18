@@ -10,4 +10,6 @@
 
 @interface MPHomeViewController : MPMenuViewController
 
+- (void) loadOnDismiss: (id) sender;
+
 @end

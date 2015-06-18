@@ -12,6 +12,7 @@
 
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
+#import "MMDrawerController.h"
 
 @implementation MPControllerManager
 
@@ -41,16 +42,32 @@
         [controller dismissViewControllerAnimated:true completion:nil];
     
     UIViewController* presenter = controller.presentingViewController;
-    SEL refresh = sel_registerName("refreshData:");
-    if([presenter respondsToSelector:refresh]) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [presenter performSelector:refresh];
-        #pragma clang diagnostic pop
+    
+    if([presenter isKindOfClass:[MMDrawerController class]]) {
+        MMDrawerController* presenterDrawer = (MMDrawerController*)presenter;
+        UIViewController* center = presenterDrawer.centerViewController;
+        
+        SEL refresh = sel_registerName("loadOnDismiss:");
+        if([center respondsToSelector:refresh]) {
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [center performSelector: refresh withObject: self];
+            #pragma clang diagnostic pop
+        }
+        
+        [(MMDrawerController*)presenter closeDrawerAnimated:NO completion:nil];
     }
     
-    if([presenter isKindOfClass:[MMDrawerController class]])
-        [(MMDrawerController*)presenter closeDrawerAnimated:NO completion:nil];
+    else {
+        SEL refresh = sel_registerName("loadOnDismiss:");
+        if([presenter respondsToSelector:refresh]) {
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [presenter performSelector:refresh withObject: self];
+            #pragma clang diagnostic pop
+        }
+        
+    }
 }
 
 @end

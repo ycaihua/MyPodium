@@ -34,26 +34,38 @@
     if(self) {
         MPHomeView* view = [[MPHomeView alloc] init];
         self.view = view;
-        dispatch_queue_t friendsQueue = dispatch_queue_create("FriendsLabelQueue", 0);
-        dispatch_async(friendsQueue, ^{
-            NSArray* friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [view.friendsButton.customTitleLabel setText:
-                 [NSString stringWithFormat:@"%lu", (unsigned long)friends.count]];
-            });
-        });
-        dispatch_queue_t teamsQueue = dispatch_queue_create("TeamsLabelQueue", 0);
-        dispatch_async(teamsQueue, ^{
-            NSArray* teams = [MPTeamsModel teamsContainingUser:[PFUser currentUser]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [view.teamsButton.customTitleLabel setText:
-                 [NSString stringWithFormat:@"%lu", (unsigned long)teams.count]];
-            });
-        });
-        [view.friendsButton addTarget:self action:@selector(friendsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [view.teamsButton addTarget:self action:@selector(teamsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [self refreshData];
+        [view.friendsButton addTarget:self action:@selector(friendsButtonPressed:)
+                     forControlEvents:UIControlEventTouchUpInside];
+        [view.teamsButton addTarget:self action:@selector(teamsButtonPressed:)
+                   forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
+}
+
+- (void) loadOnDismiss: (id) sender {
+    [self refreshData];
+}
+
+- (void) refreshData {
+    MPHomeView* view = (MPHomeView*) self.view;
+    dispatch_queue_t friendsQueue = dispatch_queue_create("FriendsLabelQueue", 0);
+    dispatch_async(friendsQueue, ^{
+        NSArray* friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.friendsButton.customTitleLabel setText:
+             [NSString stringWithFormat:@"%lu", (unsigned long)friends.count]];
+        });
+    });
+    dispatch_queue_t teamsQueue = dispatch_queue_create("TeamsLabelQueue", 0);
+    dispatch_async(teamsQueue, ^{
+        NSArray* teams = [MPTeamsModel teamsContainingUser:[PFUser currentUser]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.teamsButton.customTitleLabel setText:
+             [NSString stringWithFormat:@"%lu", (unsigned long)teams.count]];
+        });
+    });
+    
 }
 
 - (void) friendsButtonPressed: (id) sender {
