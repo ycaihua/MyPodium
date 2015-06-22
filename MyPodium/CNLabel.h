@@ -13,6 +13,7 @@
 @property NSMutableArray* messages;
 @property NSString* persistentText;
 @property int animationDelay;
+@property NSTimer* timerWithNextAction;
 
 - (id) initWithText:(NSString*)text;
 - (id) initWithCoder:(NSCoder *)aDecoder;

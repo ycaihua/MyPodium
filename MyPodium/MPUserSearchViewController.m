@@ -181,7 +181,6 @@
     
     //Save, because we want to display a message that won't
     //revert after at a given time, but will after execution
-    NSString* defaultTitle = view.menu.subtitleLabel.text;
     [view.menu.subtitleLabel displayMessage:@"Loading..."
                                 revertAfter:FALSE
                                   withColor:[UIColor MPYellowColor]];
@@ -208,7 +207,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(addSuccess) {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.persistentText = [MPUserSearchView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:
                      [NSString stringWithFormat: @"You sent a friend request to %@.", other.username]
@@ -217,7 +216,7 @@
                     [view.searchTable reloadData];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.persistentText = [MPUserSearchView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:@"There was an error sending the request. Please try again later."
                                                 revertAfter:TRUE

@@ -129,8 +129,10 @@
                                 multiplier:1.0f
                                   constant:[UIButton standardWidthAndHeight]]
                            ]];
-};
+}
 
-+ (CGFloat) standardHeight { return 60.0f; };
++ (CGFloat) standardHeight { return 60.0f; }
+
++ (NSString*) defaultTitle { return @"User Search"; }
 
 @end

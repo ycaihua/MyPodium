@@ -74,6 +74,10 @@ static const int DEFAULT_ANIM_DELAY = 3;
     else {
         [self setPersistentText: newText];
         [self.messages removeAllObjects];
+        if(self.timerWithNextAction && [self.timerWithNextAction isValid]) {
+            [self.timerWithNextAction invalidate];
+            self.timerWithNextAction = nil;
+        }
     }
     //Pre-animation setup
     self.alpha = 0;
@@ -89,8 +93,9 @@ static const int DEFAULT_ANIM_DELAY = 3;
     [UIView animateWithDuration:0.5 delay:0 options: UIViewAnimationOptionCurveEaseIn
                      animations:^{ self.alpha = 1;}
                      completion:nil];
+    NSLog(@"Text: %@, persistentText: %@", self.text, self.persistentText);
     if(revertAfter)
-        [NSTimer scheduledTimerWithTimeInterval: self.animationDelay target:self
+        self.timerWithNextAction = [NSTimer scheduledTimerWithTimeInterval: self.animationDelay target:self
             selector:@selector(resetText:) userInfo:previousColor repeats:NO];
 }
 
@@ -107,6 +112,10 @@ static const int DEFAULT_ANIM_DELAY = 3;
     else {
         [self setPersistentText: newText];
         [self.messages removeAllObjects];
+        if(self.timerWithNextAction && [self.timerWithNextAction isValid]) {
+            [self.timerWithNextAction invalidate];
+            self.timerWithNextAction = nil;
+        }
     }
     //Pre-animation setup
     self.alpha = 0;
@@ -117,8 +126,9 @@ static const int DEFAULT_ANIM_DELAY = 3;
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
                      animations:^{ self.alpha = 1;}
                      completion:nil];
+    NSLog(@"Text: %@, persistentText: %@", self.text, self.persistentText);
     if(revertAfter)
-        [NSTimer scheduledTimerWithTimeInterval: self.animationDelay target:self
+        self.timerWithNextAction = [NSTimer scheduledTimerWithTimeInterval: self.animationDelay target:self
             selector:@selector(resetText:) userInfo:nil repeats:NO];
 }
 

@@ -332,9 +332,6 @@
         other = self.outgoingPendingList[indexPath.row];
     }
     
-    //Save, because we want to display a message that won't
-    //revert after at a given time, but will after execution
-    NSString* defaultTitle = view.menu.subtitleLabel.text;
     [view.menu.subtitleLabel displayMessage:@"Loading..."
                                 revertAfter:FALSE
                                   withColor:[UIColor MPYellowColor]];
@@ -356,7 +353,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(cancelSuccess) {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:
                      [NSString stringWithFormat: @"You cancelled your friend request to %@.", other.username]
@@ -365,7 +362,7 @@
                     [view.friendsTable reloadData];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
+                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:@"There was an error cancelling the request. Please try again later."
                                                 revertAfter:TRUE
@@ -376,7 +373,7 @@
         });
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
-        [view.menu.subtitleLabel displayMessage:defaultTitle
+        [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle]
                                     revertAfter:FALSE
                                       withColor:[UIColor whiteColor]];
     }];
