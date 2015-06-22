@@ -10,6 +10,7 @@
 
 @interface CNLabel : UILabel
 
+@property NSMutableArray* messages;
 @property NSString* persistentText;
 @property int animationDelay;
 

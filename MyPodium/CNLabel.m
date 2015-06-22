@@ -24,6 +24,7 @@ static const int DEFAULT_ANIM_DELAY = 3;
     if (self) {
         self.text = text;
         self.persistentText = text;
+        self.messages = [[NSMutableArray alloc] init];
         [self setLineBreakMode: NSLineBreakByWordWrapping];
         [self adjustFrameToText];
         [self setAnimationDelay: DEFAULT_ANIM_DELAY];
@@ -37,6 +38,7 @@ static const int DEFAULT_ANIM_DELAY = 3;
     self = [super initWithCoder:aDecoder];
     if(self) {
         self.persistentText = self.text;
+        self.messages = [[NSMutableArray alloc] init];
         [self setLineBreakMode: NSLineBreakByWordWrapping];
         [self adjustFrameToText];
         [self setAnimationDelay: DEFAULT_ANIM_DELAY];
@@ -63,6 +65,16 @@ static const int DEFAULT_ANIM_DELAY = 3;
 //Display a (temporary or permanent) message with a new color
 - (void) displayMessage: (NSString*) newText revertAfter:(BOOL) revertAfter withColor: (UIColor*) newColor
 {
+    //If revertAfter, add to chain of messages
+    if(revertAfter) {
+        [self.messages addObject: newText];
+        //If there is already another message being displayed, future method calls will handle this method later
+        if(self.messages.count > 1) return;
+    }
+    else {
+        [self setPersistentText: newText];
+        [self.messages removeAllObjects];
+    }
     //Pre-animation setup
     self.alpha = 0;
     //Label content/color change
@@ -85,13 +97,22 @@ static const int DEFAULT_ANIM_DELAY = 3;
 //Display a (temporary or permanent) message without a new color
 - (void) displayMessage: (NSString*) newText revertAfter:(BOOL) revertAfter
 {
+    //If revertAfter, add to chain of messages
+    if(revertAfter) {
+        if(![self.messages containsObject: newText])
+        [self.messages addObject: newText];
+        //If there is already another message being displayed, future method calls will handle this method later
+        if(self.messages.count > 1) return;
+    }
+    else {
+        [self setPersistentText: newText];
+        [self.messages removeAllObjects];
+    }
     //Pre-animation setup
     self.alpha = 0;
     //Label content/color change
     [super setText: newText];
     //Set persistent text if not a temporary message
-    if(!revertAfter)
-        [self setPersistentText: newText];
     //Label animation
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
                      animations:^{ self.alpha = 1;}
@@ -120,7 +141,11 @@ static const int DEFAULT_ANIM_DELAY = 3;
     //Label animation
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn
                      animations:^{ self.alpha = 1;}
-                     completion:nil];
+                     completion:^(BOOL completion){
+                         [self.messages removeLastObject];
+                         if(self.messages.count > 0)
+                             [self displayMessage:self.messages.lastObject revertAfter:YES];
+                     }];
 }
 
 //Returns whether the currently displayed text is an integer
