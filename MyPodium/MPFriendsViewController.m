@@ -41,12 +41,7 @@
         //Data init (in background)
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            PFUser* user = [PFUser currentUser];
-            self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
-            self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
-            self.friendsList = [MPFriendsModel friendsForUser:user];
-            [self updateUnfilteredHeaders];
-            
+            [self refreshData];
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Table UI init once data is retrieved
                 UITableView* table = view.friendsTable;
@@ -67,9 +62,6 @@
     dispatch_async(backgroundQueue, ^{
         MPFriendsView* view = (MPFriendsView*) self.view;
         [self refreshData];
-        //Re-filter
-        if(self.isFiltered)
-            [self filterListsWithString:view.filterSearch.searchField.text];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.friendsTable reloadData];
         });
@@ -82,6 +74,11 @@
     self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
     self.friendsList = [MPFriendsModel friendsForUser:user];
     [self updateUnfilteredHeaders];
+    //Re-filter
+    if(self.isFiltered) {
+        MPFriendsView* view = (MPFriendsView*) self.view;
+        [self filterListsWithString:view.filterSearch.searchField.text];
+    }
 }
 
 - (void) updateUnfilteredHeaders {
@@ -472,6 +469,9 @@
 }
 
 - (void) filterListsWithString: (NSString*) filterString {
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    [view.menu.subtitleLabel displayMessage:@"Filtering..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    
     dispatch_queue_t backgroundQueue = dispatch_queue_create("FilterQueue", 0);
     dispatch_async(backgroundQueue, ^{
         self.isFiltered = YES;
@@ -482,8 +482,6 @@
         self.friendsFilteredList = [[NSMutableArray alloc] initWithCapacity:
                                     self.friendsList.count];
         
-        MPFriendsView* view = (MPFriendsView*) self.view;
-        [view.menu.subtitleLabel displayMessage:@"Filtering..." revertAfter:NO withColor:[UIColor MPYellowColor]];
         
         //Filter incoming pending
         for (PFUser* user in self.incomingPendingList)

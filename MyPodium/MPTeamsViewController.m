@@ -39,41 +39,52 @@
     if(self) {
         MPTeamsView* view = [[MPTeamsView alloc] init];
         self.view = view;
-        [self loadDataAndUpdate];
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
                                            action:@selector(filterSearchButtonPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
-        view.filterSearch.searchField.delegate = self;        [self makeControlActions];
+        view.filterSearch.searchField.delegate = self;
+        [self makeControlActions];
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("LoadQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            [self refreshData];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Table UI init once data is retrieved
+                UITableView* table = view.teamsTable;
+                [table registerClass:[MPTeamCell class]
+              forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+                table.delegate = self;
+                table.dataSource = self;
+                [view finishLoading];
+                [table reloadData];
+            });
+        });
     }
     return self;
 }
 
-- (void) loadDataAndUpdate {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
-    //Data init (in background)
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("TeamsQueue", 0);
+- (void) loadOnDismiss: (id) sender {
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
-        self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-        PFUser* user = [PFUser currentUser];
-        self.invitesList = [MPTeamsModel teamsInvitingUser:user];
-        self.teamsOwnedList = [MPTeamsModel teamsCreatedByUser:user];
-        self.allTeamsList = [MPTeamsModel teamsContainingUser:user];
-        [self updateUnfilteredHeaders];
-        
+        MPTeamsView* view = (MPTeamsView*) self.view;
+        [self refreshData];
+        //Re-filter
+        if(self.isFiltered)
+            [self filterListsWithString:view.filterSearch.searchField.text];
         dispatch_async(dispatch_get_main_queue(), ^{
-            //Table UI init once data is retrieved
-            UITableView* table = view.teamsTable;
-            [table registerClass:[MPTeamCell class]
-          forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
-            table.delegate = self;
-            table.dataSource = self;
-            [view finishLoading];
-            [table reloadData];
+            [view.teamsTable reloadData];
         });
     });
+}
+
+- (void) refreshData {
+    PFUser* user = [PFUser currentUser];
+    self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
+    self.invitesList = [MPTeamsModel teamsInvitingUser:user];
+    self.teamsOwnedList = [MPTeamsModel teamsCreatedByUser:user];
+    self.allTeamsList = [MPTeamsModel teamsContainingUser:user];
+    [self updateUnfilteredHeaders];
 }
 
 - (void) updateUnfilteredHeaders {
@@ -236,22 +247,7 @@
         //If accept success, first update controller data
         //from model data
         if(acceptSuccess) {
-            self.isFiltered = NO;
-            
-            NSMutableArray* newInvitesList = self.invitesList.mutableCopy;
-            [newInvitesList removeObject: other];
-            if(newInvitesList.count == 0)
-                [self.sectionHeaderNames removeObject:
-                 [MPTeamsViewController invitesHeader]];
-            self.invitesList = newInvitesList;
-            
-            NSMutableArray* newAllTeams = self.allTeamsList.mutableCopy;
-            [newAllTeams addObject: other];
-            if(newAllTeams.count == 1) {
-                [self.sectionHeaderNames addObject:
-                 [MPTeamsViewController allTeamsHeader]];
-            }
-            self.allTeamsList = newAllTeams;
+            [self refreshData];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             //Update UI, based on success
@@ -306,13 +302,7 @@
             //If accept success, first update controller data
             //from model data
             if(denySuccess) {
-                self.isFiltered = NO;
-                NSMutableArray* newInvitesList = self.invitesList.mutableCopy;
-                [newInvitesList removeObject: other];
-                if(newInvitesList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPTeamsViewController invitesHeader]];
-                self.invitesList = newInvitesList;
+                [self refreshData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
@@ -376,27 +366,7 @@
             //If success, first update controller data
             //from model data
             if(deleteSuccess) {
-                self.isFiltered = NO;
-                NSMutableArray* newTeamsOwnedList = self.teamsOwnedList.mutableCopy;
-                [newTeamsOwnedList removeObject: other];
-                if(newTeamsOwnedList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPTeamsViewController teamsOwnedHeader]];
-                self.teamsOwnedList = newTeamsOwnedList;
-                
-                NSMutableArray* newAllTeamsList = self.allTeamsList.mutableCopy;
-                //Because "other" was accessed from teamsOwned, it won't pass the automatic
-                //equality test against the "same" team in allTeams. Manual search needed
-                int removeIndex = -1;
-                for(int i = 0; i < newAllTeamsList.count; i++) {
-                    if([[newAllTeamsList[i] objectId] isEqualToString:[other objectId]])
-                        removeIndex = i;
-                }
-                [newAllTeamsList removeObjectAtIndex:removeIndex];
-                if(newAllTeamsList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPTeamsViewController allTeamsHeader]];
-                self.allTeamsList = newAllTeamsList;
+                [self refreshData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
@@ -460,27 +430,7 @@
             //If success, first update controller data
             //from model data
             if(leaveSuccess) {
-                self.isFiltered = NO;
-                NSMutableArray* newTeamsOwnedList = self.teamsOwnedList.mutableCopy;
-                //Because "other" was accessed from allteams, it won't pass the automatic
-                //equality test against the "same" team in teamsOwned. Manual search needed
-                int removeIndex = -1;
-                for(int i = 0; i < newTeamsOwnedList.count; i++) {
-                    if([[newTeamsOwnedList[i] objectId] isEqualToString:[other objectId]])
-                        removeIndex = i;
-                }
-                [newTeamsOwnedList removeObjectAtIndex:removeIndex];
-                if(newTeamsOwnedList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPTeamsViewController teamsOwnedHeader]];
-                self.teamsOwnedList = newTeamsOwnedList;
-                
-                NSMutableArray* newAllTeamsList = self.allTeamsList.mutableCopy;
-                [newAllTeamsList removeObject:other];
-                if(newAllTeamsList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPTeamsViewController allTeamsHeader]];
-                self.allTeamsList = newAllTeamsList;
+                [self refreshData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
