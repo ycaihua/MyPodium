@@ -51,7 +51,7 @@
         if([center respondsToSelector:refresh]) {
             #pragma clang diagnostic push
             #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [center performSelector: refresh withObject: self];
+            [center performSelector:refresh withObject: self];
             #pragma clang diagnostic pop
         }
         

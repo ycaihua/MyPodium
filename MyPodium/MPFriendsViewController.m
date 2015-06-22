@@ -41,7 +41,6 @@
         //Data init (in background)
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
             PFUser* user = [PFUser currentUser];
             self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
             self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
@@ -61,6 +60,26 @@
         });
     }
     return self;
+}
+
+- (void) loadOnDismiss: (id) sender {
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        [self refreshData];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MPFriendsView* view = (MPFriendsView*) self.view;
+            [view.friendsTable reloadData];
+        });
+    });
+}
+
+- (void) refreshData {
+    PFUser* user = [PFUser currentUser];
+    self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
+    self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
+    self.friendsList = [MPFriendsModel friendsForUser:user];
+    [self updateUnfilteredHeaders];
+    self.isFiltered = NO;
 }
 
 - (void) updateUnfilteredHeaders {
@@ -107,6 +126,14 @@
     }
     //Update data for appropriate user
     [cell updateForUser: user];
+    
+    //Remove any existing actions
+    [cell.leftButton removeTarget:nil
+                           action:NULL
+                 forControlEvents:UIControlEventAllEvents];
+    [cell.rightButton removeTarget:nil
+                           action:NULL
+                 forControlEvents:UIControlEventAllEvents];
     
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPFriendsViewController incomingPendingHeader]]) {
@@ -180,7 +207,6 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    
     [view.menu.subtitleLabel displayMessage:@"Loading..."
                                 revertAfter:FALSE
                                   withColor:[UIColor MPYellowColor]];
@@ -201,22 +227,7 @@
         //If accept success, first update controller data
         //from model data
         if(acceptSuccess) {
-            self.isFiltered = NO;
-            
-            NSMutableArray* newIncomingList = self.incomingPendingList.mutableCopy;
-            [newIncomingList removeObject: other];
-            if(newIncomingList.count == 0)
-                [self.sectionHeaderNames removeObject:
-                 [MPFriendsViewController incomingPendingHeader]];
-            self.incomingPendingList = newIncomingList;
-            
-            NSMutableArray* newFriends = self.friendsList.mutableCopy;
-            [newFriends addObject: other];
-            if(newFriends.count == 1) {
-                [self.sectionHeaderNames addObject:
-                 [MPFriendsViewController friendsHeader]];
-            }
-            self.friendsList = newFriends;
+            [self refreshData];
         }
         dispatch_async(dispatch_get_main_queue(), ^{
             //Update UI, based on success
@@ -246,6 +257,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
+    NSLog(@"IndexPath %@", indexPath);
     
     PFUser* other;
     if(self.isFiltered) {
@@ -274,13 +286,7 @@
             //If accept success, first update controller data
             //from model data
             if(denySuccess) {
-                self.isFiltered = NO;
-                NSMutableArray* newIncomingList = self.incomingPendingList.mutableCopy;
-                [newIncomingList removeObject: other];
-                if(newIncomingList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPFriendsViewController incomingPendingHeader]];
-                self.incomingPendingList = newIncomingList;
+                [self refreshData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
@@ -304,7 +310,11 @@
             });
         });
     }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
+        [view.menu.subtitleLabel displayMessage:defaultTitle
+                                    revertAfter:FALSE
+                                      withColor:[UIColor whiteColor]];
+    }];
     [confirmDenyAlert addAction: confirmAction];
     [confirmDenyAlert addAction: cancelAction];
     [self presentViewController: confirmDenyAlert animated: true completion:nil];
@@ -315,6 +325,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
+    NSLog(@"IndexPath %@", indexPath);
     
     PFUser* other;
     if(self.isFiltered) {
@@ -339,21 +350,15 @@
         //Background thread
         dispatch_queue_t backgroundQueue = dispatch_queue_create("CancelFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPFriendsModel removeRequestFromUser: [PFUser currentUser] toUser:other];
+            BOOL cancelSuccess = [MPFriendsModel removeRequestFromUser: [PFUser currentUser] toUser:other];
             //If accept success, first update controller data
             //from model data
-            if(denySuccess) {
-                self.isFiltered = NO;
-                NSMutableArray* newOutgoingList = self.outgoingPendingList.mutableCopy;
-                [newOutgoingList removeObject: other];
-                if(newOutgoingList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPFriendsViewController outgoingPendingHeader]];
-                self.incomingPendingList = newOutgoingList;
+            if(cancelSuccess) {
+                [self refreshData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
-                if(denySuccess) {
+                if(cancelSuccess) {
                     view.menu.subtitleLabel.persistentText = defaultTitle;
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:
@@ -373,7 +378,11 @@
             });
         });
     }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
+        [view.menu.subtitleLabel displayMessage:defaultTitle
+                                    revertAfter:FALSE
+                                      withColor:[UIColor whiteColor]];
+    }];
     [confirmCancelAlert addAction: confirmAction];
     [confirmCancelAlert addAction: cancelAction];
     [self presentViewController: confirmCancelAlert animated: true completion:nil];
@@ -384,6 +393,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
+    NSLog(@"IndexPath %@", indexPath);
     
     PFUser* other;
     if(self.isFiltered) {
@@ -412,13 +422,7 @@
             //If accept success, first update controller data
             //from model data
             if(removeSuccess) {
-                self.isFiltered = NO;
-                NSMutableArray* newFriendsList = self.friendsList.mutableCopy;
-                [newFriendsList removeObject: other];
-                if(newFriendsList.count == 0)
-                    [self.sectionHeaderNames removeObject:
-                     [MPFriendsViewController friendsHeader]];
-                self.friendsList = newFriendsList;
+                [self refreshData];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
@@ -442,7 +446,11 @@
             });
         });
     }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
+        [view.menu.subtitleLabel displayMessage:defaultTitle
+                                    revertAfter:FALSE
+                                      withColor:[UIColor whiteColor]];
+    }];
     [confirmRemoveAlert addAction: confirmAction];
     [confirmRemoveAlert addAction: cancelAction];
     [self presentViewController: confirmRemoveAlert animated: true completion:nil];
