@@ -87,7 +87,8 @@
     if(buttonSender.rowIndex >= 0 && buttonSender.rowIndex <
        [MPSidebarViewController cellControllerTargets].count) {
         //Get destination based on array
-        MPMenuViewController* destination = [MPSidebarViewController cellControllerTargets][buttonSender.rowIndex];
+        Class destinationClass = [MPSidebarViewController cellControllerTargets][buttonSender.rowIndex];
+        MPMenuViewController* destination = [[destinationClass alloc] init];
         //Get current container
         MMDrawerController* container = self.mm_drawerController;
         MPMenuViewController* current = (MPMenuViewController*)[container centerViewController];
@@ -111,16 +112,16 @@
 + (NSString*) sidebarReuseIdentifier { return @"SidebarCell"; }
 
 + (NSArray*) cellControllerTargets {
-    return @[[[MPHomeViewController alloc] init],
-             [[MPFriendsViewController alloc] init],
-             [[MPTeamsViewController alloc] init],
-             [[MPMakeTeamViewController alloc] init],
-             [[MPMenuViewController alloc] init],
-             [[MPUserSearchViewController alloc] init],
-             [[MPMenuViewController alloc] init],
-             [[MPMenuViewController alloc] init],
-             [[MPMenuViewController alloc] init],
-             [[MPRegisterViewController alloc] init]
+    return @[[MPHomeViewController class],
+             [MPFriendsViewController class],
+             [MPTeamsViewController class],
+             [MPMakeTeamViewController class],
+             [MPMenuViewController class],
+             [MPUserSearchViewController class],
+             [MPMenuViewController class],
+             [MPMenuViewController class],
+             [MPMenuViewController class],
+             [MPRegisterViewController class]
              ];
 }
 
