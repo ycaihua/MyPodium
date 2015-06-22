@@ -65,9 +65,12 @@
 - (void) loadOnDismiss: (id) sender {
     dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
+        MPFriendsView* view = (MPFriendsView*) self.view;
         [self refreshData];
+        //Re-filter
+        if(self.isFiltered)
+            [self filterListsWithString:view.filterSearch.searchField.text];
         dispatch_async(dispatch_get_main_queue(), ^{
-            MPFriendsView* view = (MPFriendsView*) self.view;
             [view.friendsTable reloadData];
         });
     });
@@ -79,7 +82,6 @@
     self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
     self.friendsList = [MPFriendsModel friendsForUser:user];
     [self updateUnfilteredHeaders];
-    self.isFiltered = NO;
 }
 
 - (void) updateUnfilteredHeaders {
@@ -257,7 +259,6 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    NSLog(@"IndexPath %@", indexPath);
     
     PFUser* other;
     if(self.isFiltered) {
@@ -325,7 +326,6 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    NSLog(@"IndexPath %@", indexPath);
     
     PFUser* other;
     if(self.isFiltered) {
@@ -393,7 +393,6 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    NSLog(@"IndexPath %@", indexPath);
     
     PFUser* other;
     if(self.isFiltered) {
