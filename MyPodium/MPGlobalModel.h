@@ -13,5 +13,6 @@
 
 + (NSArray*) usersContainingString: (NSString*) string;
 + (NSArray*) userSearchContainingString: (NSString*) string forUser: (PFUser*) user;
++ (NSArray*) userList: (NSArray*) users searchForString: (NSString*) string;
 
 @end

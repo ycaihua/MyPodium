@@ -39,4 +39,15 @@
     return results;
 }
 
++ (NSArray*) userList: (NSArray*) users searchForString: (NSString*) string {
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: users.count];
+    for(PFUser* user in users) {
+        NSLog(@"User %@", user.username);
+        if(([user.username containsString: string]) ||
+           (user[@"realName"] && [user[@"realName"] containsString:string]))
+            [results addObject: user];
+    }
+    return results;
+}
+
 @end

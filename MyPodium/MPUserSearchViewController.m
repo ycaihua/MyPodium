@@ -52,8 +52,11 @@
     return self;
 }
 
-#pragma mark table view data/delegate
+- (void) loadOnDismiss: (id) sender {
+    [self searchButtonPressed: self];
+}
 
+#pragma mark table view data/delegate
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPUserSearchViewController noneFoundHeader]]) {
@@ -79,6 +82,10 @@
              [MPUserSearchViewController friendsHeader]]) {
         user = self.matchingFriends[indexPath.row];
     }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPUserSearchViewController pendingRequestsHeader]]) {
+        user = self.matchingPendingRequests[indexPath.row];
+    }
     else {
         user = self.matchingUsers[indexPath.row];
     }
@@ -86,13 +93,16 @@
     
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPUserSearchViewController friendsHeader]]) {
-        //Update button types on incoming request
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
     }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPUserSearchViewController pendingRequestsHeader]]) {
+        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+    }
     else {
-        //Update button type - outgoing and friends are same images
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"plus" withColorString:@"yellow" withHighlightedColorString:@"black"];
         //Add targets
@@ -245,6 +255,10 @@
              [MPUserSearchViewController usersHeader]]) {
         return self.matchingUsers.count;
     }
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPUserSearchViewController pendingRequestsHeader]]) {
+        return self.matchingPendingRequests.count;
+    }
     else {
         return 1;
     }
@@ -291,12 +305,16 @@
 
 - (void) updateUnfilteredHeaders {
     self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-    if(self.matchingFriends.count == 0 && self.matchingUsers.count == 0) {
+    if(self.matchingFriends.count == 0 &&
+       self.matchingPendingRequests.count == 0 &&
+       self.matchingUsers.count == 0) {
         [self.sectionHeaderNames addObject:[MPUserSearchViewController noneFoundHeader]];
         return;
     }
     if(self.matchingFriends.count > 0)
         [self.sectionHeaderNames addObject:[MPUserSearchViewController friendsHeader]];
+    if(self.matchingPendingRequests.count > 0)
+        [self.sectionHeaderNames addObject:[MPUserSearchViewController pendingRequestsHeader]];
     if(self.matchingUsers.count > 0)
         [self.sectionHeaderNames addObject:[MPUserSearchViewController usersHeader]];
 }
@@ -325,6 +343,9 @@
     dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
     dispatch_async(backgroundQueue, ^{
         self.matchingFriends = [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:string];
+        NSMutableArray* pendingRequests = [MPFriendsModel incomingPendingRequestsForUser: [PFUser currentUser]].mutableCopy;
+        [pendingRequests addObjectsFromArray:[MPFriendsModel outgoingPendingRequestsForUser: [PFUser currentUser]]];
+        self.matchingPendingRequests = [MPGlobalModel userList:pendingRequests searchForString:string];
         self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateUnfilteredHeaders];
@@ -337,6 +358,7 @@
 #pragma mark class methods
 
 + (NSString*) friendsHeader { return @"FRIENDS"; }
++ (NSString*) pendingRequestsHeader { return @"PENDING FRIEND REQUESTS"; }
 + (NSString*) usersHeader { return @"OTHER USERS"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
 + (NSString*) searchReuseIdentifier { return @"userSearchIdentifier"; }

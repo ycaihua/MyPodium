@@ -412,8 +412,6 @@
         dispatch_queue_t backgroundQueue = dispatch_queue_create("RemoveFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
             BOOL removeSuccess = [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
-            //If accept success, first update controller data
-            //from model data
             if(removeSuccess) {
                 [self refreshData];
             }
