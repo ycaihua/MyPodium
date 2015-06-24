@@ -362,6 +362,8 @@
     if(string.length == 0) {
         self.matchingFriends = @[];
         self.matchingUsers = @[];
+        self.matchingPendingRequests = @[];
+        self.matchingTeams = @[];
         [self updateUnfilteredHeaders];
         MPSearchView* view = (MPSearchView*) self.view;
         [view.searchTable reloadData];
