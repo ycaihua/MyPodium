@@ -42,10 +42,20 @@
 + (NSArray*) userList: (NSArray*) users searchForString: (NSString*) string {
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: users.count];
     for(PFUser* user in users) {
-        NSLog(@"User %@", user.username);
         if(([user.username containsString: string]) ||
            (user[@"realName"] && [user[@"realName"] containsString:string]))
             [results addObject: user];
+    }
+    return results;
+}
+
++ (NSArray*) teamList: (NSArray*) teams searchForString: (NSString*) string {
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: teams.count];
+    for(PFObject* team in teams) {
+        PFUser* creator = team[@"creator"];
+        if(([team[@"teamName"] containsString: string]) ||
+           ([creator.username containsString:string]))
+            [results addObject: team];
     }
     return results;
 }

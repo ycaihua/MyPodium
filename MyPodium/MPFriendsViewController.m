@@ -14,7 +14,7 @@
 #import "MPFriendsView.h"
 #import "MPUserCell.h"
 #import "MPTableHeader.h"
-#import "MPSearchView.h"
+#import "MPSearchControl.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"

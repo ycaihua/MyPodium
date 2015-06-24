@@ -8,12 +8,12 @@
 
 #import "MPMenuView.h"
 
-@class MPSearchView;
+@class MPSearchControl;
 @class MPTableHeader;
 
 @interface MPFriendsView : MPMenuView
 
-@property MPSearchView* filterSearch;
+@property MPSearchControl* filterSearch;
 @property MPTableHeader* loadingHeader;
 @property UITableView* friendsTable;
 

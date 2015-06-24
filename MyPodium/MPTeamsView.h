@@ -8,14 +8,14 @@
 
 #import "MPMenuView.h"
 
-@class MPSearchView;
+@class MPSearchControl;
 @class MPTableHeader;
 @class MPTeamsButton;
 
 @interface MPTeamsView : MPMenuView
 
 @property MPTableHeader* loadingHeader;
-@property MPSearchView* filterSearch;
+@property MPSearchControl* filterSearch;
 @property UITableView* teamsTable;
 @property MPTeamsButton* searchButton;
 @property MPTeamsButton* makeTeamButton;

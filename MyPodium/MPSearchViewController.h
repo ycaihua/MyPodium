@@ -1,5 +1,5 @@
 //
-//  MPUserSearchViewController.h
+//  MPSearchViewController.h
 //  MyPodium
 //
 //  Created by Connor Neville on 6/4/15.
@@ -8,11 +8,12 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPUserSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MPSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property NSArray* matchingFriends;
 @property NSArray* matchingPendingRequests;
 @property NSArray* matchingUsers;
+@property NSArray* matchingTeams;
 @property NSMutableArray* sectionHeaderNames;
 
 @end

@@ -2,22 +2,21 @@
 //  MPSearchView.m
 //  MyPodium
 //
-//  Created by Connor Neville on 6/5/15.
+//  Created by Connor Neville on 6/4/15.
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
 #import "UIColor+MPColor.h"
-#import "UIButton+MPImage.h"
 
 #import "MPSearchView.h"
-#import "MPTextField.h"
+#import "MPSearchControl.h"
 
 @implementation MPSearchView
 
 - (id) init {
-    self = [super init];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPSearchView defaultSubtitle]];
     if(self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
     }
@@ -25,114 +24,87 @@
 }
 
 - (void) makeControls {
-    self.bottomBorder = [[UIView alloc] init];
-    self.bottomBorder.backgroundColor = [UIColor MPDarkGrayColor];
-    self.bottomBorder.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.bottomBorder];
+    //self.searchView
+    self.searchView = [[MPSearchControl alloc] init];
+    self.searchView.backgroundColor = [UIColor whiteColor];
+    self.searchView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.searchView];
     
-    self.searchField = [[MPTextField alloc] initWithPlaceholder:@"SEARCH"];
-    self.searchField.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.searchField];
-    
-    self.searchButton = [[UIButton alloc] init];
-    [self.searchButton setImageString:@"arrow" withColorString:@"green" withHighlightedColorString:@"black"];
-    self.searchButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview:self.searchButton];
+    //self.searchTable
+    self.searchTable = [[UITableView alloc] init];
+    self.searchTable.backgroundColor = [UIColor clearColor];
+    self.searchTable.translatesAutoresizingMaskIntoConstraints = NO;
+    self.searchTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.searchTable.scrollEnabled = YES;
+    self.searchTable.delaysContentTouches = NO;
+    self.searchTable.allowsSelection = NO;
+    self.searchTable.allowsMultipleSelection = NO;
+    [self addSubview: self.searchTable];
 }
-
 - (void) makeControlConstraints {
-    [self addConstraints:@[//self.bottomBorder
-                           [NSLayoutConstraint constraintWithItem:self.bottomBorder
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.bottomBorder
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeTrailing
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.bottomBorder
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeBottom
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.bottomBorder
-                                 attribute:NSLayoutAttributeHeight
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:nil
-                                 attribute:NSLayoutAttributeNotAnAttribute
-                                multiplier:1.0f
-                                  constant:1.0f],
-    //self.searchField
-    [NSLayoutConstraint constraintWithItem:self.searchField
-                                 attribute:NSLayoutAttributeLeading
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeLeadingMargin
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.searchField
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self.searchButton
-                                 attribute:NSLayoutAttributeLeading
-                                multiplier:1.0f
-                                  constant:-8.0f],
-    [NSLayoutConstraint constraintWithItem:self.searchField
-                                 attribute:NSLayoutAttributeCenterY
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeCenterY
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.searchField
-                                 attribute:NSLayoutAttributeHeight
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:nil
-                                 attribute:NSLayoutAttributeNotAnAttribute
-                                multiplier:1.0f
-                                  constant:[MPTextField standardHeight]],
-    //self.searchButton
-    [NSLayoutConstraint constraintWithItem:self.searchButton
-                                 attribute:NSLayoutAttributeTrailing
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeTrailing
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.searchButton
-                                 attribute:NSLayoutAttributeTop
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeTop
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.searchButton
-                                 attribute:NSLayoutAttributeBottom
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:self
-                                 attribute:NSLayoutAttributeBottom
-                                multiplier:1.0f
-                                  constant:0.0f],
-    [NSLayoutConstraint constraintWithItem:self.searchButton
-                                 attribute:NSLayoutAttributeWidth
-                                 relatedBy:NSLayoutRelationEqual
-                                    toItem:nil
-                                 attribute:NSLayoutAttributeNotAnAttribute
-                                multiplier:1.0f
-                                  constant:[UIButton standardWidthAndHeight]]
+    [self addConstraints:@[//self.searchView
+                           [NSLayoutConstraint constraintWithItem:self.searchView
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchView
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.menu
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:8.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchView
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[MPSearchControl standardHeight]],
+                           //self.searchTable
+                           [NSLayoutConstraint constraintWithItem:self.searchTable
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.searchView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:8.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchTable
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchTable
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchTable
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            ]];
 }
 
-+ (CGFloat) standardHeight { return 60.0f; }
-
-+ (NSString*) defaultTitle { return @"User Search"; }
++ (NSString*) defaultSubtitle {
+    return @"Global Search";
+}
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "MPTeamsModel.h"
+#import "MPFriendsModel.h"
 
 @implementation MPTeamsModel
 
@@ -120,8 +121,15 @@
         [results addObject:team];
     }
     return results;
-
-    
 }
 
++ (NSArray*) teamsVisibleToUser: (PFUser*)user {
+    NSArray* friendsForUser = [MPFriendsModel friendsForUser:user];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator IN %@) OR (creator = %@)",
+                              friendsForUser, user];
+    PFQuery *query = [PFQuery queryWithClassName:@"Team" predicate:predicate];
+    [query includeKey:@"creator"];
+    NSArray* results = [query findObjects];
+    return results;
+}
 @end

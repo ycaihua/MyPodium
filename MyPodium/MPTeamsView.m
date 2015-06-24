@@ -11,7 +11,7 @@
 #import "MPTeamsView.h"
 #import "MPTeamsButton.h"
 #import "MPTableHeader.h"
-#import "MPSearchView.h"
+#import "MPSearchControl.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
@@ -36,7 +36,7 @@
     [self addSubview: self.loadingHeader];
     
     //self.filterSearch
-    self.filterSearch = [[MPSearchView alloc] init];
+    self.filterSearch = [[MPSearchControl alloc] init];
     [self.filterSearch.searchField setPlaceholder:@"FILTER TEAMS"];
     self.filterSearch.translatesAutoresizingMaskIntoConstraints = NO;
     //NOT showing by default
@@ -109,7 +109,7 @@
                                      toItem:nil
                                   attribute:NSLayoutAttributeNotAnAttribute
                                  multiplier:1.0f
-                                   constant:[MPSearchView standardHeight]],
+                                   constant:[MPSearchControl standardHeight]],
      //self.teamsTable
      [NSLayoutConstraint constraintWithItem:self.teamsTable
                                   attribute:NSLayoutAttributeTop

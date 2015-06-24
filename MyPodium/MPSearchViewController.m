@@ -1,5 +1,5 @@
 //
-//  MPUserSearchViewController.m
+//  MPSearchViewController.m
 //  MyPodium
 //
 //  Created by Connor Neville on 6/4/15.
@@ -10,36 +10,39 @@
 #import "UIButton+MPImage.h"
 
 #import "MPFriendsModel.h"
+#import "MPTeamsModel.h"
 #import "MPGlobalModel.h"
 
-#import "MPUserSearchView.h"
-#import "MPUserCell.h"
-#import "MPTableHeader.h"
 #import "MPSearchView.h"
+#import "MPUserCell.h"
+#import "MPTeamCell.h"
+#import "MPTableHeader.h"
+#import "MPSearchControl.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
 
-#import "MPUserSearchViewController.h"
+#import "MPSearchViewController.h"
 
-@interface MPUserSearchViewController ()
+@interface MPSearchViewController ()
 
 @end
 
-@implementation MPUserSearchViewController
+@implementation MPSearchViewController
 
 - (id) init {
     self = [super init];
     if(self) {
-        MPUserSearchView* view = [[MPUserSearchView alloc] init];
+        MPSearchView* view = [[MPSearchView alloc] init];
         self.view = view;
-        //table initUITableView* table = view.friendsTable;
         [self updateUnfilteredHeaders];
         UITableView* table = view.searchTable;
         [table registerClass:[MPUserCell class]
-      forCellReuseIdentifier:[MPUserSearchViewController searchReuseIdentifier]];
+      forCellReuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+        [table registerClass:[MPTeamCell class]
+      forCellReuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
-      forCellReuseIdentifier:[MPUserSearchViewController blankReuseIdentifier]];
+      forCellReuseIdentifier:[MPSearchViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
         [table reloadData];
@@ -59,31 +62,44 @@
 #pragma mark table view data/delegate
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPUserSearchViewController noneFoundHeader]]) {
+        [MPSearchViewController noneFoundHeader]]) {
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                                [MPUserSearchViewController blankReuseIdentifier] forIndexPath:indexPath];
+                                [MPSearchViewController blankReuseIdentifier] forIndexPath:indexPath];
         if(!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPUserSearchViewController blankReuseIdentifier]];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController blankReuseIdentifier]];
         }
         cell.backgroundColor = [UIColor clearColor];
         return cell;
 
     }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPSearchViewController teamsHeader]]) {
+        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+        if(!cell) {
+            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+        }
+        
+        PFObject* team = self.matchingTeams[indexPath.row];
+        [cell updateForTeam: team];
+        cell.backgroundColor = [UIColor clearColor];
+        return cell;
+    }
     MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                        [MPUserSearchViewController searchReuseIdentifier] forIndexPath:indexPath];
+                        [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
     if(!cell) {
-        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPUserSearchViewController searchReuseIdentifier]];
+        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
     }
     
     cell.indexPath = indexPath;
     
     PFUser* user;
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPUserSearchViewController friendsHeader]]) {
+             [MPSearchViewController friendsHeader]]) {
         user = self.matchingFriends[indexPath.row];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPUserSearchViewController pendingRequestsHeader]]) {
+             [MPSearchViewController pendingRequestsHeader]]) {
         user = self.matchingPendingRequests[indexPath.row];
     }
     else {
@@ -91,14 +107,23 @@
     }
     [cell updateForUser: user];
     
+    
+    //Remove any existing actions
+    [cell.leftButton removeTarget:nil
+                           action:NULL
+                 forControlEvents:UIControlEventAllEvents];
+    [cell.rightButton removeTarget:nil
+                            action:NULL
+                  forControlEvents:UIControlEventAllEvents];
+    
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPUserSearchViewController friendsHeader]]) {
+        [MPSearchViewController friendsHeader]]) {
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPUserSearchViewController pendingRequestsHeader]]) {
+             [MPSearchViewController pendingRequestsHeader]]) {
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
     }
@@ -113,7 +138,7 @@
 }
 
 - (void) removeFriendButtonPressed: (id) sender {
-    MPUserSearchView* view = (MPUserSearchView*)self.view;
+    MPSearchView* view = (MPSearchView*)self.view;
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -143,14 +168,14 @@
                 [newMatchingFriends removeObject: other];
                 if(newMatchingFriends.count == 0)
                     [self.sectionHeaderNames removeObject:
-                     [MPUserSearchViewController friendsHeader]];
+                     [MPSearchViewController friendsHeader]];
                 self.matchingFriends = newMatchingFriends;
                 
                 NSMutableArray* newMatchingUsers = self.matchingUsers.mutableCopy;
                 [newMatchingUsers addObject:other];
                 if(newMatchingUsers.count == 1)
                     [self.sectionHeaderNames addObject:
-                     [MPUserSearchViewController usersHeader]];
+                     [MPSearchViewController usersHeader]];
                 self.matchingUsers = newMatchingUsers;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -182,7 +207,7 @@
 }
 
 - (void) addFriendButtonPressed: (id) sender {
-    MPUserSearchView* view = (MPUserSearchView*)self.view;
+    MPSearchView* view = (MPSearchView*)self.view;
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -211,13 +236,13 @@
                 [newMatchingUsers removeObject:other];
                 if(newMatchingUsers.count == 0)
                     [self.sectionHeaderNames removeObject:
-                     [MPUserSearchViewController usersHeader]];
+                     [MPSearchViewController usersHeader]];
                 self.matchingUsers = newMatchingUsers;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(addSuccess) {
-                    view.menu.subtitleLabel.persistentText = [MPUserSearchView defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:
                      [NSString stringWithFormat: @"You sent a friend request to %@.", other.username]
@@ -226,7 +251,7 @@
                     [view.searchTable reloadData];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPUserSearchView defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:@"There was an error sending the request. Please try again later."
                                                 revertAfter:TRUE
@@ -248,16 +273,20 @@
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if([self.sectionHeaderNames[section] isEqualToString:
-        [MPUserSearchViewController friendsHeader]]) {
+        [MPSearchViewController friendsHeader]]) {
         return self.matchingFriends.count;
     }
     else if([self.sectionHeaderNames[section] isEqualToString:
-             [MPUserSearchViewController usersHeader]]) {
+             [MPSearchViewController usersHeader]]) {
         return self.matchingUsers.count;
     }
     else if([self.sectionHeaderNames[section] isEqualToString:
-             [MPUserSearchViewController pendingRequestsHeader]]) {
+             [MPSearchViewController pendingRequestsHeader]]) {
         return self.matchingPendingRequests.count;
+    }
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPSearchViewController teamsHeader]]) {
+        return self.matchingTeams.count;
     }
     else {
         return 1;
@@ -307,22 +336,25 @@
     self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
     if(self.matchingFriends.count == 0 &&
        self.matchingPendingRequests.count == 0 &&
-       self.matchingUsers.count == 0) {
-        [self.sectionHeaderNames addObject:[MPUserSearchViewController noneFoundHeader]];
+       self.matchingUsers.count == 0 &&
+       self.matchingTeams.count == 0) {
+        [self.sectionHeaderNames addObject:[MPSearchViewController noneFoundHeader]];
         return;
     }
     if(self.matchingFriends.count > 0)
-        [self.sectionHeaderNames addObject:[MPUserSearchViewController friendsHeader]];
+        [self.sectionHeaderNames addObject:[MPSearchViewController friendsHeader]];
     if(self.matchingPendingRequests.count > 0)
-        [self.sectionHeaderNames addObject:[MPUserSearchViewController pendingRequestsHeader]];
+        [self.sectionHeaderNames addObject:[MPSearchViewController pendingRequestsHeader]];
     if(self.matchingUsers.count > 0)
-        [self.sectionHeaderNames addObject:[MPUserSearchViewController usersHeader]];
+        [self.sectionHeaderNames addObject:[MPSearchViewController usersHeader]];
+    if(self.matchingTeams.count > 0)
+        [self.sectionHeaderNames addObject:[MPSearchViewController teamsHeader]];
 }
 
 #pragma mark button actions
 
 - (void) searchButtonPressed: (id) sender {
-    MPUserSearchView* view = (MPUserSearchView*) self.view;
+    MPSearchView* view = (MPSearchView*) self.view;
     [self filterDataWithString:view.searchView.searchField.text];
 }
 
@@ -331,26 +363,30 @@
         self.matchingFriends = @[];
         self.matchingUsers = @[];
         [self updateUnfilteredHeaders];
-        MPUserSearchView* view = (MPUserSearchView*) self.view;
+        MPSearchView* view = (MPSearchView*) self.view;
         [view.searchTable reloadData];
         return;
     }
     
-    MPUserSearchView* view = (MPUserSearchView*) self.view;
+    MPSearchView* view = (MPSearchView*) self.view;
     [view.menu.subtitleLabel displayMessage:@"Searching..." revertAfter:NO withColor:[UIColor MPYellowColor]];
     [view.searchView.searchField resignFirstResponder];
     
     dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
     dispatch_async(backgroundQueue, ^{
+        
         self.matchingFriends = [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:string];
         NSMutableArray* pendingRequests = [MPFriendsModel incomingPendingRequestsForUser: [PFUser currentUser]].mutableCopy;
         [pendingRequests addObjectsFromArray:[MPFriendsModel outgoingPendingRequestsForUser: [PFUser currentUser]]];
         self.matchingPendingRequests = [MPGlobalModel userList:pendingRequests searchForString:string];
+        NSArray* teams = [MPTeamsModel teamsVisibleToUser:[PFUser currentUser]];
+        self.matchingTeams = [MPGlobalModel teamList:teams searchForString:string];
         self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateUnfilteredHeaders];
             [view.searchTable reloadData];
-            [view.menu.subtitleLabel displayMessage:[MPUserSearchView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+            [view.menu.subtitleLabel displayMessage:[MPSearchView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
         });
     });
 }
@@ -360,8 +396,10 @@
 + (NSString*) friendsHeader { return @"FRIENDS"; }
 + (NSString*) pendingRequestsHeader { return @"PENDING FRIEND REQUESTS"; }
 + (NSString*) usersHeader { return @"OTHER USERS"; }
++ (NSString*) teamsHeader { return @"TEAMS"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
-+ (NSString*) searchReuseIdentifier { return @"userSearchIdentifier"; }
++ (NSString*) userReuseIdentifier { return @"userSearchIdentifier"; }
++ (NSString*) teamReuseIdentifier { return @"teamSearchIdentifier"; }
 + (NSString*) blankReuseIdentifier { return @"blankIdentifier"; }
 
 @end

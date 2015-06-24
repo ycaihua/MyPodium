@@ -2,22 +2,19 @@
 //  MPSearchView.h
 //  MyPodium
 //
-//  Created by Connor Neville on 6/5/15.
+//  Created by Connor Neville on 6/4/15.
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "MPView.h"
+#import "MPMenuView.h"
 
-#import <UIKit/UIKit.h>
+@class MPSearchControl;
 
-@class MPTextField;
+@interface MPSearchView : MPMenuView
 
-@interface MPSearchView : MPView
+@property MPSearchControl* searchView;
+@property UITableView* searchTable;
 
-@property UIView* bottomBorder;
-@property MPTextField* searchField;
-@property UIButton* searchButton;
-
-+ (CGFloat) standardHeight;
++ (NSString*) defaultSubtitle;
 
 @end

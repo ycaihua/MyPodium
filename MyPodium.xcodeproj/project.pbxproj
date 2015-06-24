@@ -82,9 +82,9 @@
 		2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD41B1E55E200F748C9 /* MPFriendsView.m */; };
 		2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCD81B1E561600F748C9 /* MPFriendsViewController.m */; };
 		2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */; };
-		2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */; };
-		2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */; };
-		2DE9FCF01B21F5E800F748C9 /* MPSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */; };
+		2DE9FCE61B20AC7F00F748C9 /* MPSearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE51B20AC7F00F748C9 /* MPSearchView.m */; };
+		2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCE91B20AD3A00F748C9 /* MPSearchViewController.m */; };
+		2DE9FCF01B21F5E800F748C9 /* MPSearchControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCEF1B21F5E800F748C9 /* MPSearchControl.m */; };
 		2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */; };
 		2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF51B221AE600F748C9 /* MPUserCell.m */; };
 		2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */; };
@@ -218,12 +218,12 @@
 		2DE9FCD81B1E561600F748C9 /* MPFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFriendsViewController.m; sourceTree = "<group>"; };
 		2DE9FCDD1B1EB8BE00F748C9 /* MPTableHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableHeader.h; sourceTree = "<group>"; };
 		2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableHeader.m; sourceTree = "<group>"; };
-		2DE9FCE41B20AC7F00F748C9 /* MPUserSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchView.h; sourceTree = "<group>"; };
-		2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchView.m; sourceTree = "<group>"; };
-		2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserSearchViewController.h; sourceTree = "<group>"; };
-		2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPUserSearchViewController.m; sourceTree = "<group>"; };
-		2DE9FCEE1B21F5E800F748C9 /* MPSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSearchView.h; sourceTree = "<group>"; };
-		2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSearchView.m; sourceTree = "<group>"; };
+		2DE9FCE41B20AC7F00F748C9 /* MPSearchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSearchView.h; sourceTree = "<group>"; };
+		2DE9FCE51B20AC7F00F748C9 /* MPSearchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSearchView.m; sourceTree = "<group>"; };
+		2DE9FCE81B20AD3A00F748C9 /* MPSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSearchViewController.h; sourceTree = "<group>"; };
+		2DE9FCE91B20AD3A00F748C9 /* MPSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSearchViewController.m; sourceTree = "<group>"; };
+		2DE9FCEE1B21F5E800F748C9 /* MPSearchControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSearchControl.h; sourceTree = "<group>"; };
+		2DE9FCEF1B21F5E800F748C9 /* MPSearchControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSearchControl.m; sourceTree = "<group>"; };
 		2DE9FCF11B22199800F748C9 /* MPGlobalModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGlobalModel.h; sourceTree = "<group>"; };
 		2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGlobalModel.m; sourceTree = "<group>"; };
 		2DE9FCF41B221AE600F748C9 /* MPUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPUserCell.h; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 				2D94D0C81B3237F8006C500A /* UserProfile */,
 				2D94D0B21B27A0EE006C500A /* Teams */,
 				2D94D0C01B2F7F12006C500A /* MakeTeam */,
-				2DE9FCE71B20ACFB00F748C9 /* UserSearch */,
+				2DE9FCE71B20ACFB00F748C9 /* Search */,
 				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
 			);
@@ -398,7 +398,7 @@
 				2D94D0C41B30DFF6006C500A /* UserProfile */,
 				2D94D0AE1B279FB2006C500A /* Teams */,
 				2D94D0BC1B2E9991006C500A /* MakeTeam */,
-				2DE9FCE31B20AC6C00F748C9 /* UserSearch */,
+				2DE9FCE31B20AC6C00F748C9 /* Search */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
 				2D44877A1B054BFF0061EF86 /* LoginRegister */,
@@ -627,24 +627,24 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
-		2DE9FCE31B20AC6C00F748C9 /* UserSearch */ = {
+		2DE9FCE31B20AC6C00F748C9 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				2DE9FCE41B20AC7F00F748C9 /* MPUserSearchView.h */,
-				2DE9FCE51B20AC7F00F748C9 /* MPUserSearchView.m */,
-				2DE9FCEE1B21F5E800F748C9 /* MPSearchView.h */,
-				2DE9FCEF1B21F5E800F748C9 /* MPSearchView.m */,
+				2DE9FCE41B20AC7F00F748C9 /* MPSearchView.h */,
+				2DE9FCE51B20AC7F00F748C9 /* MPSearchView.m */,
+				2DE9FCEE1B21F5E800F748C9 /* MPSearchControl.h */,
+				2DE9FCEF1B21F5E800F748C9 /* MPSearchControl.m */,
 			);
-			name = UserSearch;
+			name = Search;
 			sourceTree = "<group>";
 		};
-		2DE9FCE71B20ACFB00F748C9 /* UserSearch */ = {
+		2DE9FCE71B20ACFB00F748C9 /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				2DE9FCE81B20AD3A00F748C9 /* MPUserSearchViewController.h */,
-				2DE9FCE91B20AD3A00F748C9 /* MPUserSearchViewController.m */,
+				2DE9FCE81B20AD3A00F748C9 /* MPSearchViewController.h */,
+				2DE9FCE91B20AD3A00F748C9 /* MPSearchViewController.m */,
 			);
-			name = UserSearch;
+			name = Search;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -757,12 +757,12 @@
 				2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
 				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
-				2DE9FCF01B21F5E800F748C9 /* MPSearchView.m in Sources */,
+				2DE9FCF01B21F5E800F748C9 /* MPSearchControl.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
-				2DE9FCE61B20AC7F00F748C9 /* MPUserSearchView.m in Sources */,
+				2DE9FCE61B20AC7F00F748C9 /* MPSearchView.m in Sources */,
 				2D94D0BF1B2E99E0006C500A /* MPMakeTeamView.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
@@ -776,7 +776,7 @@
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */,
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
-				2DE9FCEA1B20AD3A00F748C9 /* MPUserSearchViewController.m in Sources */,
+				2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 				2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */,

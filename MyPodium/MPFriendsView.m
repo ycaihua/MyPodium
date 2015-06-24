@@ -10,7 +10,7 @@
 
 #import "MPFriendsView.h"
 #import "MPTableHeader.h"
-#import "MPSearchView.h"
+#import "MPSearchControl.h"
 #import "MPTextField.h"
 
 @implementation MPFriendsView
@@ -27,7 +27,7 @@
 
 - (void) makeControls {
     //self.filterSearch
-    self.filterSearch = [[MPSearchView alloc] init];
+    self.filterSearch = [[MPSearchControl alloc] init];
     [self.filterSearch.searchField setPlaceholder:@"FILTER FRIENDS"];
     self.filterSearch.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.filterSearch];
@@ -77,7 +77,7 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPSearchView standardHeight]],
+                                                         constant:[MPSearchControl standardHeight]],
                            //self.loadingHeader
                            [NSLayoutConstraint constraintWithItem:self.loadingHeader
                                                         attribute:NSLayoutAttributeTop

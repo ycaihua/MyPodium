@@ -16,7 +16,7 @@
 #import "MPTeamCell.h"
 #import "MPTeamsButton.h"
 #import "MPTableHeader.h"
-#import "MPSearchView.h"
+#import "MPSearchControl.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
@@ -154,8 +154,18 @@
         else
             team = self.allTeamsList[indexPath.row];
     }
-    //Update data for appropriate user
+    
+    //Update data for appropriate team
     [cell updateForTeam: team];
+    
+    
+    //Remove any existing actions
+    [cell.leftButton removeTarget:nil
+                           action:NULL
+                 forControlEvents:UIControlEventAllEvents];
+    [cell.rightButton removeTarget:nil
+                            action:NULL
+                  forControlEvents:UIControlEventAllEvents];
     
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPTeamsViewController invitesHeader]]) {
