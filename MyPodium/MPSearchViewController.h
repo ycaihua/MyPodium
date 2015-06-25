@@ -11,7 +11,8 @@
 @interface MPSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property NSArray* matchingFriends;
-@property NSArray* matchingPendingRequests;
+@property NSArray* matchingIncomingRequests;
+@property NSArray* matchingOutgoingRequests;
 @property NSArray* matchingUsers;
 @property NSArray* matchingTeams;
 @property NSMutableArray* sectionHeaderNames;

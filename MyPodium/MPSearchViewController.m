@@ -63,6 +63,7 @@
 
 #pragma mark table view data/delegate
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Blank cell
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
         [MPSearchViewController noneFoundHeader]]) {
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
@@ -74,6 +75,7 @@
         return cell;
 
     }
+    //Teams cell
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
              [MPSearchViewController teamsHeader]]) {
         MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
@@ -87,6 +89,8 @@
         cell.backgroundColor = [UIColor clearColor];
         return cell;
     }
+    
+    //All user-related cells
     MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
                         [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
     if(!cell) {
@@ -101,8 +105,12 @@
         user = self.matchingFriends[indexPath.row];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController pendingRequestsHeader]]) {
-        user = self.matchingPendingRequests[indexPath.row];
+             [MPSearchViewController incomingRequestsHeader]]) {
+        user = self.matchingIncomingRequests[indexPath.row];
+    }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPSearchViewController outgoingRequestsHeader]]) {
+        user = self.matchingOutgoingRequests[indexPath.row];
     }
     else {
         user = self.matchingUsers[indexPath.row];
@@ -124,13 +132,26 @@
         [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
-        [cell.leftButton addTarget:self action:@selector(friendProfilePressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.leftButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController pendingRequestsHeader]]) {
+             [MPSearchViewController incomingRequestsHeader]]) {
+        //Set images
+        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+        //Add targets
+        [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(removeIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPSearchViewController outgoingRequestsHeader]]) {
+        //Set images
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+        //Add targets
+        [cell.leftButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(removeOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:[MPSearchViewController usersHeader]]) {
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
@@ -191,11 +212,33 @@
         [self presentViewController: confirmationAlert animated: true completion:nil];
     }
     else {
-        
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL success = methodAction();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(success) {
+                    view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage: successMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    [self searchButtonPressed: self];
+                    [view.searchTable reloadData];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:errorMessage                                                 revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                    [view.searchTable reloadData];
+                }
+            });
+        });
     }
 }
 
-- (void) friendProfilePressed: (id) sender {
+- (void) friendProfileButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     PFUser* other = self.matchingFriends[indexPath.row];
@@ -203,8 +246,7 @@
 }
 
 - (void) removeFriendButtonPressed: (id) sender {
-    UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     PFUser* other = self.matchingFriends[indexPath.row];
     [self performModelUpdate:^BOOL{
@@ -214,7 +256,55 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
+}
+
+- (void) acceptIncomingButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFUser* other = self.matchingIncomingRequests[indexPath.row];
     
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel acceptRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You accepted %@'s friend request.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:@""];
+}
+
+- (void) removeIncomingButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFUser* other = self.matchingIncomingRequests[indexPath.row];
+    
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel removeRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You denied %@'s friend request.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username]];
+}
+
+- (void) outgoingProfileButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFUser* other = self.matchingOutgoingRequests[indexPath.row];
+    [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
+- (void) removeOutgoingButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFUser* other = self.matchingOutgoingRequests[indexPath.row];
+    
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel removeRequestFromUser:[PFUser currentUser] toUser:other canReverse:YES];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You cancelled your friend request to %@.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]];
 }
 
 - (void) addFriendButtonPressed: (id) sender {
@@ -229,7 +319,6 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to send %@ a friend request?", other.username]];
-    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
@@ -246,8 +335,12 @@
         return self.matchingUsers.count;
     }
     else if([self.sectionHeaderNames[section] isEqualToString:
-             [MPSearchViewController pendingRequestsHeader]]) {
-        return self.matchingPendingRequests.count;
+             [MPSearchViewController incomingRequestsHeader]]) {
+        return self.matchingIncomingRequests.count;
+    }
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPSearchViewController outgoingRequestsHeader]]) {
+        return self.matchingOutgoingRequests.count;
     }
     else if([self.sectionHeaderNames[section] isEqualToString:
              [MPSearchViewController teamsHeader]]) {
@@ -300,7 +393,8 @@
 - (void) updateUnfilteredHeaders {
     self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
     if(self.matchingFriends.count == 0 &&
-       self.matchingPendingRequests.count == 0 &&
+       self.matchingIncomingRequests.count == 0 &&
+       self.matchingOutgoingRequests.count == 0 &&
        self.matchingUsers.count == 0 &&
        self.matchingTeams.count == 0) {
         [self.sectionHeaderNames addObject:[MPSearchViewController noneFoundHeader]];
@@ -308,8 +402,10 @@
     }
     if(self.matchingFriends.count > 0)
         [self.sectionHeaderNames addObject:[MPSearchViewController friendsHeader]];
-    if(self.matchingPendingRequests.count > 0)
-        [self.sectionHeaderNames addObject:[MPSearchViewController pendingRequestsHeader]];
+    if(self.matchingIncomingRequests.count > 0)
+        [self.sectionHeaderNames addObject:[MPSearchViewController incomingRequestsHeader]];
+    if(self.matchingOutgoingRequests.count > 0)
+        [self.sectionHeaderNames addObject:[MPSearchViewController outgoingRequestsHeader]];
     if(self.matchingUsers.count > 0)
         [self.sectionHeaderNames addObject:[MPSearchViewController usersHeader]];
     if(self.matchingTeams.count > 0)
@@ -327,7 +423,8 @@
     if(string.length == 0) {
         self.matchingFriends = @[];
         self.matchingUsers = @[];
-        self.matchingPendingRequests = @[];
+        self.matchingIncomingRequests = @[];
+        self.matchingOutgoingRequests = @[];
         self.matchingTeams = @[];
         [self updateUnfilteredHeaders];
         MPSearchView* view = (MPSearchView*) self.view;
@@ -336,16 +433,17 @@
     }
     
     MPSearchView* view = (MPSearchView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Searching..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
     [view.searchView.searchField resignFirstResponder];
     
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
     dispatch_async(backgroundQueue, ^{
         
         self.matchingFriends = [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:string];
-        NSMutableArray* pendingRequests = [MPFriendsModel incomingPendingRequestsForUser: [PFUser currentUser]].mutableCopy;
-        [pendingRequests addObjectsFromArray:[MPFriendsModel outgoingPendingRequestsForUser: [PFUser currentUser]]];
-        self.matchingPendingRequests = [MPGlobalModel userList:pendingRequests searchForString:string];
+        NSArray* incoming = [MPFriendsModel incomingPendingRequestsForUser: [PFUser currentUser]];
+        self.matchingIncomingRequests = [MPGlobalModel userList:incoming searchForString:string];
+        NSArray* outgoing = [MPFriendsModel outgoingPendingRequestsForUser: [PFUser currentUser]];
+        self.matchingOutgoingRequests = [MPGlobalModel userList:outgoing searchForString:string];
         NSArray* teams = [MPTeamsModel teamsVisibleToUser:[PFUser currentUser]];
         self.matchingTeams = [MPGlobalModel teamList:teams searchForString:string];
         self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
@@ -361,7 +459,8 @@
 #pragma mark class methods
 
 + (NSString*) friendsHeader { return @"FRIENDS"; }
-+ (NSString*) pendingRequestsHeader { return @"PENDING FRIEND REQUESTS"; }
++ (NSString*) incomingRequestsHeader { return @"INCOMING FRIEND REQUESTS"; }
++ (NSString*) outgoingRequestsHeader { return @"OUTGOING FRIEND REQUESTS"; }
 + (NSString*) usersHeader { return @"OTHER USERS"; }
 + (NSString*) teamsHeader { return @"TEAMS"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }

@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, MPFriendStatus) {
 
 + (BOOL) sendRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver canReverse: (BOOL) canReverse;
-+ (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver;
++ (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver canReverse: (BOOL) canReverse;
 + (BOOL) removeFriendRelationWithFirstUser: (PFUser*) first secondUser: (PFUser*) second;
 
 + (MPFriendStatus) friendStatusFromUser: (PFUser*) sender toUser: (PFUser*) toUser;

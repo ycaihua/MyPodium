@@ -21,7 +21,7 @@
 + (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver canReverse: (BOOL) canReverse {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
                               sender, receiver];
-    if(canReverse) predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@)) OR ((sender = %@) AND (receiver = %@))"];
+    if(canReverse) predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@)) OR ((sender = %@) AND (receiver = %@))", sender, receiver, receiver, sender];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {
@@ -37,10 +37,11 @@
     return [friendObject save];
 }
 
-+ (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
++ (BOOL) removeRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver canReverse: (BOOL) canReverse {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)"
                               "AND (accepted = %@)",
                               sender, receiver, [NSNumber numberWithBool:FALSE]];
+    if(canReverse) predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@)) OR ((sender = %@) AND (receiver = %@)) AND (accepted = %@)", sender, receiver, receiver, sender, [NSNumber numberWithBool:FALSE]];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {
@@ -85,7 +86,7 @@
     
     if(results.count == 0) return MPFriendStatusNotFriends;
     PFObject* friendObject = results[0];
-    if(friendObject[@"accepted"] == [NSNumber numberWithBool:FALSE]) return MPFriendStatusFriends;
+    if(friendObject[@"accepted"] == [NSNumber numberWithBool:TRUE]) return MPFriendStatusFriends;
     PFUser* sender = friendObject[@"sender"];
     if([sender.username isEqualToString: firstUser.username]) return MPFriendStatusOutgoingPending;
     return MPFriendStatusIncomingPending;

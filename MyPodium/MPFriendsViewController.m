@@ -280,7 +280,7 @@
         //Background thread
         dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPFriendsModel removeRequestFromUser: other toUser:[PFUser currentUser]];
+            BOOL denySuccess = [MPFriendsModel removeRequestFromUser: other toUser:[PFUser currentUser] canReverse:NO];
             //If accept success, first update controller data
             //from model data
             if(denySuccess) {
@@ -344,7 +344,7 @@
         //Background thread
         dispatch_queue_t backgroundQueue = dispatch_queue_create("CancelFriendQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL cancelSuccess = [MPFriendsModel removeRequestFromUser: [PFUser currentUser] toUser:other];
+            BOOL cancelSuccess = [MPFriendsModel removeRequestFromUser: [PFUser currentUser] toUser:other canReverse:NO];
             //If accept success, first update controller data
             //from model data
             if(cancelSuccess) {
