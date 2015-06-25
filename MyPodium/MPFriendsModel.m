@@ -18,9 +18,10 @@
     return [request save];
 }
 
-+ (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
++ (BOOL) acceptRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver canReverse: (BOOL) canReverse {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
                               sender, receiver];
+    if(canReverse) predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@)) OR ((sender = %@) AND (receiver = %@))"];
     PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {

@@ -222,7 +222,7 @@
             other = self.incomingPendingList[indexPath.row];
         }
         
-        BOOL acceptSuccess = [MPFriendsModel acceptRequestFromUser: other toUser:[PFUser currentUser]];
+        BOOL acceptSuccess = [MPFriendsModel acceptRequestFromUser: other toUser:[PFUser currentUser] canReverse: NO];
         //If accept success, first update controller data
         //from model data
         if(acceptSuccess) {
