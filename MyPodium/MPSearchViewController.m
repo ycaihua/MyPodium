@@ -464,6 +464,17 @@
 }
 
 - (void) requestToJoinTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFObject* other = self.matchingVisibleTeams[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel requestToJoinTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You requested to join %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to request to join the team, %@?", other[@"teamName"]]];
     
 }
 
