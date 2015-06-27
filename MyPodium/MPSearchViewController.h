@@ -14,7 +14,9 @@
 @property NSArray* matchingIncomingRequests;
 @property NSArray* matchingOutgoingRequests;
 @property NSArray* matchingUsers;
-@property NSArray* matchingTeams;
+@property NSArray* matchingOwnedTeams;
+@property NSArray* matchingTeamsAsMember;
+@property NSArray* matchingVisibleTeams;
 @property NSMutableArray* sectionHeaderNames;
 
 @end

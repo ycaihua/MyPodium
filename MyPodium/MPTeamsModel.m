@@ -100,33 +100,26 @@
 }
 
 + (NSArray*) teamsContainingUser: (PFUser*)user {
-    NSString* userID = user.objectId;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN teamMembers)",
-                              userID];
+                              user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:@"Team" predicate:predicate];
     [query includeKey:@"creator"];
     return [query findObjects];
 }
 
 + (NSArray*) teamsInvitingUser: (PFUser*) user {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@)",
-                              user];
-    PFQuery *query = [PFQuery queryWithClassName:@"TeamInvites" predicate:predicate];
-    [query includeKey:@"sender"];
-    [query includeKey:@"receiver"];
-    NSArray* matches = [query findObjects];
-    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
-    for(PFObject* object in matches) {
-        PFObject* team = object[@"sender"];
-        [results addObject:team];
-    }
-    return results;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN invitedMembers)",
+                              user.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:@"Team" predicate:predicate];
+    [query includeKey:@"creator"];
+    return [query findObjects];
 }
 
 + (NSArray*) teamsVisibleToUser: (PFUser*)user {
     NSArray* friendsForUser = [MPFriendsModel friendsForUser:user];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator IN %@) OR (creator = %@)",
-                              friendsForUser, user];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:
+                              @"(creator IN %@) AND (creator != %@) AND !(%@ IN teamMembers)",
+                              friendsForUser, user, user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:@"Team" predicate:predicate];
     [query includeKey:@"creator"];
     NSArray* results = [query findObjects];

@@ -82,7 +82,7 @@
 
 + (NSArray*) cellLabelStrings {
     return @[@"Home", @"Friends", @"Teams", @"New Team", @"Events",
-             @"User Search", @"Settings", @"Help", @"About",
+             @"Global Search", @"Settings", @"Help", @"About",
              @"Log Out"];
 }
 
