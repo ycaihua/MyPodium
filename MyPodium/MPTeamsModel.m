@@ -26,6 +26,22 @@
     return [team delete];
 }
 
++ (BOOL) requestToJoinTeam:(PFObject *)team forUser:(PFUser *)user {
+    [team addObject:user.objectId forKey:@"joinRequests"];
+    return [team save];
+}
+
++ (BOOL) acceptTeamJoinRequest:(PFObject *)team forUser:(PFUser *)user {
+    [team removeObject:user.objectId forKey:@"joinRequests"];
+    [team addObject:user.objectId forKey:@"teamMembers"];
+    return [team save];
+}
+
++ (BOOL) denyTeamJoinRequest:(PFObject *)team forUser:(PFUser *)user {
+    [team removeObject:user.objectId forKey:@"joinRequests"];
+    return [team save];
+}
+
 //If you leave a team as the owner, elect new creator
 + (BOOL) leaveTeam: (PFObject*) team forUser: (PFUser*) user {
     NSString* userId = [user objectId];

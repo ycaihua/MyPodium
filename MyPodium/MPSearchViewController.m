@@ -253,6 +253,8 @@
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
         //Add targets
+        [cell.leftButton addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(requestToJoinTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
         
     }
@@ -455,7 +457,13 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
+}
 
+- (void) visibleTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) requestToJoinTeamButtonPressed: (id) sender {
     
 }
 
