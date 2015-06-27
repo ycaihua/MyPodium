@@ -16,6 +16,8 @@
 @property NSArray* matchingUsers;
 @property NSArray* matchingOwnedTeams;
 @property NSArray* matchingTeamsAsMember;
+@property NSArray* matchingTeamsInvitingUser;
+@property NSArray* matchingTeamsRequestedToJoin;
 @property NSArray* matchingVisibleTeams;
 @property NSMutableArray* sectionHeaderNames;
 

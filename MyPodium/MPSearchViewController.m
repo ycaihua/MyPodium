@@ -232,6 +232,58 @@
         [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPSearchViewController teamsInvitingHeader]]) {
+        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+        if(!cell) {
+            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+        }
+        cell.indexPath = indexPath;
+        PFObject* team = self.matchingTeamsInvitingUser[indexPath.row];
+        [cell updateForTeam: team];
+        //Remove any existing actions
+        [cell.leftButton removeTarget:nil
+                               action:NULL
+                     forControlEvents:UIControlEventAllEvents];
+        [cell.rightButton removeTarget:nil
+                                action:NULL
+                      forControlEvents:UIControlEventAllEvents];
+        
+        //Set images
+        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+        //Add targets
+        [cell.leftButton addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }
+    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
+             [MPSearchViewController teamsRequestedToJoinHeader]]) {
+        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+        if(!cell) {
+            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+        }
+        cell.indexPath = indexPath;
+        PFObject* team = self.matchingTeamsRequestedToJoin[indexPath.row];
+        [cell updateForTeam: team];
+        //Remove any existing actions
+        [cell.leftButton removeTarget:nil
+                               action:NULL
+                     forControlEvents:UIControlEventAllEvents];
+        [cell.rightButton removeTarget:nil
+                                action:NULL
+                      forControlEvents:UIControlEventAllEvents];
+        
+        //Set images
+        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+        //Add targets
+        [cell.leftButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        return cell;
+    }
     else {
         MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
                             [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
@@ -459,6 +511,52 @@
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
 }
 
+- (void) acceptTeamInviteButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFObject* other = self.matchingTeamsInvitingUser[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel acceptInviteFromTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to accept the invitation from %@?", other[@"teamName"]]];
+}
+
+- (void) denyTeamInviteButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFObject* other = self.matchingTeamsInvitingUser[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]];
+}
+
+- (void) requestedTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) cancelTeamRequestButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFObject* other = self.matchingTeamsRequestedToJoin[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel denyTeamJoinRequest:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]];
+}
+
 - (void) visibleTeamProfileButtonPressed: (id) sender {
     //Need to create team profile
 }
@@ -506,6 +604,14 @@
     else if([self.sectionHeaderNames[section] isEqualToString:
              [MPSearchViewController teamsAsMemberHeader]]) {
         return self.matchingTeamsAsMember.count;
+    }
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPSearchViewController teamsInvitingHeader]]) {
+        return self.matchingTeamsInvitingUser.count;
+    }
+    else if([self.sectionHeaderNames[section] isEqualToString:
+             [MPSearchViewController teamsRequestedToJoinHeader]]) {
+        return self.matchingTeamsRequestedToJoin.count;
     }
     else if([self.sectionHeaderNames[section] isEqualToString:
              [MPSearchViewController visibleTeamsHeader]]) {
@@ -557,7 +663,11 @@
 
 - (void) updateUnfilteredHeaders {
     self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-    if(self.matchingFriends.count + self.matchingIncomingRequests.count + self.matchingOutgoingRequests.count + self.matchingOwnedTeams.count + self.matchingTeamsAsMember.count + self.matchingUsers.count + self.matchingVisibleTeams.count == 0) {
+    if(self.matchingFriends.count + self.matchingIncomingRequests.count +
+       self.matchingOutgoingRequests.count + self.matchingOwnedTeams.count +
+       self.matchingTeamsAsMember.count + self.matchingUsers.count +
+       self.matchingTeamsInvitingUser.count + self.matchingTeamsRequestedToJoin.count +
+       self.matchingVisibleTeams.count == 0) {
         [self.sectionHeaderNames addObject:[MPSearchViewController noneFoundHeader]];
         return;
     }
@@ -573,6 +683,10 @@
         [self.sectionHeaderNames addObject:[MPSearchViewController ownedTeamsHeader]];
     if(self.matchingTeamsAsMember.count > 0)
         [self.sectionHeaderNames addObject:[MPSearchViewController teamsAsMemberHeader]];
+    if(self.matchingTeamsInvitingUser.count > 0)
+        [self.sectionHeaderNames addObject:[MPSearchViewController teamsInvitingHeader]];
+    if(self.matchingTeamsRequestedToJoin.count > 0)
+        [self.sectionHeaderNames addObject:[MPSearchViewController teamsRequestedToJoinHeader]];
     if(self.matchingVisibleTeams.count > 0)
         [self.sectionHeaderNames addObject:[MPSearchViewController visibleTeamsHeader]];
 }
@@ -592,6 +706,8 @@
         self.matchingOutgoingRequests = @[];
         self.matchingOwnedTeams = @[];
         self.matchingTeamsAsMember = @[];
+        self.matchingTeamsInvitingUser = @[];
+        self.matchingTeamsRequestedToJoin = @[];
         self.matchingVisibleTeams = @[];
         [self updateUnfilteredHeaders];
         MPSearchView* view = (MPSearchView*) self.view;
@@ -623,6 +739,12 @@
         NSArray* visibleTeams = [MPTeamsModel teamsVisibleToUser:[PFUser currentUser]];
         self.matchingVisibleTeams = [MPGlobalModel teamList:visibleTeams searchForString:string];
         
+        NSArray* invites = [MPTeamsModel teamsInvitingUser:[PFUser currentUser]];
+        self.matchingTeamsInvitingUser = [MPGlobalModel teamList:invites searchForString:string];
+        
+        NSArray* joinRequests = [MPTeamsModel teamsRequestedByUser:[PFUser currentUser]];
+        self.matchingTeamsRequestedToJoin = [MPGlobalModel teamList:joinRequests searchForString:string];
+        
         self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -641,6 +763,8 @@
 + (NSString*) usersHeader { return @"OTHER USERS"; }
 + (NSString*) ownedTeamsHeader { return @"OWNED TEAMS"; }
 + (NSString*) teamsAsMemberHeader { return @"TEAMS I'M ON"; }
++ (NSString*) teamsInvitingHeader { return @"TEAMS INVITING ME"; }
++ (NSString*) teamsRequestedToJoinHeader { return @"TEAMS I REQUESTED TO JOIN"; }
 + (NSString*) visibleTeamsHeader { return @"OTHER VISIBLE TEAMS"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
 + (NSString*) userReuseIdentifier { return @"userSearchIdentifier"; }

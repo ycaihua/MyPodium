@@ -99,11 +99,19 @@
     return [query findObjects];
 }
 
++ (NSArray*) teamsRequestedByUser: (PFUser*) user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN joinRequests)",
+                              user.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
+    [query includeKey:@"creator"];
+    return [query findObjects];
+}
+
 + (NSArray*) teamsVisibleToUser: (PFUser*)user {
     NSArray* friendsForUser = [MPFriendsModel friendsForUser:user];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"(creator IN %@) AND (creator != %@) AND !(%@ IN teamMembers)",
-                              friendsForUser, user, user.objectId];
+                              @"(creator IN %@) AND (creator != %@) AND !(%@ IN teamMembers) AND !(%@ IN invitedMembers) AND !(%@ IN joinRequests)",
+                              friendsForUser, user, user.objectId, user.objectId, user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
     [query includeKey:@"creator"];
     NSArray* results = [query findObjects];

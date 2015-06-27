@@ -23,6 +23,7 @@
 + (NSArray*) teamsCreatedByUser: (PFUser*) user;
 + (NSArray*) teamsContainingUser: (PFUser*) user;
 + (NSArray*) teamsInvitingUser: (PFUser*) user;
++ (NSArray*) teamsRequestedByUser: (PFUser*) user;
 + (NSArray*) teamsVisibleToUser: (PFUser*) user;
 
 @end
