@@ -202,6 +202,8 @@
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
+        [cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
     else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
@@ -226,6 +228,8 @@
         [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
         [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
         //Add targets
+        [cell.leftButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
     }
     else {
@@ -415,6 +419,43 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to send %@ a friend request?", other.username]];
+}
+
+- (void) ownedTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) deleteOwnedTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFObject* other = self.matchingOwnedTeams[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel deleteTeam: other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]];
+}
+
+- (void) memberTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) leaveTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    PFObject* other = self.matchingTeamsAsMember[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
+
     
 }
 
