@@ -60,7 +60,7 @@
 }
 
 - (void) makeTableSections {
-    self.tableSections = @{[MPSearchViewController friendsHeader]:
+    self.tableSections = @[
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController friendsHeader]
                                 withDataBlock:^() {
@@ -94,7 +94,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object) {
                                     [(MPUserCell*)cell updateForUser:object];
                                 }],
-                           [MPSearchViewController incomingRequestsHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController incomingRequestsHeader]
                                 withDataBlock:^(){
@@ -129,7 +128,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPUserCell*)cell updateForUser:object];
                                 }],
-                           [MPSearchViewController outgoingRequestsHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController outgoingRequestsHeader]
                                 withDataBlock:^(){
@@ -164,7 +162,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPUserCell*)cell updateForUser:object];
                                 }],
-                           [MPSearchViewController usersHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController usersHeader]
                                 withDataBlock:^(){
@@ -198,7 +195,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPUserCell*)cell updateForUser:object];
                                 }],
-                           [MPSearchViewController ownedTeamsHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController ownedTeamsHeader]
                                 withDataBlock:^(){
@@ -232,7 +228,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPTeamCell*)cell updateForTeam:object];
                                 }],
-                           [MPSearchViewController teamsAsMemberHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController teamsAsMemberHeader]
                                 withDataBlock:^(){
@@ -268,7 +263,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPTeamCell*)cell updateForTeam:object];
                                 }],
-                           [MPSearchViewController teamsInvitingHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController teamsInvitingHeader]
                                 withDataBlock:^(){
@@ -304,7 +298,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPTeamCell*)cell updateForTeam:object];
                                 }],
-                           [MPSearchViewController teamsRequestedToJoinHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController teamsRequestedToJoinHeader]
                                 withDataBlock:^(){
@@ -340,7 +333,6 @@
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPTeamCell*)cell updateForTeam: object];
                                 }],
-                           [MPSearchViewController visibleTeamsHeader]:
                                [[MPTableSectionUtility alloc]
                                 initWithHeaderTitle:[MPSearchViewController visibleTeamsHeader]
                                 withDataBlock:^(){
@@ -375,8 +367,7 @@
                                 }
                                 withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                     [(MPTeamCell*)cell updateForTeam:object];
-                                }],
-                           };
+                                }]];
 }
 
 - (void) loadOnDismiss: (id) sender {
@@ -399,7 +390,7 @@
     }
     else {
         NSString* sectionHeader = self.sectionHeaderNames[indexPath.section];
-        MPTableSectionUtility* section = [self.tableSections objectForKey:sectionHeader];
+        MPTableSectionUtility* section = [self tableSectionWithHeader: sectionHeader];
         UITableViewCell* cell = section.cellCreationBlock(tableView, indexPath);
         id object = section.dataObjects[indexPath.row];
         section.cellUpdateBlock(cell, object);
@@ -483,7 +474,7 @@
 - (void) friendProfileButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController friendsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
 }
@@ -491,7 +482,7 @@
 - (void) removeFriendButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController friendsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
@@ -505,7 +496,7 @@
 - (void) acceptIncomingButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController incomingRequestsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel acceptRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
@@ -519,7 +510,7 @@
 - (void) removeIncomingButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController incomingRequestsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
@@ -533,7 +524,7 @@
 - (void) outgoingProfileButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController outgoingRequestsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController outgoingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
 }
@@ -541,7 +532,7 @@
 - (void) removeOutgoingButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController outgoingRequestsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController outgoingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeRequestFromUser:[PFUser currentUser] toUser:other canReverse:YES];
@@ -555,7 +546,7 @@
 - (void) userProfileButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController usersHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController usersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
 }
@@ -564,7 +555,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController usersHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController usersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel sendRequestFromUser:[PFUser currentUser] toUser:other];
@@ -583,7 +574,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController ownedTeamsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel deleteTeam: other];
@@ -602,7 +593,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController teamsAsMemberHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsAsMemberHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
@@ -617,7 +608,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController teamsInvitingHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel acceptInviteFromTeam:other forUser:[PFUser currentUser]];
@@ -632,7 +623,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController teamsInvitingHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
@@ -651,7 +642,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController teamsRequestedToJoinHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsRequestedToJoinHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyTeamJoinRequest:other forUser:[PFUser currentUser]];
@@ -670,7 +661,7 @@
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = self.tableSections[[MPSearchViewController visibleTeamsHeader]];
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController visibleTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel requestToJoinTeam:other forUser:[PFUser currentUser]];
@@ -679,7 +670,6 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to request to join the team, %@?", other[@"teamName"]]];
-    
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
@@ -689,7 +679,7 @@
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if([self.sectionHeaderNames[section] isEqualToString:[MPSearchViewController noneFoundHeader]])
         return 1;
-    MPTableSectionUtility* sectionUtility = self.tableSections[self.sectionHeaderNames[section]];
+    MPTableSectionUtility* sectionUtility = [self tableSectionWithHeader:self.sectionHeaderNames[section]];
     return  sectionUtility.dataObjects.count;
 }
 
@@ -734,10 +724,10 @@
 
 - (void) updateUnfilteredHeaders {
     NSMutableArray* headerNames = [[NSMutableArray alloc] init];
-    for(id key in self.tableSections) {
-        MPTableSectionUtility* section = self.tableSections[key];
-        if(section.dataObjects.count > 0)
-            [headerNames insertObject:section.headerTitle atIndex:0];
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if(section.dataObjects.count > 0) {
+            [headerNames addObject: section.headerTitle];
+        }
     }
     if(headerNames.count == 0)
         [headerNames addObject: [MPSearchViewController noneFoundHeader]];
@@ -761,16 +751,23 @@
     
     dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
     dispatch_async(backgroundQueue, ^{
-        for(id key in self.tableSections) {
-            MPTableSectionUtility* sectionUtility = self.tableSections[key];
+        for(MPTableSectionUtility* sectionUtility in self.tableSections) {
             [sectionUtility reloadData];
         }
+        [self updateUnfilteredHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self updateUnfilteredHeaders];
             [view.searchTable reloadData];
             [view.menu.subtitleLabel displayMessage:[MPSearchView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
         });
     });
+}
+
+- (MPTableSectionUtility*) tableSectionWithHeader: (NSString*) header {
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if([section.headerTitle isEqualToString: header])
+            return section;
+    }
+    return nil;
 }
 
 #pragma mark class methods
