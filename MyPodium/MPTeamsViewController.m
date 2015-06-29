@@ -9,8 +9,10 @@
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
 #import "MPControllerManager.h"
+#import "MPTableSectionUtility.h"
 
 #import "MPTeamsModel.h"
+#import "MPGlobalModel.h"
 
 #import "MPTeamsView.h"
 #import "MPTeamCell.h"
@@ -46,22 +48,58 @@
                                  forControlEvents:UIControlEventTouchUpInside];
         view.filterSearch.searchField.delegate = self;
         [self makeControlActions];
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("LoadQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            [self refreshData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Table UI init once data is retrieved
-                UITableView* table = view.teamsTable;
-                [table registerClass:[MPTeamCell class]
-              forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
-                table.delegate = self;
-                table.dataSource = self;
-                [view finishLoading];
-                [table reloadData];
-            });
-        });
+        [self makeTableSections];
+        UITableView* table = view.teamsTable;
+        [table registerClass:[MPTeamCell class]
+      forCellReuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+        [table registerClass:[UITableViewCell class]
+      forCellReuseIdentifier:[MPTeamsViewController blankReuseIdentifier]];
+        table.delegate = self;
+        table.dataSource = self;
+        [view finishLoading];
+        [self refreshData];
     }
     return self;
+}
+
+- (void) makeTableSections {
+    self.tableSections = @[[[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPTeamsViewController ownedTeamsHeader]
+                            withDataBlock:^(){
+                                NSArray* ownedTeams = [MPTeamsModel teamsCreatedByUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPTeamsView* view = (MPTeamsView*) self.view;
+                                    return [MPGlobalModel teamList:ownedTeams searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return ownedTeams;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPTeamsViewController teamsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPTeamCell*)cell updateForTeam:object];
+                            }],
+                           ];
 }
 
 - (void) loadOnDismiss: (id) sender {
@@ -69,9 +107,6 @@
     dispatch_async(backgroundQueue, ^{
         MPTeamsView* view = (MPTeamsView*) self.view;
         [self refreshData];
-        //Re-filter
-        if(self.isFiltered)
-            [self filterListsWithString:view.filterSearch.searchField.text];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.teamsTable reloadData];
         });
@@ -79,22 +114,32 @@
 }
 
 - (void) refreshData {
-    PFUser* user = [PFUser currentUser];
-    self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-    self.invitesList = [MPTeamsModel teamsInvitingUser:user];
-    self.teamsOwnedList = [MPTeamsModel teamsCreatedByUser:user];
-    self.allTeamsList = [MPTeamsModel teamsContainingUser:user];
-    [self updateUnfilteredHeaders];
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("FilterQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        for(MPTableSectionUtility* section in self.tableSections) {
+            [section reloadData];
+            NSLog(@"%@: %lu", section.headerTitle, section.dataObjects.count);
+        }
+        [self updateHeaders];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.teamsTable reloadData];
+            [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+        });
+    });
 }
 
-- (void) updateUnfilteredHeaders {
-    self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-    if(self.invitesList.count > 0)
-        [self.sectionHeaderNames addObject:[MPTeamsViewController invitesHeader]];
-    if(self.teamsOwnedList.count > 0)
-        [self.sectionHeaderNames addObject:[MPTeamsViewController teamsOwnedHeader]];
-    if(self.allTeamsList.count > 0)
-        [self.sectionHeaderNames addObject:[MPTeamsViewController allTeamsHeader]];
+- (void) updateHeaders {
+    NSMutableArray* headerNames = [[NSMutableArray alloc] init];
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if(section.dataObjects.count > 0) {
+            [headerNames addObject: section.headerTitle];
+        }
+    }
+    if(headerNames.count == 0)
+        [headerNames addObject: [MPTeamsViewController noneFoundHeader]];
+    self.sectionHeaderNames = headerNames;
 }
 
 - (void) makeControlActions {
@@ -107,10 +152,6 @@
     MPTeamsView* view = (MPTeamsView*) self.view;
     if(view.searchAvailable) {
         [view hideSearch];
-        view.filterSearch.searchField.text = @"";
-        self.isFiltered = NO;
-        [self updateUnfilteredHeaders];
-        [view.teamsTable reloadData];
     }
     else {
         [view displaySearch];
@@ -124,70 +165,26 @@
 #pragma mark table view data/delegate
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                        [MPTeamsViewController teamsReuseIdentifier] forIndexPath:indexPath];
-    if(!cell) {
-        cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
-    }
-    
-    cell.indexPath = indexPath;
-    
-    PFObject* team;
+    //Blank cell
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPTeamsViewController invitesHeader]]) {
+        [MPTeamsViewController noneFoundHeader]]) {
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                 [MPTeamsViewController blankReuseIdentifier] forIndexPath:indexPath];
+        if(!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamsViewController blankReuseIdentifier]];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        return cell;
         
-        if(self.isFiltered)
-            team = self.invitesFilteredList[indexPath.row];
-        else
-            team = self.invitesList[indexPath.row];
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPTeamsViewController teamsOwnedHeader]]) {
-        if(self.isFiltered)
-            team = self.teamsOwnedFilteredList[indexPath.row];
-        else
-            team = self.teamsOwnedList[indexPath.row];
     }
     else {
-        if(self.isFiltered)
-            team = self.allTeamsFilteredList[indexPath.row];
-        else
-            team = self.allTeamsList[indexPath.row];
+        NSString* sectionHeader = self.sectionHeaderNames[indexPath.section];
+        MPTableSectionUtility* section = [self tableSectionWithHeader: sectionHeader];
+        UITableViewCell* cell = section.cellCreationBlock(tableView, indexPath);
+        id object = section.dataObjects[indexPath.row];
+        section.cellUpdateBlock(cell, object);
+        return cell;
     }
-    
-    //Update data for appropriate team
-    [cell updateForTeam: team];
-    
-    
-    //Remove any existing actions
-    [cell.leftButton removeTarget:nil
-                           action:NULL
-                 forControlEvents:UIControlEventAllEvents];
-    [cell.rightButton removeTarget:nil
-                            action:NULL
-                  forControlEvents:UIControlEventAllEvents];
-    
-    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPTeamsViewController invitesHeader]]) {
-        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(acceptInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(denyInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPTeamsViewController teamsOwnedHeader]]) {
-        [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.rightButton addTarget:self action:@selector(deleteTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else {
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    return cell;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
@@ -195,26 +192,10 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([self.sectionHeaderNames[section] isEqualToString:
-        [MPTeamsViewController invitesHeader]]) {
-        if(self.isFiltered)
-            return self.invitesFilteredList.count;
-        else
-            return self.invitesList.count;
-    }
-    else if([self.sectionHeaderNames[section] isEqualToString:
-             [MPTeamsViewController teamsOwnedHeader]]) {
-        if(self.isFiltered)
-            return self.teamsOwnedFilteredList.count;
-        else
-            return self.teamsOwnedList.count;
-    }
-    else {
-        if(self.isFiltered)
-            return self.allTeamsFilteredList.count;
-        else
-            return self.allTeamsList.count;
-    }
+    if([self.sectionHeaderNames[section] isEqualToString:[MPTeamsViewController noneFoundHeader]])
+        return 1;
+    MPTableSectionUtility* sectionUtility = [self tableSectionWithHeader:self.sectionHeaderNames[section]];
+    return  sectionUtility.dataObjects.count;
 }
 
 
@@ -230,249 +211,16 @@
     return [[MPTableHeader alloc] initWithText:self.sectionHeaderNames[section]];
 }
 
+- (MPTableSectionUtility*) tableSectionWithHeader: (NSString*) header {
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if([section.headerTitle isEqualToString: header])
+            return section;
+    }
+    return nil;
+}
+
 #pragma mark button actions
 
-- (void) acceptInviteButtonPressed: (id) sender {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    PFObject* other;
-    if(self.isFiltered) {
-        other = self.invitesFilteredList[indexPath.row];
-    }
-    else {
-        other = self.invitesList[indexPath.row];
-    }
-    
-    //Background thread
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("AcceptTeamQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        
-        BOOL acceptSuccess = [MPTeamsModel acceptInviteFromTeam: other forUser:[PFUser currentUser]];
-        //If accept success, first update controller data
-        //from model data
-        if(acceptSuccess) {
-            [self refreshData];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //Update UI, based on success
-            if(acceptSuccess) {
-                view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:
-                                                         @"You accepted a team invite from %@.", other[@"teamName"]]
-                                            revertAfter:TRUE
-                                              withColor:[UIColor MPGreenColor]];
-                [view.teamsTable reloadData];
-            }
-            else {
-                view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                [view.menu.subtitleLabel displayMessage:@"There was an error accepting the invite. Please try again later."
-                                            revertAfter:TRUE
-                                              withColor:[UIColor MPRedColor]];
-                [view.teamsTable reloadData];
-            }
-        });
-    });
-}
-
-- (void) denyInviteButtonPressed: (id) sender {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    PFObject* other;
-    if(self.isFiltered) {
-        other = self.invitesFilteredList[indexPath.row];
-    }
-    else {
-        other = self.invitesList[indexPath.row];
-    }
-    
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    UIAlertController* confirmDenyAlert =
-    [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                        message:[NSString stringWithFormat:@"Are you sure you want to deny the team invitation from %@?", other[@"teamName"]]
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyTeamQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
-            //If accept success, first update controller data
-            //from model data
-            if(denySuccess) {
-                [self refreshData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(denySuccess) {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You denied a team invite from %@.", other[@"teamName"]]
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [view.teamsTable reloadData];
-                }
-                else {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error denying the request. Please try again later."
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.teamsTable reloadData];
-                }
-            });
-        });
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-        [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle]
-                                    revertAfter:FALSE
-                                      withColor:[UIColor whiteColor]];
-    }];
-    [confirmDenyAlert addAction: confirmAction];
-    [confirmDenyAlert addAction: cancelAction];
-    [self presentViewController: confirmDenyAlert animated: true completion:nil];
-}
-
-- (void) deleteTeamButtonPressed: (id) sender {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    PFObject* other;
-    if(self.isFiltered) {
-        other = self.teamsOwnedFilteredList[indexPath.row];
-    }
-    else {
-        other = self.teamsOwnedList[indexPath.row];
-    }
-    
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    UIAlertController* confirmDenyAlert =
-    [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                        message:[NSString stringWithFormat:@"Are you sure you want to delete your team, %@? This action cannot be undone.", other[@"teamName"]]
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("DeleteTeamQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL deleteSuccess = [MPTeamsModel deleteTeam:other];
-            //If success, first update controller data
-            //from model data
-            if(deleteSuccess) {
-                [self refreshData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(deleteSuccess) {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You deleted your team, %@.", other[@"teamName"]]
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [view.teamsTable reloadData];
-                }
-                else {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the team. Please try again later."
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.teamsTable reloadData];
-                }
-            });
-        });
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-        [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle]
-                                    revertAfter:FALSE
-                                      withColor:[UIColor whiteColor]];
-    }];
-    [confirmDenyAlert addAction: confirmAction];
-    [confirmDenyAlert addAction: cancelAction];
-    [self presentViewController: confirmDenyAlert animated: true completion:nil];
-}
-
-- (void) leaveTeamButtonPressed: (id) sender {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    PFObject* other;
-    if(self.isFiltered) {
-        other = self.allTeamsFilteredList[indexPath.row];
-    }
-    else {
-        other = self.allTeamsList[indexPath.row];
-    }
-    
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    UIAlertController* confirmDenyAlert =
-    [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                        message:[NSString stringWithFormat:@"Are you sure you want to leave your team, %@? If you are the creator of the team, a random teammate will be promoted to creator.", other[@"teamName"]]
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("LeaveTeamQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL leaveSuccess = [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
-            //If success, first update controller data
-            //from model data
-            if(leaveSuccess) {
-                [self refreshData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(leaveSuccess) {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You left your team, %@.", other[@"teamName"]]
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [view.teamsTable reloadData];
-                }
-                else {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error leaving the team. Please try again later."
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.teamsTable reloadData];
-                }
-            });
-        });
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-        [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle]
-                                    revertAfter:FALSE
-                                      withColor:[UIColor whiteColor]];
-    }];
-    [confirmDenyAlert addAction: confirmAction];
-    [confirmDenyAlert addAction: cancelAction];
-    [self.mm_drawerController presentViewController: confirmDenyAlert animated: true completion:nil];
-}
 
 #pragma mark search filtering
 
@@ -480,89 +228,19 @@
     MPTeamsView* view = (MPTeamsView*) self.view;
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
-    if(filterString.length == 0) {
-        self.isFiltered = NO;
-        [self updateUnfilteredHeaders];
-        [view.teamsTable reloadData];
-        return;
-    }
-    [self filterListsWithString: filterString];
-    [view.teamsTable reloadData];
+    self.isFiltered = !(filterString.length == 0);
+    [self refreshData];
 }
 
-- (void) filterListsWithString: (NSString*) filterString {
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("FilterQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        self.isFiltered = YES;
-        self.invitesFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                            self.invitesList.count];
-        self.teamsOwnedFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                            self.teamsOwnedList.count];
-        self.allTeamsFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                    self.allTeamsList.count];
-        
-        MPTeamsView* view = (MPTeamsView*) self.view;
-        [view.menu.subtitleLabel displayMessage:@"Filtering..." revertAfter:NO withColor:[UIColor MPYellowColor]];
-        
-        //Filter invites
-        for (PFObject* team in self.invitesList)
-        {
-            NSString* teamName = team[@"teamName"];
-            NSRange teamNameRange = [teamName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            if(teamNameRange.location != NSNotFound)
-            {
-                [self.invitesFilteredList addObject:team];
-            }
-        }
-        if(self.invitesFilteredList.count == 0)
-            [self.sectionHeaderNames removeObject:[MPTeamsViewController invitesHeader]];
-        
-        //Filter teams owned
-        for (PFObject* team in self.teamsOwnedList)
-        {
-            NSString* teamName = team[@"teamName"];
-            NSRange teamNameRange = [teamName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            if(teamNameRange.location != NSNotFound)
-            {
-                [self.teamsOwnedFilteredList addObject:team];
-            }
-        }
-        if(self.teamsOwnedFilteredList.count == 0)
-            [self.sectionHeaderNames removeObject:[MPTeamsViewController teamsOwnedHeader]];
-        
-        //Filter all teams
-        for (PFObject* team in self.allTeamsList)
-        {
-            NSString* teamName = team[@"teamName"];
-            NSRange teamNameRange = [teamName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            if(teamNameRange.location != NSNotFound)
-            {
-                [self.allTeamsFilteredList addObject:team];
-            }
-        }
-        if(self.allTeamsFilteredList.count == 0)
-            [self.sectionHeaderNames removeObject:[MPTeamsViewController allTeamsHeader]];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.teamsTable reloadData];
-            [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-        });
-    });
-}
 
 #pragma mark textfield delegate
 
 - (BOOL) textFieldShouldClear:(UITextField *)textField {
-    self.isFiltered = NO;
-    [self updateUnfilteredHeaders];
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    [view.teamsTable reloadData];
     return YES;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    [self filterSearchButtonPressed: nil];
     return YES;
 }
 
@@ -579,8 +257,13 @@
 
 #pragma mark constants
 
-+ (NSString*) invitesHeader { return @"TEAM INVITES"; }
-+ (NSString*) teamsOwnedHeader { return @"TEAMS I OWN"; }
-+ (NSString*) allTeamsHeader { return @"ALL TEAMS"; }
+
++ (NSString*) ownedTeamsHeader { return @"OWNED TEAMS"; }
++ (NSString*) teamsAsMemberHeader { return @"TEAMS I'M ON"; }
++ (NSString*) teamsInvitingHeader { return @"TEAMS INVITING ME"; }
++ (NSString*) teamsRequestedToJoinHeader { return @"TEAMS I REQUESTED TO JOIN"; }
++ (NSString*) noneFoundHeader { return @"NO RESULTS"; }
+
 + (NSString*) teamsReuseIdentifier { return @"TeamsCell"; }
++ (NSString*) blankReuseIdentifier { return @"BlankCell"; }
 @end

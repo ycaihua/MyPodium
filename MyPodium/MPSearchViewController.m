@@ -682,7 +682,6 @@
     return  sectionUtility.dataObjects.count;
 }
 
-
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [MPUserCell cellHeight];
 }

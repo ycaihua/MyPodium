@@ -12,18 +12,10 @@
 
 @interface MPTeamsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
-@property NSArray* invitesList;
-@property NSArray* teamsOwnedList;
-@property NSArray* allTeamsList;
+@property NSArray* tableSections;
+
 @property BOOL isFiltered;
-@property NSMutableArray* invitesFilteredList;
-@property NSMutableArray* teamsOwnedFilteredList;
-@property NSMutableArray* allTeamsFilteredList;
 
 @property NSMutableArray* sectionHeaderNames;
-
-+ (NSString*) invitesHeader;
-+ (NSString*) teamsOwnedHeader;
-+ (NSString*) allTeamsHeader;
 
 @end
