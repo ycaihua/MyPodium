@@ -20,7 +20,6 @@
         self.dataBlock = dataBlock;
         self.cellCreationBlock = cellCreationBlock;
         self.cellUpdateBlock = cellUpdateBlock;
-        [self reloadData];
     }
     return self;
 }

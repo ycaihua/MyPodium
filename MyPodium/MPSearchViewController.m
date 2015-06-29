@@ -92,7 +92,290 @@
                                         }
                                         withCellUpdateBlock:^(UITableViewCell* cell, id object) {
                                             [(MPUserCell*)cell updateForUser:object];
-                                        }]};
+                                        }],
+                           @"INCOMING FRIEND REQUESTS":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"INCOMING FRIEND REQUESTS"
+                                withDataBlock:^(){
+                                    NSArray* incoming = [MPFriendsModel incomingPendingRequestsForUser: [PFUser currentUser]];
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    return [MPGlobalModel userList:incoming searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    //Set images
+                                    [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(removeIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPUserCell*)cell updateForUser:object];
+                                }],
+                           @"OUTGOING FRIEND REQUESTS":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"OUTGOING FRIEND REQUESTS"
+                                withDataBlock:^(){
+                                    NSArray* outgoing = [MPFriendsModel outgoingPendingRequestsForUser: [PFUser currentUser]];
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    return [MPGlobalModel userList:outgoing searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    //Set images
+                                    [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(removeOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPUserCell*)cell updateForUser:object];
+                                }],
+                           @"OTHER USERS":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"OTHER USERS"
+                                withDataBlock:^(){
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    return [MPGlobalModel userSearchContainingString:view.searchView.searchField.text forUser:[PFUser currentUser]];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    //Set images
+                                    [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(userProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(sendUserRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPUserCell*)cell updateForUser:object];
+                                }],
+                           @"TEAMS I OWN":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"TEAMS I OWN"
+                                withDataBlock:^(){
+                                    NSArray* ownedTeams = [MPTeamsModel teamsCreatedByUser:[PFUser currentUser]];
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    return [MPGlobalModel teamList:ownedTeams searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    }
+                                    cell.indexPath = indexPath;
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    
+                                    //Set images
+                                    [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPTeamCell*)cell updateForTeam:object];
+                                }],
+                           @"TEAMS I'M ON":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"TEAMS I'M ON"
+                                withDataBlock:^(){
+                                    NSArray* memberTeams = [MPTeamsModel teamsContainingUser:[PFUser currentUser]];
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    return [MPGlobalModel teamList:memberTeams searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    
+                                    //Set images
+                                    [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPTeamCell*)cell updateForTeam:object];
+                                }],
+                           @"TEAMS INVITING ME":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"TEAMS INVITING ME"
+                                withDataBlock:^(){
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    NSArray* invites = [MPTeamsModel teamsInvitingUser:[PFUser currentUser]];
+                                    return [MPGlobalModel teamList:invites searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    
+                                    //Set images
+                                    [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPTeamCell*)cell updateForTeam:object];
+                                }],
+                           @"TEAMS I REQUESTED TO JOIN":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"TEAMS I REQUESTED TO JOIN"
+                                withDataBlock:^(){
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    NSArray* joinRequests = [MPTeamsModel teamsRequestedByUser:[PFUser currentUser]];
+                                    return [MPGlobalModel teamList:joinRequests searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    
+                                    //Set images
+                                    [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPTeamCell*)cell updateForTeam: object];
+                                }],
+                           @"OTHER VISIBLE TEAMS":
+                               [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:@"OTHER VISIBLE TEAMS"
+                                withDataBlock:^(){
+                                    MPSearchView* view = (MPSearchView*) self.view;
+                                    NSArray* visibleTeams = [MPTeamsModel teamsVisibleToUser:[PFUser currentUser]];
+                                    return [MPGlobalModel teamList:visibleTeams searchForString:view.searchView.searchField.text];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    
+                                    //Remove any existing actions
+                                    [cell.leftButton removeTarget:nil
+                                                           action:NULL
+                                                 forControlEvents:UIControlEventAllEvents];
+                                    [cell.rightButton removeTarget:nil
+                                                            action:NULL
+                                                  forControlEvents:UIControlEventAllEvents];
+                                    
+                                    //Set images
+                                    [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                    [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
+                                    //Add targets
+                                    [cell.leftButton addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.rightButton addTarget:self action:@selector(requestToJoinTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [(MPTeamCell*)cell updateForTeam:object];
+                                }],
+                           };
 }
 
 - (void) loadOnDismiss: (id) sender {
@@ -120,215 +403,6 @@
         id object = section.dataObjects[indexPath.row];
         section.cellUpdateBlock(cell, object);
         return cell;
-    }
-    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController incomingRequestsHeader]]) {
-        MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
-        }
-        
-        cell.indexPath = indexPath;
-        PFUser* user = self.matchingIncomingRequests[indexPath.row];
-        [cell updateForUser: user];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        //Set images
-        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(removeIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController outgoingRequestsHeader]]) {
-        
-        MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
-        }
-        
-        cell.indexPath = indexPath;
-        PFUser* user = user = self.matchingOutgoingRequests[indexPath.row];
-        [cell updateForUser: user];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        //Set images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(removeOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:[MPSearchViewController usersHeader]]) {
-        MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
-        }
-        
-        cell.indexPath = indexPath;
-        PFUser* user = self.matchingUsers[indexPath.row];
-        [cell updateForUser: user];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-
-        //Set images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(userProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(sendUserRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController ownedTeamsHeader]]) {
-        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
-        }
-        cell.indexPath = indexPath;
-        PFObject* team = self.matchingOwnedTeams[indexPath.row];
-        [cell updateForTeam: team];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        
-        //Set images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController teamsAsMemberHeader]]) {
-        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
-        }
-        cell.indexPath = indexPath;
-        PFObject* team = self.matchingTeamsAsMember[indexPath.row];
-        [cell updateForTeam: team];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        
-        //Set images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController teamsInvitingHeader]]) {
-        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
-        }
-        cell.indexPath = indexPath;
-        PFObject* team = self.matchingTeamsInvitingUser[indexPath.row];
-        [cell updateForTeam: team];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        
-        //Set images
-        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPSearchViewController teamsRequestedToJoinHeader]]) {
-        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
-        }
-        cell.indexPath = indexPath;
-        PFObject* team = self.matchingTeamsRequestedToJoin[indexPath.row];
-        [cell updateForTeam: team];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        
-        //Set images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }
-    else {
-        MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                            [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
-        if(!cell) {
-            cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
-        }
-        cell.indexPath = indexPath;
-        PFObject* team = self.matchingVisibleTeams[indexPath.row];
-        [cell updateForTeam: team];
-        //Remove any existing actions
-        [cell.leftButton removeTarget:nil
-                               action:NULL
-                     forControlEvents:UIControlEventAllEvents];
-        [cell.rightButton removeTarget:nil
-                                action:NULL
-                      forControlEvents:UIControlEventAllEvents];
-        
-        //Set images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(requestToJoinTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-        
     }
 }
 
@@ -651,7 +725,7 @@
     for(id key in self.tableSections) {
         MPTableSectionUtility* section = self.tableSections[key];
         if(section.dataObjects.count > 0)
-            [headerNames addObject: section.headerTitle];
+            [headerNames insertObject:section.headerTitle atIndex:0];
     }
     if(headerNames.count == 0)
         [headerNames addObject: [MPSearchViewController noneFoundHeader]];
@@ -679,33 +753,6 @@
             MPTableSectionUtility* sectionUtility = self.tableSections[key];
             [sectionUtility reloadData];
         }
-        /*
-        self.matchingFriends = [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:string];
-        
-        NSArray* incoming = [MPFriendsModel incomingPendingRequestsForUser: [PFUser currentUser]];
-        self.matchingIncomingRequests = [MPGlobalModel userList:incoming searchForString:string];
-        
-        NSArray* outgoing = [MPFriendsModel outgoingPendingRequestsForUser: [PFUser currentUser]];
-        self.matchingOutgoingRequests = [MPGlobalModel userList:outgoing searchForString:string];
-        
-        NSArray* ownedTeams = [MPTeamsModel teamsCreatedByUser:[PFUser currentUser]];
-        self.matchingOwnedTeams = [MPGlobalModel teamList:ownedTeams searchForString:string];
-        
-        NSArray* memberTeams = [MPTeamsModel teamsContainingUser:[PFUser currentUser]];
-        self.matchingTeamsAsMember = [MPGlobalModel teamList:memberTeams searchForString:string];
-        
-        NSArray* visibleTeams = [MPTeamsModel teamsVisibleToUser:[PFUser currentUser]];
-        self.matchingVisibleTeams = [MPGlobalModel teamList:visibleTeams searchForString:string];
-        
-        NSArray* invites = [MPTeamsModel teamsInvitingUser:[PFUser currentUser]];
-        self.matchingTeamsInvitingUser = [MPGlobalModel teamList:invites searchForString:string];
-        
-        NSArray* joinRequests = [MPTeamsModel teamsRequestedByUser:[PFUser currentUser]];
-        self.matchingTeamsRequestedToJoin = [MPGlobalModel teamList:joinRequests searchForString:string];
-        
-        self.matchingUsers = [MPGlobalModel userSearchContainingString:string forUser:[PFUser currentUser]];
-        */
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self updateUnfilteredHeaders];
             [view.searchTable reloadData];
