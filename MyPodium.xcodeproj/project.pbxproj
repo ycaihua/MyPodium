@@ -91,6 +91,7 @@
 		2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFB1B2275F800F748C9 /* Reachability.m */; };
 		2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */; };
 		2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */; };
+		2DF3D3D81B405EC7009C5304 /* MPTableSectionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -236,6 +237,8 @@
 		2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpView.m; sourceTree = "<group>"; };
 		2DE9FD001B2288C600F748C9 /* MPHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpViewController.h; sourceTree = "<group>"; };
 		2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpViewController.m; sourceTree = "<group>"; };
+		2DF3D3D61B405EC7009C5304 /* MPTableSectionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableSectionUtility.h; sourceTree = "<group>"; };
+		2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableSectionUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -470,6 +473,8 @@
 				2DE9FCF81B224C1B00F748C9 /* UIButton+MPImage.m */,
 				2D94D0CC1B3268A4006C500A /* MPControllerManager.h */,
 				2D94D0CD1B3268A4006C500A /* MPControllerManager.m */,
+				2DF3D3D61B405EC7009C5304 /* MPTableSectionUtility.h */,
+				2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -726,6 +731,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DF3D3D81B405EC7009C5304 /* MPTableSectionUtility.m in Sources */,
 				2D4487D71B05A7030061EF86 /* MPForgotPasswordViewController.m in Sources */,
 				2D4487E31B07A6B70061EF86 /* MPLabel.m in Sources */,
 				2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */,

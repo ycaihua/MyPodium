@@ -10,6 +10,8 @@
 
 @interface MPSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
+@property NSDictionary* tableSections;
+
 @property NSArray* matchingFriends;
 @property NSArray* matchingIncomingRequests;
 @property NSArray* matchingOutgoingRequests;
