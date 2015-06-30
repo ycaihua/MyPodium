@@ -70,7 +70,7 @@
                                                             toItem:self
                                                          attribute:NSLayoutAttributeLeadingMargin
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:-5.0f],
                             [NSLayoutConstraint constraintWithItem:self.sidebarTable
                                                          attribute:NSLayoutAttributeTrailing
                                                          relatedBy:NSLayoutRelationEqual

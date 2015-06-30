@@ -60,7 +60,7 @@
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:3.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
                                                          attribute:NSLayoutAttributeTop
                                                          relatedBy:NSLayoutRelationEqual
@@ -78,11 +78,11 @@
                             ]];
 }
 
-+ (CGFloat) cellHeight { return 45.0f; }
++ (CGFloat) cellHeight { return 50.0f; }
 
 + (NSArray*) cellLabelStrings {
     return @[@"Home", @"Friends", @"Teams", @"New Team", @"Events",
-             @"Global Search", @"Settings", @"Help", @"About",
+             @"Search", @"Settings", @"Help", @"About",
              @"Log Out"];
 }
 

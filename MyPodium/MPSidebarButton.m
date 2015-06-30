@@ -16,10 +16,16 @@
     self = [super init];
     if(self) {
         self.rowIndex = -1;
+        [self adjustStyle];
         [self adjustControls];
         [self makeControlConstraints];
     }
     return self;
+}
+
+- (void) adjustStyle {
+    self.layer.borderColor = [UIColor MPYellowColor].CGColor;
+    self.layer.borderWidth = 1.0f;
 }
 
 - (void) adjustControls {
@@ -27,8 +33,8 @@
     self.customTitleLabel.textAlignment = NSTextAlignmentLeft;
     self.customTitleLabel.font = [UIFont fontWithName:@"Lato-Regular" size:22.0f];
     self.customTitleLabel.text = @"Button";
+    self.customTitleLabel.adjustsFontSizeToFitWidth = NO;
     self.customTitleLabel.textColor = [UIColor whiteColor];
-    self.customTitleLabel.clipsToBounds = NO;
     
     //self.subtitleLabel
     self.subtitleLabel.textAlignment = NSTextAlignmentRight;
@@ -94,7 +100,7 @@
 
 - (void) applyHighlightedStyle {
     [self.customTitleLabel setTextColor:[UIColor MPBlackColor]];
-    [self setBackgroundColor: [UIColor MPGreenColor]];
+    [self setBackgroundColor: [UIColor MPYellowColor]];
     self.subtitleLabel.text = @"";
 }
 
@@ -106,7 +112,7 @@
 - (void) setHighlighted:(BOOL)highlighted {
     [super setHighlighted: highlighted];
     if(self.currentlyOpen) {
-        self.backgroundColor = [UIColor MPGreenColor];
+        return;
     }
     else if(highlighted) {
         [self applyHighlightedStyle];
