@@ -34,6 +34,14 @@
     }
 }
 
+- (void) hideLeftButton {
+    self.leftButton.alpha = 0.0f;
+}
+
+- (void) showLeftButton {
+    self.leftButton.alpha = 1.0f;
+}
+
 - (void) applySelectedUserStyle {
     self.solidColorView.backgroundColor = [UIColor MPGreenColor];
     self.leadingBorder.backgroundColor = [UIColor clearColor];

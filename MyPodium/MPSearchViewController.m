@@ -77,14 +77,18 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -111,14 +115,20 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 //Set images
+                                [cell showLeftButton];
                                 [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
                                 [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(incomingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(removeIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -145,14 +155,18 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(removeOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -178,14 +192,18 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(userProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(userProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(sendUserRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -212,15 +230,21 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.leftButton addTarget:self action:@selector(leaveOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -247,21 +271,27 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                 [(MPTeamCell*)cell updateForTeam:object];
                             }],
+                           
+                           
                            [[MPTableSectionUtility alloc]
                             initWithHeaderTitle:[MPSearchViewController teamsInvitingHeader]
                             withDataBlock:^(){
@@ -280,15 +310,20 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
-                                
                                 //Set images
+                                [cell showLeftButton];
                                 [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
                                 [cell.leftButton addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(teamInviteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -315,15 +350,19 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -352,15 +391,19 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(requestToJoinTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -506,6 +549,14 @@
      withConfirmationMessage:@""];
 }
 
+- (void) incomingProfileButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
 - (void) removeIncomingButtonPressed: (id) sender {
     MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -569,6 +620,21 @@
     //Need to create team profile
 }
 
+- (void) leaveOwnedTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]];
+}
+
 - (void) deleteOwnedTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
     MPUserCell* cell = (MPUserCell*)buttonSender.superview;
@@ -616,6 +682,10 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to accept the invitation from %@?", other[@"teamName"]]];
+}
+
+- (void) teamInviteProfileButtonPressed: (id) sender {
+    //Need to create team profile
 }
 
 - (void) denyTeamInviteButtonPressed: (id) sender {

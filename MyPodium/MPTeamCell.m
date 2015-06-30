@@ -225,7 +225,7 @@
                            [NSLayoutConstraint constraintWithItem:self.numPlayersLabel
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.leftButton
+                                                           toItem:self.centerButton
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
                                                          constant:-5.0f],

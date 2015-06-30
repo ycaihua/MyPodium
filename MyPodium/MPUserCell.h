@@ -26,6 +26,8 @@
 @property NSIndexPath* indexPath;
 
 - (void) updateForUser: (PFUser*) user;
+- (void) hideLeftButton;
+- (void) showLeftButton;
 
 + (CGFloat) cellHeight;
 
