@@ -16,10 +16,16 @@
 
 @property UIButton* sidebarButton;
 @property UIButton* logOutButton;
+
 @property UIButton* titleButton;
 @property CNLabel* subtitleLabel;
 
-- (void) displayTitlePressMessageForPageName: (NSString*) pageName;
+@property UIButton* searchButton;
+@property UIButton* hideButton;
+@property UIButton* settingsButton;
+
+@property UIView* searchButtonSpacer;
+@property UIView* settingsButtonSpacer;
 
 + (CGFloat) height;
 

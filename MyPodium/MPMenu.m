@@ -23,11 +23,6 @@
     return self;
 }
 
-- (void) displayTitlePressMessageForPageName: (NSString*) pageName {
-    [self.subtitleLabel displayMessage:[NSString stringWithFormat: @"Tap above to return to %@",
-                                        pageName] revertAfter:YES withColor:[UIColor MPYellowColor]];
-}
-
 - (void) makeControls {
     //self.titleButton
     self.titleButton = [[UIButton alloc] init];
@@ -63,6 +58,38 @@
     [self.logOutButton setImage:logOutImg forState:UIControlStateNormal];
     self.logOutButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.logOutButton];
+    
+    //These below controls not added by default
+    //(requires double tap)
+    
+    //self.searchButton
+    UIImage *searchImg = [UIImage imageNamed:@"searchIcon38.png"];
+    self.searchButton = [[UIButton alloc] init];
+    [self.searchButton setImage:searchImg forState:UIControlStateNormal];
+    self.searchButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    
+    //self.hideButton
+    UIImage *hideImg = [UIImage imageNamed:@"hideIcon38.png"];
+    self.hideButton = [[UIButton alloc] init];
+    [self.hideButton setImage:hideImg forState:UIControlStateNormal];
+    self.hideButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    
+    //self.settingsButton
+    UIImage *settingsImg = [UIImage imageNamed:@"settingsIcon38.png"];
+    self.settingsButton = [[UIButton alloc] init];
+    [self.settingsButton setImage:settingsImg forState:UIControlStateNormal];
+    self.settingsButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    
+    //Spacers used to allow for 5 buttons horizontally dispersed
+    self.searchButtonSpacer = [[UIView alloc] init];
+    self.searchButtonSpacer.backgroundColor = [UIColor clearColor];
+    self.searchButtonSpacer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.searchButtonSpacer addSubview: self.searchButton];
+    
+    self.settingsButtonSpacer = [[UIView alloc] init];
+    self.settingsButtonSpacer.backgroundColor = [UIColor clearColor];
+    self.settingsButtonSpacer.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.settingsButtonSpacer addSubview: self.settingsButton];
 }
 
 - (void) makeControlConstraints {

@@ -41,13 +41,18 @@
     MMDrawerController* container = self.mm_drawerController;
     //If the controller is not part of the root container
     if(container.presentingViewController) {
-        [view.menu.titleButton addTarget:self action:@selector(titleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [view.menu.titleButton addTarget:self action:@selector(returnButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
+    [view.menu.titleButton addTarget:self action:@selector(displayIcons:) forControlEvents:UIControlEventTouchDownRepeat];
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.logOutButton addTarget:self action:@selector(logOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) titleButtonPressed: (id) sender {
+- (void) displayIcons: (id) sender {
+    NSLog(@"should display icons");
+}
+
+- (void) returnButtonPressed: (id) sender {
     MMDrawerController* container = self.mm_drawerController;
     [MPControllerManager dismissViewController: container];
 }
