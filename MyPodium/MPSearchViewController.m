@@ -26,6 +26,7 @@
 
 #import "MPSearchViewController.h"
 #import "MPUserProfileViewController.h"
+#import "MPMakeTeamViewController.h"
 
 @interface MPSearchViewController ()
 
@@ -84,10 +85,12 @@
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 //Set images
-                                [cell hideLeftButton];
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
                                 [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
+                                [cell.leftButton addTarget:self action:@selector(newTeamWithFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.centerButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
@@ -513,6 +516,15 @@
             });
         });
     }
+}
+
+- (void) newTeamWithFriendButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController friendsHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    MPMakeTeamViewController* destination = [[MPMakeTeamViewController alloc] initWithSelectedUser: other];
+    [MPControllerManager presentViewController:destination fromController:self];
 }
 
 - (void) friendProfileButtonPressed: (id) sender {
