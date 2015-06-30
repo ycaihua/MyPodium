@@ -21,11 +21,14 @@
 @property CNLabel* numPlayersLabel;
 
 @property UIButton* leftButton;
+@property UIButton* centerButton;
 @property UIButton* rightButton;
 
 @property NSIndexPath* indexPath;
 
 - (void) updateForTeam: (PFObject*) team;
+- (void) showLeftButton;
+- (void) hideLeftButton;
 
 + (CGFloat) cellHeight;
 

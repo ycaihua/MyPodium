@@ -99,6 +99,119 @@
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                 [(MPTeamCell*)cell updateForTeam:object];
                             }],
+                           
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPTeamsViewController teamsAsMemberHeader]
+                            withDataBlock:^(){
+                                NSArray* teams = [MPTeamsModel teamsContainingUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPTeamsView* view = (MPTeamsView*) self.view;
+                                    return [MPGlobalModel teamList:teams searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return teams;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPTeamsViewController teamsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPTeamCell*)cell updateForTeam:object];
+                            }],
+                           
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPTeamsViewController teamsInvitingHeader]
+                            withDataBlock:^(){
+                                NSArray* teams = [MPTeamsModel teamsInvitingUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPTeamsView* view = (MPTeamsView*) self.view;
+                                    return [MPGlobalModel teamList:teams searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return teams;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPTeamsViewController teamsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPTeamCell*)cell updateForTeam:object];
+                            }],
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPTeamsViewController teamsRequestedToJoinHeader]
+                            withDataBlock:^(){
+                                NSArray* teams = [MPTeamsModel teamsRequestedByUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPTeamsView* view = (MPTeamsView*) self.view;
+                                    return [MPGlobalModel teamList:teams searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return teams;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPTeamsViewController teamsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamsViewController teamsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPTeamCell*)cell updateForTeam:object];
+                            }],
                            ];
 }
 
@@ -116,11 +229,10 @@
 - (void) refreshData {
     MPTeamsView* view = (MPTeamsView*) self.view;
     [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("FilterQueue", 0);
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
     dispatch_async(backgroundQueue, ^{
         for(MPTableSectionUtility* section in self.tableSections) {
             [section reloadData];
-            NSLog(@"%@: %lu", section.headerTitle, section.dataObjects.count);
         }
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{

@@ -90,11 +90,18 @@
     self.rightButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.rightButton];
     
+    //self.centerButton
+    self.centerButton = [[UIButton alloc] init];
+    [self.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+    self.centerButton.translatesAutoresizingMaskIntoConstraints = FALSE;
+    [self addSubview:self.centerButton];
+    
     //self.leftButton
     self.leftButton = [[UIButton alloc] init];
-    [self.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+    [self.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
     self.leftButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.leftButton];
+    [self hideLeftButton];
 }
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.solidColorView
@@ -258,11 +265,40 @@
                                                         attribute:NSLayoutAttributeHeight
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           //self.greenButton
-                           [NSLayoutConstraint constraintWithItem:self.leftButton
+                           //self.centerButton
+                           [NSLayoutConstraint constraintWithItem:self.centerButton
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.rightButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.centerButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.centerButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.solidColorView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.centerButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.centerButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.leftButton
+                           [NSLayoutConstraint constraintWithItem:self.leftButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.centerButton
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
                                                          constant:0.0f],
@@ -288,6 +324,16 @@
                                                        multiplier:1.0f
                                                          constant:0.0f]
                            ]];
+}
+
+- (void) showLeftButton {
+    self.leftButton.alpha = 1.0f;
+    self.numPlayersLabel.alpha = 0.0f;
+}
+
+- (void) hideLeftButton {
+    self.leftButton.alpha = 0.0f;
+    self.numPlayersLabel.alpha = 1.0f;
 }
 
 + (CGFloat) cellHeight { return 60.0f; }

@@ -20,6 +20,7 @@
 @property CNLabel* friendRealNameLabel;
 
 @property UIButton* leftButton;
+@property UIButton* centerButton;
 @property UIButton* rightButton;
 
 @property NSIndexPath* indexPath;
