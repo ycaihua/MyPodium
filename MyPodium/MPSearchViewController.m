@@ -471,7 +471,8 @@
                     else {
                         view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage                                                 revertAfter:TRUE
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
                                                       withColor:[UIColor MPRedColor]];
                         [view.searchTable reloadData];
                     }
@@ -504,7 +505,8 @@
                 else {
                     view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:errorMessage                                                 revertAfter:TRUE
+                    [view.menu.subtitleLabel displayMessage:errorMessage
+                                                revertAfter:TRUE
                                                   withColor:[UIColor MPRedColor]];
                     [view.searchTable reloadData];
                 }
@@ -622,7 +624,7 @@
 
 - (void) leaveOwnedTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -637,7 +639,7 @@
 
 - (void) deleteOwnedTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -656,7 +658,7 @@
 
 - (void) leaveTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsAsMemberHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -671,7 +673,7 @@
 
 - (void) acceptTeamInviteButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -690,7 +692,7 @@
 
 - (void) denyTeamInviteButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -709,7 +711,7 @@
 
 - (void) cancelTeamRequestButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsRequestedToJoinHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -728,7 +730,7 @@
 
 - (void) requestToJoinTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController visibleTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];

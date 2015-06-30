@@ -84,16 +84,22 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.leftButton addTarget:self action:@selector(leaveOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -122,16 +128,20 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(leaveMemberTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -160,16 +170,22 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
+                                [cell showLeftButton];
                                 [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.leftButton addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(teamInviteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -197,16 +213,20 @@
                                 [cell.leftButton removeTarget:nil
                                                        action:NULL
                                              forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
                                 [cell.rightButton removeTarget:nil
                                                         action:NULL
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.leftButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -272,6 +292,187 @@
 
 - (void) makeTeamButtonPressed: (id) sender {
     [MPControllerManager presentViewController:[[MPMakeTeamViewController alloc] init] fromController:self];
+}
+
+#pragma mark cell targets
+
+- (void) performModelUpdate: (BOOL (^)(void)) methodAction
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+      withConfirmationAlert: (BOOL) showAlert
+    withConfirmationMessage: (NSString*) alertMessage {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    
+    if(showAlert) {
+        UIAlertController* confirmationAlert =
+        [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                            message:alertMessage
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+            //Background thread
+            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+            dispatch_async(backgroundQueue, ^{
+                BOOL success = methodAction();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //Update UI, based on success
+                    if(success) {
+                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                        [self searchButtonPressed: self];
+                        [view.teamsTable reloadData];
+                    }
+                    else {
+                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                        [view.teamsTable reloadData];
+                    }
+                });
+            });
+        }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+            [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
+            
+        }];
+        [confirmationAlert addAction: confirmAction];
+        [confirmationAlert addAction: cancelAction];
+        [self presentViewController: confirmationAlert animated: true completion:nil];
+    }
+    else {
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL success = methodAction();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(success) {
+                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage: successMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:errorMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                }
+                [view.teamsTable reloadData];
+            });
+        });
+    }
+}
+
+- (void) ownedTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) leaveOwnedTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController ownedTeamsHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]];
+}
+
+- (void) deleteOwnedTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController ownedTeamsHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel deleteTeam: other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]];
+}
+
+- (void) memberTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) leaveMemberTeamButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsAsMemberHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
+}
+
+- (void) acceptTeamInviteButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsInvitingHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel acceptInviteFromTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to accept the invitation from %@?", other[@"teamName"]]];
+}
+
+- (void) teamInviteProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) denyTeamInviteButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsInvitingHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]];
+}
+
+- (void) requestedTeamProfileButtonPressed: (id) sender {
+    //Need to create team profile
+}
+
+- (void) cancelTeamRequestButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsRequestedToJoinHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPTeamsModel denyTeamJoinRequest:other forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]];
 }
 
 #pragma mark table view data/delegate
