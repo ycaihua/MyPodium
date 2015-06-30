@@ -10,18 +10,9 @@
 
 @interface MPFriendsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
-@property NSArray* incomingPendingList;
-@property NSArray* outgoingPendingList;
-@property NSArray* friendsList;
+@property NSArray* tableSections;
 @property BOOL isFiltered;
-@property NSMutableArray* incomingPendingFilteredList;
-@property NSMutableArray* outgoingPendingFilteredList;
-@property NSMutableArray* friendsFilteredList;
 
 @property NSMutableArray* sectionHeaderNames;
-
-+ (NSString*) incomingPendingHeader;
-+ (NSString*) outgoingPendingHeader;
-+ (NSString*) friendsHeader;
 
 @end

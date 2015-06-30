@@ -8,11 +8,14 @@
 
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
+#import "MPControllerManager.h"
+#import "MPTableSectionUtility.h"
 
 #import "MPFriendsModel.h"
+#import "MPGlobalModel.h"
 
-#import "MPFriendsView.h"
 #import "MPUserCell.h"
+#import "MPFriendsView.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
 #import "MPTextField.h"
@@ -20,6 +23,11 @@
 #import "CNLabel.h"
 
 #import "MPFriendsViewController.h"
+#import "MPUserProfileViewController.h"
+#import "MMDrawerController.h"
+#import "UIViewController+MMDrawerController.h"
+
+#import "AppDelegate.h"
 
 @interface MPFriendsViewController ()
 
@@ -38,23 +46,149 @@
                                            action:@selector(filterSearchButtonPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
         view.filterSearch.searchField.delegate = self;
-        //Data init (in background)
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            [self refreshData];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Table UI init once data is retrieved
-                UITableView* table = view.friendsTable;
-                [table registerClass:[MPUserCell class]
-              forCellReuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
-                table.delegate = self;
-                table.dataSource = self;
-                [view.loadingHeader removeFromSuperview];
-                [table reloadData];
-            });
-        });
+        [self makeTableSections];
+        UITableView* table = view.friendsTable;
+        [table registerClass:[MPUserCell class]
+      forCellReuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+        [table registerClass:[UITableViewCell class]
+      forCellReuseIdentifier:[MPFriendsViewController blankReuseIdentifier]];
+        table.delegate = self;
+        table.dataSource = self;
+        [self refreshData];
     }
     return self;
+}
+
+- (void) makeTableSections {
+    self.tableSections = @[[[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPFriendsViewController incomingHeader]
+                            withDataBlock:^(){
+                                NSArray* incoming = [MPFriendsModel incomingPendingRequestsForUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPFriendsView* view = (MPFriendsView*) self.view;
+                                    return [MPGlobalModel userList:incoming searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return incoming;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(incomingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPUserCell*)cell updateForUser:object];
+                            }],
+                           
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPFriendsViewController outgoingHeader]
+                            withDataBlock:^(){
+                                NSArray* outgoing = [MPFriendsModel outgoingPendingRequestsForUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPFriendsView* view = (MPFriendsView*) self.view;
+                                    return [MPGlobalModel userList:outgoing searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return outgoing;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.centerButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPUserCell*)cell updateForUser:object];
+                            }],
+                           
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPFriendsViewController friendsHeader]
+                            withDataBlock:^(){
+                                NSArray* friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPFriendsView* view = (MPFriendsView*) self.view;
+                                    return [MPGlobalModel userList:friends searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return friends;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.leftButton addTarget:self action:@selector(newTeamWithFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPUserCell*)cell updateForUser:object];
+                            }]
+                            ];
 }
 
 - (void) loadOnDismiss: (id) sender {
@@ -69,94 +203,210 @@
 }
 
 - (void) refreshData {
-    PFUser* user = [PFUser currentUser];
-    self.incomingPendingList = [MPFriendsModel incomingPendingRequestsForUser:user];
-    self.outgoingPendingList = [MPFriendsModel outgoingPendingRequestsForUser:user];
-    self.friendsList = [MPFriendsModel friendsForUser:user];
-    [self updateUnfilteredHeaders];
-    //Re-filter
-    if(self.isFiltered) {
-        MPFriendsView* view = (MPFriendsView*) self.view;
-        [self filterListsWithString:view.filterSearch.searchField.text];
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        for(MPTableSectionUtility* section in self.tableSections) {
+            [section reloadData];
+        }
+        [self updateHeaders];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.friendsTable reloadData];
+            [view.loadingHeader removeFromSuperview];
+            [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+        });
+    });
+}
+
+- (void) updateHeaders {
+    NSMutableArray* headerNames = [[NSMutableArray alloc] init];
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if(section.dataObjects.count > 0) {
+            [headerNames addObject: section.headerTitle];
+        }
+    }
+    if(headerNames.count == 0)
+        [headerNames addObject: [MPFriendsViewController noneFoundHeader]];
+    self.sectionHeaderNames = headerNames;
+}
+
+#pragma mark cell targets
+
+- (void) performModelUpdate: (BOOL (^)(void)) methodAction
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+      withConfirmationAlert: (BOOL) showAlert
+    withConfirmationMessage: (NSString*) alertMessage {
+    MPFriendsView* view = (MPFriendsView*) self.view;
+    
+    if(showAlert) {
+        UIAlertController* confirmationAlert =
+        [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                            message:alertMessage
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+            //Background thread
+            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+            dispatch_async(backgroundQueue, ^{
+                BOOL success = methodAction();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //Update UI, based on success
+                    if(success) {
+                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                    }
+                    else {
+                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }
+                    [view.friendsTable reloadData];
+                });
+            });
+        }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+            [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
+            
+        }];
+        [confirmationAlert addAction: confirmAction];
+        [confirmationAlert addAction: cancelAction];
+        [self presentViewController: confirmationAlert animated: true completion:nil];
+    }
+    else {
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL success = methodAction();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(success) {
+                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage: successMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                }
+                else {
+                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:errorMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                }
+                [view.friendsTable reloadData];
+            });
+        });
     }
 }
 
-- (void) updateUnfilteredHeaders {
-    self.sectionHeaderNames = [[NSMutableArray alloc] initWithCapacity:3];
-    if(self.incomingPendingList.count > 0)
-        [self.sectionHeaderNames addObject:[MPFriendsViewController incomingPendingHeader]];
-    if(self.outgoingPendingList.count > 0)
-        [self.sectionHeaderNames addObject:[MPFriendsViewController outgoingPendingHeader]];
-    if(self.friendsList.count > 0)
-        [self.sectionHeaderNames addObject:[MPFriendsViewController friendsHeader]];
+- (void) acceptIncomingButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel acceptRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You accepted %@'s friend request.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:@""];
+}
+
+- (void) incomingProfileButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
+- (void) denyIncomingButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel removeRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You denied %@'s friend request.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username]];
+}
+
+- (void) outgoingProfileButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController outgoingHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
+- (void) cancelOutgoingButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController outgoingHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel removeRequestFromUser:[PFUser currentUser] toUser:other canReverse:YES];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You cancelled your friend request to %@.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]];
+}
+
+- (void) friendProfileButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
+- (void) removeFriendButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You successfully removed %@ as a friend.", other.username]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
 }
 
 #pragma mark table view data/delegate
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                           [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
-    if(!cell) {
-        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
-    }
-    
-    cell.indexPath = indexPath;
-    
-    PFUser* user;
+    //Blank cell
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPFriendsViewController incomingPendingHeader]]) {
-        if(self.isFiltered)
-            user = self.incomingPendingFilteredList[indexPath.row];
-        else
-            user = self.incomingPendingList[indexPath.row];
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPFriendsViewController outgoingPendingHeader]]) {
-        if(self.isFiltered)
-            user = self.outgoingPendingFilteredList[indexPath.row];
-        else
-            user = self.outgoingPendingList[indexPath.row];
+        [MPFriendsViewController noneFoundHeader]]) {
+        UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                 [MPFriendsViewController blankReuseIdentifier] forIndexPath:indexPath];
+        if(!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController blankReuseIdentifier]];
+        }
+        cell.backgroundColor = [UIColor clearColor];
+        return cell;
+        
     }
     else {
-        if(self.isFiltered)
-            user = self.friendsFilteredList[indexPath.row];
-        else
-            user = self.friendsList[indexPath.row];
+        NSString* sectionHeader = self.sectionHeaderNames[indexPath.section];
+        MPTableSectionUtility* section = [self tableSectionWithHeader: sectionHeader];
+        UITableViewCell* cell = section.cellCreationBlock(tableView, indexPath);
+        id object = section.dataObjects[indexPath.row];
+        section.cellUpdateBlock(cell, object);
+        return cell;
     }
-    //Update data for appropriate user
-    [cell updateForUser: user];
-    
-    //Remove any existing actions
-    [cell.leftButton removeTarget:nil
-                           action:NULL
-                 forControlEvents:UIControlEventAllEvents];
-    [cell.rightButton removeTarget:nil
-                           action:NULL
-                 forControlEvents:UIControlEventAllEvents];
-    
-    if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPFriendsViewController incomingPendingHeader]]) {
-        //Update button types on incoming request
-        [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.rightButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-             [MPFriendsViewController outgoingPendingHeader]]) {
-        //Update button type - outgoing and friends are same images
-        [cell.leftButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.rightButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    else {
-        //Update button type - outgoing and friends are same images
-        [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
-        //Add targets
-        [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    return cell;
 }
 
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
@@ -164,26 +414,10 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([self.sectionHeaderNames[section] isEqualToString:
-        [MPFriendsViewController incomingPendingHeader]]) {
-        if(self.isFiltered)
-            return self.incomingPendingFilteredList.count;
-        else
-            return self.incomingPendingList.count;
-    }
-    else if([self.sectionHeaderNames[section] isEqualToString:
-             [MPFriendsViewController outgoingPendingHeader]]) {
-        if(self.isFiltered)
-            return self.outgoingPendingFilteredList.count;
-        else
-            return self.outgoingPendingList.count;
-    }
-    else {
-        if(self.isFiltered)
-            return self.friendsFilteredList.count;
-        else
-            return self.friendsList.count;
-    }
+    if([self.sectionHeaderNames[section] isEqualToString:[MPFriendsViewController noneFoundHeader]])
+        return 1;
+    MPTableSectionUtility* sectionUtility = [self tableSectionWithHeader:self.sectionHeaderNames[section]];
+    return  sectionUtility.dataObjects.count;
 }
 
 
@@ -199,253 +433,16 @@
     return [[MPTableHeader alloc] initWithText:self.sectionHeaderNames[section]];
 }
 
+- (MPTableSectionUtility*) tableSectionWithHeader: (NSString*) header {
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if([section.headerTitle isEqualToString: header])
+            return section;
+    }
+    return nil;
+}
+
 #pragma mark button actions
 
-- (void) acceptIncomingButtonPressed: (id) sender {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    //Background thread
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("AcceptFriendQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        
-        PFUser* other;
-        if(self.isFiltered) {
-            other = self.incomingPendingFilteredList[indexPath.row];
-        }
-        else {
-            other = self.incomingPendingList[indexPath.row];
-        }
-        
-        BOOL acceptSuccess = [MPFriendsModel acceptRequestFromUser: other toUser:[PFUser currentUser] canReverse: NO];
-        //If accept success, first update controller data
-        //from model data
-        if(acceptSuccess) {
-            [self refreshData];
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //Update UI, based on success
-            if(acceptSuccess) {
-                view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:
-                                                         @"You accepted a friend request from %@.", other.username]
-                                            revertAfter:TRUE
-                                              withColor:[UIColor MPGreenColor]];
-                [view.friendsTable reloadData];
-            }
-            else {
-                view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                [view.menu.subtitleLabel displayMessage:@"There was an error accepting the request. Please try again later."
-                                            revertAfter:TRUE
-                                              withColor:[UIColor MPRedColor]];
-                [view.friendsTable reloadData];
-            }
-        });
-    });
-}
-
-- (void) denyIncomingButtonPressed: (id) sender {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    PFUser* other;
-    if(self.isFiltered) {
-        other = self.incomingPendingFilteredList[indexPath.row];
-    }
-    else {
-        other = self.incomingPendingList[indexPath.row];
-    }
-    
-    //Save, because we want to display a message that won't
-    //revert after at a given time, but will after execution
-    NSString* defaultTitle = view.menu.subtitleLabel.text;
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    UIAlertController* confirmDenyAlert =
-    [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                        message:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username]
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("DenyFriendQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL denySuccess = [MPFriendsModel removeRequestFromUser: other toUser:[PFUser currentUser] canReverse:NO];
-            //If accept success, first update controller data
-            //from model data
-            if(denySuccess) {
-                [self refreshData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(denySuccess) {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You denied a friend request from %@.", other.username]
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [view.friendsTable reloadData];
-                }
-                else {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error denying the request. Please try again later."
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.friendsTable reloadData];
-                }
-            });
-        });
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
-        [view.menu.subtitleLabel displayMessage:defaultTitle
-                                    revertAfter:FALSE
-                                      withColor:[UIColor whiteColor]];
-    }];
-    [confirmDenyAlert addAction: confirmAction];
-    [confirmDenyAlert addAction: cancelAction];
-    [self presentViewController: confirmDenyAlert animated: true completion:nil];
-}
-
-- (void) cancelOutgoingButtonPressed: (id) sender {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    PFUser* other;
-    if(self.isFiltered) {
-        other = self.outgoingPendingFilteredList[indexPath.row];
-    }
-    else {
-        other = self.outgoingPendingList[indexPath.row];
-    }
-    
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    UIAlertController* confirmCancelAlert =
-    [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                        message:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("CancelFriendQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL cancelSuccess = [MPFriendsModel removeRequestFromUser: [PFUser currentUser] toUser:other canReverse:NO];
-            //If accept success, first update controller data
-            //from model data
-            if(cancelSuccess) {
-                [self refreshData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(cancelSuccess) {
-                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You cancelled your friend request to %@.", other.username]
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [view.friendsTable reloadData];
-                }
-                else {
-                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error cancelling the request. Please try again later."
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.friendsTable reloadData];
-                }
-            });
-        });
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
-        [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle]
-                                    revertAfter:FALSE
-                                      withColor:[UIColor whiteColor]];
-    }];
-    [confirmCancelAlert addAction: confirmAction];
-    [confirmCancelAlert addAction: cancelAction];
-    [self presentViewController: confirmCancelAlert animated: true completion:nil];
-}
-
-- (void) removeFriendButtonPressed: (id) sender {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    
-    PFUser* other;
-    if(self.isFiltered) {
-        other = self.friendsFilteredList[indexPath.row];
-    }
-    else {
-        other = self.friendsList[indexPath.row];
-    }
-    
-    //Save, because we want to display a message that won't
-    //revert after at a given time, but will after execution
-    NSString* defaultTitle = view.menu.subtitleLabel.text;
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:FALSE
-                                  withColor:[UIColor MPYellowColor]];
-    
-    UIAlertController* confirmRemoveAlert =
-    [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                        message:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-        //Background thread
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("RemoveFriendQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL removeSuccess = [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
-            if(removeSuccess) {
-                [self refreshData];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(removeSuccess) {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:
-                     [NSString stringWithFormat: @"You removed %@ as a friend.", other.username]
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [view.friendsTable reloadData];
-                }
-                else {
-                    view.menu.subtitleLabel.persistentText = defaultTitle;
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:@"There was an error removing the friend. Please try again later."
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.friendsTable reloadData];
-                }
-            });
-        });
-    }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler){
-        [view.menu.subtitleLabel displayMessage:defaultTitle
-                                    revertAfter:FALSE
-                                      withColor:[UIColor whiteColor]];
-    }];
-    [confirmRemoveAlert addAction: confirmAction];
-    [confirmRemoveAlert addAction: cancelAction];
-    [self presentViewController: confirmRemoveAlert animated: true completion:nil];
-}
 
 #pragma mark search filtering
 
@@ -453,99 +450,18 @@
     MPFriendsView* view = (MPFriendsView*) self.view;
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
-    if(filterString.length == 0) {
-        self.isFiltered = NO;
-        [self updateUnfilteredHeaders];
-        [view.friendsTable reloadData];
-        return;
-    }
-    [self filterListsWithString: filterString];
-    [view.friendsTable reloadData];
-}
-
-- (void) filterListsWithString: (NSString*) filterString {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Filtering..." revertAfter:NO withColor:[UIColor MPYellowColor]];
-    
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("FilterQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        self.isFiltered = YES;
-        self.incomingPendingFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                            self.incomingPendingList.count];
-        self.outgoingPendingFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                            self.outgoingPendingList.count];
-        self.friendsFilteredList = [[NSMutableArray alloc] initWithCapacity:
-                                    self.friendsList.count];
-        
-        
-        //Filter incoming pending
-        for (PFUser* user in self.incomingPendingList)
-        {
-            NSString* username = user.username;
-            NSString* realName = user[@"realName"];
-            if(!realName) realName = @"";
-            NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
-            {
-                [self.incomingPendingFilteredList addObject:user];
-            }
-        }
-        if(self.incomingPendingFilteredList.count == 0)
-            [self.sectionHeaderNames removeObject:[MPFriendsViewController incomingPendingHeader]];
-        
-        //Filter outgoing pending
-        for (PFUser* user in self.outgoingPendingList)
-        {
-            NSString* username = user.username;
-            NSString* realName = user[@"realName"];
-            if(!realName) realName = @"";
-            NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
-            {
-                [self.outgoingPendingFilteredList addObject:user];
-            }
-        }
-        if(self.outgoingPendingFilteredList.count == 0)
-            [self.sectionHeaderNames removeObject:[MPFriendsViewController outgoingPendingHeader]];
-        
-        //Filter friends
-        for (PFUser* user in self.friendsList)
-        {
-            NSString* username = user.username;
-            NSString* realName = user[@"realName"];
-            if(!realName) realName = @"";
-            NSRange usernameRange = [username rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            NSRange realNameRange = [realName rangeOfString:filterString options:NSCaseInsensitiveSearch];
-            if(usernameRange.location != NSNotFound || realNameRange.location != NSNotFound)
-            {
-                [self.friendsFilteredList addObject:user];
-            }
-        }
-        if(self.friendsFilteredList.count == 0)
-            [self.sectionHeaderNames removeObject:[MPFriendsViewController friendsHeader]];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.friendsTable reloadData];
-            [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-        });
-    });
+    self.isFiltered = !(filterString.length == 0);
+    [self refreshData];
 }
 
 #pragma mark textfield delegate
 
 - (BOOL) textFieldShouldClear:(UITextField *)textField {
-    self.isFiltered = NO;
-    [self updateUnfilteredHeaders];
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    [view.friendsTable reloadData];
     return YES;
 }
 
 - (BOOL) textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
-    [self filterSearchButtonPressed: nil];
     return YES;
 }
 
@@ -562,8 +478,12 @@
 
 #pragma mark constants
 
-+ (NSString*) incomingPendingHeader { return @"INCOMING FRIEND REQUESTS"; }
-+ (NSString*) outgoingPendingHeader { return @"OUTGOING FRIEND REQUESTS"; }
-+ (NSString*) friendsHeader { return @"MY FRIENDS"; }
+
++ (NSString*) incomingHeader { return @"INCOMING FRIEND REQUESTS"; }
++ (NSString*) outgoingHeader { return @"OUTGOING FRIEND REQUESTS"; }
++ (NSString*) friendsHeader { return @"FRIENDS"; }
++ (NSString*) noneFoundHeader { return @"NO RESULTS"; }
+
 + (NSString*) friendsReuseIdentifier { return @"FriendsCell"; }
++ (NSString*) blankReuseIdentifier { return @"BlankCell"; }
 @end
