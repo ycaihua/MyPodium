@@ -14,4 +14,6 @@
 //drawer isn't connected, it isn't called on init
 - (void) addMenuActions;
 
+@property NSTimer* actionTimer;
+
 @end

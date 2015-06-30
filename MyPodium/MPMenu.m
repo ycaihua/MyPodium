@@ -258,6 +258,51 @@
     
     [self addSubview: self.titleButton];
     [self addSubview: self.subtitleLabel];
+    
+    [self addConstraints: @[//self.titleButton
+                            [NSLayoutConstraint constraintWithItem:self.titleButton
+                                                         attribute:NSLayoutAttributeLeading
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1.0f
+                                                          constant:5.0f],
+                            [NSLayoutConstraint constraintWithItem:self.titleButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0f
+                                                          constant:-5.0f],
+                            [NSLayoutConstraint constraintWithItem:self.titleButton
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeTopMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            //self.subtitleLabel
+                            [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeLeading
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1.0f
+                                                          constant:5.0f],
+                            [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.logOutButton
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0f
+                                                          constant:-5.0f],
+                            [NSLayoutConstraint constraintWithItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeBottomMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f]]];
 }
 
 - (void) makeControlConstraints {
