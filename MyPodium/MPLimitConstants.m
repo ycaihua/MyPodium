@@ -1,0 +1,23 @@
+//
+//  MPLimitConstants.m
+//  MyPodium
+//
+//  Created by Connor Neville on 6/30/15.
+//  Copyright (c) 2015 connorneville. All rights reserved.
+//
+
+#import "MPLimitConstants.h"
+
+@implementation MPLimitConstants
+
++ (int) maxUsernameCharacters { return 12; }
++ (int) minUsernameCharacters { return 3; }
+
++ (int) maxPasswordCharacters { return 18; }
++ (int) minPasswordCharacters { return 4; }
+
++ (int) maxTeamNameCharacters { return 16; }
++ (int) minTeamNameCharacters { return 3; }
++ (int) maxUsersPerTeam { return 12; }
+
+@end

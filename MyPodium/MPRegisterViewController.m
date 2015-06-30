@@ -8,6 +8,7 @@
 
 #import "NSString+MPString.h"
 #import "MPErrorAlerter.h"
+#import "MPLimitConstants.h"
 
 #import "MPRegisterView.h"
 #import "MPTextField.h"
@@ -52,13 +53,17 @@
     
     //Potential username errors: length boundaries, already
     //in use, illegal characters
-    [alerter checkErrorCondition:(username.length < 4) withMessage:@"Your username must be at least 4 characters long."];
-    [alerter checkErrorCondition:(username.length > 12) withMessage:@"Your username cannot be longer than 12 characters."];
+    [alerter checkErrorCondition:(username.length < [MPLimitConstants minUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your username must be at least %d characters long.",
+                                                                                                           [MPLimitConstants minUsernameCharacters]]];
+    [alerter checkErrorCondition:(username.length > [MPLimitConstants maxUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your username cannot be longer than %d characters.",
+                                                                                                           [MPLimitConstants minUsernameCharacters]]];
     [alerter checkErrorCondition:!([username isValidUsername]) withMessage:@"Usernames must be alphanumeric (just letters and numbers)."];
     
     //Potential password errors: length boundaries
-    [alerter checkErrorCondition:(password.length < 4) withMessage:@"Your password must be at least 4 characters long."];
-    [alerter checkErrorCondition:(password.length > 16) withMessage:@"Your password cannot be longer than 16 characters."];
+    [alerter checkErrorCondition:(password.length < [MPLimitConstants minUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your password must be at least %d characters long.",
+                                                                                                           [MPLimitConstants minUsernameCharacters]]];
+    [alerter checkErrorCondition:(password.length > [MPLimitConstants maxUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your password cannot be longer than %d characters.",
+                                                                                                           [MPLimitConstants minUsernameCharacters]]];
     
     //Potential email errors: invalid email, already in use
     [alerter checkErrorCondition:!([email isValidEmail]) withMessage:@"You didn't enter a valid email."];
@@ -95,7 +100,7 @@
                             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                 if (error) {
                                     [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
-                                    [alerter checkErrorCondition:true withMessage:@"Server error please try again later."];
+                                    [alerter checkErrorCondition:true withMessage:@"An error occurred. Please try again later."];
                                 }
                                 else {
                                     [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];

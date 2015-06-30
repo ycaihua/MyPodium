@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */; };
 		2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */; };
 		2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */; };
 		2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */; };
@@ -95,6 +96,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D2B31A61B42EE2300781E0D /* MPLimitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLimitConstants.h; sourceTree = "<group>"; };
+		2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLimitConstants.m; sourceTree = "<group>"; };
 		2D2D5AC51B18D2A400C46B53 /* MPHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeViewController.h; sourceTree = "<group>"; };
 		2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeViewController.m; sourceTree = "<group>"; };
 		2D2D5AC91B18D2F400C46B53 /* MPHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeView.h; sourceTree = "<group>"; };
@@ -475,6 +478,8 @@
 				2D94D0CD1B3268A4006C500A /* MPControllerManager.m */,
 				2DF3D3D61B405EC7009C5304 /* MPTableSectionUtility.h */,
 				2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */,
+				2D2B31A61B42EE2300781E0D /* MPLimitConstants.h */,
+				2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -740,6 +745,7 @@
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
+				2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */,
 				2D94D0CE1B3268A4006C500A /* MPControllerManager.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,

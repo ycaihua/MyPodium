@@ -10,6 +10,7 @@
 #import "UIColor+MPColor.h"
 #import "MPErrorAlerter.h"
 #import "MPControllerManager.h"
+#import "MPLimitConstants.h"
 
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
@@ -120,10 +121,13 @@
 - (void) submitButtonPressed: (id) sender {
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController:self];
     MPMakeTeamView* view = (MPMakeTeamView*) self.view;
-    [alerter checkErrorCondition:(view.teamNameField.text.length < 2) withMessage:@"Your team name must be at least 3 characters long."];
-    [alerter checkErrorCondition:(view.teamNameField.text.length > 16) withMessage:@"Your team name can't be more than 16 characters long."];
+    [alerter checkErrorCondition:(view.teamNameField.text.length < [MPLimitConstants minTeamNameCharacters])
+                     withMessage:[NSString stringWithFormat: @"Your team name must be at least %d characters long.", [MPLimitConstants minTeamNameCharacters]]];
+    [alerter checkErrorCondition:(view.teamNameField.text.length > [MPLimitConstants maxTeamNameCharacters])
+                     withMessage:[NSString stringWithFormat: @"Your team name cannot be longer than %d characters.", [MPLimitConstants maxTeamNameCharacters]]];
     [alerter checkErrorCondition:(self.selectedFriends.count < 1) withMessage:@"You need to select at least one teammate."];
-    [alerter checkErrorCondition:(self.selectedFriends.count > 11) withMessage:@"You can have at most 12 players on your team (counting yourself)."];
+    [alerter checkErrorCondition:(self.selectedFriends.count > [MPLimitConstants maxUsersPerTeam] - 1)
+                     withMessage:[NSString stringWithFormat:@"You can have at most %d players on your team (counting yourself).", [MPLimitConstants maxUsersPerTeam]]];
     if(![alerter hasFoundError]) {
         dispatch_queue_t backgroundQueue = dispatch_queue_create("MakeTeamQueue", 0);
         dispatch_async(backgroundQueue, ^{
