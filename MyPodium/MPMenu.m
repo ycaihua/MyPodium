@@ -16,6 +16,7 @@
 - (id) init {
     self = [super init];
     if(self) {
+        self.iconsVisible = NO;
         [self setBackgroundColor:[UIColor MPBlackColor]];
         [self makeControls];
         [self makeControlConstraints];
@@ -92,6 +93,173 @@
     [self.settingsButtonSpacer addSubview: self.settingsButton];
 }
 
+- (void) showIcons {
+    self.iconsVisible = YES;
+    [self.titleButton removeFromSuperview];
+    [self.subtitleLabel removeFromSuperview];
+    
+    [self addSubview: self.hideButton];
+    [self addSubview: self.searchButtonSpacer];
+    [self addSubview: self.settingsButtonSpacer];
+    
+    [self addConstraints:@[//self.hideButton
+                           [NSLayoutConstraint constraintWithItem:self.hideButton
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.hideButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.hideButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           [NSLayoutConstraint constraintWithItem:self.hideButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           //self.searchButtonSpacer
+                           [NSLayoutConstraint constraintWithItem:self.searchButtonSpacer
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.sidebarButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchButtonSpacer
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.hideButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchButtonSpacer
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchButtonSpacer
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           //self.searchButton
+                           [NSLayoutConstraint constraintWithItem:self.searchButton
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.searchButtonSpacer
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchButton
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.searchButtonSpacer
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           [NSLayoutConstraint constraintWithItem:self.searchButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           //self.settingsButtonSpacer
+                           [NSLayoutConstraint constraintWithItem:self.settingsButtonSpacer
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.hideButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.settingsButtonSpacer
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.logOutButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.settingsButtonSpacer
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.settingsButtonSpacer
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           //self.searchButton
+                           [NSLayoutConstraint constraintWithItem:self.settingsButton
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.settingsButtonSpacer
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.settingsButton
+                                                        attribute:NSLayoutAttributeCenterY
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.settingsButtonSpacer
+                                                        attribute:NSLayoutAttributeCenterY
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.settingsButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           [NSLayoutConstraint constraintWithItem:self.settingsButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:38.0f],
+                           ]];
+}
+
+- (void) hideIcons {
+    self.iconsVisible = NO;
+    [self.hideButton removeFromSuperview];
+    [self.searchButtonSpacer removeFromSuperview];
+    [self.settingsButtonSpacer removeFromSuperview];
+    
+    [self addSubview: self.titleButton];
+    [self addSubview: self.subtitleLabel];
+}
+
 - (void) makeControlConstraints {
     [self addConstraints: @[//self.titleButton
                             [NSLayoutConstraint constraintWithItem:self.titleButton
@@ -148,8 +316,8 @@
                             [NSLayoutConstraint constraintWithItem:self.sidebarButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self.subtitleLabel
-                                                         attribute:NSLayoutAttributeBottom
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.sidebarButton

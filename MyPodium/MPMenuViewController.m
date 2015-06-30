@@ -43,13 +43,15 @@
     if(container.presentingViewController) {
         [view.menu.titleButton addTarget:self action:@selector(returnButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
-    [view.menu.titleButton addTarget:self action:@selector(displayIcons:) forControlEvents:UIControlEventTouchDownRepeat];
+    [view.menu.titleButton addTarget:self action:@selector(menuDoubleTap:) forControlEvents:UIControlEventTouchDownRepeat];
     [view.menu.sidebarButton addTarget:self action:@selector(menuButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.logOutButton addTarget:self action:@selector(logOutButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) displayIcons: (id) sender {
-    NSLog(@"should display icons");
+- (void) menuDoubleTap: (id) sender {
+    MPMenuView* view = (MPMenuView*) self.view;
+    MPMenu* menu = view.menu;
+    [menu showIcons];
 }
 
 - (void) returnButtonPressed: (id) sender {

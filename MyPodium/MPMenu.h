@@ -20,6 +20,10 @@
 @property UIButton* titleButton;
 @property CNLabel* subtitleLabel;
 
+@property BOOL iconsVisible;
+- (void) hideIcons;
+- (void) showIcons;
+
 @property UIButton* searchButton;
 @property UIButton* hideButton;
 @property UIButton* settingsButton;
