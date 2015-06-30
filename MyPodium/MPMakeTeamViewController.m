@@ -33,7 +33,7 @@
 
 @implementation MPMakeTeamViewController
 
-- (id) init {
+- (id) initWithSelectedUser:(PFUser *)user {
     self = [super init];
     if(self) {
         MPMakeTeamView* view = [[MPMakeTeamView alloc] init];
@@ -52,6 +52,13 @@
                 table.delegate = self;
                 table.dataSource = self;
                 [table reloadData];
+                
+                if(user) {
+                    NSIndexPath* path = [self indexPathForUser: user];
+                    [self.selectedFriends addObject: self.friends[path.row]];
+                    [view enableSubmitButton];
+                    [view.playersTable selectRowAtIndexPath:path animated:true scrollPosition:UITableViewScrollPositionMiddle];
+                }
                 [view.menu.subtitleLabel displayMessage:[MPMakeTeamView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
                 
                 [view.submitButton addTarget:self action:@selector(submitButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -61,6 +68,10 @@
         });
     }
     return self;
+}
+
+- (id) init {
+    return [self initWithSelectedUser: nil];
 }
 
 #pragma mark table view delegate/data source
@@ -75,8 +86,8 @@
     cell.indexPath = indexPath;
     
     //don't need buttons unless selected
-    [cell.rightButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"green"];
     [cell.leftButton removeFromSuperview];
+    [cell.centerButton removeFromSuperview];
     [cell.rightButton removeFromSuperview];
     
     //Update data for appropriate user
@@ -98,11 +109,22 @@
     return [MPUserCell cellHeight];
 }
 
+- (NSIndexPath*) indexPathForUser: (PFUser*) user {
+    int row = -1;
+    for(int i = 0; i < self.friends.count; i++) {
+        PFUser* current = self.friends[i];
+        if([current.objectId isEqualToString: user.objectId])
+            row = i;
+    }
+    NSLog(@"%d", row);
+    return [NSIndexPath indexPathForRow:row inSection:0];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MPMakeTeamView* view = (MPMakeTeamView*) self.view;
     PFUser* friend = self.friends[indexPath.row];
     [self.selectedFriends addObject: friend];
-    if(self.selectedFriends.count == 1)
+    if(self.selectedFriends.count > 0)
         [view enableSubmitButton];
     [view.teamNameField resignFirstResponder];
 }

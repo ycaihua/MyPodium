@@ -23,6 +23,7 @@
 #import "CNLabel.h"
 
 #import "MPFriendsViewController.h"
+#import "MPMakeTeamViewController.h"
 #import "MPUserProfileViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -382,6 +383,15 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
+}
+
+- (void) newTeamWithFriendButtonPressed: (id) sender {
+    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    MPMakeTeamViewController* destination = [[MPMakeTeamViewController alloc] initWithSelectedUser: other];
+    [MPControllerManager presentViewController:destination fromController:self];
 }
 
 #pragma mark table view data/delegate

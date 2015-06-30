@@ -9,8 +9,11 @@
 #import "MPMenuViewController.h"
 
 #import <UIKit/UIKit.h>
+@class PFUser;
 
 @interface MPMakeTeamViewController : MPMenuViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
+- (id) initWithSelectedUser: (PFUser*) user;
 
 @property NSArray* friends;
 @property NSMutableArray* selectedFriends;
