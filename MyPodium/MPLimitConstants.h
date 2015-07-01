@@ -16,6 +16,8 @@
 + (int) minPasswordCharacters;
 + (int) maxTeamNameCharacters;
 + (int) minTeamNameCharacters;
++ (int) maxRealNameCharacters;
++ (int) minRealNameCharacters;
 + (int) maxUsersPerTeam;
 
 @end

@@ -18,6 +18,10 @@
 
 + (int) maxTeamNameCharacters { return 16; }
 + (int) minTeamNameCharacters { return 3; }
+
++ (int) maxRealNameCharacters { return 18; }
++ (int) minRealNameCharacters { return 3; }
+
 + (int) maxUsersPerTeam { return 12; }
 
 @end
