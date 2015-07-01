@@ -47,6 +47,7 @@
     
     //self.changePasswordField
     self.changePasswordField = [[MPTextField alloc] initWithPlaceholder:@"CHANGE PASSWORD"];
+    self.changePasswordField.secureTextEntry = YES;
     self.changePasswordField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.changePasswordField];
     
@@ -58,6 +59,7 @@
     
     //self.confirmPasswordField
     self.confirmPasswordField = [[MPTextField alloc] initWithPlaceholder:@"CONFIRM PASSWORD"];
+    self.confirmPasswordField.secureTextEntry = YES;
     self.confirmPasswordField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.confirmPasswordField];
     
@@ -69,6 +71,7 @@
     
     //self.oldPasswordField
     self.oldPasswordField = [[MPTextField alloc] initWithPlaceholder:@"OLD PASSWORD"];
+    self.oldPasswordField.secureTextEntry = YES;
     self.oldPasswordField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.oldPasswordField];
     

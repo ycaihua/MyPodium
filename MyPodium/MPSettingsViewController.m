@@ -30,6 +30,7 @@
     if(self) {
         MPSettingsView* view = [[MPSettingsView alloc] init];
         [view.submitNameButton addTarget:self action:@selector(submitNameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [view.submitPasswordButton addTarget:self action:@selector(submitPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         self.view = view;
     }
     return self;
@@ -55,7 +56,37 @@
             });
         });
     }
+}
+
+- (void) submitPasswordButtonPressed: (id) sender {
+    NSString* newPassword = ((MPSettingsView*)self.view).changePasswordField.text;
+    NSString* confirmPassword = ((MPSettingsView*)self.view).confirmPasswordField.text;
+    NSString* oldPassword = ((MPSettingsView*)self.view).oldPasswordField.text;
+    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     
+    [alerter checkErrorCondition:![newPassword isEqualToString: confirmPassword] withMessage:@"Your two password entries did not match."];
+    [alerter checkErrorCondition:(newPassword.length < [MPLimitConstants minPasswordCharacters]) withMessage:[NSString stringWithFormat:@"Passwords must be at least %d characters long.", [MPLimitConstants minPasswordCharacters]]];
+    [alerter checkErrorCondition:(newPassword.length > [MPLimitConstants maxPasswordCharacters]) withMessage:[NSString stringWithFormat:@"Passwords can be at most %d characters long.", [MPLimitConstants maxPasswordCharacters]]];
+    
+    if(![alerter hasFoundError]) {
+        dispatch_queue_t saveNameThread = dispatch_queue_create("SaveName", 0);
+        dispatch_async(saveNameThread, ^{
+            id success = [PFUser logInWithUsername:[PFUser currentUser].username password:oldPassword];
+            [alerter checkErrorCondition:!(success) withMessage:@"Verification failed. Check your entry for your old password."];
+            if(![alerter hasFoundError]) {
+                PFUser* currentUser = [PFUser currentUser];
+                currentUser[@"password"] = newPassword;
+                [alerter checkErrorCondition:![currentUser save] withMessage:@"There was an error saving your password. Please try again later."];
+                if(![alerter hasFoundError]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [((MPSettingsView*)self.view).menu.subtitleLabel displayMessage:@"Your password was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
+                        
+                    });
+                }
+            }
+        });
+    }
+
 }
 
 @end
