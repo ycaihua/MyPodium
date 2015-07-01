@@ -8,6 +8,20 @@
 
 #import "MPMenuView.h"
 
+@class MPTextField;
+@class MPLabel;
+
 @interface MPSettingsView : MPMenuView
+
+@property MPTextField* realNameField;
+@property MPLabel* realNameLabel;
+@property UIButton* submitNameButton;
+@property MPTextField* changePasswordField;
+@property MPLabel* changePasswordLabel;
+@property MPTextField* confirmPasswordField;
+@property MPLabel* confirmPasswordLabel;
+@property MPTextField* oldPasswordField;
+@property MPLabel* oldPasswordLabel;
+@property UIButton* submitPasswordButton;
 
 @end
