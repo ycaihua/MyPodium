@@ -19,6 +19,7 @@
 #import "MPTeamsViewController.h"
 #import "MPMakeTeamViewController.h"
 #import "MPSearchViewController.h"
+#import "MPSettingsViewController.h"
 
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -118,7 +119,7 @@
              [MPMakeTeamViewController class],
              [MPMenuViewController class],
              [MPSearchViewController class],
-             [MPMenuViewController class],
+             [MPSettingsViewController class],
              [MPMenuViewController class],
              [MPMenuViewController class],
              [MPRegisterViewController class]

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */; };
+		2D2B31AC1B443FA500781E0D /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31AB1B443FA500781E0D /* MPSettingsViewController.m */; };
+		2D2B31B01B443FCD00781E0D /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31AF1B443FCD00781E0D /* MPSettingsView.m */; };
 		2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */; };
 		2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */; };
 		2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */; };
@@ -98,6 +100,10 @@
 /* Begin PBXFileReference section */
 		2D2B31A61B42EE2300781E0D /* MPLimitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLimitConstants.h; sourceTree = "<group>"; };
 		2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLimitConstants.m; sourceTree = "<group>"; };
+		2D2B31AA1B443FA500781E0D /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
+		2D2B31AB1B443FA500781E0D /* MPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsViewController.m; sourceTree = "<group>"; };
+		2D2B31AE1B443FCD00781E0D /* MPSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsView.h; sourceTree = "<group>"; };
+		2D2B31AF1B443FCD00781E0D /* MPSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsView.m; sourceTree = "<group>"; };
 		2D2D5AC51B18D2A400C46B53 /* MPHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeViewController.h; sourceTree = "<group>"; };
 		2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeViewController.m; sourceTree = "<group>"; };
 		2D2D5AC91B18D2F400C46B53 /* MPHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeView.h; sourceTree = "<group>"; };
@@ -273,6 +279,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D2B31A91B443F9000781E0D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2D2B31AA1B443FA500781E0D /* MPSettingsViewController.h */,
+				2D2B31AB1B443FA500781E0D /* MPSettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		2D2B31AD1B443FB700781E0D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2D2B31AE1B443FCD00781E0D /* MPSettingsView.h */,
+				2D2B31AF1B443FCD00781E0D /* MPSettingsView.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		2D2D5AC41B18D29000C46B53 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,6 +365,7 @@
 		2D4487461B039B540061EF86 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				2D2B31A91B443F9000781E0D /* Settings */,
 				2D94D0A91B23CB35006C500A /* Help */,
 				2D2D5AC41B18D29000C46B53 /* Home */,
 				2DE9FCD61B1E55F300F748C9 /* Friends */,
@@ -398,6 +423,7 @@
 		2D4487751B05460F0061EF86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2D2B31AD1B443FB700781E0D /* Settings */,
 				2D94D0AA1B23CB48006C500A /* Help */,
 				2D2D5AC81B18D2E600C46B53 /* Home */,
 				2DE9FCD21B1E55A700F748C9 /* Friends */,
@@ -771,6 +797,7 @@
 				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
 				2DE9FCF01B21F5E800F748C9 /* MPSearchControl.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
+				2D2B31B01B443FCD00781E0D /* MPSettingsView.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
@@ -778,6 +805,7 @@
 				2D94D0BF1B2E99E0006C500A /* MPMakeTeamView.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
+				2D2B31AC1B443FA500781E0D /* MPSettingsViewController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,

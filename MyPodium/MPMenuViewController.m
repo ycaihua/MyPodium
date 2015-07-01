@@ -16,6 +16,7 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MPSearchViewController.h"
+#import "MPSettingsViewController.h"
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
@@ -49,6 +50,7 @@
     
     [view.menu.hideButton addTarget:self action:@selector(hideIcons:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.searchButton addTarget:self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.menu.settingsButton addTarget:self action:@selector(settingsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) hideIcons: (id) sender {
@@ -104,6 +106,10 @@
     [MPControllerManager presentViewController:[[MPSearchViewController alloc] init] fromController:self];
 }
 
-+ (NSTimeInterval) iconHoldDuration { return 1.5f; }
+- (void) settingsButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPSettingsViewController alloc] init] fromController:self];
+}
+
++ (NSTimeInterval) iconHoldDuration { return 1.0f; }
 
 @end
