@@ -90,6 +90,8 @@
     self.submitPasswordButton.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.submitPasswordButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.submitPasswordButton];
+    
+    [self bringSubviewToFront:(UIView*)self.menu];
 }
 
 - (void) shiftVerticalConstraintsBy: (CGFloat) amount {

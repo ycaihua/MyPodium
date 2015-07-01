@@ -39,6 +39,8 @@
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification {
+    if(![((MPSettingsView*)self.view).oldPasswordField isFirstResponder])
+        return;
     NSDictionary *info = [notification userInfo];
     NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
