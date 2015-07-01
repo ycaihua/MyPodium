@@ -8,6 +8,9 @@
 
 #import "MPControllerManager.h"
 
+#import "MPMenu.h"
+#import "MPMenuView.h"
+
 #import "MPMenuViewController.h"
 
 #import "AppDelegate.h"
@@ -28,6 +31,11 @@
         [presenter.mm_drawerController presentViewController:toPresent animated:true completion:nil];
     else
         [presenter presentViewController:toPresent animated:true completion:nil];
+    
+    if([presenter isKindOfClass:[MPMenuViewController class]]) {
+        MPMenu* menu = ((MPMenuView*)presenter.view).menu;
+        [menu hideIcons];
+    }
     
     if([controller isKindOfClass:[MPMenuViewController class]])
         [(MPMenuViewController*)controller addMenuActions];
