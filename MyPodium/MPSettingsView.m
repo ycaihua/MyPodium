@@ -92,6 +92,20 @@
     [self addSubview:self.submitPasswordButton];
 }
 
+- (void) shiftVerticalConstraintsBy: (CGFloat) amount {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTop && [constraint.firstItem isEqual: self.realNameField])
+                constraint.constant += amount;
+    }
+}
+
+- (void) restoreDefaultConstraints {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTop && [constraint.firstItem isEqual: self.realNameField])
+            constraint.constant = 10.0f;
+    }
+}
+
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.realNameField
                            [NSLayoutConstraint constraintWithItem:self.realNameField

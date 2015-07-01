@@ -31,9 +31,36 @@
         MPSettingsView* view = [[MPSettingsView alloc] init];
         [view.submitNameButton addTarget:self action:@selector(submitNameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [view.submitPasswordButton addTarget:self action:@selector(submitPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         self.view = view;
     }
     return self;
+}
+
+- (void) keyboardWillShow: (NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect keyboardFrame = [kbFrame CGRectValue];
+    
+    CGFloat height = keyboardFrame.size.height;
+    [((MPSettingsView*)self.view) shiftVerticalConstraintsBy: -height];
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void) keyboardWillHide: (NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    
+    [((MPSettingsView*)self.view) restoreDefaultConstraints];
+    
+    [UIView animateWithDuration:animationDuration animations:^{
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void) submitNameButtonPressed: (id) sender {

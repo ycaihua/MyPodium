@@ -24,4 +24,7 @@
 @property MPLabel* oldPasswordLabel;
 @property UIButton* submitPasswordButton;
 
+- (void) shiftVerticalConstraintsBy: (CGFloat) amount;
+- (void) restoreDefaultConstraints;
+
 @end

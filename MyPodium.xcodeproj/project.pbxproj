@@ -10,6 +10,8 @@
 		2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */; };
 		2D2B31AC1B443FA500781E0D /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31AB1B443FA500781E0D /* MPSettingsViewController.m */; };
 		2D2B31B01B443FCD00781E0D /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31AF1B443FCD00781E0D /* MPSettingsView.m */; };
+		2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */; };
+		2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B61B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */; };
 		2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */; };
 		2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */; };
@@ -104,6 +106,10 @@
 		2D2B31AB1B443FA500781E0D /* MPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsViewController.m; sourceTree = "<group>"; };
 		2D2B31AE1B443FCD00781E0D /* MPSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsView.h; sourceTree = "<group>"; };
 		2D2B31AF1B443FCD00781E0D /* MPSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsView.m; sourceTree = "<group>"; };
+		2D2B31B21B4486FD00781E0D /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		2D2B31B51B44875D00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		2D2B31B61B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		2D2D5AC51B18D2A400C46B53 /* MPHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeViewController.h; sourceTree = "<group>"; };
 		2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeViewController.m; sourceTree = "<group>"; };
 		2D2D5AC91B18D2F400C46B53 /* MPHomeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeView.h; sourceTree = "<group>"; };
@@ -297,6 +303,17 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		2D2B31B11B4486C400781E0D /* TPKeyboardAvoiding */ = {
+			isa = PBXGroup;
+			children = (
+				2D2B31B51B44875D00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				2D2B31B61B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
+				2D2B31B21B4486FD00781E0D /* TPKeyboardAvoidingScrollView.h */,
+				2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */,
+			);
+			name = TPKeyboardAvoiding;
+			sourceTree = "<group>";
+		};
 		2D2D5AC41B18D29000C46B53 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,6 +412,7 @@
 		2D44874B1B039C2D0061EF86 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				2D2B31B11B4486C400781E0D /* TPKeyboardAvoiding */,
 				2DE9FCFA1B2275F800F748C9 /* Reachability.h */,
 				2DE9FCFB1B2275F800F748C9 /* Reachability.m */,
 				2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */,
@@ -770,6 +788,7 @@
 				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
+				2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */,
 				2D94D0CE1B3268A4006C500A /* MPControllerManager.m in Sources */,
@@ -783,6 +802,7 @@
 				2D94D0C31B2F7F3B006C500A /* MPMakeTeamViewController.m in Sources */,
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,
+				2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D94D0AD1B279719006C500A /* MPTeamsModel.m in Sources */,

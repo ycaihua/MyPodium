@@ -12,6 +12,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "TPKeyboardAvoidingScrollView.h"
+
 @interface MPView : UIView
 
 //Button that sits in the back of the
