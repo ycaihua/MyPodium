@@ -39,7 +39,7 @@
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification {
-    if(![((MPSettingsView*)self.view).oldPasswordField isFirstResponder])
+    if(!([((MPSettingsView*)self.view).oldPasswordField isFirstResponder] || [((MPSettingsView*)self.view).oldPasswordField isFirstResponder]))
         return;
     NSDictionary *info = [notification userInfo];
     NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
@@ -73,11 +73,11 @@
     if(![alerter hasFoundError]) {
         dispatch_queue_t saveNameThread = dispatch_queue_create("SaveName", 0);
         dispatch_async(saveNameThread, ^{
-            ((MPSettingsView*)self.view).realNameField.text = @"";
             PFUser* currentUser = [PFUser currentUser];
             currentUser[@"realName"] = name;
             BOOL success = [currentUser save];
             dispatch_async(dispatch_get_main_queue(), ^{
+                ((MPSettingsView*)self.view).realNameField.text = @"";
                 [alerter checkErrorCondition:(!success) withMessage:@"There was a problem saving your name. Please try again later."];
                 if(![alerter hasFoundError]) {
                     [((MPSettingsView*)self.view).menu.subtitleLabel displayMessage:@"Your name was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
