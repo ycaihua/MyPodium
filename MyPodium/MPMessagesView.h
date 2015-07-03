@@ -1,5 +1,5 @@
 //
-//  MPFriendsView.h
+//  MPMessagesView.h
 //  MyPodium
 //
 //  Created by Connor Neville on 6/2/15.
@@ -11,11 +11,11 @@
 @class MPSearchControl;
 @class MPTableHeader;
 
-@interface MPFriendsView : MPMenuView
+@interface MPMessagesView : MPMenuView
 
 @property MPSearchControl* filterSearch;
 @property MPTableHeader* loadingHeader;
-@property UITableView* friendsTable;
+@property UITableView* messagesTable;
 
 + (NSString*) defaultSubtitle;
 

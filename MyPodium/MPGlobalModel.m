@@ -60,4 +60,15 @@
     return results;
 }
 
++ (NSArray*) messagesList: (NSArray*) messages searchForString: (NSString*) string {
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: messages.count];
+    for(PFObject* message in messages) {
+        PFUser* sender = message[@"sender"];
+        if(([message[@"title"] containsString: string]) ||
+           ([sender.username containsString:string]))
+            [results addObject: message];
+    }
+    return results;
+}
+
 @end

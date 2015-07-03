@@ -66,6 +66,9 @@
     self.titleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.titleLabel.textColor = [UIColor MPBlackColor];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.titleLabel.numberOfLines = 1;
+    self.titleLabel.adjustsFontSizeToFitWidth = NO;
+    self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.titleLabel];
     
     //self.senderLabel
@@ -73,6 +76,9 @@
     self.senderLabel.font = [UIFont fontWithName:@"Lato-Bold" size:11.0f];
     self.senderLabel.textColor = [UIColor MPBlackColor];
     self.senderLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.senderLabel.numberOfLines = 1;
+    self.senderLabel.adjustsFontSizeToFitWidth = NO;
+    self.senderLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.senderLabel];
     
     //self.rightButton
@@ -190,6 +196,13 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.titleLabel
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual

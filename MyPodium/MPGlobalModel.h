@@ -15,5 +15,6 @@
 + (NSArray*) userSearchContainingString: (NSString*) string forUser: (PFUser*) user;
 + (NSArray*) userList: (NSArray*) users searchForString: (NSString*) string;
 + (NSArray*) teamList: (NSArray*) teams searchForString: (NSString*) string;
++ (NSArray*) messagesList: (NSArray*) messages searchForString: (NSString*) string;
 
 @end
