@@ -89,13 +89,13 @@
                                 
                                 //Set images
                                 [cell showLeftButton];
-                                [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"check" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(markReadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.centerButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.rightButton addTarget:self action:@selector(deleteMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.leftButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(markReadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(deleteNewMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -132,13 +132,54 @@
                                 
                                 //Set images
                                 [cell showLeftButton];
-                                [cell.leftButton setImageString:@"up" withColorString:@"green" withHighlightedColorString:@"black"];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"up" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(markUnreadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.centerButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                //[cell.rightButton addTarget:self action:@selector(deleteMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.leftButton addTarget:self action:@selector(readReadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(markUnreadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(deleteReadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPMessagesCell*)cell updateForMessage:object];
+                            }],
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPMessagesViewController sentMessagesHeader]
+                            withDataBlock:^(){
+                                NSArray* messages = [MPMessagesModel sentMessagesForUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPMessagesView* view = (MPMessagesView*) self.view;
+                                    return [MPGlobalModel messagesList:messages searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return messages;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPMessagesCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPMessagesViewController messagesReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPMessagesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMessagesViewController messagesReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                //[cell.centerButton addTarget:self action:@selector(readSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(hideSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -284,6 +325,49 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:false
      withConfirmationMessage:nil];
+}
+
+- (void) deleteNewMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController newMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel deleteMessage: other];
+    }
+          withSuccessMessage:@"You deleted the message."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+}
+
+- (void) deleteReadMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel deleteMessage: other];
+    }
+          withSuccessMessage:@"You deleted the message."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+}
+
+- (void) hideSentMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController sentMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel hideMessageFromSender: other];
+    }
+          withSuccessMessage:@"You removed the message from your sent box."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage: nil
+     ];
 }
 
 #pragma mark table view data/delegate

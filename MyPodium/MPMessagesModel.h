@@ -19,5 +19,7 @@
 
 + (BOOL) markMessageRead: (PFObject*) message;
 + (BOOL) markMessageUnread: (PFObject*) message;
++ (BOOL) deleteMessage: (PFObject*) message;
++ (BOOL) hideMessageFromSender:(PFObject*) message;
 
 @end
