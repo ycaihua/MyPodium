@@ -35,10 +35,48 @@
 }
 
 - (void) hideLeftButton {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
+           constraint.relation == NSLayoutRelationLessThanOrEqual)
+            [self removeConstraint: constraint];
+    }
+    [self addConstraints:@[[NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.centerButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.centerButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f]]];
     self.leftButton.alpha = 0.0f;
 }
 
 - (void) showLeftButton {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
+           constraint.relation == NSLayoutRelationLessThanOrEqual)
+            [self removeConstraint: constraint];
+    }
+    [self addConstraints:@[[NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f]]];
     self.leftButton.alpha = 1.0f;
 }
 
@@ -124,6 +162,9 @@
     self.friendUsernameLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.friendUsernameLabel.textColor = [UIColor MPBlackColor];
     self.friendUsernameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.friendUsernameLabel.numberOfLines = 1;
+    self.friendUsernameLabel.adjustsFontSizeToFitWidth = NO;
+    self.friendUsernameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.friendUsernameLabel];
     
     //self.friendRealNameLabel
@@ -131,6 +172,9 @@
     self.friendRealNameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:11.0f];
     self.friendRealNameLabel.textColor = [UIColor MPBlackColor];
     self.friendRealNameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.friendRealNameLabel.numberOfLines = 1;
+    self.friendRealNameLabel.adjustsFontSizeToFitWidth = NO;
+    self.friendRealNameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.friendRealNameLabel];
     
     //self.rightButton
@@ -247,6 +291,13 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            //Will be removed if a user's real name is specified
                            [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
                                                         attribute:NSLayoutAttributeCenterY
@@ -263,6 +314,20 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.leadingBorder
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.friendUsernameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.friendRealNameLabel
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
