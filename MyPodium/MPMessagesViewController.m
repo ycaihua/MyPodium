@@ -53,7 +53,7 @@
       forCellReuseIdentifier:[MPMessagesViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [self refreshData];
+        [self loadOnDismiss:self];
     }
     return self;
 }
@@ -148,31 +148,25 @@
 }
 
 - (void) loadOnDismiss: (id) sender {
+    MPMessagesView* view = (MPMessagesView*) self.view;
+    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
         MPMessagesView* view = (MPMessagesView*) self.view;
         [self refreshData];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.messagesTable reloadData];
+            [view.loadingHeader removeFromSuperview];
+            [view.menu.subtitleLabel displayMessage:[MPMessagesView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
         });
     });
 }
 
 - (void) refreshData {
-    MPMessagesView* view = (MPMessagesView*) self.view;
-    //[view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.messagesTable reloadData];
-            [view.loadingHeader removeFromSuperview];
-            //[view.menu.subtitleLabel displayMessage:[MPMessagesView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-        });
-    });
+    for(MPTableSectionUtility* section in self.tableSections) {
+        [section reloadData];
+    }
+    [self updateHeaders];
 }
 
 - (void) updateHeaders {
@@ -206,10 +200,11 @@
             dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
             dispatch_async(backgroundQueue, ^{
                 BOOL success = methodAction();
+                if(success)
+                    [self refreshData];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        [self refreshData];
                         view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                         [view.menu.subtitleLabel displayMessage: successMessage
@@ -239,10 +234,11 @@
         dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
         dispatch_async(backgroundQueue, ^{
             BOOL success = methodAction();
+            if(success)
+                [self refreshData];
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    [self refreshData];
                     view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage: successMessage
@@ -357,7 +353,7 @@
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     self.isFiltered = !(filterString.length == 0);
-    [self refreshData];
+    [self loadOnDismiss: self];
 }
 
 #pragma mark textfield delegate
