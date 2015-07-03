@@ -79,6 +79,7 @@
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
 		2D9A4B3E1B0AC77B00AEF295 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */; };
 		2D9A4B401B0AC7B900AEF295 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */; };
+		2DBF86911B462A0400FB0AF5 /* MPMessagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86901B462A0400FB0AF5 /* MPMessagesCell.m */; };
 		2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */; };
 		2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC911B194BB200F748C9 /* MPSidebarView.m */; };
 		2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC941B19D92100F748C9 /* MPSidebarViewCell.m */; };
@@ -218,6 +219,8 @@
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		2DBF868F1B462A0400FB0AF5 /* MPMessagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessagesCell.h; sourceTree = "<group>"; };
+		2DBF86901B462A0400FB0AF5 /* MPMessagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessagesCell.m; sourceTree = "<group>"; };
 		2DE9FC8D1B190FE600F748C9 /* MPHomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeButton.h; sourceTree = "<group>"; };
 		2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeButton.m; sourceTree = "<group>"; };
 		2DE9FC901B194BB200F748C9 /* MPSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarView.h; sourceTree = "<group>"; };
@@ -441,6 +444,7 @@
 		2D4487751B05460F0061EF86 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2DBF868E1B4629DB00FB0AF5 /* Messages */,
 				2D2B31AD1B443FB700781E0D /* Settings */,
 				2D94D0AA1B23CB48006C500A /* Help */,
 				2D2D5AC81B18D2E600C46B53 /* Home */,
@@ -650,6 +654,15 @@
 			name = UserProfile;
 			sourceTree = "<group>";
 		};
+		2DBF868E1B4629DB00FB0AF5 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				2DBF868F1B462A0400FB0AF5 /* MPMessagesCell.h */,
+				2DBF86901B462A0400FB0AF5 /* MPMessagesCell.m */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		2DE9FCCE1B1D5E4000F748C9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -792,6 +805,7 @@
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,
 				2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */,
 				2D94D0CE1B3268A4006C500A /* MPControllerManager.m in Sources */,
+				2DBF86911B462A0400FB0AF5 /* MPMessagesCell.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
 				2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */,

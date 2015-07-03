@@ -136,7 +136,6 @@
                 if(![alerter hasFoundError]) {
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [((MPSettingsView*)self.view).menu.subtitleLabel displayMessage:@"Your password was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
-                        
                     });
                 }
             }
