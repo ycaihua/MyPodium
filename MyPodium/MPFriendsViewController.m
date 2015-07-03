@@ -259,6 +259,7 @@
                         [view.menu.subtitleLabel displayMessage: successMessage
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPGreenColor]];
+                        [self refreshData];
                     }
                     else {
                         view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
@@ -291,6 +292,7 @@
                     [view.menu.subtitleLabel displayMessage: successMessage
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
+                    [self refreshData];
                 }
                 else {
                     view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
