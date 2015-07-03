@@ -9,9 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @class PFUser;
+@class PFObject;
 
 @interface MPMessagesModel : NSObject
 
 + (NSArray*) newMessagesForUser: (PFUser*) user;
++ (NSArray*) readMessagesForUser: (PFUser*) user;
++ (NSArray*) sentMessagesForUser: (PFUser*) user;
+
++ (BOOL) markMessageRead: (PFObject*) message;
++ (BOOL) markMessageUnread: (PFObject*) message;
 
 @end

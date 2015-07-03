@@ -94,8 +94,51 @@
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
                                 [cell.leftButton addTarget:self action:@selector(markReadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.centerButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(deleteMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.centerButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.rightButton addTarget:self action:@selector(deleteMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPMessagesCell*)cell updateForMessage:object];
+                            }],
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPMessagesViewController readMessagesHeader]
+                            withDataBlock:^(){
+                                NSArray* messages = [MPMessagesModel readMessagesForUser:[PFUser currentUser]];
+                                if(self.isFiltered) {
+                                    MPMessagesView* view = (MPMessagesView*) self.view;
+                                    return [MPGlobalModel messagesList:messages searchForString:view.filterSearch.searchField.text];
+                                }
+                                else return messages;
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPMessagesCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPMessagesViewController messagesReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPMessagesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMessagesViewController messagesReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"up" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.leftButton addTarget:self action:@selector(markUnreadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.centerButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                //[cell.rightButton addTarget:self action:@selector(deleteMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -117,7 +160,7 @@
 
 - (void) refreshData {
     MPMessagesView* view = (MPMessagesView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    //[view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
     dispatch_async(backgroundQueue, ^{
         for(MPTableSectionUtility* section in self.tableSections) {
@@ -127,7 +170,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.messagesTable reloadData];
             [view.loadingHeader removeFromSuperview];
-            [view.menu.subtitleLabel displayMessage:[MPMessagesView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+            //[view.menu.subtitleLabel displayMessage:[MPMessagesView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
         });
     });
 }
@@ -166,6 +209,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
+                        [self refreshData];
                         view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                         [view.menu.subtitleLabel displayMessage: successMessage
@@ -198,6 +242,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
+                    [self refreshData];
                     view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage: successMessage
@@ -215,6 +260,34 @@
             });
         });
     }
+}
+
+- (void) markReadButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController newMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel markMessageRead: other];
+    }
+          withSuccessMessage:@"You marked the message as read."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:nil];
+}
+
+- (void) markUnreadButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel markMessageUnread: other];
+    }
+          withSuccessMessage:@"You marked the message as unread."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:nil];
 }
 
 #pragma mark table view data/delegate

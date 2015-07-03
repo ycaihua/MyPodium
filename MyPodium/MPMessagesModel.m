@@ -19,4 +19,30 @@
     return [query findObjects];
 }
 
++ (NSArray*) readMessagesForUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (read = %@)",
+                              user, [NSNumber numberWithBool:true]];
+    PFQuery *query = [PFQuery queryWithClassName:@"Message" predicate:predicate];
+    [query includeKey:@"sender"];
+    return [query findObjects];
+}
+
++ (NSArray*) sentMessagesForUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@)",
+                              user];
+    PFQuery *query = [PFQuery queryWithClassName:@"Message" predicate:predicate];
+    [query includeKey:@"receiver"];
+    return [query findObjects];
+}
+
++ (BOOL) markMessageRead:(PFObject *)message {
+    message[@"read"] = [NSNumber numberWithBool:true];
+    return [message save];
+}
+
++ (BOOL) markMessageUnread:(PFObject *)message {
+    message[@"read"] = [NSNumber numberWithBool:false];
+    return [message save];
+}
+
 @end
