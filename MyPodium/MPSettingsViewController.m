@@ -33,25 +33,52 @@
         [view.submitPasswordButton addTarget:self action:@selector(submitPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+        for(UITextField* textField in @[view.realNameField, view.changePasswordField, view.confirmPasswordField, view.oldPasswordField]) {
+            [textField setDelegate: self];
+        }
         self.view = view;
     }
     return self;
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification {
-    if(!([((MPSettingsView*)self.view).oldPasswordField isFirstResponder] || [((MPSettingsView*)self.view).oldPasswordField isFirstResponder]))
-        return;
+    MPSettingsView* view = ((MPSettingsView*)self.view);
+    UITextField* responder;
+    for(UITextField* textfield in @[view.realNameField, view.changePasswordField, view.confirmPasswordField, view.oldPasswordField]) {
+        if([textfield isFirstResponder]) {
+            responder = textfield;
+            break;
+        }
+    }
+    
     NSDictionary *info = [notification userInfo];
     NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     CGRect keyboardFrame = [kbFrame CGRectValue];
     
     CGFloat height = keyboardFrame.size.height;
-    [((MPSettingsView*)self.view) shiftVerticalConstraintsBy: -height];
+    self.keyboardHeight = height;
+    
+    [self shiftConstraintToFocusTextField: responder animationDuration: animationDuration];
+}
+
+- (void) shiftConstraintToFocusTextField: (UITextField*) textField animationDuration: (NSTimeInterval) animationDuration {
+    CGFloat fieldBottom = textField.frame.origin.y + textField.frame.size.height;
+    //Note: here we assume self.keyboardHeight has to be initialized, because a keyboard must have been
+    //shown prior to this method call
+    CGFloat shiftAmount = (self.view.frame.size.height - self.keyboardHeight - fieldBottom - 5);
+    
+    if(shiftAmount >= 0) {
+        [((MPSettingsView*)self.view) restoreDefaultConstraints];
+        return;
+    }
+    
+    [((MPSettingsView*)self.view) shiftVerticalConstraintsBy: shiftAmount];
     
     [UIView animateWithDuration:animationDuration animations:^{
         [self.view layoutIfNeeded];
     }];
+    
 }
 
 - (void) keyboardWillHide: (NSNotification *)notification {
@@ -115,7 +142,28 @@
             }
         });
     }
+}
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    MPSettingsView* view = (MPSettingsView*)self.view;
+    if([textField isEqual: view.realNameField]) {
+        [textField resignFirstResponder];
+        if(textField.text.length > 0)
+            [self submitNameButtonPressed: self];
+    }
+    else if([textField isEqual: view.changePasswordField]) {
+        [view.confirmPasswordField becomeFirstResponder];
+        [self shiftConstraintToFocusTextField: view.confirmPasswordField animationDuration:0.5f];
+    }
+    else if([textField isEqual: view.confirmPasswordField]) {
+        [view.oldPasswordField becomeFirstResponder];
+        [self shiftConstraintToFocusTextField: view.oldPasswordField animationDuration:0.5f];
+    }
+    else {
+        [textField resignFirstResponder];
+        [self submitPasswordButtonPressed: self];
+    }
+    return YES;
 }
 
 @end
