@@ -16,7 +16,7 @@
 + (int) maxPasswordCharacters { return 18; }
 + (int) minPasswordCharacters { return 4; }
 
-+ (int) maxTeamNameCharacters { return 16; }
++ (int) maxTeamNameCharacters { return 28; }
 + (int) minTeamNameCharacters { return 3; }
 
 + (int) maxRealNameCharacters { return 18; }

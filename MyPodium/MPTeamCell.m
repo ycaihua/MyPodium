@@ -63,11 +63,14 @@
     self.leadingBorder.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self.solidColorView addSubview: self.leadingBorder];
     
-    //self.friendUsernameLabel
+    //self.teamNameLabel
     self.teamNameLabel = [[CNLabel alloc] initWithText:@"team name"];
     self.teamNameLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.teamNameLabel.textColor = [UIColor MPBlackColor];
     self.teamNameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.teamNameLabel.numberOfLines = 1;
+    self.teamNameLabel.adjustsFontSizeToFitWidth = NO;
+    self.teamNameLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.teamNameLabel];
     
     //self.teamOwnerLabel
@@ -75,6 +78,9 @@
     self.teamOwnerLabel.font = [UIFont fontWithName:@"Lato-Bold" size:11.0f];
     self.teamOwnerLabel.textColor = [UIColor MPBlackColor];
     self.teamOwnerLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.teamOwnerLabel.numberOfLines = 1;
+    self.teamOwnerLabel.adjustsFontSizeToFitWidth = NO;
+    self.teamOwnerLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.teamOwnerLabel];
     
     //self.numPlayersLabel
@@ -200,6 +206,13 @@
                                                        multiplier:1.0f
                                                          constant:5.0f],
                            [NSLayoutConstraint constraintWithItem:self.teamNameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.teamNameLabel
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.solidColorView
@@ -214,6 +227,13 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.teamOwnerLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.teamOwnerLabel
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
@@ -327,11 +347,51 @@
 }
 
 - (void) showLeftButton {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
+           constraint.relation == NSLayoutRelationLessThanOrEqual)
+            [self removeConstraint: constraint];
+    }
+    [self addConstraints:@[
+     [NSLayoutConstraint constraintWithItem:self.teamNameLabel
+                                  attribute:NSLayoutAttributeTrailing
+                                  relatedBy:NSLayoutRelationLessThanOrEqual
+                                     toItem:self.leftButton
+                                  attribute:NSLayoutAttributeLeading
+                                 multiplier:1.0f
+                                   constant:0.0f],
+     [NSLayoutConstraint constraintWithItem:self.teamOwnerLabel
+                                  attribute:NSLayoutAttributeTrailing
+                                  relatedBy:NSLayoutRelationLessThanOrEqual
+                                     toItem:self.leftButton
+                                  attribute:NSLayoutAttributeLeading
+                                 multiplier:1.0f
+                                   constant:0.0f],]];
     self.leftButton.alpha = 1.0f;
     self.numPlayersLabel.alpha = 0.0f;
 }
 
 - (void) hideLeftButton {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
+           constraint.relation == NSLayoutRelationLessThanOrEqual)
+            [self removeConstraint: constraint];
+    }
+    [self addConstraints:@[
+                           [NSLayoutConstraint constraintWithItem:self.teamNameLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.centerButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.teamOwnerLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.numPlayersLabel
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],]];
     self.leftButton.alpha = 0.0f;
     self.numPlayersLabel.alpha = 1.0f;
 }
