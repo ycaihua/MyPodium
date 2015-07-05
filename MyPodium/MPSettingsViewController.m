@@ -14,6 +14,7 @@
 
 #import "MPSettingsViewController.h"
 #import "MPAccountDetailsViewController.h"
+#import "MPAccountPreferencesViewController.h"
 
 @interface MPSettingsViewController ()
 
@@ -33,6 +34,7 @@
 - (void) makeControlActions {
     MPSettingsView* view = (MPSettingsView*) self.view;
     [view.accountDetailsButton addTarget:self action:@selector(detailsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.accountPreferencesButton addTarget:self action:@selector(preferencesButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) loadOnDismiss: (id) sender {
@@ -45,6 +47,10 @@
 
 - (void) detailsButtonPressed: (id) sender {
     [MPControllerManager presentViewController:[[MPAccountDetailsViewController alloc] init] fromController:self];
+}
+
+- (void) preferencesButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPAccountPreferencesViewController alloc] init] fromController:self];
 }
 
 @end
