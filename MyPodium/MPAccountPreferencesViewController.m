@@ -11,6 +11,8 @@
 
 #import "MPAccountPreferencesViewController.h"
 
+#import <Parse/Parse.h>
+
 @interface MPAccountPreferencesViewController ()
 
 @end
@@ -34,7 +36,14 @@
 }
 
 - (void) initializeUserPreferences {
+    MPAccountPreferencesView* view = (MPAccountPreferencesView*)self.view;
+    PFUser* currentUser = [PFUser currentUser];
     
+    NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
+    if(prefFriendRequests == 0) [view.friendRequestsButton toggleSelected];
+    
+    NSNumber* prefConfirmations = [currentUser objectForKey:@"pref_confirmation"];
+    if(prefConfirmations == 0) [view.confirmationAlertsButton toggleSelected];
 }
 
 - (void) friendRequestsButtonPressed: (id) sender {
