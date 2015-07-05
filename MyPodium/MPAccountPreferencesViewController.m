@@ -40,10 +40,10 @@
     PFUser* currentUser = [PFUser currentUser];
     
     NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
-    if(prefFriendRequests == 0) [view.friendRequestsButton toggleSelected];
+    if([prefFriendRequests isEqual: [NSNumber numberWithBool:FALSE]]) [view.friendRequestsButton toggleSelected];
     
     NSNumber* prefConfirmations = [currentUser objectForKey:@"pref_confirmation"];
-    if(prefConfirmations == 0) [view.confirmationAlertsButton toggleSelected];
+    if([prefConfirmations isEqual: [NSNumber numberWithBool:FALSE]]) [view.confirmationAlertsButton toggleSelected];
 }
 
 - (void) friendRequestsButtonPressed: (id) sender {
