@@ -8,6 +8,7 @@
 
 #import "UIColor+MPColor.h"
 
+#import "MPBottomEdgeButton.h"
 #import "MPMessagesView.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
@@ -47,6 +48,12 @@
     self.loadingHeader = [[MPTableHeader alloc] initWithText:@"LOADING..."];
     self.loadingHeader.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.loadingHeader];
+    
+    //self.composeButton
+    self.composeButton = [[MPBottomEdgeButton alloc] init];
+    [self.composeButton setTitle:@"COMPOSE MESSAGE" forState:UIControlStateNormal];
+    self.composeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.composeButton];
 }
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.filterSearch
@@ -125,10 +132,39 @@
                            [NSLayoutConstraint constraintWithItem:self.messagesTable
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeBottomMargin
+                                                           toItem:self.composeButton
+                                                        attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
+                           //self.composeButotn
+                           [NSLayoutConstraint constraintWithItem:self.composeButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.composeButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.composeButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.composeButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[MPBottomEdgeButton defaultHeight]],
                            ]];
 }
 

@@ -231,6 +231,10 @@
     withConfirmationMessage: (NSString*) alertMessage {
     MPMessagesView* view = (MPMessagesView*) self.view;
     
+    [view.menu.subtitleLabel displayMessage:@"Loading..."
+                                revertAfter:NO
+                                  withColor:[UIColor MPYellowColor]];
+    
     if(showAlert) {
         UIAlertController* confirmationAlert =
         [UIAlertController alertControllerWithTitle:@"Confirmation"
