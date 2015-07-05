@@ -219,6 +219,13 @@
                                                        multiplier:1.0f
                                                          constant:5.0f],
                            [NSLayoutConstraint constraintWithItem:self.senderLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.senderLabel
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.titleLabel
@@ -316,10 +323,50 @@
 }
 
 - (void) showLeftButton {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
+           constraint.relation == NSLayoutRelationLessThanOrEqual)
+            [self removeConstraint: constraint];
+    }
+    [self addConstraints:@[
+                           [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.leftButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],]];
     self.leftButton.alpha = 1.0f;
 }
 
 - (void) hideLeftButton {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
+           constraint.relation == NSLayoutRelationLessThanOrEqual)
+            [self removeConstraint: constraint];
+    }
+    [self addConstraints:@[
+                           [NSLayoutConstraint constraintWithItem:self.titleLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.centerButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationLessThanOrEqual
+                                                           toItem:self.centerButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],]];
     self.leftButton.alpha = 0.0f;
 }
 
