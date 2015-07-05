@@ -29,13 +29,7 @@
 - (void) makeControls {
     //self.accountDetailsButton
     self.accountDetailsButton = [[MPBoldColorButton alloc] init];
-    self.accountDetailsButton.backgroundColor = self.buttonColors[0];
-    if([self.accountDetailsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.accountDetailsButton setCombinedTextColor: [UIColor whiteColor]];
-    }
-    else {
-        [self.accountDetailsButton setCombinedTextColor: [UIColor MPBlackColor]];
-    }
+    [self.accountDetailsButton applyBackgroundColor:self.buttonColors[0]];
     self.accountDetailsButton.customTitleLabel.text = @"ACCOUNT DETAILS";
     self.accountDetailsButton.subtitleLabel.text = @"change real name/password";
     self.accountDetailsButton.subtitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:18.0f];
@@ -43,18 +37,11 @@
     
     //self.accountPreferencesButton
     self.accountPreferencesButton = [[MPBoldColorButton alloc] init];
-    self.accountPreferencesButton.backgroundColor = self.buttonColors[1];
-    if([self.accountPreferencesButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.accountPreferencesButton setCombinedTextColor: [UIColor whiteColor]];
-    }
-    else {
-        [self.accountPreferencesButton setCombinedTextColor: [UIColor MPBlackColor]];
-    }
+    [self.accountPreferencesButton applyBackgroundColor:self.buttonColors[1]];
     self.accountPreferencesButton.customTitleLabel.text = @"PREFERENCES";
     self.accountPreferencesButton.subtitleLabel.text = @"set default behaviors";
     self.accountPreferencesButton.subtitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:18.0f];
     [self addSubview: self.accountPreferencesButton];
-    
 }
 
 - (void) makeControlConstraints {

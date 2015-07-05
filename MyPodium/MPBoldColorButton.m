@@ -88,22 +88,23 @@
                            ]];
 }
 
+- (void) applyBackgroundColor: (UIColor*) color {
+    self.backgroundColor = color;
+    if([color isEqual:[UIColor MPBlackColor]])
+        [self setCombinedTextColor: [UIColor whiteColor]];
+    else
+        [self setCombinedTextColor: [UIColor MPBlackColor]];
+}
+
 - (void) setHighlighted:(BOOL)highlighted {
     [super setHighlighted: highlighted];
+    self.layer.borderColor = [UIColor MPBlackColor].CGColor;
     if(highlighted) {
         [self setCombinedTextColor: [UIColor MPBlackColor]];
-        self.layer.borderColor = [UIColor MPBlackColor].CGColor;
         self.backgroundColor = [self.backgroundColor colorWithAlphaComponent: 0.0f];
     }
     else {
-        self.layer.borderColor = [UIColor MPBlackColor].CGColor;
-        self.backgroundColor = [self.backgroundColor colorWithAlphaComponent:1.0f];
-        if([self.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-            [self setCombinedTextColor: [UIColor whiteColor]];
-        }
-        else {
-            [self setCombinedTextColor: [UIColor MPBlackColor]];
-        }
+        [self applyBackgroundColor: [self.backgroundColor colorWithAlphaComponent:1.0f]];
     }
 }
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "MPControllerManager.h"
+#import "NSMutableArray+Shuffling.h"
 
 #import "MPSettingsView.h"
 #import "MPBoldColorButton.h"
@@ -32,6 +33,14 @@
 - (void) makeControlActions {
     MPSettingsView* view = (MPSettingsView*) self.view;
     [view.accountDetailsButton addTarget:self action:@selector(detailsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) loadOnDismiss: (id) sender {
+    MPSettingsView* view = (MPSettingsView*) self.view;
+    [view.buttonColors shuffle];
+    [view.accountDetailsButton applyBackgroundColor: view.buttonColors[0]];
+    [view.accountPreferencesButton applyBackgroundColor: view.buttonColors[1]];
+    
 }
 
 - (void) detailsButtonPressed: (id) sender {

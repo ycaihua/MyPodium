@@ -11,4 +11,6 @@
 
 @interface MPBoldColorButton : MPDualLabelButton
 
+- (void) applyBackgroundColor: (UIColor*) color;
+
 @end
