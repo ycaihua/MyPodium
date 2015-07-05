@@ -12,7 +12,7 @@
 #import "MPTeamsModel.h"
 
 #import "MPHomeView.h"
-#import "MPHomeButton.h"
+#import "MPBoldColorButton.h"
 #import "CNLabel.h"
 
 #import "MMDrawerController.h"

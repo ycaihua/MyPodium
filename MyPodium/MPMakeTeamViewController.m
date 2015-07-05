@@ -21,7 +21,7 @@
 #import "MPUserCell.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
-#import "MPTeamsButton.h"
+#import "MPBottomEdgeButton.h"
 
 #import "MPMakeTeamViewController.h"
 #import "MPTeamsViewController.h"

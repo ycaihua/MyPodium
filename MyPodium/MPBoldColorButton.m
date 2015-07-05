@@ -1,5 +1,5 @@
 //
-//  MPHomeButton.m
+//  MPBoldColorButton.m
 //  MyPodium
 //
 //  Created by Connor Neville on 5/29/15.
@@ -8,9 +8,9 @@
 
 #import "UIColor+MPColor.h"
 
-#import "MPHomeButton.h"
+#import "MPBoldColorButton.h"
 
-@implementation MPHomeButton
+@implementation MPBoldColorButton
 
 - (id) init {
     self = [super init];

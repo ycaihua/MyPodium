@@ -10,7 +10,7 @@
 #import "NSMutableArray+Shuffling.h"
 
 #import "MPHomeView.h"
-#import "MPHomeButton.h"
+#import "MPBoldColorButton.h"
 
 @implementation MPHomeView
 
@@ -29,7 +29,7 @@
 
 - (void) makeControls {
     //self.friendsButton
-    self.friendsButton = [[MPHomeButton alloc] init];
+    self.friendsButton = [[MPBoldColorButton alloc] init];
     self.friendsButton.backgroundColor = self.buttonColors[0];
     if([self.friendsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
         [self.friendsButton setCombinedTextColor: [UIColor whiteColor]];
@@ -41,7 +41,7 @@
     [self addSubview: self.friendsButton];
     
     //self.teamsButton
-    self.teamsButton = [[MPHomeButton alloc] init];
+    self.teamsButton = [[MPBoldColorButton alloc] init];
     self.teamsButton.backgroundColor = self.buttonColors[1];
     if([self.teamsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
         [self.teamsButton setCombinedTextColor: [UIColor whiteColor]];
@@ -53,7 +53,7 @@
     [self addSubview: self.teamsButton];
     
     //self.modesButton
-    self.modesButton = [[MPHomeButton alloc] init];
+    self.modesButton = [[MPBoldColorButton alloc] init];
     self.modesButton.backgroundColor = self.buttonColors[2];
     if([self.modesButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
         [self.modesButton setCombinedTextColor: [UIColor whiteColor]];
@@ -65,7 +65,7 @@
     [self addSubview: self.modesButton];
     
     //self.eventsButton
-    self.eventsButton = [[MPHomeButton alloc] init];
+    self.eventsButton = [[MPBoldColorButton alloc] init];
     self.eventsButton.backgroundColor = self.buttonColors[3];
     if([self.eventsButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
         [self.eventsButton setCombinedTextColor: [UIColor whiteColor]];

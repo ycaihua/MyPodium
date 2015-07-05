@@ -9,7 +9,7 @@
 #import "UIColor+MPColor.h"
 
 #import "MPTeamsView.h"
-#import "MPTeamsButton.h"
+#import "MPBottomEdgeButton.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
 #import "MPTextField.h"
@@ -51,7 +51,7 @@
     [self addSubview: self.teamsTable];
     
     //self.searchButton
-    self.searchButton = [[MPTeamsButton alloc] init];
+    self.searchButton = [[MPBottomEdgeButton alloc] init];
     [self.searchButton setTitle:@"SHOW SEARCH" forState:UIControlStateNormal];
     self.searchButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.searchButton setBackgroundColor:[UIColor MPDarkGrayColor]];
@@ -59,7 +59,7 @@
     [self addSubview:self.searchButton];
     
     //self.makeTeamButton
-    self.makeTeamButton = [[MPTeamsButton alloc] init];
+    self.makeTeamButton = [[MPBottomEdgeButton alloc] init];
     [self.makeTeamButton setTitle:@"NEW TEAM" forState:UIControlStateNormal];
     self.makeTeamButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.makeTeamButton];
@@ -219,7 +219,7 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPTeamsButton defaultHeight]],
+                                                         constant:[MPBottomEdgeButton defaultHeight]],
                            //self.makeTeamButton
                            [NSLayoutConstraint constraintWithItem:self.makeTeamButton
                                                         attribute:NSLayoutAttributeBottom
@@ -248,7 +248,7 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPTeamsButton defaultHeight]]
+                                                         constant:[MPBottomEdgeButton defaultHeight]]
                            ]];
 }
 

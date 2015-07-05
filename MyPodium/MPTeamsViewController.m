@@ -16,7 +16,7 @@
 
 #import "MPTeamsView.h"
 #import "MPTeamCell.h"
-#import "MPTeamsButton.h"
+#import "MPBottomEdgeButton.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
 #import "MPTextField.h"

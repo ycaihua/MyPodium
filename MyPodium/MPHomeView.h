@@ -8,7 +8,7 @@
 
 #import "MPMenuView.h"
 
-@class MPHomeButton;
+@class MPBoldColorButton;
 
 @interface MPHomeView : MPMenuView
 
@@ -16,9 +16,9 @@
 //color, done by shuffling below mutable array
 @property NSMutableArray* buttonColors;
 
-@property MPHomeButton* friendsButton;
-@property MPHomeButton* teamsButton;
-@property MPHomeButton* modesButton;
-@property MPHomeButton* eventsButton;
+@property MPBoldColorButton* friendsButton;
+@property MPBoldColorButton* teamsButton;
+@property MPBoldColorButton* modesButton;
+@property MPBoldColorButton* eventsButton;
 
 @end

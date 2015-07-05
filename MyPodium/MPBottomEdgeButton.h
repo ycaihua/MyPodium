@@ -1,5 +1,5 @@
 //
-//  MPTeamsButton.h
+//  MPBottomEdgeButton.h
 //  MyPodium
 //
 //  Created by Connor Neville on 6/14/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPTeamsButton : UIButton
+@interface MPBottomEdgeButton : UIButton
 
 + (CGFloat) defaultHeight;
 

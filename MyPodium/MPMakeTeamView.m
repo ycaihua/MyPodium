@@ -11,7 +11,7 @@
 #import "MPMakeTeamView.h"
 #import "MPTextField.h"
 #import "MPLabel.h"
-#import "MPTeamsButton.h"
+#import "MPBottomEdgeButton.h"
 
 @implementation MPMakeTeamView
 
@@ -50,13 +50,13 @@
     [self addSubview: self.playersTable];
     
     //self.goBackButton
-    self.goBackButton = [[MPTeamsButton alloc] init];
+    self.goBackButton = [[MPBottomEdgeButton alloc] init];
     [self.goBackButton setTitle:@"GO BACK" forState:UIControlStateNormal];
     self.goBackButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.goBackButton];
     
     //self.submitButton
-    self.submitButton = [[MPTeamsButton alloc] init];
+    self.submitButton = [[MPBottomEdgeButton alloc] init];
     [self.submitButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
     self.submitButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.submitButton setBackgroundColor:[UIColor MPDarkGrayColor]];
@@ -183,7 +183,7 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPTeamsButton defaultHeight]],
+                                                         constant:[MPBottomEdgeButton defaultHeight]],
                            //self.submitButton
                            [NSLayoutConstraint constraintWithItem:self.submitButton
                                                         attribute:NSLayoutAttributeBottom
@@ -212,7 +212,7 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPTeamsButton defaultHeight]]
+                                                         constant:[MPBottomEdgeButton defaultHeight]]
                            ]];
 }
 

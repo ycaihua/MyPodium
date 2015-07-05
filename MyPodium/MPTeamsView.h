@@ -10,15 +10,15 @@
 
 @class MPSearchControl;
 @class MPTableHeader;
-@class MPTeamsButton;
+@class MPBottomEdgeButton;
 
 @interface MPTeamsView : MPMenuView
 
 @property MPTableHeader* loadingHeader;
 @property MPSearchControl* filterSearch;
 @property UITableView* teamsTable;
-@property MPTeamsButton* searchButton;
-@property MPTeamsButton* makeTeamButton;
+@property MPBottomEdgeButton* searchButton;
+@property MPBottomEdgeButton* makeTeamButton;
 
 @property BOOL searchAvailable;
 - (void) displaySearch;

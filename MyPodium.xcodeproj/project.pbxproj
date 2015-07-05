@@ -68,7 +68,7 @@
 		2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B01B279FD2006C500A /* MPTeamsView.m */; };
 		2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B41B27A10F006C500A /* MPTeamsViewController.m */; };
 		2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B71B27A451006C500A /* MPTeamCell.m */; };
-		2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */; };
+		2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0BA1B2E1213006C500A /* MPBottomEdgeButton.m */; };
 		2D94D0BF1B2E99E0006C500A /* MPMakeTeamView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0BE1B2E99E0006C500A /* MPMakeTeamView.m */; };
 		2D94D0C31B2F7F3B006C500A /* MPMakeTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0C21B2F7F3B006C500A /* MPMakeTeamViewController.m */; };
 		2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0C61B30E061006C500A /* MPUserProfileView.m */; };
@@ -83,7 +83,7 @@
 		2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86931B462B8B00FB0AF5 /* MPMessagesView.m */; };
 		2DBF86981B462C2B00FB0AF5 /* MPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */; };
 		2DBF869B1B462D7400FB0AF5 /* MPMessagesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF869A1B462D7400FB0AF5 /* MPMessagesModel.m */; };
-		2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */; };
+		2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */; };
 		2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC911B194BB200F748C9 /* MPSidebarView.m */; };
 		2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC941B19D92100F748C9 /* MPSidebarViewCell.m */; };
 		2DE9FC981B1A000B00F748C9 /* MPSidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC971B1A000B00F748C9 /* MPSidebarButton.m */; };
@@ -205,8 +205,8 @@
 		2D94D0B41B27A10F006C500A /* MPTeamsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamsViewController.m; sourceTree = "<group>"; };
 		2D94D0B61B27A451006C500A /* MPTeamCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamCell.h; sourceTree = "<group>"; };
 		2D94D0B71B27A451006C500A /* MPTeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamCell.m; sourceTree = "<group>"; };
-		2D94D0B91B2E1213006C500A /* MPTeamsButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamsButton.h; sourceTree = "<group>"; };
-		2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamsButton.m; sourceTree = "<group>"; };
+		2D94D0B91B2E1213006C500A /* MPBottomEdgeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBottomEdgeButton.h; sourceTree = "<group>"; };
+		2D94D0BA1B2E1213006C500A /* MPBottomEdgeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBottomEdgeButton.m; sourceTree = "<group>"; };
 		2D94D0BD1B2E99E0006C500A /* MPMakeTeamView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeTeamView.h; sourceTree = "<group>"; };
 		2D94D0BE1B2E99E0006C500A /* MPMakeTeamView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeTeamView.m; sourceTree = "<group>"; };
 		2D94D0C11B2F7F3B006C500A /* MPMakeTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeTeamViewController.h; sourceTree = "<group>"; };
@@ -230,8 +230,8 @@
 		2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessagesViewController.m; sourceTree = "<group>"; };
 		2DBF86991B462D7400FB0AF5 /* MPMessagesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessagesModel.h; sourceTree = "<group>"; };
 		2DBF869A1B462D7400FB0AF5 /* MPMessagesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessagesModel.m; sourceTree = "<group>"; };
-		2DE9FC8D1B190FE600F748C9 /* MPHomeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeButton.h; sourceTree = "<group>"; };
-		2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeButton.m; sourceTree = "<group>"; };
+		2DE9FC8D1B190FE600F748C9 /* MPBoldColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBoldColorButton.h; sourceTree = "<group>"; };
+		2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBoldColorButton.m; sourceTree = "<group>"; };
 		2DE9FC901B194BB200F748C9 /* MPSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarView.h; sourceTree = "<group>"; };
 		2DE9FC911B194BB200F748C9 /* MPSidebarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSidebarView.m; sourceTree = "<group>"; };
 		2DE9FC931B19D92100F748C9 /* MPSidebarViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarViewCell.h; sourceTree = "<group>"; };
@@ -340,8 +340,6 @@
 			children = (
 				2D2D5AC91B18D2F400C46B53 /* MPHomeView.h */,
 				2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */,
-				2DE9FC8D1B190FE600F748C9 /* MPHomeButton.h */,
-				2DE9FC8E1B190FE600F748C9 /* MPHomeButton.m */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -486,6 +484,10 @@
 		2D4487811B05553D0061EF86 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
+				2DE9FC8D1B190FE600F748C9 /* MPBoldColorButton.h */,
+				2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */,
+				2D94D0B91B2E1213006C500A /* MPBottomEdgeButton.h */,
+				2D94D0BA1B2E1213006C500A /* MPBottomEdgeButton.m */,
 				2DE9FCDD1B1EB8BE00F748C9 /* MPTableHeader.h */,
 				2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */,
 				2D4487781B0546580061EF86 /* MPView.m */,
@@ -611,8 +613,6 @@
 			children = (
 				2D94D0AF1B279FD2006C500A /* MPTeamsView.h */,
 				2D94D0B01B279FD2006C500A /* MPTeamsView.m */,
-				2D94D0B91B2E1213006C500A /* MPTeamsButton.h */,
-				2D94D0BA1B2E1213006C500A /* MPTeamsButton.m */,
 				2D94D0B61B27A451006C500A /* MPTeamCell.h */,
 				2D94D0B71B27A451006C500A /* MPTeamCell.m */,
 			);
@@ -874,13 +874,13 @@
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
-				2D94D0BB1B2E1213006C500A /* MPTeamsButton.m in Sources */,
+				2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */,
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 				2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */,
-				2DE9FC8F1B190FE600F748C9 /* MPHomeButton.m in Sources */,
+				2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

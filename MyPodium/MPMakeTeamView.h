@@ -9,7 +9,7 @@
 #import "MPMenuView.h"
 
 @class MPTextField;
-@class MPTeamsButton;
+@class MPBottomEdgeButton;
 @class MPLabel;
 
 @interface MPMakeTeamView : MPMenuView
@@ -17,8 +17,8 @@
 @property MPTextField* teamNameField;
 @property MPLabel* instructionLabel;
 @property UITableView* playersTable;
-@property MPTeamsButton* goBackButton;
-@property MPTeamsButton* submitButton;
+@property MPBottomEdgeButton* goBackButton;
+@property MPBottomEdgeButton* submitButton;
 
 - (void) enableSubmitButton;
 - (void) disableSubmitButton;
