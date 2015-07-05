@@ -1,5 +1,5 @@
 //
-//  MPSettingsView.h
+//  MPAccountDetailsView.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/1/15.
@@ -11,7 +11,7 @@
 @class MPTextField;
 @class MPLabel;
 
-@interface MPSettingsView : MPMenuView
+@interface MPAccountDetailsView : MPMenuView
 
 @property MPTextField* realNameField;
 @property MPLabel* realNameLabel;

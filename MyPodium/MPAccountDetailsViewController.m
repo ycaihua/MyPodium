@@ -1,5 +1,5 @@
 //
-//  MPSettingsViewController.m
+//  MPAccountDetailsViewController.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/1/15.
@@ -10,25 +10,25 @@
 #import "MPLimitConstants.h"
 #import "UIColor+MPColor.h"
 
-#import "MPSettingsView.h"
+#import "MPAccountDetailsView.h"
 #import "MPTextField.h"
 #import "MPMenu.h"
 #import "CNLabel.h"
 
-#import "MPSettingsViewController.h"
+#import "MPAccountDetailsViewController.h"
 
 #import <Parse/Parse.h>
 
-@interface MPSettingsViewController ()
+@interface MPAccountDetailsViewController ()
 
 @end
 
-@implementation MPSettingsViewController
+@implementation MPAccountDetailsViewController
 
 - (id) init {
     self = [super init];
     if(self) {
-        MPSettingsView* view = [[MPSettingsView alloc] init];
+        MPAccountDetailsView* view = [[MPAccountDetailsView alloc] init];
         [view.submitNameButton addTarget:self action:@selector(submitNameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [view.submitPasswordButton addTarget:self action:@selector(submitPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
@@ -42,7 +42,7 @@
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification {
-    MPSettingsView* view = ((MPSettingsView*)self.view);
+    MPAccountDetailsView* view = ((MPAccountDetailsView*)self.view);
     UITextField* responder;
     for(UITextField* textfield in @[view.realNameField, view.changePasswordField, view.confirmPasswordField, view.oldPasswordField]) {
         if([textfield isFirstResponder]) {
@@ -69,11 +69,11 @@
     CGFloat shiftAmount = (self.view.frame.size.height - self.keyboardHeight - fieldBottom - 5);
     
     if(shiftAmount >= 0) {
-        [((MPSettingsView*)self.view) restoreDefaultConstraints];
+        [((MPAccountDetailsView*)self.view) restoreDefaultConstraints];
         return;
     }
     
-    [((MPSettingsView*)self.view) shiftVerticalConstraintsBy: shiftAmount];
+    [((MPAccountDetailsView*)self.view) shiftVerticalConstraintsBy: shiftAmount];
     
     [UIView animateWithDuration:animationDuration animations:^{
         [self.view layoutIfNeeded];
@@ -85,7 +85,7 @@
     NSDictionary *info = [notification userInfo];
     NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
-    [((MPSettingsView*)self.view) restoreDefaultConstraints];
+    [((MPAccountDetailsView*)self.view) restoreDefaultConstraints];
     
     [UIView animateWithDuration:animationDuration animations:^{
         [self.view layoutIfNeeded];
@@ -94,7 +94,7 @@
 
 - (void) submitNameButtonPressed: (id) sender {
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
-    NSString* name = ((MPSettingsView*)self.view).realNameField.text;
+    NSString* name = ((MPAccountDetailsView*)self.view).realNameField.text;
     [alerter checkErrorCondition:(name.length < [MPLimitConstants minRealNameCharacters]) withMessage:[NSString stringWithFormat:@"Real names need to be at least %d characters.", [MPLimitConstants minRealNameCharacters]]];
     [alerter checkErrorCondition:(name.length > [MPLimitConstants maxRealNameCharacters]) withMessage:[NSString stringWithFormat:@"Real names can be at most %d characters.", [MPLimitConstants maxRealNameCharacters]]];
     if(![alerter hasFoundError]) {
@@ -104,10 +104,10 @@
             currentUser[@"realName"] = name;
             BOOL success = [currentUser save];
             dispatch_async(dispatch_get_main_queue(), ^{
-                ((MPSettingsView*)self.view).realNameField.text = @"";
+                ((MPAccountDetailsView*)self.view).realNameField.text = @"";
                 [alerter checkErrorCondition:(!success) withMessage:@"There was a problem saving your name. Please try again later."];
                 if(![alerter hasFoundError]) {
-                    [((MPSettingsView*)self.view).menu.subtitleLabel displayMessage:@"Your name was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
+                    [((MPAccountDetailsView*)self.view).menu.subtitleLabel displayMessage:@"Your name was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
                 }
             });
         });
@@ -115,9 +115,9 @@
 }
 
 - (void) submitPasswordButtonPressed: (id) sender {
-    NSString* newPassword = ((MPSettingsView*)self.view).changePasswordField.text;
-    NSString* confirmPassword = ((MPSettingsView*)self.view).confirmPasswordField.text;
-    NSString* oldPassword = ((MPSettingsView*)self.view).oldPasswordField.text;
+    NSString* newPassword = ((MPAccountDetailsView*)self.view).changePasswordField.text;
+    NSString* confirmPassword = ((MPAccountDetailsView*)self.view).confirmPasswordField.text;
+    NSString* oldPassword = ((MPAccountDetailsView*)self.view).oldPasswordField.text;
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     
     [alerter checkErrorCondition:![newPassword isEqualToString: confirmPassword] withMessage:@"Your two password entries did not match."];
@@ -135,7 +135,7 @@
                 [alerter checkErrorCondition:![currentUser save] withMessage:@"There was an error saving your password. Please try again later."];
                 if(![alerter hasFoundError]) {
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        [((MPSettingsView*)self.view).menu.subtitleLabel displayMessage:@"Your password was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
+                        [((MPAccountDetailsView*)self.view).menu.subtitleLabel displayMessage:@"Your password was saved." revertAfter:true withColor:[UIColor MPGreenColor]];
                     });
                 }
             }
@@ -144,7 +144,7 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    MPSettingsView* view = (MPSettingsView*)self.view;
+    MPAccountDetailsView* view = (MPAccountDetailsView*)self.view;
     if([textField isEqual: view.realNameField]) {
         [textField resignFirstResponder];
         if(textField.text.length > 0)

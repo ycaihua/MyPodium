@@ -1,5 +1,5 @@
 //
-//  MPSettingsViewController.h
+//  MPAccountDetailsViewController.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/1/15.
@@ -8,7 +8,7 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPSettingsViewController : MPMenuViewController <UITextFieldDelegate>
+@interface MPAccountDetailsViewController : MPMenuViewController <UITextFieldDelegate>
 
 @property CGFloat keyboardHeight;
 

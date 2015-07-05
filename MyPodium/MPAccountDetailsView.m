@@ -1,5 +1,5 @@
 //
-//  MPSettingsView.m
+//  MPAccountDetailsView.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/1/15.
@@ -10,12 +10,12 @@
 
 #import "MPTextField.h"
 #import "MPLabel.h"
-#import "MPSettingsView.h"
+#import "MPAccountDetailsView.h"
 
-@implementation MPSettingsView
+@implementation MPAccountDetailsView
 
 - (id) init {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPSettingsView defaultSubtitle]];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPAccountDetailsView defaultSubtitle]];
     if(self) {
         [self makeControls];
         [self makeControlConstraints];
@@ -360,6 +360,6 @@
                            ]];
 }
 
-+ (NSString*) defaultSubtitle { return @"Settings"; }
++ (NSString*) defaultSubtitle { return @"Account Details"; }
 
 @end

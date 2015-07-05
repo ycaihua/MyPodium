@@ -19,7 +19,7 @@
 #import "MPTeamsViewController.h"
 #import "MPMakeTeamViewController.h"
 #import "MPSearchViewController.h"
-#import "MPSettingsViewController.h"
+#import "MPAccountDetailsViewController.h"
 #import "MPMessagesViewController.h"
 
 #import "MMDrawerController.h"
@@ -122,7 +122,7 @@
              [MPMakeTeamViewController class],
              [MPMenuViewController class],
              [MPSearchViewController class],
-             [MPSettingsViewController class],
+             [MPAccountDetailsViewController class],
              [MPMenuViewController class],
              [MPMenuViewController class],
              [MPRegisterViewController class]

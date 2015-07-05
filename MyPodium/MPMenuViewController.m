@@ -16,7 +16,7 @@
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "MPSearchViewController.h"
-#import "MPSettingsViewController.h"
+#import "MPAccountDetailsViewController.h"
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
@@ -107,7 +107,7 @@
 }
 
 - (void) settingsButtonPressed: (id) sender {
-    [MPControllerManager presentViewController:[[MPSettingsViewController alloc] init] fromController:self];
+    [MPControllerManager presentViewController:[[MPAccountDetailsViewController alloc] init] fromController:self];
 }
 
 + (NSTimeInterval) iconHoldDuration { return 1.0f; }
