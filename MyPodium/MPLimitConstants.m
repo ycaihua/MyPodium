@@ -24,4 +24,7 @@
 
 + (int) maxUsersPerTeam { return 12; }
 
++ (int) maxMessageTitleCharacters { return 50; }
++ (int) maxMessageBodyCharacters { return 500; }
+
 @end

@@ -23,6 +23,7 @@
 #import "MPMessagesCell.h"
 
 #import "MPMessagesViewController.h"
+#import "MPMessageReaderViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 
@@ -93,7 +94,7 @@
                                 [cell.centerButton setImageString:@"check" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.leftButton addTarget:self action:@selector(readMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.leftButton addTarget:self action:@selector(readNewMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.centerButton addTarget:self action:@selector(markReadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(deleteNewMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
@@ -136,7 +137,7 @@
                                 [cell.centerButton setImageString:@"up" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.leftButton addTarget:self action:@selector(readReadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.leftButton addTarget:self action:@selector(rereadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.centerButton addTarget:self action:@selector(markUnreadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(deleteReadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
@@ -178,7 +179,7 @@
                                 [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                //[cell.centerButton addTarget:self action:@selector(readSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(readSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(hideSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
@@ -303,6 +304,14 @@
     }
 }
 
+- (void) readNewMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController newMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPMessageReaderViewController alloc] initWithMessage:other] fromController:self];
+}
+
 - (void) markReadButtonPressed: (id) sender {
     MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -312,20 +321,6 @@
         return [MPMessagesModel markMessageRead: other];
     }
           withSuccessMessage:@"You marked the message as read."
-            withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
-     withConfirmationMessage:nil];
-}
-
-- (void) markUnreadButtonPressed: (id) sender {
-    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController readMessagesHeader]];
-    PFUser* other = utility.dataObjects[indexPath.row];
-    [self performModelUpdate:^BOOL{
-        return [MPMessagesModel markMessageUnread: other];
-    }
-          withSuccessMessage:@"You marked the message as unread."
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:false
      withConfirmationMessage:nil];
@@ -345,6 +340,28 @@
      withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
 }
 
+- (void) rereadMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPMessageReaderViewController alloc] initWithMessage:other] fromController:self];
+}
+
+- (void) markUnreadButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel markMessageUnread: other];
+    }
+          withSuccessMessage:@"You marked the message as unread."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:nil];
+}
+
 - (void) deleteReadMessageButtonPressed: (id) sender {
     MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -357,6 +374,14 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+}
+
+- (void) readSentMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController sentMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPMessageReaderViewController alloc] initWithMessage:other] fromController:self];
 }
 
 - (void) hideSentMessageButtonPressed: (id) sender {

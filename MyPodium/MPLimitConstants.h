@@ -12,12 +12,19 @@
 
 + (int) maxUsernameCharacters;
 + (int) minUsernameCharacters;
+
 + (int) maxPasswordCharacters;
 + (int) minPasswordCharacters;
+
 + (int) maxTeamNameCharacters;
 + (int) minTeamNameCharacters;
+
 + (int) maxRealNameCharacters;
 + (int) minRealNameCharacters;
+
 + (int) maxUsersPerTeam;
+
++ (int) maxMessageTitleCharacters;
++ (int) maxMessageBodyCharacters;
 
 @end

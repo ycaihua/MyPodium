@@ -68,6 +68,8 @@
 		2D67BFCF1B4997050043BD96 /* MPAccountPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPAccountPreferencesViewController.m */; };
 		2D67BFD21B4997370043BD96 /* MPAccountPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPAccountPreferencesView.m */; };
 		2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD41B499E8A0043BD96 /* MPPreferencesButton.m */; };
+		2D67BFD81B49E7D80043BD96 /* MPMessageReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */; };
+		2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */; };
 		2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0A71B23BD07006C500A /* MPHelpCell.m */; };
 		2D94D0AD1B279719006C500A /* MPTeamsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0AC1B279719006C500A /* MPTeamsModel.m */; };
 		2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B01B279FD2006C500A /* MPTeamsView.m */; };
@@ -210,6 +212,10 @@
 		2D67BFD11B4997370043BD96 /* MPAccountPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAccountPreferencesView.m; sourceTree = "<group>"; };
 		2D67BFD31B499E8A0043BD96 /* MPPreferencesButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPPreferencesButton.h; sourceTree = "<group>"; };
 		2D67BFD41B499E8A0043BD96 /* MPPreferencesButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPPreferencesButton.m; sourceTree = "<group>"; };
+		2D67BFD61B49E7D80043BD96 /* MPMessageReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageReaderView.h; sourceTree = "<group>"; };
+		2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageReaderView.m; sourceTree = "<group>"; };
+		2D67BFD91B49E9EE0043BD96 /* MPMessageReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageReaderViewController.h; sourceTree = "<group>"; };
+		2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageReaderViewController.m; sourceTree = "<group>"; };
 		2D94D0A61B23BD07006C500A /* MPHelpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpCell.h; sourceTree = "<group>"; };
 		2D94D0A71B23BD07006C500A /* MPHelpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpCell.m; sourceTree = "<group>"; };
 		2D94D0AB1B279719006C500A /* MPTeamsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamsModel.h; sourceTree = "<group>"; };
@@ -696,6 +702,8 @@
 				2DBF86901B462A0400FB0AF5 /* MPMessagesCell.m */,
 				2DBF86921B462B8B00FB0AF5 /* MPMessagesView.h */,
 				2DBF86931B462B8B00FB0AF5 /* MPMessagesView.m */,
+				2D67BFD61B49E7D80043BD96 /* MPMessageReaderView.h */,
+				2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -705,6 +713,8 @@
 			children = (
 				2DBF86961B462C2B00FB0AF5 /* MPMessagesViewController.h */,
 				2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */,
+				2D67BFD91B49E9EE0043BD96 /* MPMessageReaderViewController.h */,
+				2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -887,6 +897,7 @@
 				2D2B31B01B443FCD00781E0D /* MPAccountDetailsView.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D67BFC91B498EA70043BD96 /* MPSettingsView.m in Sources */,
+				2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
@@ -904,6 +915,7 @@
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */,
+				2D67BFD81B49E7D80043BD96 /* MPMessageReaderView.m in Sources */,
 				2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */,
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */,
