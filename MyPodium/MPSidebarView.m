@@ -36,7 +36,6 @@
     self.sidebarTable.translatesAutoresizingMaskIntoConstraints = NO;
     self.sidebarTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.sidebarTable.scrollEnabled = YES;
-    self.sidebarTable.delaysContentTouches = NO;
     [self addSubview: self.sidebarTable];
 }
 
