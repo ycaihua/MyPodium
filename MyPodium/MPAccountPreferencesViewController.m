@@ -6,8 +6,12 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPAccountPreferencesView.h"
 #import "MPPreferencesButton.h"
+#import "MPMenu.h"
+#import "CNLabel.h"
 
 #import "MPAccountPreferencesViewController.h"
 
@@ -48,12 +52,33 @@
 
 - (void) friendRequestsButtonPressed: (id) sender {
     MPAccountPreferencesView* view = (MPAccountPreferencesView*)self.view;
-    [view.friendRequestsButton toggleSelected];
+    [self togglePreferenceForKey:@"pref_friendRequests" forButton:view.friendRequestsButton];
+}
+
+- (void) togglePreferenceForKey: (NSString*) key forButton: (MPPreferencesButton*) button {
+    MPAccountPreferencesView* view = (MPAccountPreferencesView*)self.view;
+    dispatch_queue_t prefsQueue = dispatch_queue_create("PreferencesQueue", 0);
+    dispatch_async(prefsQueue, ^{
+        PFUser* currentUser = [PFUser currentUser];
+        NSNumber* prefFriendRequests = [currentUser objectForKey: key];
+        BOOL preferenceValue = [prefFriendRequests boolValue];
+        [currentUser setObject:[NSNumber numberWithBool:!preferenceValue] forKey:key];
+        BOOL success = [currentUser save];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(success) {
+                [view.menu.subtitleLabel displayMessage:@"Your preferences have been saved." revertAfter:YES withColor:[UIColor MPGreenColor]];
+                [button toggleSelected];
+            }
+            else {
+                [view.menu.subtitleLabel displayMessage:@"There was an error saving your preferences. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+            }
+        });
+    });
 }
 
 - (void) confirmationAlertsButtonPressed: (id) sender {
     MPAccountPreferencesView* view = (MPAccountPreferencesView*)self.view;
-    [view.confirmationAlertsButton toggleSelected];
+    [self togglePreferenceForKey:@"pref_confirmation" forButton:view.confirmationAlertsButton];
 }
 
 @end
