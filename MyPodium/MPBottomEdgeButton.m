@@ -31,6 +31,16 @@
     }
 }
 
+- (void) disable {
+    self.enabled = NO;
+    self.backgroundColor = [UIColor MPGrayColor];
+}
+
+- (void) enable {
+    self.enabled = YES;
+    self.backgroundColor = [UIColor MPBlackColor];
+}
+
 + (CGFloat) defaultHeight { return 45.0f; }
 
 @end

@@ -56,7 +56,7 @@
                 if(user) {
                     NSIndexPath* path = [self indexPathForUser: user];
                     [self.selectedFriends addObject: self.friends[path.row]];
-                    [view enableSubmitButton];
+                    [view.submitButton enable];
                     [view.playersTable selectRowAtIndexPath:path animated:true scrollPosition:UITableViewScrollPositionMiddle];
                 }
                 [view.menu.subtitleLabel displayMessage:[MPMakeTeamView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
@@ -125,7 +125,7 @@
     PFUser* friend = self.friends[indexPath.row];
     [self.selectedFriends addObject: friend];
     if(self.selectedFriends.count > 0)
-        [view enableSubmitButton];
+        [view.submitButton enable];
     [view.teamNameField resignFirstResponder];
 }
 
@@ -134,7 +134,7 @@
     PFUser* friend = self.friends[indexPath.row];
     [self.selectedFriends removeObject: friend];
     if(self.selectedFriends.count == 0)
-        [view disableSubmitButton];
+        [view.submitButton disable];
     [view.teamNameField resignFirstResponder];
 }
 

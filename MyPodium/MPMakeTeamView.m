@@ -64,16 +64,6 @@
     [self addSubview:self.submitButton];
 }
 
-- (void) enableSubmitButton {
-    self.submitButton.backgroundColor = [UIColor MPBlackColor];
-    self.submitButton.enabled = YES;
-}
-
-- (void) disableSubmitButton {
-    self.submitButton.backgroundColor = [UIColor MPDarkGrayColor];
-    self.submitButton.enabled = NO;
-}
-
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.teamNameField
                            [NSLayoutConstraint constraintWithItem:self.teamNameField

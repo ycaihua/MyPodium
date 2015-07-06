@@ -7,6 +7,7 @@
 //
 
 #import "MPControllerManager.h"
+#import "UIColor+MPColor.h"
 
 #import "MPMessageReaderViewController.h"
 #import "MPMessageReaderView.h"
@@ -27,6 +28,7 @@
         self.view = view;
         [view updateForMessage: message];
         [self markMessageReadInBackground: message];
+        [self disableDeleteButtonIfNecessary];
         [self makeControlActions];
         self.message = message;
     }
@@ -67,6 +69,15 @@
             [MPControllerManager dismissViewController: self];
         });
     });
+}
+
+- (void) disableDeleteButtonIfNecessary {
+    PFUser* receiver = self.message[@"receiver"];
+    if(![receiver.username isEqualToString: [PFUser currentUser].username]) {
+        MPBottomEdgeButton* button = ((MPMessageReaderView*)self.view).deleteButton;
+        [button disable];
+    }
+    
 }
 
 @end

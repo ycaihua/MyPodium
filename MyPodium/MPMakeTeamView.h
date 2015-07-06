@@ -20,9 +20,6 @@
 @property MPBottomEdgeButton* goBackButton;
 @property MPBottomEdgeButton* submitButton;
 
-- (void) enableSubmitButton;
-- (void) disableSubmitButton;
-
 + (NSString*) defaultSubtitle;
 
 @end

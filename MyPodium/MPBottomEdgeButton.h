@@ -10,6 +10,9 @@
 
 @interface MPBottomEdgeButton : UIButton
 
+- (void) disable;
+- (void) enable;
+
 + (CGFloat) defaultHeight;
 
 @end
