@@ -8,6 +8,17 @@
 
 #import "MPMenuView.h"
 
+@class MPTextField;
+@class MPLabel;
+@class MPBottomEdgeButton;
+
 @interface MPMessageComposerView : MPMenuView
+
+@property MPTextField* recipientsField;
+@property MPLabel* recipientsLabel;
+@property MPTextField* titleField;
+@property UITextView* bodyView;
+@property MPBottomEdgeButton* cancelButton;
+@property MPBottomEdgeButton* sendButton;
 
 @end

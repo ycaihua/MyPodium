@@ -74,7 +74,8 @@
 
 + (void) resignRespondersForSubviews: (UIView*) view {
     for(UIView* subview in view.subviews) {
-        if ([subview isKindOfClass:[UITextField class]]) {
+        if ([subview isKindOfClass:[UITextField class]] ||
+            [subview isKindOfClass:[UITextView class]]) {
             //Resign first responder
             UITextField* currentField = (UITextField*) subview;
             [currentField resignFirstResponder];

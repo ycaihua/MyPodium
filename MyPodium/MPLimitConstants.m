@@ -27,4 +27,6 @@
 + (int) maxMessageTitleCharacters { return 50; }
 + (int) maxMessageBodyCharacters { return 500; }
 
++ (int) maxRecipientsPerMessage { return 5; }
+
 @end

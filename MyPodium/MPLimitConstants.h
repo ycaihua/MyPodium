@@ -27,4 +27,6 @@
 + (int) maxMessageTitleCharacters;
 + (int) maxMessageBodyCharacters;
 
++ (int) maxRecipientsPerMessage;
+
 @end
