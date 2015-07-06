@@ -20,9 +20,17 @@
 - (id) initWithMessage: (PFObject*) message {
     self = [super init];
     if(self) {
-        self.view = [[MPMessageReaderView alloc] init];
+        MPMessageReaderView* view = [[MPMessageReaderView alloc] init];
+        [view updateForMessage: message];
+        [self markMessageReadInBackground: message];
+        self.view = view;
     }
     return self;
+}
+
+- (void) markMessageReadInBackground: (PFObject*) message {
+    message[@"read"] = @YES;
+    [message saveInBackground];
 }
 
 @end

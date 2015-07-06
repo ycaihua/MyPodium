@@ -9,6 +9,8 @@
 #import "MPMenuView.h"
 
 @class MPLabel;
+@class MPBottomEdgeButton;
+@class PFObject;
 
 @interface MPMessageReaderView : MPMenuView
 
@@ -16,5 +18,11 @@
 @property MPLabel* senderLabel;
 @property MPLabel* receiverLabel;
 @property MPLabel* timestampLabel;
+@property UITextView* bodyView;
+
+@property MPBottomEdgeButton* deleteButton;
+@property MPBottomEdgeButton* replyButton;
+
+- (void) updateForMessage: (PFObject*) message;
 
 @end
