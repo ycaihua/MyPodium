@@ -16,6 +16,8 @@
 		2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACA1B18D2F400C46B53 /* MPHomeView.m */; };
 		2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */; };
 		2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AD01B18E34800C46B53 /* MPDualLabelButton.m */; };
+		2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D33D5321B4AF2B0006AF4F9 /* MPMessageComposerView.m */; };
+		2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -129,6 +131,10 @@
 		2D2D5ACD1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		2D2D5ACF1B18E34800C46B53 /* MPDualLabelButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPDualLabelButton.h; sourceTree = "<group>"; };
 		2D2D5AD01B18E34800C46B53 /* MPDualLabelButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPDualLabelButton.m; sourceTree = "<group>"; };
+		2D33D5311B4AF2B0006AF4F9 /* MPMessageComposerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageComposerView.h; sourceTree = "<group>"; };
+		2D33D5321B4AF2B0006AF4F9 /* MPMessageComposerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageComposerView.m; sourceTree = "<group>"; };
+		2D33D5341B4AF343006AF4F9 /* MPMessageComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageComposerViewController.h; sourceTree = "<group>"; };
+		2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageComposerViewController.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -704,6 +710,8 @@
 				2DBF86931B462B8B00FB0AF5 /* MPMessagesView.m */,
 				2D67BFD61B49E7D80043BD96 /* MPMessageReaderView.h */,
 				2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */,
+				2D33D5311B4AF2B0006AF4F9 /* MPMessageComposerView.h */,
+				2D33D5321B4AF2B0006AF4F9 /* MPMessageComposerView.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -715,6 +723,8 @@
 				2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */,
 				2D67BFD91B49E9EE0043BD96 /* MPMessageReaderViewController.h */,
 				2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */,
+				2D33D5341B4AF343006AF4F9 /* MPMessageComposerViewController.h */,
+				2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */,
 			);
 			name = Messages;
 			sourceTree = "<group>";
@@ -882,6 +892,7 @@
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D94D0AD1B279719006C500A /* MPTeamsModel.m in Sources */,
 				2D67BFCC1B49911E0043BD96 /* MPSettingsViewController.m in Sources */,
+				2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */,
 				2DE9FC981B1A000B00F748C9 /* MPSidebarButton.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
@@ -911,6 +922,7 @@
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */,
 				2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */,
+				2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,

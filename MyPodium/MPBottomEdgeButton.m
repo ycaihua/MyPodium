@@ -33,7 +33,7 @@
 
 - (void) disable {
     self.enabled = NO;
-    self.backgroundColor = [UIColor MPGrayColor];
+    self.backgroundColor = [UIColor MPDarkGrayColor];
 }
 
 - (void) enable {

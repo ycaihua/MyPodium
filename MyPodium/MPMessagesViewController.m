@@ -21,9 +21,11 @@
 #import "MPMenu.h"
 #import "CNLabel.h"
 #import "MPMessagesCell.h"
+#import "MPBottomEdgeButton.h"
 
 #import "MPMessagesViewController.h"
 #import "MPMessageReaderViewController.h"
+#import "MPMessageComposerViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 
@@ -55,8 +57,18 @@
         table.delegate = self;
         table.dataSource = self;
         [self loadOnDismiss:self];
+        [self makeControlActions];
     }
     return self;
+}
+
+- (void) makeControlActions {
+    MPMessagesView* view = (MPMessagesView*) self.view;
+    [view.composeButton addTarget:self action:@selector(composeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) composeButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPMessageComposerViewController alloc] init] fromController:self];
 }
 
 - (void) makeTableSections {

@@ -24,13 +24,13 @@
 - (id) initWithMessage: (PFObject*) message {
     self = [super init];
     if(self) {
+        self.message = message;
         MPMessageReaderView* view = [[MPMessageReaderView alloc] init];
         self.view = view;
         [view updateForMessage: message];
         [self markMessageReadInBackground: message];
         [self disableDeleteButtonIfNecessary];
         [self makeControlActions];
-        self.message = message;
     }
     return self;
 }
