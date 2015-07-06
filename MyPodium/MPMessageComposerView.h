@@ -17,8 +17,13 @@
 @property MPTextField* recipientsField;
 @property MPLabel* recipientsLabel;
 @property MPTextField* titleField;
+@property MPLabel* titleLimitLabel;
 @property UITextView* bodyView;
+@property MPLabel* bodyLimitLabel;
 @property MPBottomEdgeButton* cancelButton;
 @property MPBottomEdgeButton* sendButton;
+
+- (void) shiftVerticalConstraintsBy: (CGFloat) amount;
+- (void) restoreDefaultConstraints;
 
 @end

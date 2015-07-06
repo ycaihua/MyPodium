@@ -13,6 +13,7 @@
 #import "MPTextField.h"
 #import "MPLabel.h"
 #import "MPBottomEdgeButton.h"
+#import "MPMenu.h"
 
 @implementation MPMessageComposerView
 
@@ -20,9 +21,51 @@
     self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPMessageComposerView defaultSubtitle]];
     if(self) {
         [self makeControls];
+        [self bringSubviewToFront: self.menu];
         [self makeControlConstraints];
     }
     return self;
+}
+
+- (void) shiftVerticalConstraintsBy: (CGFloat) amount {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if((constraint.firstAttribute == NSLayoutAttributeTop &&
+            [constraint.firstItem isEqual: self.recipientsField]) ||
+           (constraint.firstAttribute == NSLayoutAttributeBottom &&
+            [constraint.firstItem isEqual: self.bodyView]))
+            constraint.constant += amount;
+        if(constraint.firstAttribute == NSLayoutAttributeTop &&
+           [constraint.firstItem isEqual: self.bodyView])
+            [self removeConstraint: constraint];
+    }
+    [self addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.bodyView
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.menu
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0f
+                                   constant:10.0f]];
+}
+
+- (void) restoreDefaultConstraints {
+    for(NSLayoutConstraint* constraint in self.constraints) {
+        if(constraint.firstAttribute == NSLayoutAttributeTop && [constraint.firstItem isEqual: self.recipientsField])
+            constraint.constant = 10.0f;
+        if(constraint.firstAttribute == NSLayoutAttributeBottom && [constraint.firstItem isEqual: self.bodyView])
+            constraint.constant = -10.0f;
+        if(constraint.firstAttribute == NSLayoutAttributeTop &&
+           [constraint.firstItem isEqual: self.bodyView])
+            [self removeConstraint: constraint];
+    }
+    [self addConstraint:
+     [NSLayoutConstraint constraintWithItem:self.bodyView
+                                  attribute:NSLayoutAttributeTop
+                                  relatedBy:NSLayoutRelationEqual
+                                     toItem:self.titleField
+                                  attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0f
+                                   constant:5.0f]];
 }
 
 - (void) makeControls {
@@ -39,14 +82,25 @@
     self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleField];
     
+    self.titleLimitLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"%d", [MPLimitConstants maxMessageTitleCharacters]]];
+    self.titleLimitLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.titleLimitLabel.textColor = [UIColor MPGreenColor];
+    [self addSubview: self.titleLimitLabel];
+    
     self.bodyView = [[UITextView alloc] init];
+    self.bodyView.editable = YES;
+    self.bodyView.selectable = YES;
     self.bodyView.layer.borderWidth = 1.0f;
     self.bodyView.layer.borderColor = [UIColor MPBlackColor].CGColor;
-    self.bodyView.font = [UIFont fontWithName:@"Lato-Bold" size:15.0f];
-    self.bodyView.textColor = [UIColor lightGrayColor];
-    self.bodyView.text = @"ENTER YOUR MESSAGE HERE";
+    self.bodyView.font = [UIFont fontWithName:@"Lato-Regular" size:12.0f];
+    self.bodyView.textColor = [UIColor MPBlackColor];
     self.bodyView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.bodyView];
+    
+    self.bodyLimitLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"%d", [MPLimitConstants maxMessageBodyCharacters]]];
+    self.bodyLimitLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    self.bodyLimitLabel.textColor = [UIColor MPGreenColor];
+    [self addSubview: self.bodyLimitLabel];
     
     self.cancelButton = [[MPBottomEdgeButton alloc] init];
     [self.cancelButton setTitle:@"CANCEL" forState:UIControlStateNormal];
@@ -140,6 +194,21 @@
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPTextField standardHeight]],
+                           //self.titleLimitLabel
+                           [NSLayoutConstraint constraintWithItem:self.titleLimitLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.titleField
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.titleLimitLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.titleField
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            //self.bodyView
                            [NSLayoutConstraint constraintWithItem:self.bodyView
                                                         attribute:NSLayoutAttributeLeading
@@ -169,6 +238,21 @@
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:-10.0f],
+                           //self.bodyLimitLabel
+                           [NSLayoutConstraint constraintWithItem:self.bodyLimitLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.bodyView
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.bodyLimitLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.bodyView
+                                                        attribute:NSLayoutAttributeBottomMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            //self.cancelButton
                            [NSLayoutConstraint constraintWithItem:self.cancelButton
                                                         attribute:NSLayoutAttributeLeading
