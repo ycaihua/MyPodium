@@ -77,7 +77,6 @@
             self.titleLabel.text = message[@"title"];
             self.senderLabel.text = [NSString stringWithFormat:@"from %@", [(PFUser*)message[@"sender"] username]];
             self.receiverLabel.text = [NSString stringWithFormat:@"to %@", [(PFUser*)message[@"receiver"] username]];
-            NSLog(@"%@", message[@"createdAt"]);
             self.timestampLabel.text = [NSDateFormatter localizedStringFromDate:[message createdAt]
                                                                       dateStyle:NSDateFormatterShortStyle
                                                                       timeStyle:NSDateFormatterShortStyle];;

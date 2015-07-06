@@ -12,6 +12,8 @@
 
 @interface MPMessageReaderViewController : MPMenuViewController
 
+@property PFObject* message;
+
 - (id) initWithMessage: (PFObject*) message;
 
 @end
