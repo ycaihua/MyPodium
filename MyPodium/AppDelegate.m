@@ -101,6 +101,10 @@
     
 }
 
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window {
+    return UIInterfaceOrientationPortrait;
+}
+
 - (void) logOut {
     if([PFUser currentUser]) [PFUser logOut];
     

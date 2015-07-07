@@ -110,6 +110,10 @@
     [MPControllerManager presentViewController:[[MPSettingsViewController alloc] init] fromController:self];
 }
 
+- (BOOL) shouldAutorotate {
+    return NO;
+}
+
 + (NSTimeInterval) iconHoldDuration { return 1.0f; }
 
 @end

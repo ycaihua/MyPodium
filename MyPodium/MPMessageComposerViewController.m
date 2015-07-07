@@ -82,7 +82,6 @@
     }];
 }
 
-
 - (void)textViewDidChange:(UITextView *)textView {
     NSUInteger length = textView.text.length;
     int maxLength = [MPLimitConstants maxMessageBodyCharacters];
