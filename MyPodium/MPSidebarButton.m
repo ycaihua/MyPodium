@@ -62,8 +62,8 @@
                             [NSLayoutConstraint constraintWithItem:self.customTitleLabel
                                                          attribute:NSLayoutAttributeTrailing
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterX
+                                                            toItem:self.subtitleLabel
+                                                         attribute:NSLayoutAttributeLeading
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             //self.subtitleLabel
@@ -72,13 +72,6 @@
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.customTitleLabel
                                                          attribute:NSLayoutAttributeBaseline
-                                                        multiplier:1.0f
-                                                          constant:0.0f],
-                            [NSLayoutConstraint constraintWithItem:self.subtitleLabel
-                                                         attribute:NSLayoutAttributeLeading
-                                                         relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeCenterX
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.subtitleLabel

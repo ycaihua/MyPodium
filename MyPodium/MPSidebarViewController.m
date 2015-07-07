@@ -21,6 +21,7 @@
 #import "MPSearchViewController.h"
 #import "MPSettingsViewController.h"
 #import "MPMessagesViewController.h"
+#import "MPMessageComposerViewController.h"
 
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -117,7 +118,7 @@
     return @[[MPHomeViewController class],
              [MPFriendsViewController class],
              [MPMessagesViewController class],
-             [MPMenuViewController class],
+             [MPMessageComposerViewController class],
              [MPTeamsViewController class],
              [MPMakeTeamViewController class],
              [MPMenuViewController class],

@@ -79,6 +79,7 @@
     [self addSubview: self.recipientsLabel];
     
     self.titleField = [[MPTextField alloc] initWithPlaceholder:@"TITLE"];
+    self.titleField.clearButtonMode = UITextFieldViewModeNever;
     self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleField];
     
