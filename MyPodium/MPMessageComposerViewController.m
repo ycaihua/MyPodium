@@ -9,6 +9,7 @@
 #import "MPLimitConstants.h"
 
 #import "MPLabel.h"
+#import "MPTextField.h"
 #import "MPMessageComposerView.h"
 
 #import "MPMessageComposerViewController.h"
@@ -24,6 +25,9 @@
     if(self) {
         MPMessageComposerView* view = [[MPMessageComposerView alloc] init];
         view.bodyView.delegate = self;
+        [view.titleField addTarget:self
+                      action:@selector(titleFieldDidChange:)
+            forControlEvents:UIControlEventEditingChanged];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
         self.view = view;
@@ -87,6 +91,13 @@
     int maxLength = [MPLimitConstants maxMessageBodyCharacters];
     MPMessageComposerView* view = (MPMessageComposerView*) self.view;
     [view.bodyLimitLabel setTextToInt:(maxLength-(int)length)];
+}
+
+- (void) titleFieldDidChange:(UITextField*) sender {
+    NSUInteger length = sender.text.length;
+    int maxLength = [MPLimitConstants maxMessageTitleCharacters];
+    MPMessageComposerView* view = (MPMessageComposerView*) self.view;
+    [view.titleLimitLabel setTextToInt:(maxLength-(int)length)];
 }
 
 @end

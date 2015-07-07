@@ -50,12 +50,12 @@
 
 // Adds padding to placeholder text
 - (CGRect)textRectForBounds:(CGRect)bounds {
-    return CGRectInset( bounds , 10 , 10 );
+    return CGRectInset(bounds, 10, 10);
 }
 
 // Adds padding to edited text
 - (CGRect)editingRectForBounds:(CGRect)bounds {
-    return CGRectInset( bounds , 10 , 10 );
+    return CGRectMake(bounds.origin.x+10, bounds.origin.y+10, bounds.size.width-40, bounds.size.height-10);
 }
 
 + (float) standardWidth { return 190.0f; }
