@@ -31,6 +31,7 @@
     if(self) {
         [self applyDefaultStyle];
         [self setPlaceholder: text];
+        [self addTarget:self action:@selector(textFieldContentChanged:) forControlEvents:UIControlEventEditingChanged];
     }
     return self;
 }
@@ -56,6 +57,16 @@
 // Adds padding to edited text
 - (CGRect)editingRectForBounds:(CGRect)bounds {
     return CGRectMake(bounds.origin.x+10, bounds.origin.y+10, bounds.size.width-40, bounds.size.height-10);
+}
+
+- (void) textFieldContentChanged: (UITextField*) sender {
+    NSDictionary *attributes = @{NSFontAttributeName: sender.font};
+    CGFloat textLength = [sender.text sizeWithAttributes:attributes].width;
+    CGFloat fieldLength = [self editingRectForBounds: self.frame].size.width;
+    if(textLength >= fieldLength)
+        self.textAlignment = NSTextAlignmentRight;
+    else
+        self.textAlignment = NSTextAlignmentLeft;
 }
 
 + (float) standardWidth { return 190.0f; }
