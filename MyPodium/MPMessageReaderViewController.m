@@ -9,9 +9,13 @@
 #import "MPControllerManager.h"
 #import "UIColor+MPColor.h"
 
-#import "MPMessageReaderViewController.h"
+#import "MPTextField.h"
+#import "MPMessageComposerView.h"
 #import "MPMessageReaderView.h"
 #import "MPBottomEdgeButton.h"
+
+#import "MPMessageReaderViewController.h"
+#import "MPMessageComposerViewController.h"
 
 #import <Parse/Parse.h>
 
@@ -28,7 +32,7 @@
         MPMessageReaderView* view = [[MPMessageReaderView alloc] init];
         self.view = view;
         [view updateForMessage: message];
-        [self markMessageReadInBackground: message];
+        [self markMessageReadInBackground];
         [self disableDeleteButtonIfNecessary];
         [self makeControlActions];
     }
@@ -38,11 +42,12 @@
 - (void) makeControlActions {
     MPMessageReaderView* view = (MPMessageReaderView*) self.view;
     [view.deleteButton addTarget:self action:@selector(deleteMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.replyButton addTarget:self action:@selector(replyToMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) markMessageReadInBackground: (PFObject*) message {
-    message[@"read"] = @YES;
-    [message saveInBackground];
+- (void) markMessageReadInBackground {
+    self.message[@"read"] = @YES;
+    [self.message saveInBackground];
 }
 
 - (void) deleteMessageButtonPressed: (id) sender {
@@ -60,6 +65,14 @@
     else {
         [self deleteMessageAndReturn];
     }
+}
+
+- (void) replyToMessageButtonPressed: (id) sender {
+    MPMessageComposerViewController* destination = [[MPMessageComposerViewController alloc] init];
+    MPMessageComposerView* view = (MPMessageComposerView*)destination.view;
+    PFUser* messageSender = self.message[@"sender"];
+    view.recipientsField.text = messageSender.username;
+    [MPControllerManager presentViewController:destination fromController:self];
 }
 
 - (void) deleteMessageAndReturn {

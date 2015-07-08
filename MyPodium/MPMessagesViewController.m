@@ -147,7 +147,7 @@
                                 [cell showLeftButton];
                                 [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
                                 [cell.centerButton setImageString:@"up" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
                                 [cell.leftButton addTarget:self action:@selector(rereadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.centerButton addTarget:self action:@selector(markUnreadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
