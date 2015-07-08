@@ -123,11 +123,14 @@
             UIAlertAction* sendAction = [UIAlertAction actionWithTitle:@"Send"
                                                                  style:UIAlertActionStyleDefault
                                                                handler:^(UIAlertAction* action) {
-                [self sendMessageToUsers: verifiedFriends];
-            }];
+                                                                   [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                   [self sendMessageToUsers: verifiedFriends];
+                                                               }];
             UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                    style:UIAlertActionStyleCancel
-                                                                 handler:nil];
+                                                                 handler:^(UIAlertAction* action) {
+                                                                     [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                 }];
             [confirmation addAction: sendAction];
             [confirmation addAction: cancelAction];
             [self presentViewController: confirmation animated:YES completion:nil];
@@ -139,7 +142,9 @@
                                          preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
                                                                    style:UIAlertActionStyleCancel
-                                                                 handler:nil];
+                                                                 handler:^(UIAlertAction* action){
+                                                                     [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                 }];
             [errorAlert addAction: cancelAction];
             [self presentViewController: errorAlert animated:YES completion:nil];
         }

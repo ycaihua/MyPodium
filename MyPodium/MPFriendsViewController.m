@@ -176,12 +176,10 @@
                                               forControlEvents:UIControlEventAllEvents];
                                 
                                 //Set images
-                                [cell showLeftButton];
-                                [cell.leftButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell hideLeftButton];
                                 [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(newTeamWithFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.centerButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
@@ -385,15 +383,6 @@
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:true
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
-}
-
-- (void) newTeamWithFriendButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
-    NSIndexPath* indexPath = cell.indexPath;
-    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
-    PFUser* other = utility.dataObjects[indexPath.row];
-    MPMakeTeamViewController* destination = [[MPMakeTeamViewController alloc] initWithSelectedUser: other];
-    [MPControllerManager presentViewController:destination fromController:self];
 }
 
 #pragma mark table view data/delegate
