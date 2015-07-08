@@ -47,6 +47,9 @@
 - (void) makeControlActions {
     MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
     
+    [view.selectRecipientsButton addTarget:self
+                                    action:@selector(selectRecipientsButtonPressed:)
+                          forControlEvents:UIControlEventTouchUpInside];
     [view.titleField addTarget:self
                         action:@selector(titleFieldDidChange:)
               forControlEvents:UIControlEventEditingChanged];
@@ -56,6 +59,10 @@
     [view.cancelButton addTarget:self
                           action:@selector(cancelButtonPressed:)
                 forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) selectRecipientsButtonPressed: (id) sender {
+    
 }
 
 - (void) cancelButtonPressed: (id) sender {

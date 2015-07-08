@@ -8,6 +8,7 @@
 
 #import "MPLimitConstants.h"
 #import "UIColor+MPColor.h"
+#import "UIButton+MPImage.h"
 
 #import "MPMessageComposerView.h"
 #import "MPTextField.h"
@@ -87,6 +88,12 @@
     self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleField];
     
+    self.selectRecipientsButton = [[UIButton alloc] init];
+    [self.selectRecipientsButton setImageString:@"arrow" withColorString:@"green" withHighlightedColorString:@"black"];
+    self.selectRecipientsButton.translatesAutoresizingMaskIntoConstraints = NO;
+    self.selectRecipientsButton.layer.borderWidth = 1.0f;
+    [self addSubview: self.selectRecipientsButton];
+    
     self.titleLimitLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"%d", [MPLimitConstants maxMessageTitleCharacters]]];
     self.titleLimitLabel.translatesAutoresizingMaskIntoConstraints = NO;
     self.titleLimitLabel.textColor = [UIColor MPGreenColor];
@@ -130,10 +137,10 @@
                            [NSLayoutConstraint constraintWithItem:self.recipientsField
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                           toItem:self.selectRecipientsButton
+                                                        attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:1.0f],
                            [NSLayoutConstraint constraintWithItem:self.recipientsField
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
@@ -148,6 +155,36 @@
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPTextField standardHeight]],
+                           //self.selectRecipientsButton
+                           [NSLayoutConstraint constraintWithItem:self.selectRecipientsButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.selectRecipientsButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.recipientsField
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.selectRecipientsButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.recipientsField
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.selectRecipientsButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.selectRecipientsButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           
                            //self.recipientsLabel
                            [NSLayoutConstraint constraintWithItem:self.recipientsLabel
                                                         attribute:NSLayoutAttributeLeading

@@ -15,6 +15,7 @@
 @interface MPMessageComposerView : MPMenuView
 
 @property MPTextField* recipientsField;
+@property UIButton* selectRecipientsButton;
 @property MPLabel* recipientsLabel;
 @property MPTextField* titleField;
 @property MPLabel* titleLimitLabel;
