@@ -6,9 +6,13 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
 #import "MPControllerManager.h"
 #import "MPLimitConstants.h"
 
+#import "MPFriendsModel.h"
+
+#import "MPMenu.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 #import "MPBottomEdgeButton.h"
@@ -46,6 +50,9 @@
     [view.titleField addTarget:self
                         action:@selector(titleFieldDidChange:)
               forControlEvents:UIControlEventEditingChanged];
+    [view.sendButton addTarget:self
+                        action:@selector(sendButtonPressed:)
+              forControlEvents:UIControlEventTouchUpInside];
     [view.cancelButton addTarget:self
                           action:@selector(cancelButtonPressed:)
                 forControlEvents:UIControlEventTouchUpInside];
@@ -58,7 +65,124 @@
         return;
     }
     [MPControllerManager dismissViewController: self];
+}
+
+- (void) sendButtonPressed: (id) sender {
+    MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
+    for(UIControl* control in @[view.recipientsField, view.titleField, view.bodyView]) {
+        if([control isFirstResponder]) {
+            [control resignFirstResponder];
+            break;
+        }
+    }
+    if(![self messageContentVerified])
+        return;
+    NSArray* usernames = [self usernameListFromText: view.recipientsField.text];
+    if(usernames.count > [MPLimitConstants maxRecipientsPerMessage]) {
+        UIAlertController* errorAlert =
+        [UIAlertController alertControllerWithTitle:@"Error"
+                                            message:[NSString stringWithFormat:@"You can only have up to %d recipients per message. You entered %lu.",
+                                                     [MPLimitConstants maxRecipientsPerMessage],
+                                                     (unsigned long)usernames.count]
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:nil];
+        [errorAlert addAction: cancelAction];
+        [self presentViewController: errorAlert animated:YES completion:nil];
+        return;
+    }
+    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    dispatch_async(dispatch_queue_create("VerifyUsernamesQueue", 0), ^{
+        //NOTE: verifiedFriends contains PFUSERS, where
+        //verifiedNotFriends contains NSSTRINGS (usernames)
+        NSMutableArray* verifiedFriends = [[NSMutableArray alloc] initWithCapacity:usernames.count];
+        NSMutableArray* verifiedNotFriends = [[NSMutableArray alloc] initWithCapacity:usernames.count];
+        for(NSString* username in usernames) {
+            PFQuery *query = [PFUser query];
+            [query whereKey:@"username" equalTo:username];
+            PFUser *user = (PFUser *)[query getFirstObject];
+            MPFriendStatus status = [MPFriendsModel friendStatusFromUser:user toUser:[PFUser currentUser]];
+            if(status == MPFriendStatusFriends)
+                [verifiedFriends addObject: user];
+            else
+                [verifiedNotFriends addObject:username];
+        }
+        if(verifiedNotFriends.count == 0)
+            [self sendMessageToUsers: verifiedFriends];
+        else if(verifiedFriends.count > 0) {
+            NSString* message = [NSString stringWithFormat:@"The following users you entered as recipients aren't on your friends list. You can choose to send the message to the remaining friends, or cancel.\n%@", verifiedNotFriends[0]];
+            for(int i = 1; i < verifiedNotFriends.count; i++) {
+                message = [message stringByAppendingString:
+                           [NSString stringWithFormat:@", %@",verifiedNotFriends[i]]];
+            }
+            UIAlertController* confirmation =
+            [UIAlertController alertControllerWithTitle:@"Warning"
+                                                message:message
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* sendAction = [UIAlertAction actionWithTitle:@"Send"
+                                                                 style:UIAlertActionStyleDefault
+                                                               handler:^(UIAlertAction* action) {
+                [self sendMessageToUsers: verifiedFriends];
+            }];
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:nil];
+            [confirmation addAction: sendAction];
+            [confirmation addAction: cancelAction];
+            [self presentViewController: confirmation animated:YES completion:nil];
+        }
+        else {
+            UIAlertController* errorAlert =
+            [UIAlertController alertControllerWithTitle:@"Error"
+                                                message:@"None of the users you entered as recipients are on your friends list. Please double-check your entries."
+                                         preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
+                                                                   style:UIAlertActionStyleCancel
+                                                                 handler:nil];
+            [errorAlert addAction: cancelAction];
+            [self presentViewController: errorAlert animated:YES completion:nil];
+        }
+    });
+}
+
+- (void) sendMessageToUsers: (NSArray*) recipients {
     
+}
+
+- (BOOL) messageContentVerified {
+    MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
+    NSString* title = view.titleField.text;
+    NSString* body = view.bodyView.text;
+    NSString* alertMessage;
+    if(title.length == 0)
+        alertMessage = @"You cannot leave a blank title.";
+    else if(title.length > [MPLimitConstants maxMessageTitleCharacters])
+        alertMessage = @"Your title is too long.";
+    else if(body.length == 0)
+        alertMessage = @"You cannot leave a blank message body.";
+    else if(body.length > [MPLimitConstants maxMessageBodyCharacters])
+        alertMessage = @"Your message body is too long.";
+    if(alertMessage) {
+        UIAlertController* errorAlert =
+        [UIAlertController alertControllerWithTitle:@"Error"
+                                            message:alertMessage
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
+                                                               style:UIAlertActionStyleCancel
+                                                             handler:nil];
+        [errorAlert addAction: cancelAction];
+        [self presentViewController: errorAlert animated:YES completion:nil];
+        return NO;
+    }
+    return YES;
+    
+}
+
+- (NSArray*) usernameListFromText: (NSString*) text {
+    NSArray* withoutWhitespace = [text componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString* noSpaceString = [withoutWhitespace componentsJoinedByString:@""];
+    return [noSpaceString componentsSeparatedByString:@","];
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification {
