@@ -34,12 +34,21 @@
     }
 }
 
-- (void) updateForMessage:(PFObject *)message {
+- (void) updateForMessage:(PFObject *)message displaySender: (BOOL) displaySender {
     [self.titleLabel setText: message[@"title"]];
-    [message[@"sender"] fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-        PFUser* sender = (PFUser*)object;
-        [self.senderLabel setText: [NSString stringWithFormat:@"from %@", sender.username]];
-    }];
+    if(displaySender) {
+        [message[@"sender"] fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            PFUser* sender = (PFUser*)object;
+            [self.userLabel setText: [NSString stringWithFormat:@"from %@", sender.username]];
+        }];
+    }
+    else {
+        [message[@"receiver"] fetchIfNeededInBackgroundWithBlock:^(PFObject *object, NSError *error) {
+            PFUser* receiver = (PFUser*)object;
+            [self.userLabel setText: [NSString stringWithFormat:@"to %@", receiver.username]];
+        }];
+        
+    }
 }
 
 - (void) makeControls {
@@ -71,15 +80,15 @@
     self.titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
     [self.solidColorView addSubview: self.titleLabel];
     
-    //self.senderLabel
-    self.senderLabel = [[CNLabel alloc] initWithText:@"sender"];
-    self.senderLabel.font = [UIFont fontWithName:@"Lato-Bold" size:11.0f];
-    self.senderLabel.textColor = [UIColor MPBlackColor];
-    self.senderLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
-    self.senderLabel.numberOfLines = 1;
-    self.senderLabel.adjustsFontSizeToFitWidth = NO;
-    self.senderLabel.lineBreakMode = NSLineBreakByTruncatingTail;
-    [self.solidColorView addSubview: self.senderLabel];
+    //self.userLabel
+    self.userLabel = [[CNLabel alloc] initWithText:@"sender"];
+    self.userLabel.font = [UIFont fontWithName:@"Lato-Bold" size:11.0f];
+    self.userLabel.textColor = [UIColor MPBlackColor];
+    self.userLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
+    self.userLabel.numberOfLines = 1;
+    self.userLabel.adjustsFontSizeToFitWidth = NO;
+    self.userLabel.lineBreakMode = NSLineBreakByTruncatingTail;
+    [self.solidColorView addSubview: self.userLabel];
     
     //self.rightButton
     self.rightButton = [[UIButton alloc] init];
@@ -210,22 +219,22 @@
                                                         attribute:NSLayoutAttributeCenterY
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           //self.senderLabel
-                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                           //self.userLabel
+                           [NSLayoutConstraint constraintWithItem:self.userLabel
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.leadingBorder
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                           [NSLayoutConstraint constraintWithItem:self.userLabel
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationLessThanOrEqual
                                                            toItem:self.leftButton
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                           [NSLayoutConstraint constraintWithItem:self.userLabel
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.titleLabel
@@ -336,7 +345,7 @@
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                           [NSLayoutConstraint constraintWithItem:self.userLabel
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationLessThanOrEqual
                                                            toItem:self.leftButton
@@ -360,7 +369,7 @@
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.senderLabel
+                           [NSLayoutConstraint constraintWithItem:self.userLabel
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationLessThanOrEqual
                                                            toItem:self.centerButton

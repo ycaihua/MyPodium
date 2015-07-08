@@ -112,7 +112,7 @@
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPMessagesCell*)cell updateForMessage:object];
+                                [(MPMessagesCell*)cell updateForMessage:object displaySender: YES];
                             }],
                            
                            [[MPTableSectionUtility alloc]
@@ -155,7 +155,7 @@
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPMessagesCell*)cell updateForMessage:object];
+                                [(MPMessagesCell*)cell updateForMessage:object displaySender: YES];
                             }],
                            
                            [[MPTableSectionUtility alloc]
@@ -196,7 +196,7 @@
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPMessagesCell*)cell updateForMessage:object];
+                                [(MPMessagesCell*)cell updateForMessage:object displaySender:NO];
                             }]
                            ];
 }

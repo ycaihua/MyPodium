@@ -19,6 +19,7 @@
 #import "MPMessageComposerView.h"
 
 #import "MPMessageComposerViewController.h"
+#import "MPSelectMessageRecipientsViewController.h"
 
 @interface MPMessageComposerViewController ()
 
@@ -62,7 +63,7 @@
 }
 
 - (void) selectRecipientsButtonPressed: (id) sender {
-    
+    [MPControllerManager presentViewController:[[MPSelectMessageRecipientsViewController alloc] init] fromController:self];
 }
 
 - (void) cancelButtonPressed: (id) sender {

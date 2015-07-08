@@ -17,7 +17,7 @@
 @property UIView* leadingBorder;
 
 @property CNLabel* titleLabel;
-@property CNLabel* senderLabel;
+@property CNLabel* userLabel;
 
 @property UIButton* leftButton;
 @property UIButton* centerButton;
@@ -25,7 +25,7 @@
 
 @property NSIndexPath* indexPath;
 
-- (void) updateForMessage: (PFObject*) message;
+- (void) updateForMessage: (PFObject*) message displaySender: (BOOL) displaySender;
 - (void) showLeftButton;
 - (void) hideLeftButton;
 
