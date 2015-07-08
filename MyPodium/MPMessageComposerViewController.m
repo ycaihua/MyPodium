@@ -174,7 +174,7 @@
         });
     }
     if(allSuccesses)
-        [MPControllerManager dismissViewController: self];
+        [view.menu.subtitleLabel displayMessage:@"Your message was sent." revertAfter:YES withColor:[UIColor MPGreenColor]];
     else
         [view.menu.subtitleLabel displayMessage:@"There was an error sending the message. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
     
@@ -184,6 +184,7 @@
     MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
     NSString* title = view.titleField.text;
     NSString* body = view.bodyView.text;
+    NSString* recipients = view.recipientsField.text;
     NSString* alertMessage;
     if(title.length == 0)
         alertMessage = @"You cannot leave a blank title.";
@@ -193,6 +194,8 @@
         alertMessage = @"You cannot leave a blank message body.";
     else if(body.length > [MPLimitConstants maxMessageBodyCharacters])
         alertMessage = @"Your message body is too long.";
+    else if(recipients.length == 0)
+        alertMessage = @"Please enter at least one recipient.";
     if(alertMessage) {
         UIAlertController* errorAlert =
         [UIAlertController alertControllerWithTitle:@"Error"

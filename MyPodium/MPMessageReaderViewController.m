@@ -46,8 +46,11 @@
 }
 
 - (void) markMessageReadInBackground {
-    self.message[@"read"] = @YES;
-    [self.message saveInBackground];
+    PFUser* receiver = self.message[@"receiver"];
+    if([receiver.username isEqualToString: [PFUser currentUser].username]) {
+        self.message[@"read"] = @YES;
+        [self.message saveInBackground];
+    }
 }
 
 - (void) deleteMessageButtonPressed: (id) sender {
