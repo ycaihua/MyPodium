@@ -147,6 +147,31 @@
 }
 
 - (void) sendMessageToUsers: (NSArray*) recipients {
+    MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
+    NSString* title = view.titleField.text;
+    NSString* body = view.bodyView.text;
+    __block BOOL allSuccesses = YES;
+    for(PFUser* user in recipients) {
+        PFObject* message = [PFObject objectWithClassName:@"Message"];
+        message[@"sender"] = [PFUser currentUser];
+        message[@"receiver"] = user;
+        message[@"title"] = title;
+        message[@"body"] = body;
+        message[@"read"] = [NSNumber numberWithBool:NO];
+        message[@"visibleToSender"] = [NSNumber numberWithBool:YES];
+        dispatch_async(dispatch_queue_create("CreateMessageQueue", 0), ^{
+            BOOL success = [message save];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(!success) {
+                    allSuccesses = NO;
+                }
+            });
+        });
+    }
+    if(allSuccesses)
+        [MPControllerManager dismissViewController: self];
+    else
+        [view.menu.subtitleLabel displayMessage:@"There was an error sending the message. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
     
 }
 
