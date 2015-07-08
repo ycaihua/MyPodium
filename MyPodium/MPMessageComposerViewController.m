@@ -103,7 +103,7 @@
             [query whereKey:@"username" equalTo:username];
             PFUser *user = (PFUser *)[query getFirstObject];
             MPFriendStatus status = [MPFriendsModel friendStatusFromUser:user toUser:[PFUser currentUser]];
-            if(status == MPFriendStatusFriends)
+            if(status == MPFriendStatusFriends || status == MPFriendStatusSameUser)
                 [verifiedFriends addObject: user];
             else
                 [verifiedNotFriends addObject:username];
