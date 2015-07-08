@@ -167,6 +167,7 @@
         message[@"body"] = body;
         message[@"read"] = [NSNumber numberWithBool:NO];
         message[@"visibleToSender"] = [NSNumber numberWithBool:YES];
+        message[@"visibleToReceiver"] = [NSNumber numberWithBool:YES];
         dispatch_async(dispatch_queue_create("CreateMessageQueue", 0), ^{
             BOOL success = [message save];
             dispatch_async(dispatch_get_main_queue(), ^{

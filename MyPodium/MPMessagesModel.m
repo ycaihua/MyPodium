@@ -12,8 +12,7 @@
 @implementation MPMessagesModel
 
 + (NSArray*) newMessagesForUser:(PFUser *)user {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (read = %@)",
-                              user, [NSNumber numberWithBool:false]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (read = %@) AND (visibleToReceiver = %@)", user, [NSNumber numberWithBool:false],[NSNumber numberWithBool:true]];
     PFQuery *query = [PFQuery queryWithClassName:@"Message" predicate:predicate];
     [query includeKey:@"sender"];
     [query includeKey:@"receiver"];
@@ -21,8 +20,7 @@
 }
 
 + (NSArray*) readMessagesForUser:(PFUser *)user {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (read = %@)",
-                              user, [NSNumber numberWithBool:true]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (read = %@) AND (visibleToReceiver = %@)", user, [NSNumber numberWithBool:true],[NSNumber numberWithBool:true]];
     PFQuery *query = [PFQuery queryWithClassName:@"Message" predicate:predicate];
     [query includeKey:@"sender"];
     [query includeKey:@"receiver"];
@@ -49,12 +47,27 @@
 }
 
 + (BOOL) deleteMessage:(PFObject*) message {
-    return [message delete];
+    //Want message to remain in sender's "sent" section
+    //unless they have hidden it (then actually delete)
+    BOOL visibleToSender = [message[@"visibleToSender"] boolValue];
+    if(visibleToSender) {
+        message[@"visibleToReceiver"] = [NSNumber numberWithBool:NO];
+        return [message save];
+    }
+    else
+        return [message delete];
 }
 
 + (BOOL) hideMessageFromSender:(PFObject*) message {
-    message[@"visibleToSender"] = [NSNumber numberWithBool:false];
-    return [message save];
+    //Want message to remain in receiver's messages
+    //unless they have hidden it (then delete)
+    BOOL visibleToReceiver = [message[@"visibleToReceiver"] boolValue];
+    if(visibleToReceiver) {
+        message[@"visibleToSender"] = [NSNumber numberWithBool:NO];
+        return [message save];
+    }
+    else
+        return [message delete];
 }
 
 @end
