@@ -32,7 +32,8 @@
         if((constraint.firstAttribute == NSLayoutAttributeTop &&
             [constraint.firstItem isEqual: self.recipientsField]) ||
            (constraint.firstAttribute == NSLayoutAttributeBottom &&
-            [constraint.firstItem isEqual: self.bodyView]))
+            ([constraint.firstItem isEqual: self.cancelButton] ||
+             [constraint.firstItem isEqual: self.sendButton])))
             constraint.constant += amount;
         if(constraint.firstAttribute == NSLayoutAttributeTop &&
            [constraint.firstItem isEqual: self.bodyView])
@@ -52,8 +53,10 @@
     for(NSLayoutConstraint* constraint in self.constraints) {
         if(constraint.firstAttribute == NSLayoutAttributeTop && [constraint.firstItem isEqual: self.recipientsField])
             constraint.constant = 10.0f;
-        if(constraint.firstAttribute == NSLayoutAttributeBottom && [constraint.firstItem isEqual: self.bodyView])
-            constraint.constant = -10.0f;
+        if(constraint.firstAttribute == NSLayoutAttributeBottom &&
+           ([constraint.firstItem isEqual: self.cancelButton] ||
+            [constraint.firstItem isEqual: self.sendButton]))
+            constraint.constant = 0.0f;
         if(constraint.firstAttribute == NSLayoutAttributeTop &&
            [constraint.firstItem isEqual: self.bodyView])
             [self removeConstraint: constraint];
@@ -80,6 +83,7 @@
     
     self.titleField = [[MPTextField alloc] initWithPlaceholder:@"TITLE"];
     self.titleField.clearButtonMode = UITextFieldViewModeNever;
+    self.titleField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.titleField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleField];
     

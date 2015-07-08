@@ -8,7 +8,7 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPMessageComposerViewController : MPMenuViewController <UITextViewDelegate>
+@interface MPMessageComposerViewController : MPMenuViewController <UITextViewDelegate, UITextFieldDelegate>
 
 @property CGFloat keyboardHeight;
 

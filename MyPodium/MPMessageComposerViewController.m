@@ -6,10 +6,12 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPControllerManager.h"
 #import "MPLimitConstants.h"
 
 #import "MPLabel.h"
 #import "MPTextField.h"
+#import "MPBottomEdgeButton.h"
 #import "MPMessageComposerView.h"
 
 #import "MPMessageComposerViewController.h"
@@ -24,15 +26,39 @@
     self = [super init];
     if(self) {
         MPMessageComposerView* view = [[MPMessageComposerView alloc] init];
+        self.view = view;
+        
+        view.recipientsField.delegate = self;
+        view.titleField.delegate = self;
         view.bodyView.delegate = self;
-        [view.titleField addTarget:self
-                      action:@selector(titleFieldDidChange:)
-            forControlEvents:UIControlEventEditingChanged];
+        
+        [self makeControlActions];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-        self.view = view;
     }
     return self;
+}
+
+- (void) makeControlActions {
+    MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
+    
+    [view.titleField addTarget:self
+                        action:@selector(titleFieldDidChange:)
+              forControlEvents:UIControlEventEditingChanged];
+    [view.cancelButton addTarget:self
+                          action:@selector(cancelButtonPressed:)
+                forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) cancelButtonPressed: (id) sender {
+    MPMessageComposerView* view = ((MPMessageComposerView*)self.view);
+    if([view.bodyView isFirstResponder]) {
+        [view.bodyView resignFirstResponder];
+        return;
+    }
+    [MPControllerManager dismissViewController: self];
+    
 }
 
 - (void) keyboardWillShow: (NSNotification *)notification {
@@ -53,6 +79,9 @@
     CGFloat height = keyboardFrame.size.height;
     self.keyboardHeight = height;
     
+    if([responder isEqual: view.bodyView])
+        responder = (UIControl*)view.sendButton;
+    
     [self shiftConstraintToFocusControl: responder animationDuration: animationDuration];
 }
 
@@ -60,7 +89,7 @@
     CGFloat fieldBottom = control.frame.origin.y + control.frame.size.height;
     //Note: here we assume self.keyboardHeight has to be initialized, because a keyboard must have been
     //shown prior to this method call
-    CGFloat shiftAmount = (self.view.frame.size.height - self.keyboardHeight - fieldBottom - 15);
+    CGFloat shiftAmount = (self.view.frame.size.height - self.keyboardHeight - fieldBottom);
     
     if(shiftAmount >= 0) {
         [((MPMessageComposerView*)self.view) restoreDefaultConstraints];
@@ -98,6 +127,19 @@
     int maxLength = [MPLimitConstants maxMessageTitleCharacters];
     MPMessageComposerView* view = (MPMessageComposerView*) self.view;
     [view.titleLimitLabel setTextToInt:(maxLength-(int)length)];
+}
+
+- (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {
+    MPMessageComposerView* view = (MPMessageComposerView*) self.view;
+    if([textField isEqual: view.recipientsField]) {
+        [view.titleField becomeFirstResponder];
+        return YES;
+    }
+    else if([textField isEqual: view.titleField]){
+        [view.bodyView becomeFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 @end
