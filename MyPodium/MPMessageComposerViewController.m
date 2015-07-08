@@ -108,46 +108,49 @@
             else
                 [verifiedNotFriends addObject:username];
         }
-        if(verifiedNotFriends.count == 0)
-            [self sendMessageToUsers: verifiedFriends];
-        else if(verifiedFriends.count > 0) {
-            NSString* message = [NSString stringWithFormat:@"The following users you entered as recipients aren't on your friends list. You can choose to send the message to the remaining friends, or cancel.\n%@", verifiedNotFriends[0]];
-            for(int i = 1; i < verifiedNotFriends.count; i++) {
-                message = [message stringByAppendingString:
-                           [NSString stringWithFormat:@", %@",verifiedNotFriends[i]]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(verifiedNotFriends.count == 0)
+                [self sendMessageToUsers: verifiedFriends];
+            else if(verifiedFriends.count > 0) {
+                NSString* message = [NSString stringWithFormat:@"The following users you entered as recipients aren't on your friends list. You can choose to send the message to the remaining friends, or cancel.\n%@", verifiedNotFriends[0]];
+                for(int i = 1; i < verifiedNotFriends.count; i++) {
+                    message = [message stringByAppendingString:
+                               [NSString stringWithFormat:@", %@",verifiedNotFriends[i]]];
+                }
+                UIAlertController* confirmation =
+                [UIAlertController alertControllerWithTitle:@"Warning"
+                                                    message:message
+                                             preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* sendAction = [UIAlertAction actionWithTitle:@"Send"
+                                                                     style:UIAlertActionStyleDefault
+                                                                   handler:^(UIAlertAction* action) {
+                                                                       [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                       [self sendMessageToUsers: verifiedFriends];
+                                                                   }];
+                UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
+                                                                       style:UIAlertActionStyleCancel
+                                                                     handler:^(UIAlertAction* action) {
+                                                                         [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                     }];
+                [confirmation addAction: sendAction];
+                [confirmation addAction: cancelAction];
+                [self presentViewController: confirmation animated:YES completion:nil];
             }
-            UIAlertController* confirmation =
-            [UIAlertController alertControllerWithTitle:@"Warning"
-                                                message:message
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction* sendAction = [UIAlertAction actionWithTitle:@"Send"
-                                                                 style:UIAlertActionStyleDefault
-                                                               handler:^(UIAlertAction* action) {
-                                                                   [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-                                                                   [self sendMessageToUsers: verifiedFriends];
-                                                               }];
-            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
-                                                                   style:UIAlertActionStyleCancel
-                                                                 handler:^(UIAlertAction* action) {
-                                                                     [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-                                                                 }];
-            [confirmation addAction: sendAction];
-            [confirmation addAction: cancelAction];
-            [self presentViewController: confirmation animated:YES completion:nil];
-        }
-        else {
-            UIAlertController* errorAlert =
-            [UIAlertController alertControllerWithTitle:@"Error"
-                                                message:@"None of the users you entered as recipients are on your friends list. Please double-check your entries."
-                                         preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
-                                                                   style:UIAlertActionStyleCancel
-                                                                 handler:^(UIAlertAction* action){
-                                                                     [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-                                                                 }];
-            [errorAlert addAction: cancelAction];
-            [self presentViewController: errorAlert animated:YES completion:nil];
-        }
+            else {
+                UIAlertController* errorAlert =
+                [UIAlertController alertControllerWithTitle:@"Error"
+                                                    message:@"None of the users you entered as recipients are on your friends list. Please double-check your entries."
+                                             preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
+                                                                       style:UIAlertActionStyleCancel
+                                                                     handler:^(UIAlertAction* action){
+                                                                         [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                     }];
+                [errorAlert addAction: cancelAction];
+                [self presentViewController: errorAlert animated:YES completion:nil];
+            }
+            
+        });
     });
 }
 
@@ -174,7 +177,7 @@
         });
     }
     if(allSuccesses)
-        [view.menu.subtitleLabel displayMessage:@"Your message was sent." revertAfter:YES withColor:[UIColor MPGreenColor]];
+        [MPControllerManager dismissViewController: self];
     else
         [view.menu.subtitleLabel displayMessage:@"There was an error sending the message. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
     
