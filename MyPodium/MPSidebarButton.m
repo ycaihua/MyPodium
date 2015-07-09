@@ -16,7 +16,7 @@
     self = [super init];
     if(self) {
         self.rowIndex = -1;
-        [self adjustStyle];
+        //[self adjustStyle];
         [self adjustControls];
         [self makeControlConstraints];
     }

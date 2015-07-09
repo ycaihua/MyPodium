@@ -38,7 +38,6 @@
     self.friendsTable.translatesAutoresizingMaskIntoConstraints = NO;
     self.friendsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.friendsTable.scrollEnabled = YES;
-    self.friendsTable.delaysContentTouches = NO;
     self.friendsTable.allowsSelection = NO;
     self.friendsTable.allowsMultipleSelection = NO;
     [self addSubview: self.friendsTable];

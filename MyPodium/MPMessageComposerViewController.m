@@ -285,17 +285,32 @@
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
+    MPMessageComposerView* view = (MPMessageComposerView*) self.view;
     NSUInteger length = textView.text.length;
     int maxLength = [MPLimitConstants maxMessageBodyCharacters];
-    MPMessageComposerView* view = (MPMessageComposerView*) self.view;
-    [view.bodyLimitLabel setTextToInt:(maxLength-(int)length)];
+    int remainingChars = maxLength-(int)length;
+    if(remainingChars <= 0)
+        [view.bodyLimitLabel setTextColor:[UIColor MPRedColor]];
+    else if(remainingChars <= (maxLength / 5))
+        [view.bodyLimitLabel setTextColor:[UIColor MPYellowColor]];
+    else
+        [view.bodyLimitLabel setTextColor:[UIColor MPGreenColor]];
+    
+    [view.bodyLimitLabel setTextToInt:remainingChars];
 }
 
 - (void) titleFieldDidChange:(UITextField*) sender {
+    MPMessageComposerView* view = (MPMessageComposerView*) self.view;
     NSUInteger length = sender.text.length;
     int maxLength = [MPLimitConstants maxMessageTitleCharacters];
-    MPMessageComposerView* view = (MPMessageComposerView*) self.view;
-    [view.titleLimitLabel setTextToInt:(maxLength-(int)length)];
+    int remainingChars = maxLength-(int)length;
+    if(remainingChars <= 0)
+        [view.titleLimitLabel setTextColor:[UIColor MPRedColor]];
+    else if(remainingChars <= (maxLength / 5))
+        [view.titleLimitLabel setTextColor:[UIColor MPYellowColor]];
+    else
+        [view.titleLimitLabel setTextColor:[UIColor MPGreenColor]];
+    [view.titleLimitLabel setTextToInt:remainingChars];
 }
 
 - (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {

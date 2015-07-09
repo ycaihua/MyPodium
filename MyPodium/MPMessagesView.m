@@ -39,7 +39,6 @@
     self.messagesTable.translatesAutoresizingMaskIntoConstraints = NO;
     self.messagesTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.messagesTable.scrollEnabled = YES;
-    self.messagesTable.delaysContentTouches = NO;
     self.messagesTable.allowsSelection = NO;
     self.messagesTable.allowsMultipleSelection = NO;
     [self addSubview: self.messagesTable];
