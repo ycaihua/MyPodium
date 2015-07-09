@@ -85,10 +85,17 @@
 }
 
 - (void) applyCurrentlyOpenStyle {
-    self.currentlyOpen = TRUE;
+    self.currentlyOpen = YES;
     [self.customTitleLabel setTextColor:[UIColor MPBlackColor]];
     [self setBackgroundColor: [UIColor MPYellowColor]];
     self.subtitleLabel.text = @"OPEN";
+}
+
+- (void) applyNotOpenStyle {
+    self.currentlyOpen = NO;
+    [self.customTitleLabel setTextColor:[UIColor whiteColor]];
+    [self setBackgroundColor: [UIColor MPBlackColor]];
+    self.subtitleLabel.text = @"";
 }
 
 - (void) applyHighlightedStyle {

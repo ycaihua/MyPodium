@@ -15,5 +15,6 @@
 
 - (void) cellButtonPressed: (id) sender;
 - (void) applyCurrentlyOpenStyle;
+- (void) applyNotOpenStyle;
 
 @end

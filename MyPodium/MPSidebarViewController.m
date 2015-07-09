@@ -66,6 +66,9 @@
     if([[current class] isEqual: [destination class]]) {
         [cell.cellButton applyCurrentlyOpenStyle];
     }
+    else {
+        [cell.cellButton applyNotOpenStyle];
+    }
     
     [cell.cellButton addTarget:self action:@selector(cellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [cell updateWithRow: (int)indexPath.row];
