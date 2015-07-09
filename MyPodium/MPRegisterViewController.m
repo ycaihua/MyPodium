@@ -56,14 +56,14 @@
     [alerter checkErrorCondition:(username.length < [MPLimitConstants minUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your username must be at least %d characters long.",
                                                                                                            [MPLimitConstants minUsernameCharacters]]];
     [alerter checkErrorCondition:(username.length > [MPLimitConstants maxUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your username cannot be longer than %d characters.",
-                                                                                                           [MPLimitConstants minUsernameCharacters]]];
+                                                                                                           [MPLimitConstants maxUsernameCharacters]]];
     [alerter checkErrorCondition:!([username isValidUsername]) withMessage:@"Usernames must be alphanumeric (just letters and numbers)."];
     
     //Potential password errors: length boundaries
     [alerter checkErrorCondition:(password.length < [MPLimitConstants minUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your password must be at least %d characters long.",
-                                                                                                           [MPLimitConstants minUsernameCharacters]]];
+                                                                                                           [MPLimitConstants minPasswordCharacters]]];
     [alerter checkErrorCondition:(password.length > [MPLimitConstants maxUsernameCharacters]) withMessage:[NSString stringWithFormat:@"Your password cannot be longer than %d characters.",
-                                                                                                           [MPLimitConstants minUsernameCharacters]]];
+                                                                                                           [MPLimitConstants maxPasswordCharacters]]];
     
     //Potential email errors: invalid email, already in use
     [alerter checkErrorCondition:!([email isValidEmail]) withMessage:@"You didn't enter a valid email."];

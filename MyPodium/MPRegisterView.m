@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPLimitConstants.h"
 #import "UIColor+MPColor.h"
 
 #import "MPRegisterView.h"
@@ -38,7 +39,7 @@
     [self addSubview:self.usernameField];
     
     //self.usernameLabel
-    self.usernameLabel = [[MPLabel alloc] initWithText:@"4-12 letters, numbers and underscores"];
+    self.usernameLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"%d-%d letters, numbers or underscores", [MPLimitConstants minUsernameCharacters], [MPLimitConstants maxUsernameCharacters]]];
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
     self.usernameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.usernameLabel];
@@ -50,7 +51,7 @@
     [self addSubview:self.passwordField];
     
     //self.passwordLabel
-    self.passwordLabel = [[MPLabel alloc] initWithText:@"6-16 characters"];
+    self.passwordLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"%d-%d characters", [MPLimitConstants minPasswordCharacters], [MPLimitConstants maxPasswordCharacters]]];
     self.passwordLabel.textAlignment = NSTextAlignmentCenter;
     self.passwordLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.passwordLabel];
