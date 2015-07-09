@@ -67,9 +67,9 @@
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                         attribute:NSLayoutAttributeLeading
                                                         multiplier:1.0f
-                                                          constant:-5.0f],
+                                                          constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.sidebarTable
                                                          attribute:NSLayoutAttributeTrailing
                                                          relatedBy:NSLayoutRelationEqual

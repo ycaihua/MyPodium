@@ -8,6 +8,10 @@
 
 #import "MPControllerManager.h"
 
+#import "MPFriendsModel.h"
+#import "MPTeamsModel.h"
+#import "MPMessagesModel.h"
+
 #import "MPSidebarViewController.h"
 #import "MPSidebarView.h"
 #import "MPSidebarViewCell.h"
@@ -68,6 +72,33 @@
     }
     else {
         [cell.cellButton applyNotOpenStyle];
+        if([destination.class isEqual: [MPFriendsViewController class]]) {
+            dispatch_async(dispatch_queue_create("FriendRequestCountQueue", 0), ^{
+                NSArray* friendRequests = [MPFriendsModel incomingPendingRequestsForUser:[PFUser currentUser]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(friendRequests.count > 0)
+                        [cell.cellButton applyNumericSubtitle: (int)friendRequests.count];
+                });
+            });
+        }
+        else if([destination.class isEqual: [MPTeamsViewController class]]) {
+            dispatch_async(dispatch_queue_create("TeamInvitesCountQueue", 0), ^{
+                NSArray* teamInvites = [MPTeamsModel teamsInvitingUser:[PFUser currentUser]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(teamInvites.count > 0)
+                        [cell.cellButton applyNumericSubtitle: (int)teamInvites.count];
+                });
+            });
+        }
+        else if([destination.class isEqual: [MPMessagesViewController class]]) {
+            dispatch_async(dispatch_queue_create("NewMessagesCountQueue", 0), ^{
+                NSArray* messages = [MPMessagesModel newMessagesForUser:[PFUser currentUser]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(messages.count > 0)
+                        [cell.cellButton applyNumericSubtitle: (int)messages.count];
+                });
+            });
+        }
     }
     
     [cell.cellButton addTarget:self action:@selector(cellButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

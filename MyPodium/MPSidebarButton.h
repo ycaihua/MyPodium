@@ -16,5 +16,6 @@
 - (void) cellButtonPressed: (id) sender;
 - (void) applyCurrentlyOpenStyle;
 - (void) applyNotOpenStyle;
+- (void) applyNumericSubtitle: (int) number;
 
 @end

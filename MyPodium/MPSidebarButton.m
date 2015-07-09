@@ -101,12 +101,18 @@
 - (void) applyHighlightedStyle {
     [self.customTitleLabel setTextColor:[UIColor MPBlackColor]];
     [self setBackgroundColor: [UIColor MPYellowColor]];
-    self.subtitleLabel.text = @"";
+    self.subtitleLabel.textColor = [UIColor MPBlackColor];
 }
 
 - (void) applyDefaultStyle {
     [self.customTitleLabel setTextColor:[UIColor whiteColor]];
     [self setBackgroundColor: [UIColor MPBlackColor]];
+    self.subtitleLabel.textColor = [UIColor MPYellowColor];
+}
+
+- (void) applyNumericSubtitle: (int) number {
+    self.subtitleLabel.textColor = [UIColor MPYellowColor];
+    self.subtitleLabel.text = [NSString stringWithFormat:@"%d NEW", number];
 }
 
 - (void) setHighlighted:(BOOL)highlighted {
