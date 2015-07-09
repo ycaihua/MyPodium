@@ -10,7 +10,7 @@
 #import "UIButton+MPImage.h"
 
 #import "MPTeamCell.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 @implementation MPTeamCell
 
@@ -64,7 +64,7 @@
     [self.solidColorView addSubview: self.leadingBorder];
     
     //self.teamNameLabel
-    self.teamNameLabel = [[CNLabel alloc] initWithText:@"team name"];
+    self.teamNameLabel = [[MPLabel alloc] initWithText:@"team name"];
     self.teamNameLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.teamNameLabel.textColor = [UIColor MPBlackColor];
     self.teamNameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
@@ -74,7 +74,7 @@
     [self.solidColorView addSubview: self.teamNameLabel];
     
     //self.teamOwnerLabel
-    self.teamOwnerLabel = [[CNLabel alloc] initWithText:@"owner"];
+    self.teamOwnerLabel = [[MPLabel alloc] initWithText:@"owner"];
     self.teamOwnerLabel.font = [UIFont fontWithName:@"Lato-Bold" size:11.0f];
     self.teamOwnerLabel.textColor = [UIColor MPBlackColor];
     self.teamOwnerLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
@@ -84,7 +84,7 @@
     [self.solidColorView addSubview: self.teamOwnerLabel];
     
     //self.numPlayersLabel
-    self.numPlayersLabel = [[CNLabel alloc] initWithText:@"0 players"];
+    self.numPlayersLabel = [[MPLabel alloc] initWithText:@"0 players"];
     self.numPlayersLabel.font = [UIFont fontWithName:@"Lato-Regular" size:11.0f];
     self.numPlayersLabel.textColor = [UIColor MPBlackColor];
     self.numPlayersLabel.translatesAutoresizingMaskIntoConstraints = FALSE;

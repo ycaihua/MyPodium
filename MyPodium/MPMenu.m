@@ -9,7 +9,7 @@
 #import "UIColor+MPColor.h"
 
 #import "MPMenu.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 @implementation MPMenu
 
@@ -35,7 +35,7 @@
     [self addSubview: self.titleButton];
     
     //self.subtitleLabel
-    self.subtitleLabel = [[CNLabel alloc] initWithText:@"subtitle"];
+    self.subtitleLabel = [[MPLabel alloc] initWithText:@"subtitle"];
     self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:12.0f];
     self.subtitleLabel.textColor = [UIColor whiteColor];
     self.subtitleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;

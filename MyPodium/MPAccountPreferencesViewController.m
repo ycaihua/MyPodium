@@ -11,7 +11,7 @@
 #import "MPAccountPreferencesView.h"
 #import "MPPreferencesButton.h"
 #import "MPMenu.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 #import "MPAccountPreferencesViewController.h"
 

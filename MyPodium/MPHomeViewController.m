@@ -13,7 +13,7 @@
 
 #import "MPHomeView.h"
 #import "MPBoldColorButton.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 #import "MMDrawerController.h"
 #import "MPFriendsViewController.h"

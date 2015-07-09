@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class CNLabel;
+@class MPLabel;
 
 @interface MPMenu : MPView
 
@@ -18,7 +18,7 @@
 @property UIButton* logOutButton;
 
 @property UIButton* titleButton;
-@property CNLabel* subtitleLabel;
+@property MPLabel* subtitleLabel;
 
 @property BOOL iconsVisible;
 - (void) hideIcons;

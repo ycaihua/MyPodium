@@ -10,14 +10,14 @@
 
 #import <UIKit/UIKit.h>
 
-@class CNLabel;
+@class MPLabel;
 
 @interface MPTableHeader : MPView
 
 - (id) initWithText: (NSString*) text;
 
 @property UIView* bottomBorder;
-@property CNLabel* headerLabel;
+@property MPLabel* headerLabel;
 
 + (CGFloat) headerHeight;
 

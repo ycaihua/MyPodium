@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
-#import "CNLabel.h"
+#import "MPLabel.h"
 #import "MPMenu.h"
 #import "MPMenuView.h"
 

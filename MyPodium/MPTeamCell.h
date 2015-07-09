@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-@class CNLabel;
+@class MPLabel;
 
 @interface MPTeamCell : UITableViewCell
 
@@ -16,9 +16,9 @@
 @property UIView* bottomBorder;
 @property UIView* leadingBorder;
 
-@property CNLabel* teamNameLabel;
-@property CNLabel* teamOwnerLabel;
-@property CNLabel* numPlayersLabel;
+@property MPLabel* teamNameLabel;
+@property MPLabel* teamOwnerLabel;
+@property MPLabel* numPlayersLabel;
 
 @property UIButton* leftButton;
 @property UIButton* centerButton;

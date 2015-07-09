@@ -9,7 +9,7 @@
 #import "UIColor+MPColor.h"
 
 #import "MPTableHeader.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 @implementation MPTableHeader
 
@@ -32,7 +32,7 @@
     [self addSubview: self.bottomBorder];
     
     //self.headerLabel
-    self.headerLabel = [[CNLabel alloc] initWithText:@"HEADER"];
+    self.headerLabel = [[MPLabel alloc] initWithText:@"HEADER"];
     self.headerLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:20.0f];
     self.headerLabel.textColor = [UIColor MPBlackColor];
     self.headerLabel.translatesAutoresizingMaskIntoConstraints = FALSE;

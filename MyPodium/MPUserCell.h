@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Parse/Parse.h>
-@class CNLabel;
+@class MPLabel;
 
 @interface MPUserCell : UITableViewCell
 
@@ -16,8 +16,8 @@
 @property UIView* bottomBorder;
 @property UIView* leadingBorder;
 
-@property CNLabel* friendUsernameLabel;
-@property CNLabel* friendRealNameLabel;
+@property MPLabel* friendUsernameLabel;
+@property MPLabel* friendRealNameLabel;
 
 @property UIButton* leftButton;
 @property UIButton* centerButton;

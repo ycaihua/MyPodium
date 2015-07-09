@@ -10,7 +10,7 @@
 #import "UIButton+MPImage.h"
 
 #import "MPMessagesCell.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 @implementation MPMessagesCell
 
@@ -71,7 +71,7 @@
     [self.solidColorView addSubview: self.leadingBorder];
     
     //self.titleLabel
-    self.titleLabel = [[CNLabel alloc] initWithText:@"message title"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"message title"];
     self.titleLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.titleLabel.textColor = [UIColor MPBlackColor];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
@@ -81,7 +81,7 @@
     [self.solidColorView addSubview: self.titleLabel];
     
     //self.userLabel
-    self.userLabel = [[CNLabel alloc] initWithText:@"sender"];
+    self.userLabel = [[MPLabel alloc] initWithText:@"sender"];
     self.userLabel.font = [UIFont fontWithName:@"Lato-Bold" size:11.0f];
     self.userLabel.textColor = [UIColor MPBlackColor];
     self.userLabel.translatesAutoresizingMaskIntoConstraints = FALSE;

@@ -20,7 +20,7 @@
 #import "MPTextField.h"
 #import "MPUserCell.h"
 #import "MPMenu.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 #import "MPBottomEdgeButton.h"
 
 #import "MPMakeTeamViewController.h"

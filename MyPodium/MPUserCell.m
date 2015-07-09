@@ -10,7 +10,7 @@
 #import "UIButton+MPImage.h"
 
 #import "MPUserCell.h"
-#import "CNLabel.h"
+#import "MPLabel.h"
 
 @implementation MPUserCell
 
@@ -158,7 +158,7 @@
     [self.solidColorView addSubview: self.leadingBorder];
     
     //self.friendUsernameLabel
-    self.friendUsernameLabel = [[CNLabel alloc] initWithText:@"username"];
+    self.friendUsernameLabel = [[MPLabel alloc] initWithText:@"username"];
     self.friendUsernameLabel.font = [UIFont fontWithName:@"Lato-Bold" size:16.0f];
     self.friendUsernameLabel.textColor = [UIColor MPBlackColor];
     self.friendUsernameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
@@ -168,7 +168,7 @@
     [self.solidColorView addSubview: self.friendUsernameLabel];
     
     //self.friendRealNameLabel
-    self.friendRealNameLabel = [[CNLabel alloc] initWithText:@""];
+    self.friendRealNameLabel = [[MPLabel alloc] initWithText:@""];
     self.friendRealNameLabel.font = [UIFont fontWithName:@"Lato-Regular" size:11.0f];
     self.friendRealNameLabel.textColor = [UIColor MPBlackColor];
     self.friendRealNameLabel.translatesAutoresizingMaskIntoConstraints = FALSE;
