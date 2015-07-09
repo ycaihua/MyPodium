@@ -203,7 +203,7 @@
 
 - (void) loadOnDismiss: (id) sender {
     MPMessagesView* view = (MPMessagesView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    [view startLoading];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
         MPMessagesView* view = (MPMessagesView*) self.view;
@@ -211,7 +211,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.messagesTable reloadData];
             [view.loadingHeader removeFromSuperview];
-            [view.menu.subtitleLabel displayMessage:[MPMessagesView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+            [view finishLoading];
         });
     });
 }
@@ -243,10 +243,7 @@
       withConfirmationAlert: (BOOL) showAlert
     withConfirmationMessage: (NSString*) alertMessage {
     MPMessagesView* view = (MPMessagesView*) self.view;
-    
-    [view.menu.subtitleLabel displayMessage:@"Loading..."
-                                revertAfter:NO
-                                  withColor:[UIColor MPYellowColor]];
+    [view startLoading];
     
     if(showAlert) {
         UIAlertController* confirmationAlert =

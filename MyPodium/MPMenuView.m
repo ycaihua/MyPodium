@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPLabel.h"
 #import "MPMenu.h"
 #import "MPMenuView.h"
@@ -72,5 +74,15 @@
                              ];
     [self addConstraints: constraints];
 }
+
+- (void) startLoading {
+    [self.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+}
+
+- (void) finishLoading {
+    [self.menu.subtitleLabel displayMessage:[self.class defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+}
+
++ (NSString*) defaultSubtitle { return @"Subtitle"; }
 
 @end

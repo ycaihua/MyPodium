@@ -38,7 +38,7 @@
     if(self) {
         MPMakeTeamView* view = [[MPMakeTeamView alloc] init];
         self.view = view;
-        [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+        [view startLoading];
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
             self.friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
@@ -59,7 +59,7 @@
                     [view.submitButton enable];
                     [view.playersTable selectRowAtIndexPath:path animated:true scrollPosition:UITableViewScrollPositionMiddle];
                 }
-                [view.menu.subtitleLabel displayMessage:[MPMakeTeamView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                [view finishLoading];
                 
                 [view.submitButton addTarget:self action:@selector(submitButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 [view.goBackButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];

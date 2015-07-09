@@ -34,7 +34,7 @@
     if(self) {
         MPSelectMessageRecipientsView* view = [[MPSelectMessageRecipientsView alloc] init];
         self.view = view;
-        [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+        [view startLoading];
         dispatch_queue_t backgroundQueue = dispatch_queue_create("FriendsQueue", 0);
         dispatch_async(backgroundQueue, ^{
             self.friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
@@ -52,7 +52,7 @@
                 [view.selectButton addTarget:self action:@selector(selectButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 [view.goBackButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 
-                [view.menu.subtitleLabel displayMessage:[MPSelectMessageRecipientsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                [view finishLoading];
             });
         });
     }

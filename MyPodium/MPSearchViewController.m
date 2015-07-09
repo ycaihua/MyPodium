@@ -817,7 +817,7 @@
         return;
     
     MPSearchView* view = (MPSearchView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    [view startLoading];
     [view.searchView.searchField resignFirstResponder];
     
     dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
@@ -828,7 +828,7 @@
         [self updateUnfilteredHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.searchTable reloadData];
-            [view.menu.subtitleLabel displayMessage:[MPSearchView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+            [view finishLoading];
         });
     });
 }

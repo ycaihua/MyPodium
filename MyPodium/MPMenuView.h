@@ -16,4 +16,9 @@
 
 - (id) initWithTitleText: (NSString*) titleText subtitleText: (NSString*) subtitleText;
 
+- (void) startLoading;
+- (void) finishLoading;
+
++ (NSString*) defaultSubtitle;
+
 @end

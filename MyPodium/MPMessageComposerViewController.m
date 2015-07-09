@@ -100,7 +100,7 @@
         [self presentViewController: errorAlert animated:YES completion:nil];
         return;
     }
-    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    [view startLoading];
     dispatch_async(dispatch_queue_create("VerifyUsernamesQueue", 0), ^{
         //NOTE: verifiedFriends contains PFUSERS, where
         //verifiedNotFriends contains NSSTRINGS (usernames)
@@ -132,13 +132,13 @@
                 UIAlertAction* sendAction = [UIAlertAction actionWithTitle:@"Send"
                                                                      style:UIAlertActionStyleDefault
                                                                    handler:^(UIAlertAction* action) {
-                                                                       [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                       [view finishLoading];
                                                                        [self sendMessageToUsers: verifiedFriends];
                                                                    }];
                 UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel"
                                                                        style:UIAlertActionStyleCancel
                                                                      handler:^(UIAlertAction* action) {
-                                                                         [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                         [view finishLoading];
                                                                      }];
                 [confirmation addAction: sendAction];
                 [confirmation addAction: cancelAction];
@@ -152,7 +152,7 @@
                 UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Go Back"
                                                                        style:UIAlertActionStyleCancel
                                                                      handler:^(UIAlertAction* action){
-                                                                         [view.menu.subtitleLabel displayMessage:[MPMessageComposerView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+                                                                         [view finishLoading];
                                                                      }];
                 [errorAlert addAction: cancelAction];
                 [self presentViewController: errorAlert animated:YES completion:nil];

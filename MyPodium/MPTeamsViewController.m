@@ -248,7 +248,7 @@
 
 - (void) refreshData {
     MPTeamsView* view = (MPTeamsView*) self.view;
-    [view.menu.subtitleLabel displayMessage:@"Loading..." revertAfter:NO withColor:[UIColor MPYellowColor]];
+    [view startLoading];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
     dispatch_async(backgroundQueue, ^{
         for(MPTableSectionUtility* section in self.tableSections) {
@@ -257,7 +257,7 @@
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.teamsTable reloadData];
-            [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+            [view finishLoading];
         });
     });
 }
