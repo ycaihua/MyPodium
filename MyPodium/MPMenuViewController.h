@@ -16,4 +16,6 @@
 
 @property NSTimer* actionTimer;
 
+- (void) checkNewNotifications;
+
 @end

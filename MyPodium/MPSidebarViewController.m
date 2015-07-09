@@ -51,6 +51,11 @@
     return self;
 }
 
+- (void) refresh {
+    MPSidebarView* view = (MPSidebarView*) self.view;
+    [view.sidebarTable reloadData];
+}
+
 - (UIStatusBarStyle) preferredStatusBarStyle
 {
     return UIStatusBarStyleLightContent;

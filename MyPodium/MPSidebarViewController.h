@@ -12,4 +12,6 @@
 
 + (NSString*) sidebarReuseIdentifier;
 
+- (void) refresh;
+
 @end

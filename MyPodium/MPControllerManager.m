@@ -12,6 +12,7 @@
 #import "MPMenuView.h"
 
 #import "MPMenuViewController.h"
+#import "MPSidebarViewController.h"
 
 #import "AppDelegate.h"
 #import "UIViewController+MMDrawerController.h"
@@ -53,7 +54,11 @@
     
     if([presenter isKindOfClass:[MMDrawerController class]]) {
         MMDrawerController* presenterDrawer = (MMDrawerController*)presenter;
-        UIViewController* center = presenterDrawer.centerViewController;
+        MPMenuViewController* center = (MPMenuViewController*)presenterDrawer.centerViewController;
+        [center checkNewNotifications];
+        
+        MPSidebarViewController* sidebar = (MPSidebarViewController*)presenterDrawer.leftDrawerViewController;
+        [sidebar refresh];
         
         SEL refresh = sel_registerName("loadOnDismiss:");
         if([center respondsToSelector:refresh]) {
