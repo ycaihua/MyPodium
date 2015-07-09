@@ -15,6 +15,7 @@
 @interface MPMenu : MPView
 
 @property UIButton* sidebarButton;
+@property MPLabel* notificationLabel;
 @property UIButton* logOutButton;
 
 @property UIButton* titleButton;
@@ -30,6 +31,9 @@
 
 @property UIView* searchButtonSpacer;
 @property UIView* settingsButtonSpacer;
+
+- (void) showNotificationLabelWithInt: (int) notifications;
+- (void) hideNotificationLabel;
 
 + (CGFloat) height;
 

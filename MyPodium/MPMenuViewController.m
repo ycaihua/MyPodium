@@ -8,6 +8,10 @@
 
 #import "MPControllerManager.h"
 
+#import "MPFriendsModel.h"
+#import "MPTeamsModel.h"
+#import "MPMessagesModel.h"
+
 #import "MPMenuView.h"
 #import "MPMenu.h"
 #import "MPLabel.h"
@@ -34,6 +38,7 @@
     if(self) {
         self.view = [[MPMenuView alloc] init];
         if(self.mm_drawerController) [self addMenuActions];
+        [self checkNewNotifications];
     }
     return self;
 }
@@ -51,6 +56,25 @@
     [view.menu.hideButton addTarget:self action:@selector(hideIcons:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.searchButton addTarget:self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.menu.settingsButton addTarget:self action:@selector(settingsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) checkNewNotifications {
+    dispatch_async(dispatch_queue_create("NewNotificationsQueue", 0), ^{
+        NSArray* notifications = @[[MPTeamsModel teamsInvitingUser:[PFUser currentUser]],
+                                   [MPFriendsModel incomingPendingRequestsForUser:[PFUser currentUser]],
+                                   [MPMessagesModel newMessagesForUser:[PFUser currentUser]]];
+        int sum = 0;
+        for(NSArray* subArray in notifications)
+            sum += subArray.count;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MPMenuView* view = (MPMenuView*) self.view;
+            if(sum > 0)
+                [view.menu showNotificationLabelWithInt: sum];
+            else
+                [view.menu hideNotificationLabel];
+        });
+    });
+    
 }
 
 - (void) hideIcons: (id) sender {

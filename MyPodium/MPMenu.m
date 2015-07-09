@@ -11,6 +11,8 @@
 #import "MPMenu.h"
 #import "MPLabel.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 @implementation MPMenu
 
 - (id) init {
@@ -53,6 +55,17 @@
     self.sidebarButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.sidebarButton];
     
+    //self.notificationLabel
+    self.notificationLabel = [[MPLabel alloc] init];
+    [self.notificationLabel setText: @"0"];
+    self.notificationLabel.backgroundColor = [UIColor MPYellowColor];
+    self.notificationLabel.textColor = [UIColor MPBlackColor];
+    self.notificationLabel.textAlignment = NSTextAlignmentCenter;
+    self.notificationLabel.layer.cornerRadius = 4.0f;
+    self.notificationLabel.clipsToBounds = YES;
+    self.notificationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.notificationLabel];
+    
     //self.logOutButton
     UIImage* logOutImg = [UIImage imageNamed:@"logOutIcon38.png"];
     self.logOutButton = [[UIButton alloc] init];
@@ -61,7 +74,7 @@
     [self addSubview:self.logOutButton];
     
     //These below controls not added by default
-    //(requires double tap)
+    //(requires menu hold)
     
     //self.searchButton
     UIImage *searchImg = [UIImage imageNamed:@"searchIcon38.png"];
@@ -91,6 +104,32 @@
     self.settingsButtonSpacer.backgroundColor = [UIColor clearColor];
     self.settingsButtonSpacer.translatesAutoresizingMaskIntoConstraints = NO;
     [self.settingsButtonSpacer addSubview: self.settingsButton];
+}
+
+- (void) hideNotificationLabel {
+    self.notificationLabel.hidden = YES;
+}
+
+- (void) showNotificationLabelWithInt: (int) notifications {
+    NSString* labelText;
+    if(notifications >= 10) {
+        for(NSLayoutConstraint* constraint in self.constraints) {
+            if([constraint.firstItem isEqual: self.notificationLabel] &&
+               constraint.firstAttribute == NSLayoutAttributeWidth)
+                constraint.constant = 25;
+        }
+        labelText = @"9+";
+    }
+    else {
+        for(NSLayoutConstraint* constraint in self.constraints) {
+            if([constraint.firstItem isEqual: self.notificationLabel] &&
+               constraint.firstAttribute == NSLayoutAttributeWidth)
+                constraint.constant = 15;
+        }
+        labelText = [NSString stringWithFormat:@"%d", notifications];
+    }
+    self.notificationLabel.text = labelText;
+    self.notificationLabel.hidden = NO;
 }
 
 - (void) showIcons {
@@ -379,6 +418,28 @@
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
                                                           constant:38.0f],
+                            //self.notificationLabel
+                            [NSLayoutConstraint constraintWithItem:self.notificationLabel
+                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.sidebarButton
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.notificationLabel
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.titleButton
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.notificationLabel
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:15.0f],
                             //self.logOutButton
                             [NSLayoutConstraint constraintWithItem:self.logOutButton
                                                          attribute:NSLayoutAttributeTrailing
