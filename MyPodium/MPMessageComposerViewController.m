@@ -172,7 +172,9 @@
         message[@"sender"] = [PFUser currentUser];
         message[@"receiver"] = user;
         message[@"title"] = title;
+        message[@"title_searchable"] = title.lowercaseString;
         message[@"body"] = body;
+        message[@"body_searchable"] = body.lowercaseString;
         message[@"read"] = [NSNumber numberWithBool:NO];
         message[@"visibleToSender"] = [NSNumber numberWithBool:YES];
         message[@"visibleToReceiver"] = [NSNumber numberWithBool:YES];
