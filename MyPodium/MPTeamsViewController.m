@@ -236,20 +236,9 @@
 }
 
 - (void) loadOnDismiss: (id) sender {
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        MPTeamsView* view = (MPTeamsView*) self.view;
-        [self refreshData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.teamsTable reloadData];
-        });
-    });
-}
-
-- (void) refreshData {
     MPTeamsView* view = (MPTeamsView*) self.view;
     [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
         for(MPTableSectionUtility* section in self.tableSections) {
             [section reloadData];
@@ -258,6 +247,20 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.teamsTable reloadData];
             [view finishLoading];
+        });
+    });
+}
+
+- (void) refreshData {
+    MPTeamsView* view = (MPTeamsView*) self.view;
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        for(MPTableSectionUtility* section in self.tableSections) {
+            [section reloadData];
+        }
+        [self updateHeaders];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.teamsTable reloadData];
         });
     });
 }
@@ -302,7 +305,7 @@
       withConfirmationAlert: (BOOL) showAlert
     withConfirmationMessage: (NSString*) alertMessage {
     MPTeamsView* view = (MPTeamsView*) self.view;
-    
+    [view startLoading];
     if(showAlert) {
         UIAlertController* confirmationAlert =
         [UIAlertController alertControllerWithTitle:@"Confirmation"
@@ -321,7 +324,7 @@
                         [view.menu.subtitleLabel displayMessage: successMessage
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPGreenColor]];
-                        [self searchButtonPressed: self];
+                        [self refreshData];
                         [view.teamsTable reloadData];
                     }
                     else {
@@ -330,7 +333,6 @@
                         [view.menu.subtitleLabel displayMessage:errorMessage
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPRedColor]];
-                        [view.teamsTable reloadData];
                     }
                 });
             });
@@ -355,6 +357,8 @@
                     [view.menu.subtitleLabel displayMessage: successMessage
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
+                    [self refreshData];
+                    [view.teamsTable reloadData];
                 }
                 else {
                     view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
@@ -363,7 +367,6 @@
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPRedColor]];
                 }
-                [view.teamsTable reloadData];
             });
         });
     }
@@ -384,7 +387,7 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:YES
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]];
 }
 
@@ -399,7 +402,7 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:YES
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]];
 }
 
@@ -418,7 +421,7 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:YES
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
 }
 
@@ -433,7 +436,7 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:YES
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to accept the invitation from %@?", other[@"teamName"]]];
 }
 
