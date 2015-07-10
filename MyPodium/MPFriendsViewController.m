@@ -56,6 +56,7 @@
         table.delegate = self;
         table.dataSource = self;
         [self refreshData];
+        [view.loadingHeader removeFromSuperview];
     }
     return self;
 }
