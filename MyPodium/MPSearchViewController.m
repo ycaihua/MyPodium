@@ -414,7 +414,20 @@
 }
 
 - (void) loadOnDismiss: (id) sender {
-    [self searchButtonPressed: self];
+    MPSearchView* view = (MPSearchView*) self.view;
+    [view startLoading];
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        for(MPTableSectionUtility* sectionUtility in self.tableSections) {
+            [sectionUtility reloadData];
+        }
+        [self updateUnfilteredHeaders];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view.searchTable reloadData];
+            [view finishLoading];
+        });
+    });
+
 }
 
 #pragma mark table view data/delegate
@@ -817,7 +830,6 @@
         return;
     
     MPSearchView* view = (MPSearchView*) self.view;
-    [view startLoading];
     [view.searchView.searchField resignFirstResponder];
     
     dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
@@ -828,7 +840,6 @@
         [self updateUnfilteredHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.searchTable reloadData];
-            [view finishLoading];
         });
     });
 }
