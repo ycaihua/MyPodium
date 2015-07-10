@@ -117,7 +117,6 @@
     }
     return results;
 }
-
 + (NSArray*) friendsForUser: (PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) OR "
                               "(receiver = %@)) AND (accepted = %@)", user, user, [NSNumber numberWithBool:true]];
