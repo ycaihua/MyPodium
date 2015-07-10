@@ -318,7 +318,7 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You accepted %@'s friend request.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage:@""];
 }
 

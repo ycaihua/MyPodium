@@ -101,6 +101,8 @@
                             user.password = password;
                             user.email = email;
                             user[@"email_searchable"] = emailSearchable;
+                            user[@"pref_friendRequests"] = [NSNumber numberWithBool:YES];
+                            user[@"pref_confirmation"] = [NSNumber numberWithBool:YES];
                             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                 if (error) {
                                     [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
