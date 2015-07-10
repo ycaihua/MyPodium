@@ -58,11 +58,15 @@
     //self.notificationLabel
     self.notificationLabel = [[MPLabel alloc] init];
     [self.notificationLabel setText: @"0"];
-    self.notificationLabel.backgroundColor = [UIColor MPYellowColor];
-    self.notificationLabel.textColor = [UIColor MPBlackColor];
+    self.notificationLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:13.0f];
+    self.notificationLabel.backgroundColor = [UIColor MPBlackColor];
+    self.notificationLabel.textColor = [UIColor MPYellowColor];
     self.notificationLabel.textAlignment = NSTextAlignmentCenter;
     self.notificationLabel.layer.cornerRadius = 4.0f;
+    self.notificationLabel.layer.borderColor = [UIColor MPYellowColor].CGColor;
+    self.notificationLabel.layer.borderWidth = 2.0f;
     self.notificationLabel.clipsToBounds = YES;
+    self.notificationLabel.hidden = YES;
     self.notificationLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.notificationLabel];
     
@@ -116,7 +120,7 @@
         for(NSLayoutConstraint* constraint in self.constraints) {
             if([constraint.firstItem isEqual: self.notificationLabel] &&
                constraint.firstAttribute == NSLayoutAttributeWidth)
-                constraint.constant = 25;
+                constraint.constant = 24;
         }
         labelText = @"9+";
     }
@@ -124,7 +128,7 @@
         for(NSLayoutConstraint* constraint in self.constraints) {
             if([constraint.firstItem isEqual: self.notificationLabel] &&
                constraint.firstAttribute == NSLayoutAttributeWidth)
-                constraint.constant = 15;
+                constraint.constant = 20;
         }
         labelText = [NSString stringWithFormat:@"%d", notifications];
     }
@@ -429,17 +433,24 @@
                             [NSLayoutConstraint constraintWithItem:self.notificationLabel
                                                          attribute:NSLayoutAttributeTop
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self.titleButton
+                                                            toItem:self
                                                          attribute:NSLayoutAttributeTop
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:24.0f],
                             [NSLayoutConstraint constraintWithItem:self.notificationLabel
                                                          attribute:NSLayoutAttributeWidth
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:nil
                                                          attribute:NSLayoutAttributeNotAnAttribute
                                                         multiplier:1.0f
-                                                          constant:15.0f],
+                                                          constant:20.0f],
+                            [NSLayoutConstraint constraintWithItem:self.notificationLabel
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:20.0f],
                             //self.logOutButton
                             [NSLayoutConstraint constraintWithItem:self.logOutButton
                                                          attribute:NSLayoutAttributeTrailing
