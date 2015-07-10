@@ -66,11 +66,13 @@
     newTeam[@"creator"] = user;
     
     newTeam[@"teamMembers"] = @[];
+    newTeam[@"invitedMembers"] = @[];
+    newTeam[@"joinRequests"] = @[];
     [newTeam addObject:[user objectId] forKey:@"teamMembers"];
     for(PFUser* member in players) {
-        [newTeam addObject:[member objectId] forKey:@"teamMembers"];
+        [newTeam addObject:[member objectId] forKey:@"invitedMembers"];
     }
-    
+
     newTeam[@"teamName"] = teamName;
     newTeam[@"teamName_searchable"] = [teamName lowercaseString];
     return [newTeam save];
