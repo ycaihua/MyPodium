@@ -72,6 +72,7 @@
     }
     
     newTeam[@"teamName"] = teamName;
+    newTeam[@"teamName_searchable"] = [teamName lowercaseString];
     return [newTeam save];
 }
 

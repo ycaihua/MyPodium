@@ -11,7 +11,7 @@
 @implementation MPFriendsModel
 
 + (BOOL) sendRequestFromUser: (PFUser*) sender toUser: (PFUser*) receiver {
-    PFObject* request = [PFObject objectWithClassName:@"Friends"
+    PFObject* request = [PFObject objectWithClassName:@"Friend"
                                            dictionary:@{@"sender":sender,
                                                         @"receiver":receiver,
                                                         @"accepted":[NSNumber numberWithBool:FALSE]}];
@@ -22,7 +22,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (receiver = %@)",
                               sender, receiver];
     if(canReverse) predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@)) OR ((sender = %@) AND (receiver = %@))", sender, receiver, receiver, sender];
-    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {
         NSLog(@"acceptRequestFromUser found multiple results");
@@ -60,7 +60,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(((sender = %@) AND (receiver = %@))"
                               "OR (sender = %@) AND (receiver = %@)) AND (accepted = %@)",
                               first, second, second, first, [NSNumber numberWithBool:TRUE]];
-    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {
         NSLog(@"removeFriendRelation found multiple results");
@@ -79,7 +79,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@))"
                               "OR ((sender = %@) AND (receiver = %@))",
                               firstUser, secondUser, secondUser, firstUser];
-    PFQuery* query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery* query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     [query includeKey:@"sender"];
     [query includeKey:@"receiver"];
     NSArray* results = [query findObjects];
@@ -95,7 +95,7 @@
 + (NSArray*) incomingPendingRequestsForUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];
-    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     [query includeKey:@"sender"];
     NSArray* matches = [query findObjects];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
@@ -108,7 +108,7 @@
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];
-    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     [query includeKey:@"receiver"];
     NSArray* matches = [query findObjects];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
@@ -121,7 +121,7 @@
 + (NSArray*) friendsForUser: (PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) OR "
                               "(receiver = %@)) AND (accepted = %@)", user, user, [NSNumber numberWithBool:true]];
-    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     [query includeKey:@"sender"];
     [query includeKey:@"receiver"];
     NSArray* matches = [query findObjects];

@@ -57,6 +57,7 @@
         [self.window setRootViewController:[AppDelegate makeLoggedOutRootController]];
     }
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
