@@ -191,20 +191,9 @@
 }
 
 - (void) loadOnDismiss: (id) sender {
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        MPFriendsView* view = (MPFriendsView*) self.view;
-        [self refreshData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.friendsTable reloadData];
-        });
-    });
-}
-
-- (void) refreshData {
     MPFriendsView* view = (MPFriendsView*) self.view;
     [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
         for(MPTableSectionUtility* section in self.tableSections) {
             [section reloadData];
@@ -212,8 +201,21 @@
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.friendsTable reloadData];
-            [view.loadingHeader removeFromSuperview];
             [view finishLoading];
+        });
+    });
+}
+
+- (void) refreshData {
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        for(MPTableSectionUtility* section in self.tableSections) {
+            [section reloadData];
+        }
+        [self updateHeaders];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MPFriendsView* view = (MPFriendsView*) self.view;
+            [view.friendsTable reloadData];
         });
     });
 }
@@ -258,6 +260,7 @@
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPGreenColor]];
                         [self refreshData];
+                        [view.friendsTable reloadData];
                     }
                     else {
                         view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
@@ -266,7 +269,6 @@
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPRedColor]];
                     }
-                    [view.friendsTable reloadData];
                 });
             });
         }];
@@ -291,6 +293,7 @@
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
                     [self refreshData];
+                    [view.friendsTable reloadData];
                 }
                 else {
                     view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
@@ -299,7 +302,6 @@
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPRedColor]];
                 }
-                [view.friendsTable reloadData];
             });
         });
     }
