@@ -46,9 +46,11 @@
     MPRegisterView* view = (MPRegisterView*) self.view;
     [view.titleLabel displayMessage:@"LOADING..." revertAfter:NO];
     [self.view performSelector:@selector(responderButtonPressed:) withObject:self];
-    NSString* username = view.usernameField.text.lowercaseString;
+    NSString* username = view.usernameField.text;
+    NSString* usernameSearchable = username.lowercaseString;
     NSString* password = view.passwordField.text;
-    NSString* email = view.emailField.text.lowercaseString;
+    NSString* email = view.emailField.text;
+    NSString* emailSearchable = email.lowercaseString;
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController:self];
     
     //Potential username errors: length boundaries, already
@@ -75,7 +77,7 @@
     dispatch_async(registerQueue, ^{
     //All query-related checks
     PFQuery *nameQuery = [PFUser query];
-    [nameQuery whereKey:@"username" equalTo:username];
+    [nameQuery whereKey:@"username_searchable" equalTo:usernameSearchable];
     [nameQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Check username availability
@@ -83,7 +85,7 @@
             if([alerter hasFoundError])
                 [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
             PFQuery *emailQuery = [PFUser query];
-            [emailQuery whereKey:@"email" equalTo:email];
+            [emailQuery whereKey:@"email_searchable" equalTo:emailSearchable];
             [emailQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
                 if (!error) {
                     //Check email availability
@@ -95,8 +97,10 @@
                         if(![alerter hasFoundError]) {
                             PFUser *user = [PFUser user];
                             user.username = username;
+                            user[@"username_searchable"] = usernameSearchable;
                             user.password = password;
                             user.email = email;
+                            user[@"email_searchable"] = emailSearchable;
                             [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                                 if (error) {
                                     [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
