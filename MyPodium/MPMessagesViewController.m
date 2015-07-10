@@ -331,7 +331,7 @@
     }
           withSuccessMessage:@"You marked the message as read."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage:nil];
 }
 
@@ -340,12 +340,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController newMessagesHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPMessagesModel deleteMessage: other];
     }
           withSuccessMessage:@"You deleted the message."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
 }
 
@@ -367,7 +368,7 @@
     }
           withSuccessMessage:@"You marked the message as unread."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage:nil];
 }
 
@@ -376,12 +377,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPMessagesViewController readMessagesHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPMessagesModel deleteMessage: other];
     }
           withSuccessMessage:@"You deleted the message."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
 }
 
@@ -403,7 +405,7 @@
     }
           withSuccessMessage:@"You removed the message from your sent box."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage: nil
      ];
 }

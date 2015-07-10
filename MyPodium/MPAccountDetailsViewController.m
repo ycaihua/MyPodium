@@ -115,9 +115,16 @@
 }
 
 - (void) submitPasswordButtonPressed: (id) sender {
-    NSString* newPassword = ((MPAccountDetailsView*)self.view).changePasswordField.text;
-    NSString* confirmPassword = ((MPAccountDetailsView*)self.view).confirmPasswordField.text;
-    NSString* oldPassword = ((MPAccountDetailsView*)self.view).oldPasswordField.text;
+    MPAccountDetailsView* view = (MPAccountDetailsView*) self.view;
+    
+    NSString* newPassword = view.changePasswordField.text;
+    NSString* confirmPassword = view.confirmPasswordField.text;
+    NSString* oldPassword = view.oldPasswordField.text;
+    
+    view.changePasswordField.text = @"";
+    view.confirmPasswordField.text = @"";
+    view.oldPasswordField.text = @"";
+    
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     
     [alerter checkErrorCondition:![newPassword isEqualToString: confirmPassword] withMessage:@"Your two password entries did not match."];

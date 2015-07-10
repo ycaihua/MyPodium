@@ -335,12 +335,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You denied %@'s friend request.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username]];
 }
 
@@ -357,12 +358,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController outgoingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeRequestFromUser:[PFUser currentUser] toUser:other canReverse:YES];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your friend request to %@.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]];
 }
 
@@ -379,12 +381,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You successfully removed %@ as a friend.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
 }
 

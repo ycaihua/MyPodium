@@ -382,12 +382,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:YES
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]];
 }
 
@@ -397,12 +398,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel deleteTeam: other];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:YES
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]];
 }
 
@@ -416,12 +418,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsAsMemberHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:YES
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
 }
 
@@ -436,8 +439,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:YES
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to accept the invitation from %@?", other[@"teamName"]]];
+       withConfirmationAlert:NO
+     withConfirmationMessage:@""];
 }
 
 - (void) teamInviteProfileButtonPressed: (id) sender {
@@ -450,12 +453,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsInvitingHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]];
 }
 
@@ -469,12 +473,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsRequestedToJoinHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyTeamJoinRequest:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]];
 }
 

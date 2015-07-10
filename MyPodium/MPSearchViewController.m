@@ -667,12 +667,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeFriendRelationWithFirstUser:other secondUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You successfully removed %@ as a friend.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
 }
 
@@ -686,7 +687,7 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You accepted %@'s friend request.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage:@""];
 }
 
@@ -703,12 +704,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You denied %@'s friend request.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username]];
 }
 
@@ -725,12 +727,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController outgoingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPFriendsModel removeRequestFromUser:[PFUser currentUser] toUser:other canReverse:YES];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your friend request to %@.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]];
 }
 
@@ -753,8 +756,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You sent %@ a friend request.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to send %@ a friend request?", other.username]];
+       withConfirmationAlert:NO
+     withConfirmationMessage:@""];
 }
 
 - (void) ownedTeamProfileButtonPressed: (id) sender {
@@ -767,12 +770,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]];
 }
 
@@ -782,12 +786,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel deleteTeam: other];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]];
 }
 
@@ -801,12 +806,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsAsMemberHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
 }
 
@@ -821,8 +827,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to accept the invitation from %@?", other[@"teamName"]]];
+       withConfirmationAlert:NO
+     withConfirmationMessage:@""];
 }
 
 - (void) teamInviteProfileButtonPressed: (id) sender {
@@ -835,12 +841,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]];
 }
 
@@ -854,12 +861,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsRequestedToJoinHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyTeamJoinRequest:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]];
 }
 
@@ -878,10 +886,9 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You requested to join %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to request to join the team, %@?", other[@"teamName"]]];
+       withConfirmationAlert:NO
+     withConfirmationMessage:@""];
 }
-
 
 - (void) readNewMessageButtonPressed: (id) sender {
     MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
@@ -901,7 +908,7 @@
     }
           withSuccessMessage:@"You marked the message as read."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage:nil];
 }
 
@@ -910,12 +917,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController newMessagesHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPMessagesModel deleteMessage: other];
     }
           withSuccessMessage:@"You deleted the message."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
 }
 
@@ -937,7 +945,7 @@
     }
           withSuccessMessage:@"You marked the message as unread."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage:nil];
 }
 
@@ -946,12 +954,13 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController readMessagesHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
         return [MPMessagesModel deleteMessage: other];
     }
           withSuccessMessage:@"You deleted the message."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:true
+       withConfirmationAlert:showConfirmation
      withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
 }
 
@@ -973,7 +982,7 @@
     }
           withSuccessMessage:@"You removed the message from your sent box."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:false
+       withConfirmationAlert:NO
      withConfirmationMessage: nil
      ];
 }
