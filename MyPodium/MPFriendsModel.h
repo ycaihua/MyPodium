@@ -29,6 +29,5 @@ typedef NS_ENUM(NSInteger, MPFriendStatus) {
 + (NSArray*) incomingPendingRequestsForUser: (PFUser*) user;
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user;
 + (NSArray*) friendsForUser:(PFUser*)user;
-+ (NSArray*) friendsForUser:(PFUser*)user containingString: (NSString*) string;
 
 @end

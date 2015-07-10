@@ -65,7 +65,7 @@
                             initWithHeaderTitle:[MPSearchViewController friendsHeader]
                             withDataBlock:^() {
                                 MPSearchView* view = (MPSearchView*) self.view;
-                                return [MPFriendsModel friendsForUser:[PFUser currentUser] containingString:view.searchView.searchField.text];
+                                return [MPGlobalModel userList:[MPFriendsModel friendsForUser:[PFUser currentUser]] searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath) {
                                 MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:

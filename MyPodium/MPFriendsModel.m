@@ -136,17 +136,4 @@
     return results;
 }
 
-+ (NSArray*) friendsForUser: (PFUser*)user containingString: (NSString*) string {
-    NSArray* friends = [MPFriendsModel friendsForUser: user];
-    NSMutableArray* filteredFriends = [[NSMutableArray alloc] initWithCapacity:friends.count];
-    for(PFUser* friend in friends) {
-        NSString* username = friend.username;
-        NSString* realName = friend[@"realName"];
-        if(!realName) realName = @"";
-        if([username containsString: string] || [realName containsString: string])
-            [filteredFriends addObject: friend];
-    }
-    return filteredFriends;
-}
-
 @end
