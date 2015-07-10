@@ -8,6 +8,7 @@
 
 #import "MPMenuView.h"
 
+@class MPHomeTipView;
 @class MPBoldColorButton;
 
 @interface MPHomeView : MPMenuView
@@ -20,5 +21,7 @@
 @property MPBoldColorButton* teamsButton;
 @property MPBoldColorButton* modesButton;
 @property MPBoldColorButton* eventsButton;
+
+@property MPHomeTipView* tipView;
 
 @end

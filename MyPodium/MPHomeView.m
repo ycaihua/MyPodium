@@ -11,6 +11,7 @@
 
 #import "MPHomeView.h"
 #import "MPBoldColorButton.h"
+#import "MPHomeTipView.h"
 
 @implementation MPHomeView
 
@@ -75,6 +76,11 @@
     }
     self.eventsButton.subtitleLabel.text = @"EVENTS";
     [self addSubview: self.eventsButton];
+    
+    //self.tipView
+    self.tipView = [[MPHomeTipView alloc] init];
+    self.tipView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.tipView];
 }
 
 - (void) makeControlConstraints {
@@ -169,8 +175,8 @@
                             [NSLayoutConstraint constraintWithItem:self.modesButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeBottomMargin
+                                                            toItem:self.tipView
+                                                         attribute:NSLayoutAttributeTop
                                                         multiplier:1.0f
                                                           constant:-(buttonPadding*2)],
                             //self.eventsButton
@@ -205,10 +211,40 @@
                             [NSLayoutConstraint constraintWithItem:self.eventsButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.tipView
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0f
+                                                          constant:-(buttonPadding*2)],
+                            //self.tipView
+                            [NSLayoutConstraint constraintWithItem:self.tipView
+                                                         attribute:NSLayoutAttributeLeading
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.tipView
+                                                         attribute:NSLayoutAttributeTrailing
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeTrailingMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.tipView
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
-                                                          constant:-(buttonPadding*2)],
+                                                          constant:-8.0f],
+                            [NSLayoutConstraint constraintWithItem:self.tipView
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:[MPHomeTipView defaultHeight]],
+                            
                             ]];
 }
 
