@@ -39,6 +39,12 @@
 }
 
 - (void) makeControls {
+    //self.leadingBorder
+    self.leadingBorder = [[UIView alloc] init];
+    self.leadingBorder.backgroundColor = [UIColor MPYellowColor];
+    self.leadingBorder.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.leadingBorder];
+    
     //self.cellButton
     self.cellButton = [[MPSidebarButton alloc] init];
     self.cellButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -46,12 +52,41 @@
 }
 
 - (void) makeControlConstraints {
-    [self addConstraints: @[//self.cellButton
-                            [NSLayoutConstraint constraintWithItem:self.cellButton
+    [self addConstraints: @[//self.leadingBorder
+                            [NSLayoutConstraint constraintWithItem:self.leadingBorder
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeLeadingMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.leadingBorder
+                                                         attribute:NSLayoutAttributeTop
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeTopMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.leadingBorder
+                                                         attribute:NSLayoutAttributeBottom
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self
+                                                         attribute:NSLayoutAttributeBottomMargin
+                                                        multiplier:1.0f
+                                                          constant:0.0f],
+                            [NSLayoutConstraint constraintWithItem:self.leadingBorder
+                                                         attribute:NSLayoutAttributeWidth
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:1.0f],
+                            //self.cellButton
+                            [NSLayoutConstraint constraintWithItem:self.cellButton
+                                                         attribute:NSLayoutAttributeLeading
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:self.leadingBorder
+                                                         attribute:NSLayoutAttributeTrailing
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
@@ -60,7 +95,7 @@
                                                             toItem:self
                                                          attribute:NSLayoutAttributeBottomMargin
                                                         multiplier:1.0f
-                                                          constant:3.0f],
+                                                          constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
                                                          attribute:NSLayoutAttributeTop
                                                          relatedBy:NSLayoutRelationEqual

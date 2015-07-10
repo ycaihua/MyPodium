@@ -12,6 +12,7 @@
 
 @interface MPSidebarViewCell : UITableViewCell
 
+@property UIView* leadingBorder;
 @property MPSidebarButton* cellButton;
 
 - (void) updateWithRow: (int) row;
