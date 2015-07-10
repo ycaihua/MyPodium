@@ -13,11 +13,13 @@
 
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
+#import "MPMessagesModel.h"
 #import "MPGlobalModel.h"
 
 #import "MPSearchView.h"
 #import "MPUserCell.h"
 #import "MPTeamCell.h"
+#import "MPMessagesCell.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
 #import "MPTextField.h"
@@ -27,6 +29,7 @@
 #import "MPSearchViewController.h"
 #import "MPUserProfileViewController.h"
 #import "MPMakeTeamViewController.h"
+#import "MPMessageReaderViewController.h"
 
 @interface MPSearchViewController ()
 
@@ -46,6 +49,8 @@
       forCellReuseIdentifier:[MPSearchViewController userReuseIdentifier]];
         [table registerClass:[MPTeamCell class]
       forCellReuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+        [table registerClass:[MPMessagesCell class]
+      forCellReuseIdentifier:[MPSearchViewController messagesReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
       forCellReuseIdentifier:[MPSearchViewController blankReuseIdentifier]];
         table.delegate = self;
@@ -410,7 +415,127 @@
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                 [(MPTeamCell*)cell updateForTeam:object];
-                            }]];
+                            }],
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPSearchViewController newMessagesHeader]
+                            withDataBlock:^(){
+                                NSArray* messages = [MPMessagesModel newMessagesForUser:[PFUser currentUser]];
+                                MPSearchView* view = (MPSearchView*) self.view;
+                                return [MPGlobalModel messagesList:messages searchForString:view.searchView.searchField.text];
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPMessagesCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController messagesReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPMessagesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController messagesReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"check" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.leftButton addTarget:self action:@selector(readNewMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(markReadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(deleteNewMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPMessagesCell*)cell updateForMessage:object displaySender: YES];
+                            }],
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPSearchViewController readMessagesHeader]
+                            withDataBlock:^(){
+                                NSArray* messages = [MPMessagesModel readMessagesForUser:[PFUser currentUser]];
+                                MPSearchView* view = (MPSearchView*) self.view;
+                                return [MPGlobalModel messagesList:messages searchForString:view.searchView.searchField.text];
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPMessagesCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController messagesReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPMessagesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController messagesReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell showLeftButton];
+                                [cell.leftButton setImageString:@"info" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.centerButton setImageString:@"up" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.leftButton addTarget:self action:@selector(rereadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(markUnreadButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(deleteReadMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPMessagesCell*)cell updateForMessage:object displaySender: YES];
+                            }],
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPSearchViewController sentMessagesHeader]
+                            withDataBlock:^(){
+                                NSArray* messages = [MPMessagesModel sentMessagesForUser:[PFUser currentUser]];
+                                MPSearchView* view = (MPSearchView*) self.view;
+                                return [MPGlobalModel messagesList:messages searchForString:view.searchView.searchField.text];
+                                
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPMessagesCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                        [MPSearchViewController messagesReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPMessagesCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController messagesReuseIdentifier]];
+                                }
+                                cell.indexPath = indexPath;
+                                //Remove any existing actions
+                                [cell.leftButton removeTarget:nil
+                                                       action:NULL
+                                             forControlEvents:UIControlEventAllEvents];
+                                [cell.centerButton removeTarget:nil
+                                                         action:NULL
+                                               forControlEvents:UIControlEventAllEvents];
+                                [cell.rightButton removeTarget:nil
+                                                        action:NULL
+                                              forControlEvents:UIControlEventAllEvents];
+                                
+                                //Set images
+                                [cell hideLeftButton];
+                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                //Add targets
+                                [cell.centerButton addTarget:self action:@selector(readSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(hideSentMessageButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [(MPMessagesCell*)cell updateForMessage:object displaySender:NO];
+                            }]
+];
 }
 
 - (void) loadOnDismiss: (id) sender {
@@ -757,6 +882,102 @@
      withConfirmationMessage:[NSString stringWithFormat:@"Do you want to request to join the team, %@?", other[@"teamName"]]];
 }
 
+
+- (void) readNewMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController newMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPMessageReaderViewController alloc] initWithMessage:other] fromController:self];
+}
+
+- (void) markReadButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController newMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel markMessageRead: other];
+    }
+          withSuccessMessage:@"You marked the message as read."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:nil];
+}
+
+- (void) deleteNewMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController newMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel deleteMessage: other];
+    }
+          withSuccessMessage:@"You deleted the message."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+}
+
+- (void) rereadMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPMessageReaderViewController alloc] initWithMessage:other] fromController:self];
+}
+
+- (void) markUnreadButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel markMessageUnread: other];
+    }
+          withSuccessMessage:@"You marked the message as unread."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage:nil];
+}
+
+- (void) deleteReadMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController readMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel deleteMessage: other];
+    }
+          withSuccessMessage:@"You deleted the message."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:true
+     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+}
+
+- (void) readSentMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController sentMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPMessageReaderViewController alloc] initWithMessage:other] fromController:self];
+}
+
+- (void) hideSentMessageButtonPressed: (id) sender {
+    MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController sentMessagesHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [self performModelUpdate:^BOOL{
+        return [MPMessagesModel hideMessageFromSender: other];
+    }
+          withSuccessMessage:@"You removed the message from your sent box."
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:false
+     withConfirmationMessage: nil
+     ];
+}
+
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
     return self.sectionHeaderNames.count;
 }
@@ -864,9 +1085,14 @@
 + (NSString*) teamsInvitingHeader { return @"TEAMS INVITING ME"; }
 + (NSString*) teamsRequestedToJoinHeader { return @"TEAMS I REQUESTED TO JOIN"; }
 + (NSString*) visibleTeamsHeader { return @"OTHER VISIBLE TEAMS"; }
++ (NSString*) newMessagesHeader { return @"NEW MESSAGES"; }
++ (NSString*) readMessagesHeader { return @"READ MESSAGES"; }
++ (NSString*) sentMessagesHeader { return @"SENT MESSAGES"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
+
 + (NSString*) userReuseIdentifier { return @"userSearchIdentifier"; }
 + (NSString*) teamReuseIdentifier { return @"teamSearchIdentifier"; }
++ (NSString*) messagesReuseIdentifier { return @"messagesReuseIdentifier"; }
 + (NSString*) blankReuseIdentifier { return @"blankIdentifier"; }
 
 @end
