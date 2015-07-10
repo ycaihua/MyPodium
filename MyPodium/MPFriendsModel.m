@@ -42,7 +42,7 @@
                               "AND (accepted = %@)",
                               sender, receiver, [NSNumber numberWithBool:FALSE]];
     if(canReverse) predicate = [NSPredicate predicateWithFormat:@"((sender = %@) AND (receiver = %@)) OR ((sender = %@) AND (receiver = %@)) AND (accepted = %@)", sender, receiver, receiver, sender, [NSNumber numberWithBool:FALSE]];
-    PFQuery *query = [PFQuery queryWithClassName:@"Friends" predicate:predicate];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
     NSArray* results = [query findObjects];
     if(results.count > 1) {
         NSLog(@"removeRequestFromUser found multiple results");
