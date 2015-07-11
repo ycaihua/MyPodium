@@ -10,13 +10,19 @@
 
 @class MPLabel;
 
-@interface MPHomeTipView : UIView
+@interface MPHomeTipView : UIControl
 
 @property MPLabel* tipDescriptionLabel;
 @property MPLabel* tipContentLabel;
+@property MPLabel* showOrHideLabel;
 
 @property NSArray* allTips;
+@property BOOL expanded;
+
+- (void) toggleExpanded;
+- (void) displayRandomTip;
 
 + (CGFloat) defaultHeight;
++ (CGFloat) collapsedHeight;
 
 @end

@@ -12,6 +12,7 @@
 #import "MPTeamsModel.h"
 
 #import "MPHomeView.h"
+#import "MPHomeTipView.h"
 #import "MPBoldColorButton.h"
 #import "MPLabel.h"
 
@@ -39,6 +40,8 @@
                      forControlEvents:UIControlEventTouchUpInside];
         [view.teamsButton addTarget:self action:@selector(teamsButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
+        [view.tipView addTarget:self action:@selector(tipViewPressed:)
+               forControlEvents: UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -66,6 +69,11 @@
         });
     });
     
+}
+
+- (void) tipViewPressed: (id) sender {
+    MPHomeView* view = (MPHomeView*) self.view;
+    [view toggleTips];
 }
 
 - (void) friendsButtonPressed: (id) sender {

@@ -17,6 +17,7 @@
     self = [super init];
     if(self) {
         self.allTips = [MPHomeTipView getAllTips];
+        self.expanded = YES;
         [self applyDefaultStyle];
         [self makeControls];
         [self makeControlConstraints];
@@ -45,6 +46,14 @@
     self.tipContentLabel.textColor = [UIColor MPBlackColor];
     self.tipContentLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.tipContentLabel];
+    
+    //self.showOrHideLabel
+    self.showOrHideLabel = [[MPLabel alloc] initWithText:@"tap to hide"];
+    self.showOrHideLabel.font = [UIFont fontWithName:@"Lato-Regular" size:12.0f];
+    self.showOrHideLabel.textColor = [UIColor MPBlackColor];
+    self.showOrHideLabel.textAlignment = NSTextAlignmentCenter;
+    self.showOrHideLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview:self.showOrHideLabel];
 }
 
 - (void) makeControlConstraints {
@@ -79,13 +88,49 @@
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.tipContentLabel
-                                                        attribute:NSLayoutAttributeCenterY
+                                                        attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeCenterY
+                                                        attribute:NSLayoutAttributeTopMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.tipContentLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.showOrHideLabel
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.showOrHideLabel
+                           [NSLayoutConstraint constraintWithItem:self.showOrHideLabel
+                                                        attribute:NSLayoutAttributeCenterX
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeCenterX
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.showOrHideLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottomMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            ]];
+}
+
+- (void) toggleExpanded {
+    if(self.expanded) {
+        self.tipContentLabel.hidden = YES;
+        self.tipDescriptionLabel.hidden = YES;
+        self.showOrHideLabel.text = @"tap to show tips";
+    }
+    else {
+        self.tipContentLabel.hidden = NO;
+        self.tipDescriptionLabel.hidden = NO;
+        self.showOrHideLabel.text = @"tap to hide";
+    }
+    self.expanded = !self.expanded;
 }
 
 - (void) displayRandomTip {
@@ -96,10 +141,12 @@
 
 + (NSArray*) getAllTips {
     return @[@"You can always go back to the previous page by tapping \"My Podium\" at the top of the screen.",
-             @"You can quickly access the search and settings pages by holding down \"My Podium\" at the top of the screen."
+             @"You can quickly access extra pages by holding down \"My Podium\" at the top of the screen.",
+             @"More than for just sports, MyPodium works great for board, video and card games, too."
              ];
 }
 
-+ (CGFloat) defaultHeight { return 80.0f; }
++ (CGFloat) defaultHeight { return 90.0f; }
++ (CGFloat) collapsedHeight { return 30.0f; }
 
 @end

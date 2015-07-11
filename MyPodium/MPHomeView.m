@@ -83,6 +83,47 @@
     [self addSubview: self.tipView];
 }
 
+- (void) toggleTips {
+    BOOL expanded = self.tipView.expanded;
+    if(expanded) {
+        for(NSLayoutConstraint* constraint in self.constraints) {
+            if([constraint.firstItem isEqual: self.tipView] &&
+               constraint.firstAttribute == NSLayoutAttributeHeight) {
+                [self removeConstraint: constraint];
+                break;
+            }
+        }
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self.tipView
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:[MPHomeTipView collapsedHeight]]];
+    }
+    else {
+        for(NSLayoutConstraint* constraint in self.constraints) {
+            if([constraint.firstItem isEqual: self.tipView] &&
+               constraint.firstAttribute == NSLayoutAttributeHeight) {
+                [self removeConstraint: constraint];
+                break;
+            }
+        }
+        [self addConstraint:[NSLayoutConstraint constraintWithItem:self.tipView
+                                                         attribute:NSLayoutAttributeHeight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:nil
+                                                         attribute:NSLayoutAttributeNotAnAttribute
+                                                        multiplier:1.0f
+                                                          constant:[MPHomeTipView defaultHeight]]];
+        [self.tipView displayRandomTip];
+    }
+    [UIView animateWithDuration:1.0f animations:^{
+        [self layoutIfNeeded];
+    }];
+    [self.tipView toggleExpanded];
+}
+
 - (void) makeControlConstraints {
     float buttonPadding = 8.0f;
     [self addConstraints: @[//self.friendsButton

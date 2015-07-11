@@ -24,4 +24,6 @@
 
 @property MPHomeTipView* tipView;
 
+- (void) toggleTips;
+
 @end
