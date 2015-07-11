@@ -13,5 +13,6 @@
 
 + (void) presentViewController: (UIViewController*) toPresent fromController: (UIViewController*) presenter;
 + (void) dismissViewController: (UIViewController*) controller;
++ (void) updateNotificationsForController: (UIViewController*) controller;
 
 @end

@@ -54,11 +54,8 @@
     
     if([presenter isKindOfClass:[MMDrawerController class]]) {
         MMDrawerController* presenterDrawer = (MMDrawerController*)presenter;
+        [MPControllerManager updateNotificationsForController:presenterDrawer];
         MPMenuViewController* center = (MPMenuViewController*)presenterDrawer.centerViewController;
-        [center checkNewNotifications];
-        
-        MPSidebarViewController* sidebar = (MPSidebarViewController*)presenterDrawer.leftDrawerViewController;
-        [sidebar refresh];
         
         SEL refresh = sel_registerName("loadOnDismiss:");
         if([center respondsToSelector:refresh]) {
@@ -81,6 +78,19 @@
         }
         
     }
+}
+
++ (void) updateNotificationsForController: (UIViewController*) controller {
+    if([controller isKindOfClass:[MPMenuViewController class]]) {
+        [self updateNotificationsForController: controller.mm_drawerController];
+        return;
+    }
+    MMDrawerController* drawer = (MMDrawerController*)controller;
+    MPMenuViewController* center = (MPMenuViewController*)drawer.centerViewController;
+    [center checkNewNotifications];
+    
+    MPSidebarViewController* sidebar = (MPSidebarViewController*)drawer.leftDrawerViewController;
+    [sidebar refresh];
 }
 
 @end
