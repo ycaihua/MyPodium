@@ -93,18 +93,21 @@
     //self.rightButton
     self.rightButton = [[UIButton alloc] init];
     [self.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+    self.rightButton.contentMode = UIViewContentModeCenter;
     self.rightButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.rightButton];
     
     //self.centerButton
     self.centerButton = [[UIButton alloc] init];
     [self.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+    self.centerButton.contentMode = UIViewContentModeCenter;
     self.centerButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.centerButton];
     
     //self.leftButton
     self.leftButton = [[UIButton alloc] init];
     [self.leftButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
+    self.rightButton.contentMode = UIViewContentModeCenter;
     self.leftButton.translatesAutoresizingMaskIntoConstraints = FALSE;
     [self addSubview:self.leftButton];
     [self hideLeftButton];
@@ -133,12 +136,12 @@
                                                        multiplier:1.0f
                                                          constant:4.0f],
                            [NSLayoutConstraint constraintWithItem:self.solidColorView
-                                                        attribute:NSLayoutAttributeBottom
+                                                        attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeBottomMargin
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:4.0f],
+                                                         constant:[MPMessagesCell cellContentHeight]],
                            //self.bottomBorder
                            [NSLayoutConstraint constraintWithItem:self.bottomBorder
                                                         attribute:NSLayoutAttributeLeading
@@ -380,5 +383,6 @@
 }
 
 + (CGFloat) cellHeight { return 60.0f; }
++ (CGFloat) cellContentHeight { return 45.0f; }
 
 @end

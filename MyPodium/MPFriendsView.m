@@ -9,6 +9,7 @@
 #import "UIColor+MPColor.h"
 
 #import "MPFriendsView.h"
+#import "MPUserCell.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
 #import "MPTextField.h"

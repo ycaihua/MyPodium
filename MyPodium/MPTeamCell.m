@@ -133,12 +133,12 @@
                                                        multiplier:1.0f
                                                          constant:4.0f],
                            [NSLayoutConstraint constraintWithItem:self.solidColorView
-                                                        attribute:NSLayoutAttributeBottom
+                                                        attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeBottomMargin
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:4.0f],
+                                                         constant:[MPTeamCell cellContentHeight]],
                            //self.bottomBorder
                            [NSLayoutConstraint constraintWithItem:self.bottomBorder
                                                         attribute:NSLayoutAttributeLeading
@@ -397,5 +397,6 @@
 }
 
 + (CGFloat) cellHeight { return 60.0f; }
++ (CGFloat) cellContentHeight { return 45.0f; }
 
 @end

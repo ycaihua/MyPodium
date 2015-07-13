@@ -56,8 +56,10 @@
       forCellReuseIdentifier:[MPMessagesViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
+        table.estimatedRowHeight = [MPMessagesCell cellHeight];
         [self loadOnDismiss:self];
         [self makeControlActions];
+        [table reloadData];
     }
     return self;
 }
@@ -255,8 +257,10 @@
             dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
             dispatch_async(backgroundQueue, ^{
                 BOOL success = methodAction();
-                if(success)
+                if(success) {
                     [self refreshData];
+                    [MPControllerManager updateNotificationsForController: self];
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
@@ -289,8 +293,10 @@
         dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
         dispatch_async(backgroundQueue, ^{
             BOOL success = methodAction();
-            if(success)
+            if(success) {
                 [self refreshData];
+                [MPControllerManager updateNotificationsForController: self];
+            }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
@@ -448,6 +454,7 @@
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"HFR call");
     return [MPMessagesCell cellHeight];
 }
 

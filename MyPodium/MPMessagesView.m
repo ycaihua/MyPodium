@@ -13,6 +13,7 @@
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
 #import "MPTextField.h"
+#import "MPMessagesCell.h"
 
 @implementation MPMessagesView
 

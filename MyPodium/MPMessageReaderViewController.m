@@ -49,7 +49,10 @@
     PFUser* receiver = self.message[@"receiver"];
     if([receiver.username isEqualToString: [PFUser currentUser].username]) {
         self.message[@"read"] = @YES;
-        [self.message saveInBackground];
+        dispatch_async(dispatch_queue_create("MarkReadLabel", 0), ^{
+            [self.message save];
+            [MPControllerManager updateNotificationsForController: self];
+        });
     }
 }
 

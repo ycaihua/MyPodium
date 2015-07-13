@@ -61,19 +61,19 @@
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.leadingBorder
-                                                         attribute:NSLayoutAttributeTop
+                                                         attribute:NSLayoutAttributeCenterY
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeTopMargin
+                                                         attribute:NSLayoutAttributeCenterY
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.leadingBorder
-                                                         attribute:NSLayoutAttributeBottom
+                                                         attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeBottomMargin
+                                                         attribute:NSLayoutAttributeHeight
                                                         multiplier:1.0f
-                                                          constant:0.0f],
+                                                          constant:-6.0f],
                             [NSLayoutConstraint constraintWithItem:self.leadingBorder
                                                          attribute:NSLayoutAttributeWidth
                                                          relatedBy:NSLayoutRelationEqual
@@ -90,17 +90,17 @@
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
-                                                         attribute:NSLayoutAttributeBottom
+                                                         attribute:NSLayoutAttributeCenterY
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeBottomMargin
+                                                         attribute:NSLayoutAttributeCenterY
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
-                                                         attribute:NSLayoutAttributeTop
+                                                         attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self
-                                                         attribute:NSLayoutAttributeTopMargin
+                                                            toItem:self.leadingBorder
+                                                         attribute:NSLayoutAttributeHeight
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.cellButton
