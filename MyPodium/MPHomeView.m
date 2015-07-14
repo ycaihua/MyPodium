@@ -261,23 +261,23 @@
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                         attribute:NSLayoutAttributeLeading
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.tipView
                                                          attribute:NSLayoutAttributeTrailing
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeTrailingMargin
+                                                         attribute:NSLayoutAttributeTrailing
                                                         multiplier:1.0f
                                                           constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.tipView
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
-                                                         attribute:NSLayoutAttributeBottomMargin
+                                                         attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
-                                                          constant:-8.0f],
+                                                          constant:0.0f],
                             [NSLayoutConstraint constraintWithItem:self.tipView
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual

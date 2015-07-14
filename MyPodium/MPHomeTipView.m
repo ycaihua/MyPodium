@@ -27,30 +27,27 @@
 }
 
 - (void) applyDefaultStyle {
-    self.backgroundColor = [UIColor whiteColor];
-    self.layer.borderColor = [UIColor MPBlackColor].CGColor;;
-    self.layer.borderWidth = 2.0f;
-    self.layer.cornerRadius = 10.0f;
+    self.backgroundColor = [UIColor MPBlackColor];
 }
 
 - (void) makeControls {
     //self.tipDescriptionLabel
     self.tipDescriptionLabel = [[MPLabel alloc] initWithText:@"TIP"];
     self.tipDescriptionLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:28.0f];
-    self.tipDescriptionLabel.textColor = [UIColor MPBlackColor];
+    self.tipDescriptionLabel.textColor = [UIColor whiteColor];
     self.tipDescriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.tipDescriptionLabel];
     
     //self.tipContentLabel
     self.tipContentLabel = [[MPLabel alloc] initWithText:@"Tip goes here"];
-    self.tipContentLabel.textColor = [UIColor MPBlackColor];
+    self.tipContentLabel.textColor = [UIColor whiteColor];
     self.tipContentLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.tipContentLabel];
     
     //self.showOrHideLabel
     self.showOrHideLabel = [[MPLabel alloc] initWithText:@"tap to hide"];
     self.showOrHideLabel.font = [UIFont fontWithName:@"Lato-Regular" size:12.0f];
-    self.showOrHideLabel.textColor = [UIColor MPBlackColor];
+    self.showOrHideLabel.textColor = [UIColor MPGrayColor];
     self.showOrHideLabel.textAlignment = NSTextAlignmentCenter;
     self.showOrHideLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:self.showOrHideLabel];
