@@ -7,24 +7,29 @@
 //
 
 #import "MPMenuView.h"
+#import "MPFriendsModel.h"
 
 @class MPLabel;
-@class MPDualLabelButton;
+@class MPBottomEdgeButton;
+@class MPProfileControlBlock;
 
 @class PFUser;
 
 @interface MPUserProfileView : MPMenuView
 
 @property PFUser* displayedUser;
+@property MPFriendStatus userStatus;
+@property BOOL userAcceptingRequests;
 
 @property MPLabel* usernameLabel;
 @property MPLabel* realNameLabel;
 @property MPLabel* creationDateLabel;
 @property MPLabel* friendStatusLabel;
 
-@property MPDualLabelButton* friendButton;
+@property MPProfileControlBlock* controlBlock;
 
-@property MPDualLabelButton* teamControlView;
+@property MPBottomEdgeButton* leftBottomButton;
+@property MPBottomEdgeButton* rightBottomButton;
 
 - (id) initWithUser: (PFUser*) user;
 
