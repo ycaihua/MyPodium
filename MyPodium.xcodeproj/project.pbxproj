@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */; };
-		2D2B31AC1B443FA500781E0D /* MPAccountDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31AB1B443FA500781E0D /* MPAccountDetailsViewController.m */; };
-		2D2B31B01B443FCD00781E0D /* MPAccountDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31AF1B443FCD00781E0D /* MPAccountDetailsView.m */; };
 		2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */; };
 		2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B61B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AC61B18D2A400C46B53 /* MPHomeViewController.m */; };
@@ -66,10 +64,8 @@
 		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
-		2D67BFC91B498EA70043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFC81B498EA70043BD96 /* MPSettingsView.m */; };
-		2D67BFCC1B49911E0043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCB1B49911E0043BD96 /* MPSettingsViewController.m */; };
-		2D67BFCF1B4997050043BD96 /* MPAccountPreferencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPAccountPreferencesViewController.m */; };
-		2D67BFD21B4997370043BD96 /* MPAccountPreferencesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPAccountPreferencesView.m */; };
+		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
+		2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPSettingsView.m */; };
 		2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD41B499E8A0043BD96 /* MPPreferencesButton.m */; };
 		2D67BFD81B49E7D80043BD96 /* MPMessageReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */; };
 		2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */; };
@@ -89,6 +85,7 @@
 		2D9A4B3D1B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */; };
 		2D9A4B3E1B0AC77B00AEF295 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */; };
 		2D9A4B401B0AC7B900AEF295 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */; };
+		2DB8E5821B58291600623F4E /* MPSettingsScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DB8E5811B58291600623F4E /* MPSettingsScrollView.m */; };
 		2DBF86911B462A0400FB0AF5 /* MPMessagesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86901B462A0400FB0AF5 /* MPMessagesCell.m */; };
 		2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86931B462B8B00FB0AF5 /* MPMessagesView.m */; };
 		2DBF86981B462C2B00FB0AF5 /* MPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */; };
@@ -118,10 +115,6 @@
 /* Begin PBXFileReference section */
 		2D2B31A61B42EE2300781E0D /* MPLimitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLimitConstants.h; sourceTree = "<group>"; };
 		2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLimitConstants.m; sourceTree = "<group>"; };
-		2D2B31AA1B443FA500781E0D /* MPAccountDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAccountDetailsViewController.h; sourceTree = "<group>"; };
-		2D2B31AB1B443FA500781E0D /* MPAccountDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAccountDetailsViewController.m; sourceTree = "<group>"; };
-		2D2B31AE1B443FCD00781E0D /* MPAccountDetailsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAccountDetailsView.h; sourceTree = "<group>"; };
-		2D2B31AF1B443FCD00781E0D /* MPAccountDetailsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAccountDetailsView.m; sourceTree = "<group>"; };
 		2D2B31B21B4486FD00781E0D /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
 		2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
 		2D2B31B51B44875D00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
@@ -213,14 +206,10 @@
 		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
 		2D5963FA1B505E930034F000 /* MPHomeTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeTipView.m; sourceTree = "<group>"; };
-		2D67BFC71B498EA70043BD96 /* MPSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsView.h; sourceTree = "<group>"; };
-		2D67BFC81B498EA70043BD96 /* MPSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsView.m; sourceTree = "<group>"; };
-		2D67BFCA1B49911E0043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
-		2D67BFCB1B49911E0043BD96 /* MPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsViewController.m; sourceTree = "<group>"; };
-		2D67BFCD1B4997050043BD96 /* MPAccountPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAccountPreferencesViewController.h; sourceTree = "<group>"; };
-		2D67BFCE1B4997050043BD96 /* MPAccountPreferencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAccountPreferencesViewController.m; sourceTree = "<group>"; };
-		2D67BFD01B4997370043BD96 /* MPAccountPreferencesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPAccountPreferencesView.h; sourceTree = "<group>"; };
-		2D67BFD11B4997370043BD96 /* MPAccountPreferencesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPAccountPreferencesView.m; sourceTree = "<group>"; };
+		2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
+		2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsViewController.m; sourceTree = "<group>"; };
+		2D67BFD01B4997370043BD96 /* MPSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsView.h; sourceTree = "<group>"; };
+		2D67BFD11B4997370043BD96 /* MPSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsView.m; sourceTree = "<group>"; };
 		2D67BFD31B499E8A0043BD96 /* MPPreferencesButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPPreferencesButton.h; sourceTree = "<group>"; };
 		2D67BFD41B499E8A0043BD96 /* MPPreferencesButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPPreferencesButton.m; sourceTree = "<group>"; };
 		2D67BFD61B49E7D80043BD96 /* MPMessageReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageReaderView.h; sourceTree = "<group>"; };
@@ -254,6 +243,8 @@
 		2D9A4B391B0AC77B00AEF295 /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		2D9A4B3A1B0AC77B00AEF295 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
 		2D9A4B3F1B0AC7B900AEF295 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		2DB8E5801B58291600623F4E /* MPSettingsScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsScrollView.h; sourceTree = "<group>"; };
+		2DB8E5811B58291600623F4E /* MPSettingsScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSettingsScrollView.m; sourceTree = "<group>"; };
 		2DBF868F1B462A0400FB0AF5 /* MPMessagesCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessagesCell.h; sourceTree = "<group>"; };
 		2DBF86901B462A0400FB0AF5 /* MPMessagesCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessagesCell.m; sourceTree = "<group>"; };
 		2DBF86921B462B8B00FB0AF5 /* MPMessagesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessagesView.h; sourceTree = "<group>"; };
@@ -336,12 +327,8 @@
 		2D2B31A91B443F9000781E0D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				2D2B31AA1B443FA500781E0D /* MPAccountDetailsViewController.h */,
-				2D2B31AB1B443FA500781E0D /* MPAccountDetailsViewController.m */,
-				2D67BFCA1B49911E0043BD96 /* MPSettingsViewController.h */,
-				2D67BFCB1B49911E0043BD96 /* MPSettingsViewController.m */,
-				2D67BFCD1B4997050043BD96 /* MPAccountPreferencesViewController.h */,
-				2D67BFCE1B4997050043BD96 /* MPAccountPreferencesViewController.m */,
+				2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */,
+				2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -349,12 +336,10 @@
 		2D2B31AD1B443FB700781E0D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				2D2B31AE1B443FCD00781E0D /* MPAccountDetailsView.h */,
-				2D2B31AF1B443FCD00781E0D /* MPAccountDetailsView.m */,
-				2D67BFC71B498EA70043BD96 /* MPSettingsView.h */,
-				2D67BFC81B498EA70043BD96 /* MPSettingsView.m */,
-				2D67BFD01B4997370043BD96 /* MPAccountPreferencesView.h */,
-				2D67BFD11B4997370043BD96 /* MPAccountPreferencesView.m */,
+				2D67BFD01B4997370043BD96 /* MPSettingsView.h */,
+				2D67BFD11B4997370043BD96 /* MPSettingsView.m */,
+				2DB8E5801B58291600623F4E /* MPSettingsScrollView.h */,
+				2DB8E5811B58291600623F4E /* MPSettingsScrollView.m */,
 				2D67BFD31B499E8A0043BD96 /* MPPreferencesButton.h */,
 				2D67BFD41B499E8A0043BD96 /* MPPreferencesButton.m */,
 			);
@@ -895,7 +880,7 @@
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
 				2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */,
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
-				2D67BFCF1B4997050043BD96 /* MPAccountPreferencesViewController.m in Sources */,
+				2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */,
 				2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */,
 				2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */,
 				2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */,
@@ -907,7 +892,6 @@
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D94D0AD1B279719006C500A /* MPTeamsModel.m in Sources */,
-				2D67BFCC1B49911E0043BD96 /* MPSettingsViewController.m in Sources */,
 				2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */,
 				2DE9FC981B1A000B00F748C9 /* MPSidebarButton.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
@@ -915,16 +899,14 @@
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
 				2D4487DA1B05AAC30061EF86 /* MPRegisterView.m in Sources */,
 				2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */,
-				2D67BFD21B4997370043BD96 /* MPAccountPreferencesView.m in Sources */,
+				2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */,
 				2DD285661B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m in Sources */,
 				2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
 				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
 				2DE9FCF01B21F5E800F748C9 /* MPSearchControl.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
-				2D2B31B01B443FCD00781E0D /* MPAccountDetailsView.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
-				2D67BFC91B498EA70043BD96 /* MPSettingsView.m in Sources */,
 				2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */,
@@ -933,7 +915,6 @@
 				2D94D0BF1B2E99E0006C500A /* MPMakeTeamView.m in Sources */,
 				2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */,
 				2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */,
-				2D2B31AC1B443FA500781E0D /* MPAccountDetailsViewController.m in Sources */,
 				2D44871F1B02DE260061EF86 /* main.m in Sources */,
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
@@ -945,6 +926,7 @@
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */,
+				2DB8E5821B58291600623F4E /* MPSettingsScrollView.m in Sources */,
 				2D67BFD81B49E7D80043BD96 /* MPMessageReaderView.m in Sources */,
 				2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */,
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
