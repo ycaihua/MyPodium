@@ -49,6 +49,14 @@
 
 - (void) makeControlActions {
     MPSettingsView* view = (MPSettingsView*)self.view;
+    view.realNameField.delegate = self;
+    view.changePasswordField.delegate = self;
+    view.confirmPasswordField.delegate = self;
+    view.oldPasswordField.delegate = self;
+    
+    [view.submitNameButton addTarget:self action:@selector(submitNameButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.submitPasswordButton addTarget:self action:@selector(submitPasswordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
     [view.friendRequestsButton addTarget:self action:@selector(friendRequestsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.confirmationAlertsButton addTarget:self action:@selector(confirmationAlertsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -153,7 +161,35 @@
     }
 }
 
+- (void) scrollViewAdaptToStartEditingTextField:(UITextField*)textField
+{
+    MPSettingsView* view = (MPSettingsView*) self.view;
+    CGFloat frameCenter = view.center.y;
+    CGFloat fieldCenter = textField.center.y;
+    CGPoint currentOffset = view.preferencesScrollView.contentOffset;
+    CGPoint point = CGPointMake(currentOffset.x, currentOffset.y + (fieldCenter - frameCenter));
+    [view.preferencesScrollView setContentOffset:point animated:YES];
+}
+
+- (void) scrollViewEditingFinished:(UITextField*)textField
+{
+    MPSettingsView* view = (MPSettingsView*) self.view;
+    CGPoint point = CGPointMake(0, 0);
+    [view.preferencesScrollView setContentOffset:point animated:YES];
+}
+
+- (BOOL) textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [self scrollViewAdaptToStartEditingTextField:textField];
+    return YES;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if(textField.text.length == 0) {
+        [textField resignFirstResponder];
+        [self scrollViewEditingFinished:textField];
+        return YES;
+    }
     MPSettingsView* view = (MPSettingsView*)self.view;
     if([textField isEqual: view.realNameField]) {
         [textField resignFirstResponder];
@@ -162,9 +198,11 @@
     }
     else if([textField isEqual: view.changePasswordField]) {
         [view.confirmPasswordField becomeFirstResponder];
+        [self scrollViewAdaptToStartEditingTextField: view.confirmPasswordField];
     }
     else if([textField isEqual: view.confirmPasswordField]) {
         [view.oldPasswordField becomeFirstResponder];
+        [self scrollViewAdaptToStartEditingTextField: view.oldPasswordField];
     }
     else {
         [textField resignFirstResponder];
