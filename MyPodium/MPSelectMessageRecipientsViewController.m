@@ -118,7 +118,6 @@
         if([current.objectId isEqualToString: user.objectId])
             row = i;
     }
-    NSLog(@"%d", row);
     return [NSIndexPath indexPathForRow:row inSection:0];
 }
 

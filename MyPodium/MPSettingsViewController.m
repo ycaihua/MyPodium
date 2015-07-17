@@ -62,7 +62,6 @@
 }
 
 - (void) loadOnDismiss: (id) sender {
-    NSLog(@"loadOnDismiss");
     [self initializeUserPreferences];
 }
 
@@ -72,6 +71,9 @@
     dispatch_async(dispatch_queue_create("FetchUserQueue", 0), ^{
         [currentUser fetch];
         dispatch_async(dispatch_get_main_queue(), ^{
+            if(currentUser[@"realName"])
+                view.realNameField.text = currentUser[@"realName"];
+            
             NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
             if([prefFriendRequests isEqual: [NSNumber numberWithBool:FALSE]]) [view.friendRequestsButton toggleSelected];
             
@@ -80,7 +82,6 @@
             
             NSString* email = currentUser[@"email"];
             BOOL emailVerified = [currentUser[@"emailVerified"] boolValue];
-            NSLog(@"%d", emailVerified);
             if(emailVerified) {
                 [view setEmailVerified:email];
                 [view.emailVerifiedButton addTarget:self action:@selector(changeEmail:) forControlEvents:UIControlEventTouchUpInside];
