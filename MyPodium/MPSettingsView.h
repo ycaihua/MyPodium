@@ -45,4 +45,13 @@
 @property UIImageView* confirmationAlertsImage;
 @property MPPreferencesButton* confirmationAlertsButton;
 
+@property MPLabel* emailVerifiedTitle;
+@property MPLabel* emailVerifiedDescription;
+@property UIView* emailVerifiedView;
+@property UIImageView* emailVerifiedImage;
+@property MPPreferencesButton* emailVerifiedButton;
+
+- (void) setEmailVerified: (NSString*) email;
+- (void) setEmailUnverified: (NSString*) email;
+
 @end

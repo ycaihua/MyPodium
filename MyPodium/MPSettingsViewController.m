@@ -61,15 +61,70 @@
     [view.confirmationAlertsButton addTarget:self action:@selector(confirmationAlertsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+- (void) loadOnDismiss: (id) sender {
+    NSLog(@"loadOnDismiss");
+    [self initializeUserPreferences];
+}
+
 - (void) initializeUserPreferences {
     MPSettingsView* view = (MPSettingsView*)self.view;
     PFUser* currentUser = [PFUser currentUser];
+    dispatch_async(dispatch_queue_create("FetchUserQueue", 0), ^{
+        [currentUser fetch];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
+            if([prefFriendRequests isEqual: [NSNumber numberWithBool:FALSE]]) [view.friendRequestsButton toggleSelected];
+            
+            NSNumber* prefConfirmations = [currentUser objectForKey:@"pref_confirmation"];
+            if([prefConfirmations isEqual: [NSNumber numberWithBool:FALSE]]) [view.confirmationAlertsButton toggleSelected];
+            
+            NSString* email = currentUser[@"email"];
+            BOOL emailVerified = [currentUser[@"emailVerified"] boolValue];
+            NSLog(@"%d", emailVerified);
+            if(emailVerified) {
+                [view setEmailVerified:email];
+                [view.emailVerifiedButton addTarget:self action:@selector(changeEmail:) forControlEvents:UIControlEventTouchUpInside];
+            }
+            else
+                [view setEmailUnverified:email];
+                [view.emailVerifiedButton addTarget:self action:@selector(verifyOrChangeEmail:) forControlEvents:UIControlEventTouchUpInside];
+        });
+    });
+}
+
+- (void) changeEmail: (id) sender {
     
-    NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
-    if([prefFriendRequests isEqual: [NSNumber numberWithBool:FALSE]]) [view.friendRequestsButton toggleSelected];
-    
-    NSNumber* prefConfirmations = [currentUser objectForKey:@"pref_confirmation"];
-    if([prefConfirmations isEqual: [NSNumber numberWithBool:FALSE]]) [view.confirmationAlertsButton toggleSelected];
+}
+
+- (void) verifyOrChangeEmail: (id) sender {
+    MPSettingsView* view = (MPSettingsView*) self.view;
+    PFUser* currentUser = [PFUser currentUser];
+    NSString* email = currentUser[@"email"];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Email" message:[NSString stringWithFormat:@"Please choose whether you would like to resend the verification to your current email (%@), change your email, or neither.", email] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* verifyAction = [UIAlertAction actionWithTitle:@"Verify Email" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action) {
+        dispatch_async(dispatch_queue_create("VerifyEmailQueue", 0), ^{
+            [currentUser setEmail: @""];
+            BOOL success = [currentUser save];
+            if(success) {
+                [currentUser setEmail: email];
+                success = [currentUser save];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+               if(success)
+                   [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"A verification email has been sent to %@.", email] revertAfter:YES withColor:[UIColor MPGreenColor]];
+               else
+                   [view.menu.subtitleLabel displayMessage:@"There was an error sending the verification. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+            });
+        });
+    }];
+    UIAlertAction* changeAction = [UIAlertAction actionWithTitle:@"Change Email" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action) {
+        [self changeEmail: self];
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction: verifyAction];
+    [alert addAction: changeAction];
+    [alert addAction: cancelAction];
+    [self presentViewController: alert animated:YES completion:nil];
 }
 
 - (void) friendRequestsButtonPressed: (id) sender {

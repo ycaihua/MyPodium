@@ -148,7 +148,7 @@
     self.confirmationAlertsTitle.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.confirmationAlertsTitle];
     
-    //self.friendRequestsDescription
+    //self.confirmationAlertsDescription
     self.confirmationAlertsDescription = [[MPLabel alloc] initWithText:@"By default, you are asked for confirmation before doing things like removing friends, denying team invites or leaving a team. You can toggle whether or not these dialogues appear below."];
     self.confirmationAlertsDescription.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.confirmationAlertsDescription];
@@ -170,7 +170,51 @@
     self.confirmationAlertsButton.referenceImage = self.confirmationAlertsImage;
     [self.confirmationAlertsView addSubview: self.confirmationAlertsButton];
     
+    //self.emailVerifiedTitle
+    self.emailVerifiedTitle = [[MPLabel alloc] initWithText:@"EMAIL VERIFICATION"];
+    self.emailVerifiedTitle.font = [UIFont fontWithName:@"Oswald-Bold" size:22.0f];
+    self.emailVerifiedTitle.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.emailVerifiedTitle];
+    
+    //self.emailVerifiedDescription
+    self.emailVerifiedDescription = [[MPLabel alloc] initWithText:@"Verifying your email allows us to reset your password if you ever forget it."];
+    self.emailVerifiedDescription.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.emailVerifiedDescription];
+    
+    //self.emailVerifiedView
+    self.emailVerifiedView = [[UIView alloc] init];
+    self.emailVerifiedView.backgroundColor = [UIColor MPBlackColor];
+    self.emailVerifiedView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.emailVerifiedView];
+    
+    //self.emailVerifiedImage
+    self.emailVerifiedImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"check_green.png"]];
+    self.emailVerifiedImage.translatesAutoresizingMaskIntoConstraints = NO;
+    self.emailVerifiedImage.contentMode = UIViewContentModeCenter;
+    [self.emailVerifiedView addSubview: self.emailVerifiedImage];
+    
+    //self.emailVerifiedButton
+    self.emailVerifiedButton = [[MPPreferencesButton alloc] init];
+    [self.emailVerifiedButton setCombinedTextColor:[UIColor MPGreenColor]];
+    self.emailVerifiedButton.customTitleLabel.text = @"EMAIL VERIFIED";
+    self.emailVerifiedButton.subtitleLabel.text = @"email | tap to change";
+    [self.emailVerifiedView addSubview: self.emailVerifiedButton];
+    
     [self bringSubviewToFront:self.menu];
+}
+
+- (void) setEmailVerified: (NSString*) email {
+    [self.emailVerifiedButton setCombinedTextColor:[UIColor MPGreenColor]];
+    self.emailVerifiedButton.customTitleLabel.text = @"EMAIL VERIFIED";
+    self.emailVerifiedButton.subtitleLabel.text = [NSString stringWithFormat:@"%@ | tap to change", email];
+    [self.emailVerifiedImage setImage:[UIImage imageNamed:@"check_green.png"]];
+}
+
+- (void) setEmailUnverified: (NSString*) email {
+    [self.emailVerifiedButton setCombinedTextColor:[UIColor MPRedColor]];
+    self.emailVerifiedButton.customTitleLabel.text = @"EMAIL NOT VERIFIED";
+    self.emailVerifiedButton.subtitleLabel.text = [NSString stringWithFormat:@"%@ | tap to verify", email];
+    [self.emailVerifiedImage setImage:[UIImage imageNamed:@"x_red.png"]];
 }
 
 - (void) makeControlConstraints {
@@ -786,10 +830,142 @@
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:0.0f],
+                           //self.emailVerifiedTitle
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedTitle
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.confirmationAlertsView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:10.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedTitle
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedTitle
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.emailVerifiedDescription
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedDescription
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedTitle
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedDescription
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedDescription
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           //self.emailVerifiedView
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedDescription
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:10.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:-10.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:60.0f],
+                           //self.emailVerifiedImage
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedImage
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedImage
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedImage
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:60.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedImage
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:60.0f],
+                           //self.emailVerifiedButton
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedImage
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedButton
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.emailVerifiedButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.emailVerifiedView
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+
                            ]];
 }
 
-+ (CGSize) scrollingBounds { return CGSizeMake([[UIScreen mainScreen] bounds].size.width, 1000.0f); }
++ (CGSize) scrollingBounds { return CGSizeMake([[UIScreen mainScreen] bounds].size.width, 1100.0f); }
 
 + (NSString*) defaultSubtitle { return @"Settings"; }
 

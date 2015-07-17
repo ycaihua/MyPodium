@@ -103,6 +103,8 @@
 
 - (void) setHighlighted:(BOOL)highlighted {
     [super setHighlighted:highlighted];
+    if(!self.referenceImage)
+        return;
     if(highlighted)
         [self setCombinedTextColor:[UIColor MPGreenColor]];
     else
