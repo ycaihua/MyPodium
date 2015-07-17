@@ -9,6 +9,7 @@
 #import "MPErrorAlerter.h"
 #import "MPLimitConstants.h"
 #import "UIColor+MPColor.h"
+#import "NSString+MPString.h"
 
 #import "MPSettingsView.h"
 #import "MPSettingsViewController.h"
@@ -94,7 +95,41 @@
 }
 
 - (void) changeEmail: (id) sender {
+    PFUser* currentUser = [PFUser currentUser];
+    MPSettingsView* view = (MPSettingsView*) self.view;
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Email" message:@"Enter your new email below." preferredStyle:UIAlertControllerStyleAlert];
+    __weak UIAlertController* alertReference = alert;
+    UIAlertAction* submitAction = [UIAlertAction actionWithTitle:@"Submit" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action) {
+        MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
+        NSString* emailEntered = alertReference.textFields[0].text;
+        [alerter checkErrorCondition:![emailEntered isValidEmail] withMessage:@"You didn't enter a valid email address."];
+        [alerter checkErrorCondition:[emailEntered isEqualToString:currentUser.email] withMessage:@"The email you entered is the one we already have on file for you."];
+        if(![alerter hasFoundError]) {
+            dispatch_async(dispatch_queue_create("ChangeEmailQueue", 0), ^{
+                [currentUser setEmail: emailEntered];
+                BOOL success = [currentUser save];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if(success) {
+                        [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"You changed your email to %@. A verification email has been sent.", emailEntered] revertAfter:YES withColor:[UIColor MPGreenColor]];
+                        [self initializeUserPreferences];
+                    }
+                    else
+                        [view.menu.subtitleLabel displayMessage:@"There was an error changing your email. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                });
+            });
+        }
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:nil];
     
+    [alert addAction: submitAction];
+    [alert addAction: cancelAction];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"email address";
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    
+    [self presentViewController: alert animated:YES completion:nil];
 }
 
 - (void) verifyOrChangeEmail: (id) sender {
@@ -104,6 +139,8 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Email" message:[NSString stringWithFormat:@"Please choose whether you would like to resend the verification to your current email (%@), change your email, or neither.", email] preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* verifyAction = [UIAlertAction actionWithTitle:@"Verify Email" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action) {
         dispatch_async(dispatch_queue_create("VerifyEmailQueue", 0), ^{
+            //Parse won't resend verification email unless a change has occurred in the
+            //email field.
             [currentUser setEmail: @""];
             BOOL success = [currentUser save];
             if(success) {
@@ -111,10 +148,12 @@
                 success = [currentUser save];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-               if(success)
-                   [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"A verification email has been sent to %@.", email] revertAfter:YES withColor:[UIColor MPGreenColor]];
+                if(success) {
+                    [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"A verification email has been sent to %@.", email] revertAfter:YES withColor:[UIColor MPGreenColor]];
+                    [self initializeUserPreferences];
+                }
                else
-                   [view.menu.subtitleLabel displayMessage:@"There was an error sending the verification. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                    [view.menu.subtitleLabel displayMessage:@"There was an error sending the verification. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
             });
         });
     }];

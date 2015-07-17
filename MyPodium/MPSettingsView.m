@@ -55,6 +55,7 @@
     
     //self.realNameField
     self.realNameField = [[MPTextField alloc] initWithPlaceholder:@"REAL NAME"];
+    self.realNameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.realNameField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.realNameField];
     
