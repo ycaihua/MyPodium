@@ -8,6 +8,24 @@
 
 #import "MPGameModesModel.h"
 
+#import <Parse/Parse.h>
+
 @implementation MPGameModesModel
 
++ (NSArray*) gameModesForUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
+                              user];
+    PFQuery *query = [PFQuery queryWithClassName:[MPGameModesModel tableName] predicate:predicate];
+    [query includeKey:@"creator"];
+    return [query findObjects];
+}
+
++ (NSInteger) countGameModesForUser:(PFUser*)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
+                              user];
+    PFQuery *query = [PFQuery queryWithClassName:[MPGameModesModel tableName] predicate:predicate];
+    return [query countObjects];
+}
+
++ (NSString*) tableName { return @"GameMode"; }
 @end

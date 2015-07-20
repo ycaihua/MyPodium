@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D05E8DF1B5D7F24006FF360 /* MPGameModesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D05E8DE1B5D7F24006FF360 /* MPGameModesView.m */; };
 		2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */; };
 		2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */; };
 		2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B61B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
@@ -113,6 +114,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2D05E8DD1B5D7F24006FF360 /* MPGameModesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGameModesView.h; sourceTree = "<group>"; };
+		2D05E8DE1B5D7F24006FF360 /* MPGameModesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGameModesView.m; sourceTree = "<group>"; };
 		2D2B31A61B42EE2300781E0D /* MPLimitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLimitConstants.h; sourceTree = "<group>"; };
 		2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLimitConstants.m; sourceTree = "<group>"; };
 		2D2B31B21B4486FD00781E0D /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -326,6 +329,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D05E8DB1B5D7EF4006FF360 /* GameModes */ = {
+			isa = PBXGroup;
+			children = (
+				2D05E8DD1B5D7F24006FF360 /* MPGameModesView.h */,
+				2D05E8DE1B5D7F24006FF360 /* MPGameModesView.m */,
+			);
+			name = GameModes;
+			sourceTree = "<group>";
+		};
+		2D05E8DC1B5D7F05006FF360 /* GameModes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GameModes;
+			sourceTree = "<group>";
+		};
 		2D2B31A91B443F9000781E0D /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +454,7 @@
 				2D94D0C81B3237F8006C500A /* UserProfile */,
 				2D94D0B21B27A0EE006C500A /* Teams */,
 				2D94D0C01B2F7F12006C500A /* MakeTeam */,
+				2D05E8DC1B5D7F05006FF360 /* GameModes */,
 				2DE9FCE71B20ACFB00F748C9 /* Search */,
 				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
@@ -495,6 +515,7 @@
 				2D94D0C41B30DFF6006C500A /* UserProfile */,
 				2D94D0AE1B279FB2006C500A /* Teams */,
 				2D94D0BC1B2E9991006C500A /* MakeTeam */,
+				2D05E8DB1B5D7EF4006FF360 /* GameModes */,
 				2DE9FCE31B20AC6C00F748C9 /* Search */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
@@ -876,6 +897,7 @@
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */,
 				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
+				2D05E8DF1B5D7F24006FF360 /* MPGameModesView.m in Sources */,
 				2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				2DBF86981B462C2B00FB0AF5 /* MPMessagesViewController.m in Sources */,
 				2D2D5ACB1B18D2F400C46B53 /* MPHomeView.m in Sources */,

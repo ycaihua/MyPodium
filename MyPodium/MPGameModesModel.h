@@ -14,4 +14,6 @@
 
 + (NSArray*) gameModesForUser: (PFUser*) user;
 
++ (NSInteger) countGameModesForUser: (PFUser*) user;
+
 @end
