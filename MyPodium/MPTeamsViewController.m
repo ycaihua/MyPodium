@@ -41,6 +41,7 @@
     if(self) {
         MPTeamsView* view = [[MPTeamsView alloc] init];
         self.view = view;
+        [view startLoading];
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
@@ -56,7 +57,6 @@
       forCellReuseIdentifier:[MPTeamsViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [view finishLoading];
         [self refreshData];
     }
     return self;
@@ -261,6 +261,7 @@
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.teamsTable reloadData];
+            [view finishLoading];
         });
     });
 }

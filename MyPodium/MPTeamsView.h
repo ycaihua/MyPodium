@@ -14,7 +14,6 @@
 
 @interface MPTeamsView : MPMenuView
 
-@property MPTableHeader* loadingHeader;
 @property MPSearchControl* filterSearch;
 @property UITableView* teamsTable;
 @property MPBottomEdgeButton* searchButton;
