@@ -105,6 +105,13 @@
     return results;
 }
 
++ (NSInteger) countIncomingRequestsForUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (accepted = %@)",
+                              user, [NSNumber numberWithBool:false]];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
+    return [query countObjects];
+}
+
 + (NSArray*) outgoingPendingRequestsForUser:(PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(sender = %@) AND (accepted = %@)",
                               user, [NSNumber numberWithBool:false]];
@@ -117,6 +124,7 @@
     }
     return results;
 }
+
 + (NSArray*) friendsForUser: (PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) OR "
                               "(receiver = %@)) AND (accepted = %@)", user, user, [NSNumber numberWithBool:true]];
@@ -133,6 +141,13 @@
             [results addObject: object[@"sender"]];
     }
     return results;
+}
+
++ (NSInteger) countFriendsForUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((sender = %@) OR "
+                              "(receiver = %@)) AND (accepted = %@)", user, user, [NSNumber numberWithBool:true]];
+    PFQuery *query = [PFQuery queryWithClassName:@"Friend" predicate:predicate];
+    return [query countObjects];
 }
 
 @end

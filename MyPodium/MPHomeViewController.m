@@ -54,18 +54,18 @@
     MPHomeView* view = (MPHomeView*) self.view;
     dispatch_queue_t friendsQueue = dispatch_queue_create("FriendsLabelQueue", 0);
     dispatch_async(friendsQueue, ^{
-        NSArray* friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
+        NSInteger friends = [MPFriendsModel countFriendsForUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.friendsButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", (unsigned long)friends.count]];
+             [NSString stringWithFormat:@"%lu", friends]];
         });
     });
     dispatch_queue_t teamsQueue = dispatch_queue_create("TeamsLabelQueue", 0);
     dispatch_async(teamsQueue, ^{
-        NSArray* teams = [MPTeamsModel teamsContainingUser:[PFUser currentUser]];
+        NSInteger teams = [MPTeamsModel countTeamsContainingUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.teamsButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", (unsigned long)teams.count]];
+             [NSString stringWithFormat:@"%lu", teams]];
         });
     });
     

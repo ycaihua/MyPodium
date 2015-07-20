@@ -20,6 +20,9 @@
 + (BOOL) leaveTeam: (PFObject*) team forUser: (PFUser*) user;
 + (BOOL) makeTeamWithCreator: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName;
 
++ (NSInteger) countTeamsInvitingUser: (PFUser*) user;
++ (NSInteger) countTeamsContainingUser: (PFUser*) user;
+
 + (NSArray*) teamsCreatedByUser: (PFUser*) user;
 + (NSArray*) teamsContainingUser: (PFUser*) user;
 + (NSArray*) teamsInvitingUser: (PFUser*) user;

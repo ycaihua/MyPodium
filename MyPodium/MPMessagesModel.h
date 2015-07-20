@@ -17,6 +17,8 @@
 + (NSArray*) readMessagesForUser: (PFUser*) user;
 + (NSArray*) sentMessagesForUser: (PFUser*) user;
 
++ (NSInteger) countNewMessagesForUser: (PFUser*) user;
+
 + (BOOL) markMessageRead: (PFObject*) message;
 + (BOOL) markMessageUnread: (PFObject*) message;
 + (BOOL) deleteMessage: (PFObject*) message;

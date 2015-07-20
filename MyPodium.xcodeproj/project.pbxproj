@@ -30,8 +30,6 @@
 		2D4487651B039D680061EF86 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487641B039D680061EF86 /* Security.framework */; };
 		2D4487671B039D720061EF86 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487661B039D720061EF86 /* StoreKit.framework */; };
 		2D4487691B039D770061EF86 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487681B039D760061EF86 /* SystemConfiguration.framework */; };
-		2D44876B1B039D880061EF86 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44876A1B039D880061EF86 /* libz.dylib */; };
-		2D44876D1B039D8F0061EF86 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44876C1B039D8F0061EF86 /* libsqlite3.dylib */; };
 		2D44876F1B039D940061EF86 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D44876E1B039D940061EF86 /* Accounts.framework */; };
 		2D4487711B039D9D0061EF86 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D4487701B039D9D0061EF86 /* Social.framework */; };
 		2D4487791B0546580061EF86 /* MPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487781B0546580061EF86 /* MPView.m */; };
@@ -63,6 +61,7 @@
 		2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F51B083B050061EF86 /* MMDrawerController.m */; };
 		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
+		2D4F4A4F1B5D74B200F7F393 /* MPGameModesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F4A4E1B5D74B200F7F393 /* MPGameModesModel.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
 		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
 		2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPSettingsView.m */; };
@@ -205,6 +204,8 @@
 		2D4487F91B083B050061EF86 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
+		2D4F4A4D1B5D74B200F7F393 /* MPGameModesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGameModesModel.h; sourceTree = "<group>"; };
+		2D4F4A4E1B5D74B200F7F393 /* MPGameModesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGameModesModel.m; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
 		2D5963FA1B505E930034F000 /* MPHomeTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeTipView.m; sourceTree = "<group>"; };
 		2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
@@ -307,8 +308,6 @@
 				2D9A4B3B1B0AC77B00AEF295 /* Bolts.framework in Frameworks */,
 				2D4487711B039D9D0061EF86 /* Social.framework in Frameworks */,
 				2D44876F1B039D940061EF86 /* Accounts.framework in Frameworks */,
-				2D44876D1B039D8F0061EF86 /* libsqlite3.dylib in Frameworks */,
-				2D44876B1B039D880061EF86 /* libz.dylib in Frameworks */,
 				2D4487691B039D770061EF86 /* SystemConfiguration.framework in Frameworks */,
 				2D4487671B039D720061EF86 /* StoreKit.framework in Frameworks */,
 				2D4487651B039D680061EF86 /* Security.framework in Frameworks */,
@@ -745,6 +744,8 @@
 				2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */,
 				2DBF86991B462D7400FB0AF5 /* MPMessagesModel.h */,
 				2DBF869A1B462D7400FB0AF5 /* MPMessagesModel.m */,
+				2D4F4A4D1B5D74B200F7F393 /* MPGameModesModel.h */,
+				2D4F4A4E1B5D74B200F7F393 /* MPGameModesModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -887,6 +888,7 @@
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
 				2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */,
 				2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */,
+				2D4F4A4F1B5D74B200F7F393 /* MPGameModesModel.m in Sources */,
 				2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */,
 				2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */,
 				2D94D0C31B2F7F3B006C500A /* MPMakeTeamViewController.m in Sources */,
@@ -1002,6 +1004,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lsqlite3";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
@@ -1043,6 +1046,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-lsqlite3";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

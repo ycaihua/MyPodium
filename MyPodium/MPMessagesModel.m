@@ -36,6 +36,12 @@
     return [query findObjects];
 }
 
++ (NSInteger) countNewMessagesForUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(receiver = %@) AND (read = %@) AND (visibleToReceiver = %@)", user, [NSNumber numberWithBool:false],[NSNumber numberWithBool:true]];
+    PFQuery *query = [PFQuery queryWithClassName:@"Message" predicate:predicate];
+    return [query countObjects];
+}
+
 + (BOOL) markMessageRead:(PFObject*) message {
     message[@"read"] = [NSNumber numberWithBool:true];
     return [message save];

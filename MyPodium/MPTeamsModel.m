@@ -94,12 +94,26 @@
     return [query findObjects];
 }
 
++ (NSInteger) countTeamsContainingUser: (PFUser*)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN teamMembers)",
+                              user.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
+    return [query countObjects];
+}
+
 + (NSArray*) teamsInvitingUser: (PFUser*) user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN invitedMembers)",
                               user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
     [query includeKey:@"creator"];
     return [query findObjects];
+}
+
++ (NSInteger) countTeamsInvitingUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN invitedMembers)",
+                              user.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
+    return [query countObjects];
 }
 
 + (NSArray*) teamsRequestedByUser: (PFUser*) user {

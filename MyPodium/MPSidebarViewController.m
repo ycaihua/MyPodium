@@ -97,10 +97,10 @@
         }
         else if([destination.class isEqual: [MPMessagesViewController class]]) {
             dispatch_async(dispatch_queue_create("NewMessagesCountQueue", 0), ^{
-                NSArray* messages = [MPMessagesModel newMessagesForUser:[PFUser currentUser]];
+                NSInteger numMessages = [MPMessagesModel countNewMessagesForUser:[PFUser currentUser]];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if(messages.count > 0)
-                        [cell.cellButton applyNumericSubtitle: (int)messages.count];
+                    if(numMessages > 0)
+                        [cell.cellButton applyNumericSubtitle: (int)numMessages];
                 });
             });
         }

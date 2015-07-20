@@ -60,12 +60,12 @@
 
 - (void) checkNewNotifications {
     dispatch_async(dispatch_queue_create("NewNotificationsQueue", 0), ^{
-        NSArray* notifications = @[[MPTeamsModel teamsInvitingUser:[PFUser currentUser]],
-                                   [MPFriendsModel incomingPendingRequestsForUser:[PFUser currentUser]],
-                                   [MPMessagesModel newMessagesForUser:[PFUser currentUser]]];
+        NSArray* notifications = @[@([MPTeamsModel countTeamsInvitingUser:[PFUser currentUser]]),
+                                   @([MPFriendsModel countIncomingRequestsForUser:[PFUser currentUser]]),
+                                   @([MPMessagesModel countNewMessagesForUser:[PFUser currentUser]])];
         int sum = 0;
-        for(NSArray* subArray in notifications)
-            sum += subArray.count;
+        for(NSNumber* notificationType in notifications)
+            sum += notificationType.integerValue;
         dispatch_async(dispatch_get_main_queue(), ^{
             MPMenuView* view = (MPMenuView*) self.view;
             if(sum > 0)
