@@ -20,6 +20,7 @@
 #import "MMDrawerController.h"
 #import "MPFriendsViewController.h"
 #import "MPTeamsViewController.h"
+#import "MPGameModesViewController.h"
 #import "MPHomeViewController.h"
 #import "UIViewController+MMDrawerController.h"
 
@@ -41,6 +42,8 @@
                      forControlEvents:UIControlEventTouchUpInside];
         [view.teamsButton addTarget:self action:@selector(teamsButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
+        [view.modesButton addTarget:self action:@selector(modesButtonPressed:)
+                   forControlEvents:UIControlEventTouchUpInside];
         [view.tipView addTarget:self action:@selector(tipViewPressed:)
                forControlEvents: UIControlEventTouchUpInside];
     }
@@ -58,7 +61,7 @@
         NSInteger friends = [MPFriendsModel countFriendsForUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.friendsButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", friends]];
+             [NSString stringWithFormat:@"%lu", (long)friends]];
         });
     });
     dispatch_queue_t teamsQueue = dispatch_queue_create("TeamsLabelQueue", 0);
@@ -66,7 +69,7 @@
         NSInteger teams = [MPTeamsModel countTeamsContainingUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.teamsButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", teams]];
+             [NSString stringWithFormat:@"%lu", (long)teams]];
         });
     });
     dispatch_queue_t gameModesQueue = dispatch_queue_create("ModesLabelQueue", 0);
@@ -74,7 +77,7 @@
         NSInteger modes = [MPGameModesModel countGameModesForUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.modesButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", modes]];
+             [NSString stringWithFormat:@"%lu", (long)modes]];
         });
     });
     
@@ -91,6 +94,10 @@
 
 - (void) teamsButtonPressed: (id) sender {
     [MPControllerManager presentViewController:[[MPTeamsViewController alloc] init] fromController:self];
+}
+
+- (void) modesButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPGameModesViewController alloc] init] fromController:self];
 }
 
 @end

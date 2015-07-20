@@ -68,4 +68,17 @@
     return results;
 }
 
++ (NSArray*) modesList: (NSArray*) modes searchForString: (NSString*) string {
+    NSString* searchString = [string lowercaseString];
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: modes.count];
+    for(PFObject* mode in modes) {
+        PFUser* creator = mode[@"creator"];
+        if(([mode[@"name_searchable"] containsString: searchString]) ||
+           ([creator[@"username_searchable"] containsString: searchString]) ||
+           ([creator[@"realName_searchable"] containsString: searchString]))
+            [results addObject: mode];
+    }
+    return results;
+}
+
 @end

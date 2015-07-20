@@ -13,8 +13,10 @@
 
 + (NSArray*) usersContainingString: (NSString*) string;
 + (NSArray*) userSearchContainingString: (NSString*) string forUser: (PFUser*) user;
+
 + (NSArray*) userList: (NSArray*) users searchForString: (NSString*) string;
 + (NSArray*) teamList: (NSArray*) teams searchForString: (NSString*) string;
 + (NSArray*) messagesList: (NSArray*) messages searchForString: (NSString*) string;
++ (NSArray*) modesList: (NSArray*) modes searchForString: (NSString*) string;
 
 @end

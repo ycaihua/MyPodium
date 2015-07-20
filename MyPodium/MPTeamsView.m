@@ -62,7 +62,7 @@
 - (void) finishLoading {
     [self.searchButton setEnabled:YES];
     [self.searchButton setBackgroundColor:[UIColor MPBlackColor]];
-    [self.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+    [super finishLoading];
 }
 
 - (void) displaySearch {

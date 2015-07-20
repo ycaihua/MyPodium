@@ -8,6 +8,22 @@
 
 #import "MPMenuView.h"
 
+@class MPSearchControl;
+@class MPTableHeader;
+@class MPBottomEdgeButton;
+
 @interface MPGameModesView : MPMenuView
+
+@property MPSearchControl* filterSearch;
+@property UITableView* modesTable;
+@property MPBottomEdgeButton* searchButton;
+@property MPBottomEdgeButton* makeGameModeButton;
+
+@property BOOL searchAvailable;
+- (void) displaySearch;
+- (void) hideSearch;
+- (void) finishLoading;
+
++ (NSString*) defaultSubtitle;
 
 @end
