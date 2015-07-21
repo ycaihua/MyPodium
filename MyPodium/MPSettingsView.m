@@ -33,7 +33,6 @@
     self.preferencesScrollView = [[MPSettingsScrollView alloc] init];
     self.preferencesScrollView.translatesAutoresizingMaskIntoConstraints = NO;
     self.preferencesScrollView.userInteractionEnabled = YES;
-    self.preferencesScrollView.canCancelContentTouches = NO;
     [self addSubview:self.preferencesScrollView];
     
     //self.preferencesContentView
