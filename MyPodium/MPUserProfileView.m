@@ -29,6 +29,7 @@
                 self.backgroundColor = [UIColor whiteColor];
                 [self makeControls];
                 [self makeControlConstraints];
+                [self updateControlsForNewUser];
             });
         });
     }
@@ -101,7 +102,7 @@
 - (void) updateControlsForNewUser {
     self.usernameLabel.text = self.displayedUser.username.uppercaseString;
     self.realNameLabel.text = @"Display name not available";
-    if((self.userStatus == MPFriendStatusFriends || MPFriendStatusSameUser) && self.displayedUser[@"realName"]) {
+    if((self.userStatus == MPFriendStatusFriends || self.userStatus == MPFriendStatusSameUser) && self.displayedUser[@"realName"]) {
         self.realNameLabel.text = self.displayedUser[@"realName"];
     }
     self.creationDateLabel.text = [NSString stringWithFormat:@"Joined %@",
