@@ -6,6 +6,8 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "MPControllerManager.h"
+
 #import "MPMakeGameModeViewController.h"
 #import "MPMakeGameModeView.h"
 #import "MPBottomEdgeButton.h"
@@ -32,27 +34,42 @@
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-
 - (void) nextButtonPressed: (id) sender {
     MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
-    [view advanceToNextSubview];
-    if(view.subviewIndex == view.modeSubviews.count - 1) {
-        [view.nextButton disable];
-    }
-    else {
-        [view.nextButton enable];
+    BOOL (^block)() = [MPMakeGameModeViewController errorCheckingBlocks][0];
+    BOOL noErrorsFound = block();
+    if(noErrorsFound) {
+        [view advanceToNextSubview];
+        [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
+        if(view.subviewIndex == view.modeSubviews.count - 1) {
+            [view.nextButton disable];
+        }
+        else {
+            [view.nextButton enable];
+        }
     }
 }
 
 - (void) previousButtonPressed: (id) sender {
     MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
-    [view returnToLastSubview];
     if(view.subviewIndex == 0) {
-        [view.previousButton disable];
+        [MPControllerManager dismissViewController:self];
     }
     else {
-        [view.previousButton enable];
+        [view returnToLastSubview];
+        if(view.subviewIndex == 0) {
+            [view.previousButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+        }
+        else {
+            [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
+        }
     }
+}
+
++ (NSArray*) errorCheckingBlocks {
+    return @[^() { return NO; }
+             
+             ];
 }
 
 @end
