@@ -45,7 +45,7 @@
 - (void) registerButtonPressed: (id) sender {
     MPRegisterView* view = (MPRegisterView*) self.view;
     [view.titleLabel displayMessage:@"LOADING..." revertAfter:NO];
-    [self.view performSelector:@selector(responderButtonPressed:) withObject:self];
+    [self.view endEditing:YES];
     NSString* username = view.usernameField.text;
     NSString* usernameSearchable = username.lowercaseString;
     NSString* password = view.passwordField.text;
@@ -71,7 +71,10 @@
     [alerter checkErrorCondition:!([email isValidEmail]) withMessage:@"You didn't enter a valid email."];
     
     //No need to query if already found error
-    if([alerter hasFoundError]) return;
+    if([alerter hasFoundError]) {
+        [view.titleLabel displayMessage:@"REGISTER" revertAfter:NO];
+        return;
+    }
     
     dispatch_queue_t registerQueue = dispatch_queue_create("RegisterQueue", 0);
     dispatch_async(registerQueue, ^{
