@@ -32,6 +32,7 @@
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+
 - (void) nextButtonPressed: (id) sender {
     MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
     [view advanceToNextSubview];
