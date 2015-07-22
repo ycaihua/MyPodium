@@ -7,6 +7,8 @@
 //
 
 #import "MPMakeGameModeViewController.h"
+#import "MPMakeGameModeView.h"
+#import "MPBottomEdgeButton.h"
 
 @interface MPMakeGameModeViewController ()
 
@@ -14,24 +16,42 @@
 
 @implementation MPMakeGameModeViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (id) init {
+    self = [super init];
+    if(self) {
+        MPMakeGameModeView* view = [[MPMakeGameModeView alloc] init];
+        self.view = view;
+        [self makeControlActions];
+    }
+    return self;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void) makeControlActions {
+    MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
+    [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void) nextButtonPressed: (id) sender {
+    MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
+    [view advanceToNextSubview];
+    if(view.subviewIndex == view.modeSubviews.count - 1) {
+        [view.nextButton disable];
+    }
+    else {
+        [view.nextButton enable];
+    }
 }
-*/
+
+- (void) previousButtonPressed: (id) sender {
+    MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
+    [view returnToLastSubview];
+    if(view.subviewIndex == 0) {
+        [view.previousButton disable];
+    }
+    else {
+        [view.previousButton enable];
+    }
+}
 
 @end

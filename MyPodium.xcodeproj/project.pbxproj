@@ -20,6 +20,8 @@
 		2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2D5AD01B18E34800C46B53 /* MPDualLabelButton.m */; };
 		2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D33D5321B4AF2B0006AF4F9 /* MPMessageComposerView.m */; };
 		2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */; };
+		2D3E67041B600591000B39FB /* MPMakeGameModeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E67031B600591000B39FB /* MPMakeGameModeView.m */; };
+		2D3E67071B600636000B39FB /* MPMakeGameModeSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E67061B600636000B39FB /* MPMakeGameModeSubviews.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -143,6 +145,10 @@
 		2D33D5321B4AF2B0006AF4F9 /* MPMessageComposerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageComposerView.m; sourceTree = "<group>"; };
 		2D33D5341B4AF343006AF4F9 /* MPMessageComposerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageComposerViewController.h; sourceTree = "<group>"; };
 		2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageComposerViewController.m; sourceTree = "<group>"; };
+		2D3E67021B600591000B39FB /* MPMakeGameModeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeGameModeView.h; sourceTree = "<group>"; };
+		2D3E67031B600591000B39FB /* MPMakeGameModeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeGameModeView.m; sourceTree = "<group>"; };
+		2D3E67051B600636000B39FB /* MPMakeGameModeSubviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeGameModeSubviews.h; sourceTree = "<group>"; };
+		2D3E67061B600636000B39FB /* MPMakeGameModeSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeGameModeSubviews.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -420,6 +426,17 @@
 			name = Home;
 			sourceTree = "<group>";
 		};
+		2D3E67011B600554000B39FB /* MakeGameMode */ = {
+			isa = PBXGroup;
+			children = (
+				2D3E67021B600591000B39FB /* MPMakeGameModeView.h */,
+				2D3E67031B600591000B39FB /* MPMakeGameModeView.m */,
+				2D3E67051B600636000B39FB /* MPMakeGameModeSubviews.h */,
+				2D3E67061B600636000B39FB /* MPMakeGameModeSubviews.m */,
+			);
+			name = MakeGameMode;
+			sourceTree = "<group>";
+		};
 		2D4487101B02DE260061EF86 = {
 			isa = PBXGroup;
 			children = (
@@ -539,6 +556,7 @@
 				2D94D0AE1B279FB2006C500A /* Teams */,
 				2D94D0BC1B2E9991006C500A /* MakeTeam */,
 				2D05E8DB1B5D7EF4006FF360 /* GameModes */,
+				2D3E67011B600554000B39FB /* MakeGameMode */,
 				2DE9FCE31B20AC6C00F748C9 /* Search */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2D4487811B05553D0061EF86 /* Controls */,
@@ -946,7 +964,9 @@
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,
 				2D94D0AD1B279719006C500A /* MPTeamsModel.m in Sources */,
 				2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */,
+				2D3E67041B600591000B39FB /* MPMakeGameModeView.m in Sources */,
 				2DE9FC981B1A000B00F748C9 /* MPSidebarButton.m in Sources */,
+				2D3E67071B600636000B39FB /* MPMakeGameModeSubviews.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
