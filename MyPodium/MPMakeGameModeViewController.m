@@ -7,10 +7,13 @@
 //
 
 #import "MPControllerManager.h"
+#import "MPLimitConstants.h"
+#import "MPErrorAlerter.h"
 
 #import "MPMakeGameModeViewController.h"
 #import "MPMakeGameModeView.h"
 #import "MPBottomEdgeButton.h"
+#import "MPTextField.h"
 
 @interface MPMakeGameModeViewController ()
 
@@ -36,18 +39,29 @@
 
 - (void) nextButtonPressed: (id) sender {
     MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
-    BOOL (^block)() = [MPMakeGameModeViewController errorCheckingBlocks][0];
-    BOOL noErrorsFound = block();
-    if(noErrorsFound) {
-        [view advanceToNextSubview];
-        [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
-        if(view.subviewIndex == view.modeSubviews.count - 1) {
-            [view.nextButton disable];
-        }
-        else {
-            [view.nextButton enable];
-        }
-    }
+    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
+    UIView* focusedSubview = view.modeSubviews[view.subviewIndex];
+    
+    BOOL (^block)(UIView* subview, MPErrorAlerter* alerter) =
+    [MPMakeGameModeViewController errorCheckingBlocks][0];
+    
+    dispatch_async(dispatch_queue_create("CheckErrorsQueue", 0), ^{
+        BOOL errorsFound = block(focusedSubview, alerter);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(!errorsFound) {
+                [view advanceToNextSubview];
+                [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
+                [view.previousButton enable];
+                if(view.subviewIndex == view.modeSubviews.count - 1) {
+                    [view.nextButton disable];
+                }
+                else {
+                    [view.nextButton enable];
+                }
+            }
+        });
+    });
+    
 }
 
 - (void) previousButtonPressed: (id) sender {
@@ -57,6 +71,7 @@
     }
     else {
         [view returnToLastSubview];
+        [view.nextButton enable];
         if(view.subviewIndex == 0) {
             [view.previousButton setTitle:@"CANCEL" forState:UIControlStateNormal];
         }
@@ -67,9 +82,14 @@
 }
 
 + (NSArray*) errorCheckingBlocks {
-    return @[^() { return NO; }
-             
-             ];
+    return @[^(UIView* subview, MPErrorAlerter* alerter) {
+        MPTextField* usernameField = (MPTextField*)[subview viewWithTag:1];
+        [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Game mode names must be at least %d characters long.", [MPLimitConstants minGameModeCharacters]]];
+        [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Game mode names can be at most %d characters long.", [MPLimitConstants maxGameModeCharacters]]];
+        
+        return [alerter hasFoundError];
+    
+    }];
 }
 
 @end

@@ -19,6 +19,9 @@
 + (int) maxTeamNameCharacters { return 28; }
 + (int) minTeamNameCharacters { return 3; }
 
++ (int) maxGameModeCharacters { return 28; }
++ (int) minGameModeCharacters { return 3; }
+
 + (int) maxRealNameCharacters { return 18; }
 + (int) minRealNameCharacters { return 3; }
 

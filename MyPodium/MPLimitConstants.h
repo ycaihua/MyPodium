@@ -19,6 +19,9 @@
 + (int) maxTeamNameCharacters;
 + (int) minTeamNameCharacters;
 
++ (int) maxGameModeCharacters;
++ (int) minGameModeCharacters;
+
 + (int) maxRealNameCharacters;
 + (int) minRealNameCharacters;
 
