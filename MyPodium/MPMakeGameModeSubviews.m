@@ -6,6 +6,9 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "UIButton+MPImage.h"
+#import "UIColor+MPColor.h"
+
 #import "MPMakeGameModeSubviews.h"
 #import "MPView.h"
 #import "MPLabel.h"
@@ -257,44 +260,120 @@
                                                          constant:5.0f]
                            ]];
     
-    MPTextField* playersPerTeamField = [[MPTextField alloc] initWithPlaceholder:@"PLAYERS PER TEAM"];
-    playersPerTeamField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    playersPerTeamField.translatesAutoresizingMaskIntoConstraints = NO;
-    playersPerTeamField.tag = 4;
-    playersPerTeamField.hidden = YES;
-    [view addSubview: playersPerTeamField];
-    
-    [view addConstraints:@[//playersPerTeamField
-                           [NSLayoutConstraint constraintWithItem:playersPerTeamField
+    MPLabel* playersPerTeamCounter = [[MPLabel alloc] initWithText:@"2"];
+    playersPerTeamCounter.textColor = [UIColor whiteColor];
+    playersPerTeamCounter.textAlignment = NSTextAlignmentCenter;
+    playersPerTeamCounter.backgroundColor = [UIColor MPBlackColor];
+    playersPerTeamCounter.font = [UIFont fontWithName:@"Oswald-Bold" size:32.0f];
+    playersPerTeamCounter.tag = 4;
+    playersPerTeamCounter.hidden = YES;
+    playersPerTeamCounter.translatesAutoresizingMaskIntoConstraints = NO;
+    [view addSubview: playersPerTeamCounter];
+    [view addConstraints:@[//playersPerTeamCounter
+                           [NSLayoutConstraint constraintWithItem:playersPerTeamCounter
                                                         attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:view
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:playersPerTeamField
+                           [NSLayoutConstraint constraintWithItem:playersPerTeamCounter
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:playersPerTeamLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:10.0f],
-                           [NSLayoutConstraint constraintWithItem:playersPerTeamField
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:playersPerTeamCounter
                                                         attribute:NSLayoutAttributeWidth
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:nil
-                                                        attribute:NSLayoutAttributeNotAnAttribute
-                                                       multiplier:1.0f
-                                                         constant:[MPTextField standardWidth]],
-                           [NSLayoutConstraint constraintWithItem:playersPerTeamField
+                                                           toItem:view
+                                                        attribute:NSLayoutAttributeWidth
+                                                       multiplier:0.25f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:playersPerTeamCounter
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPTextField standardHeight]]
+                                                         constant:[UIButton standardWidthAndHeight]],
                            ]];
     
+    
+    UIButton* decrementButton = [[UIButton alloc] init];
+    [decrementButton setImageString:@"minus" withColorString:@"black" withHighlightedColorString:@"black"];
+    decrementButton.tag = 5;
+    decrementButton.hidden = YES;
+    decrementButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [view addSubview: decrementButton];
+    [view addConstraints:@[//decrementButton
+                           [NSLayoutConstraint constraintWithItem:decrementButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:playersPerTeamCounter
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:decrementButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:playersPerTeamCounter
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:decrementButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[UIButton standardWidthAndHeight]],
+                           [NSLayoutConstraint constraintWithItem:decrementButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[UIButton standardWidthAndHeight]],
+                           ]];
+    
+    UIButton* incrementButton = [[UIButton alloc] init];
+    [incrementButton setImageString:@"plus" withColorString:@"black" withHighlightedColorString:@"black"];
+    incrementButton.tag = 6;
+    incrementButton.hidden = YES;
+    incrementButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [view addSubview: incrementButton];
+    [view addConstraints:@[//incrementButton
+                           [NSLayoutConstraint constraintWithItem:incrementButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:playersPerTeamCounter
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:incrementButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:playersPerTeamCounter
+                                                        attribute:NSLayoutAttributeTop
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:incrementButton
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[UIButton standardWidthAndHeight]],
+                           [NSLayoutConstraint constraintWithItem:incrementButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[UIButton standardWidthAndHeight]],
+                           ]];
     
     return view;
 }
@@ -303,8 +382,8 @@
     UISwitch* switchSender = (UISwitch*) sender;
     BOOL state = [switchSender isOn];
     UIView* superview = switchSender.superview;
-    //Tags used: 2, 3, 4
-    for(int i = 2; i < 5; i++) {
+    //Tags used: 2, 3, 4, 5, 6
+    for(int i = 2; i < 7; i++) {
         [superview viewWithTag:i].hidden = !state;
     }
 }
