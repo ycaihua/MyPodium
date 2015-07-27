@@ -14,6 +14,7 @@
 #import "MPMakeRuleView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
+#import "MPLabel.h"
 
 @interface MPMakeRuleViewController ()
 
@@ -22,6 +23,7 @@
 @implementation MPMakeRuleViewController
 
 - (id) init {
+    NSLog(@"A");
     self = [super init];
     if(self) {
         MPMakeRuleView* view = [[MPMakeRuleView alloc] init];
@@ -40,8 +42,26 @@
     MPTextField* nameField = (MPTextField*)[view.ruleSubviews[0] viewWithTag:3];
     nameField.delegate = self;
     
+    UIButton* decrementButton = (UIButton*)[view.ruleSubviews[1] viewWithTag:5];
+    [decrementButton addTarget:self action:@selector(decrementCounterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIButton* incrementButton = (UIButton*)[view.ruleSubviews[1] viewWithTag:6];
+    [incrementButton addTarget:self action:@selector(incrementCounterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) decrementCounterButtonPressed: (id) sender {
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    MPLabel* counter = (MPLabel*)[view.ruleSubviews[1] viewWithTag:4];
+    [counter decrementTextAndRevertAfter:NO withBound:2];
+}
+
+- (void) incrementCounterButtonPressed: (id) sender {
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    MPLabel* counter = (MPLabel*)[view.ruleSubviews[1] viewWithTag:4];
+    [counter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxPlayersPerTeam]];
 }
 
 - (void) nextButtonPressed: (id) sender {

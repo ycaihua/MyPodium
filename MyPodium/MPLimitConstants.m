@@ -25,7 +25,7 @@
 + (int) maxRealNameCharacters { return 18; }
 + (int) minRealNameCharacters { return 3; }
 
-+ (int) maxUsersPerTeam { return 12; }
++ (int) maxPlayersPerTeam { return 12; }
 
 + (int) maxMessageTitleCharacters { return 50; }
 + (int) maxMessageBodyCharacters { return 500; }

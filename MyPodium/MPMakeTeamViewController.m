@@ -147,8 +147,8 @@
     [alerter checkErrorCondition:(view.teamNameField.text.length > [MPLimitConstants maxTeamNameCharacters])
                      withMessage:[NSString stringWithFormat: @"Your team name cannot be longer than %d characters.", [MPLimitConstants maxTeamNameCharacters]]];
     [alerter checkErrorCondition:(self.selectedFriends.count < 1) withMessage:@"You need to select at least one teammate."];
-    [alerter checkErrorCondition:(self.selectedFriends.count > [MPLimitConstants maxUsersPerTeam] - 1)
-                     withMessage:[NSString stringWithFormat:@"You can have at most %d players on your team (counting yourself).", [MPLimitConstants maxUsersPerTeam]]];
+    [alerter checkErrorCondition:(self.selectedFriends.count > [MPLimitConstants maxPlayersPerTeam] - 1)
+                     withMessage:[NSString stringWithFormat:@"You can have at most %d players on your team (counting yourself).", [MPLimitConstants maxPlayersPerTeam]]];
     if(![alerter hasFoundError]) {
         dispatch_queue_t backgroundQueue = dispatch_queue_create("MakeTeamQueue", 0);
         dispatch_async(backgroundQueue, ^{
