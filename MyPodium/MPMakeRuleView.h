@@ -12,7 +12,7 @@
 
 @interface MPMakeRuleView : MPMenuView
 
-@property NSArray* modeSubviews;
+@property NSArray* ruleSubviews;
 @property int subviewIndex;
 
 @property MPBottomEdgeButton* previousButton;
@@ -20,5 +20,7 @@
 
 - (void) advanceToNextSubview;
 - (void) returnToLastSubview;
+
+- (void) adjustNameSubviewForKeyboardShowing: (BOOL) keyboardShowing;
 
 @end

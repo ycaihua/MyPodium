@@ -21,6 +21,7 @@
     
     MPLabel* titleLabel = [[MPLabel alloc] initWithText:@"RULE SET CREATION"];
     titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
+    titleLabel.tag = 1;
     titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [view addSubview: titleLabel];
     [view addConstraints:@[//titleLabel
@@ -42,6 +43,7 @@
     
     MPLabel* infoLabel = [[MPLabel alloc] initWithText:@"Every event you make needs a set of rules. We try to make these rules easy to create and highly flexible, so you can create the type of event you want. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
     infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    infoLabel.tag = 2;
     [view addSubview: infoLabel];
     [view addConstraints:@[//infoLabel
                            [NSLayoutConstraint constraintWithItem:infoLabel
@@ -70,7 +72,8 @@
     MPTextField* nameField = [[MPTextField alloc] initWithPlaceholder:@"RULE NAME"];
     nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     nameField.translatesAutoresizingMaskIntoConstraints = NO;
-    nameField.tag = 1;
+    nameField.returnKeyType = UIReturnKeyGo;
+    nameField.tag = 3;
     [view addSubview: nameField];
     
     [view addConstraints:@[//nameField

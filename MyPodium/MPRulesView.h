@@ -17,7 +17,7 @@
 @property MPSearchControl* filterSearch;
 @property UITableView* modesTable;
 @property MPBottomEdgeButton* searchButton;
-@property MPBottomEdgeButton* makeGameModeButton;
+@property MPBottomEdgeButton* makeRuleButton;
 
 @property BOOL searchAvailable;
 - (void) displaySearch;

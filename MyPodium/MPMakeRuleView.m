@@ -6,6 +6,8 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "MPLabel.h"
+#import "MPTextField.h"
 #import "MPMakeRuleView.h"
 #import "MPMakeRuleSubviews.h"
 #import "MPBottomEdgeButton.h"
@@ -23,9 +25,9 @@
 }
 
 - (void) makeControls {
-    //self.modeSubviews
-    self.modeSubviews = @[[MPMakeRuleSubviews introAndNamingView], [MPMakeRuleSubviews participantTypeView]];
-    for(MPView* view in self.modeSubviews) {
+    //self.ruleSubviews
+    self.ruleSubviews = @[[MPMakeRuleSubviews introAndNamingView], [MPMakeRuleSubviews participantTypeView]];
+    for(MPView* view in self.ruleSubviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview: view];
     }
@@ -44,23 +46,23 @@
 }
 
 - (void) makeControlConstraints {
-    for(int i = 0; i < self.modeSubviews.count; i++) {
+    for(int i = 0; i < self.ruleSubviews.count; i++) {
         //Constraints common to all subviews
-        [self addConstraints:@[[NSLayoutConstraint constraintWithItem:self.modeSubviews[i]
+        [self addConstraints:@[[NSLayoutConstraint constraintWithItem:self.ruleSubviews[i]
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.menu
                                                             attribute:NSLayoutAttributeBottom
                                                            multiplier:1.0f
                                                              constant:10.0f],
-                               [NSLayoutConstraint constraintWithItem:self.modeSubviews[i]
+                               [NSLayoutConstraint constraintWithItem:self.ruleSubviews[i]
                                                             attribute:NSLayoutAttributeBottom
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self.previousButton
                                                             attribute:NSLayoutAttributeTop
                                                            multiplier:1.0f
                                                              constant:-10.0f],
-                               [NSLayoutConstraint constraintWithItem:self.modeSubviews[i]
+                               [NSLayoutConstraint constraintWithItem:self.ruleSubviews[i]
                                                             attribute:NSLayoutAttributeWidth
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:self
@@ -70,7 +72,7 @@
                                ]];
         if(i == 0)
             [self addConstraint:
-             [NSLayoutConstraint constraintWithItem:self.modeSubviews[i]
+             [NSLayoutConstraint constraintWithItem:self.ruleSubviews[i]
                                           attribute:NSLayoutAttributeLeading
                                           relatedBy:NSLayoutRelationEqual
                                              toItem:self
@@ -79,19 +81,19 @@
                                            constant:0.0f]];
         else
             [self addConstraint:
-             [NSLayoutConstraint constraintWithItem:self.modeSubviews[i]
+             [NSLayoutConstraint constraintWithItem:self.ruleSubviews[i]
                                           attribute:NSLayoutAttributeLeading
                                           relatedBy:NSLayoutRelationEqual
-                                             toItem:self.modeSubviews[i-1]
+                                             toItem:self.ruleSubviews[i-1]
                                           attribute:NSLayoutAttributeTrailing
                                          multiplier:1.0f
                                            constant:16.0f]];
-        if(i < (self.modeSubviews.count - 1))
+        if(i < (self.ruleSubviews.count - 1))
             [self addConstraint:
-             [NSLayoutConstraint constraintWithItem:self.modeSubviews[i]
+             [NSLayoutConstraint constraintWithItem:self.ruleSubviews[i]
                                           attribute:NSLayoutAttributeTrailing
                                           relatedBy:NSLayoutRelationEqual
-                                             toItem:self.modeSubviews[i+1]
+                                             toItem:self.ruleSubviews[i+1]
                                           attribute:NSLayoutAttributeLeading
                                          multiplier:1.0f
                                            constant:-16.0f]];
@@ -168,7 +170,7 @@
     }
     self.subviewIndex++;
     [self addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.modeSubviews[self.subviewIndex]
+     [NSLayoutConstraint constraintWithItem:self.ruleSubviews[self.subviewIndex]
                                   attribute:NSLayoutAttributeLeading
                                   relatedBy:NSLayoutRelationEqual
                                      toItem:self
@@ -193,7 +195,7 @@
     }
     self.subviewIndex--;
     [self addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.modeSubviews[self.subviewIndex]
+     [NSLayoutConstraint constraintWithItem:self.ruleSubviews[self.subviewIndex]
                                   attribute:NSLayoutAttributeLeading
                                   relatedBy:NSLayoutRelationEqual
                                      toItem:self
@@ -205,6 +207,49 @@
     
     [UIView animateWithDuration:0.75f animations:^{
         [self layoutIfNeeded];
+    }];
+}
+
+- (void) adjustNameSubviewForKeyboardShowing: (BOOL) keyboardShowing {
+    UIView* nameSubview = self.ruleSubviews[0];
+    MPTextField* nameField = (MPTextField*)[nameSubview viewWithTag:3];
+    MPLabel* infoLabel = (MPLabel*)[nameSubview viewWithTag: 2];
+    if(keyboardShowing)
+        infoLabel.hidden = YES;
+    MPLabel* titleLabel = (MPLabel*)[nameSubview viewWithTag: 1];    for(NSLayoutConstraint* constraint in nameSubview.constraints) {
+        if([constraint.firstItem isEqual: nameField] &&
+           constraint.firstAttribute == NSLayoutAttributeTop) {
+            [nameSubview removeConstraint: constraint];
+            break;
+        }
+    }
+    if(keyboardShowing) {
+        [nameSubview addConstraint:
+         [NSLayoutConstraint constraintWithItem:nameField
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:titleLabel
+                                      attribute:NSLayoutAttributeBottom
+                                     multiplier:1.0f
+                                       constant:5.0f]];
+    }
+    else {
+        [nameSubview addConstraint:
+         [NSLayoutConstraint constraintWithItem:nameField
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:infoLabel
+                                      attribute:NSLayoutAttributeBottom
+                                     multiplier:1.0f
+                                       constant:5.0f]];
+    }
+    [self setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:0.75f animations:^{
+        [self layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if(!keyboardShowing)
+            infoLabel.hidden = NO;
     }];
 }
 

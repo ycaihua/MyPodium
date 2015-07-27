@@ -52,11 +52,11 @@
     [self.searchButton setEnabled:NO];
     [self addSubview:self.searchButton];
     
-    //self.makeGameModeButton
-    self.makeGameModeButton = [[MPBottomEdgeButton alloc] init];
-    [self.makeGameModeButton setTitle:@"NEW MODE" forState:UIControlStateNormal];
-    self.makeGameModeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.makeGameModeButton];
+    //self.makeRuleButton
+    self.makeRuleButton = [[MPBottomEdgeButton alloc] init];
+    [self.makeRuleButton setTitle:@"NEW RULE" forState:UIControlStateNormal];
+    self.makeRuleButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.makeRuleButton];
 }
 
 - (void) finishLoading {
@@ -192,28 +192,28 @@
                                                        multiplier:1.0f
                                                          constant:[MPBottomEdgeButton defaultHeight]],
                            //self.makeGameModeButton
-                           [NSLayoutConstraint constraintWithItem:self.makeGameModeButton
+                           [NSLayoutConstraint constraintWithItem:self.makeRuleButton
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.makeGameModeButton
+                           [NSLayoutConstraint constraintWithItem:self.makeRuleButton
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.5f],
-                           [NSLayoutConstraint constraintWithItem:self.makeGameModeButton
+                           [NSLayoutConstraint constraintWithItem:self.makeRuleButton
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.makeGameModeButton
+                           [NSLayoutConstraint constraintWithItem:self.makeRuleButton
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil

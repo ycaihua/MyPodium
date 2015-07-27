@@ -154,7 +154,7 @@
 - (void) makeControlActions {
     MPRulesView* view = (MPRulesView*) self.view;
     [view.searchButton addTarget: self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [view.makeGameModeButton addTarget:self action:@selector(makeGameModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.makeRuleButton addTarget:self action:@selector(makeRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) searchButtonPressed: (id) sender {
@@ -167,7 +167,7 @@
     }
 }
 
-- (void) makeGameModeButtonPressed: (id) sender {
+- (void) makeRuleButtonPressed: (id) sender {
     [MPControllerManager presentViewController:[[MPMakeRuleViewController alloc] init] fromController:self];
 }
 
