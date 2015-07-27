@@ -11,7 +11,7 @@
 #import "MPControllerManager.h"
 #import "MPTableSectionUtility.h"
 
-#import "MPGameModesModel.h"
+#import "MPRulesModel.h"
 #import "MPGlobalModel.h"
 
 #import "MPGameModesView.h"
@@ -66,7 +66,7 @@
     self.tableSections = @[[[MPTableSectionUtility alloc]
                             initWithHeaderTitle:[MPGameModesViewController ownedModesHeader]
                             withDataBlock:^(){
-                                NSArray* ownedModes = [MPGameModesModel gameModesForUser:[PFUser currentUser]];
+                                NSArray* ownedModes = [MPRulesModel rulesForUser:[PFUser currentUser]];
                                 if(self.isFiltered) {
                                     MPGameModesView* view = (MPGameModesView*) self.view;
                                     return [MPGlobalModel modesList:ownedModes searchForString:view.filterSearch.searchField.text];

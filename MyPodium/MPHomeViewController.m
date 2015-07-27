@@ -10,7 +10,7 @@
 
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
-#import "MPGameModesModel.h"
+#import "MPRulesModel.h"
 
 #import "MPHomeView.h"
 #import "MPHomeTipView.h"
@@ -74,7 +74,7 @@
     });
     dispatch_queue_t gameModesQueue = dispatch_queue_create("ModesLabelQueue", 0);
     dispatch_async(gameModesQueue, ^{
-        NSInteger modes = [MPGameModesModel countGameModesForUser:[PFUser currentUser]];
+        NSInteger modes = [MPRulesModel countRulesForUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.modesButton.customTitleLabel setText:
              [NSString stringWithFormat:@"%lu", (long)modes]];

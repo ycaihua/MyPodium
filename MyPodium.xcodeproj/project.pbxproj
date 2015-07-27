@@ -67,7 +67,7 @@
 		2D4487FC1B083B050061EF86 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F51B083B050061EF86 /* MMDrawerController.m */; };
 		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
-		2D4F4A4F1B5D74B200F7F393 /* MPGameModesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F4A4E1B5D74B200F7F393 /* MPGameModesModel.m */; };
+		2D4F4A4F1B5D74B200F7F393 /* MPRulesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
 		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
 		2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPSettingsView.m */; };
@@ -222,8 +222,8 @@
 		2D4487F91B083B050061EF86 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
-		2D4F4A4D1B5D74B200F7F393 /* MPGameModesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGameModesModel.h; sourceTree = "<group>"; };
-		2D4F4A4E1B5D74B200F7F393 /* MPGameModesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGameModesModel.m; sourceTree = "<group>"; };
+		2D4F4A4D1B5D74B200F7F393 /* MPRulesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRulesModel.h; sourceTree = "<group>"; };
+		2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRulesModel.m; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
 		2D5963FA1B505E930034F000 /* MPHomeTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeTipView.m; sourceTree = "<group>"; };
 		2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
@@ -806,8 +806,8 @@
 				2DE9FCF21B22199800F748C9 /* MPGlobalModel.m */,
 				2DBF86991B462D7400FB0AF5 /* MPMessagesModel.h */,
 				2DBF869A1B462D7400FB0AF5 /* MPMessagesModel.m */,
-				2D4F4A4D1B5D74B200F7F393 /* MPGameModesModel.h */,
-				2D4F4A4E1B5D74B200F7F393 /* MPGameModesModel.m */,
+				2D4F4A4D1B5D74B200F7F393 /* MPRulesModel.h */,
+				2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -951,7 +951,7 @@
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
 				2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */,
 				2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */,
-				2D4F4A4F1B5D74B200F7F393 /* MPGameModesModel.m in Sources */,
+				2D4F4A4F1B5D74B200F7F393 /* MPRulesModel.m in Sources */,
 				2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */,
 				2D05E8E21B5D8323006FF360 /* MPGameModesViewController.m in Sources */,
 				2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */,

@@ -1,5 +1,5 @@
 //
-//  MPGameModesModel.h
+//  MPRulesModel.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
@@ -10,10 +10,10 @@
 
 @class PFUser;
 
-@interface MPGameModesModel : NSObject
+@interface MPRulesModel : NSObject
 
-+ (NSArray*) gameModesForUser: (PFUser*) user;
++ (NSArray*) rulesForUser: (PFUser*) user;
 
-+ (NSInteger) countGameModesForUser: (PFUser*) user;
++ (NSInteger) countRulesForUser: (PFUser*) user;
 
 @end
