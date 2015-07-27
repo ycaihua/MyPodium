@@ -1,5 +1,5 @@
 //
-//  MPGameModesViewController.m
+//  MPRulesViewController.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
@@ -23,18 +23,18 @@
 #import "MPMenu.h"
 #import "MPLabel.h"
 
-#import "MPGameModesViewController.h"
-#import "MPMakeGameModeViewController.h"
+#import "MPRulesViewController.h"
+#import "MPMakeRuleViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 
 #import "AppDelegate.h"
 
-@interface MPGameModesViewController ()
+@interface MPRulesViewController ()
 
 @end
 
-@implementation MPGameModesViewController
+@implementation MPRulesViewController
 
 - (id) init {
     self = [super init];
@@ -52,9 +52,9 @@
         [self makeTableSections];
         UITableView* table = view.modesTable;
         [table registerClass:[MPRuleCell class]
-      forCellReuseIdentifier:[MPGameModesViewController rulesReuseIdentifier]];
+      forCellReuseIdentifier:[MPRulesViewController rulesReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
-      forCellReuseIdentifier:[MPGameModesViewController blankReuseIdentifier]];
+      forCellReuseIdentifier:[MPRulesViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
         [self refreshData];
@@ -64,7 +64,7 @@
 
 - (void) makeTableSections {
     self.tableSections = @[[[MPTableSectionUtility alloc]
-                            initWithHeaderTitle:[MPGameModesViewController ownedModesHeader]
+                            initWithHeaderTitle:[MPRulesViewController ownedRulesHeader]
                             withDataBlock:^(){
                                 NSArray* ownedModes = [MPRulesModel rulesForUser:[PFUser currentUser]];
                                 if(self.isFiltered) {
@@ -75,9 +75,9 @@
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
                                 MPRuleCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                                                    [MPGameModesViewController rulesReuseIdentifier] forIndexPath:indexPath];
+                                                    [MPRulesViewController rulesReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPRuleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPGameModesViewController rulesReuseIdentifier]];
+                                    cell = [[MPRuleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPRulesViewController rulesReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
                                 //Remove any existing actions
@@ -147,7 +147,7 @@
         }
     }
     if(headerNames.count == 0)
-        [headerNames addObject: [MPGameModesViewController noneFoundHeader]];
+        [headerNames addObject: [MPRulesViewController noneFoundHeader]];
     self.sectionHeaderNames = headerNames;
 }
 
@@ -168,7 +168,7 @@
 }
 
 - (void) makeGameModeButtonPressed: (id) sender {
-    [MPControllerManager presentViewController:[[MPMakeGameModeViewController alloc] init] fromController:self];
+    [MPControllerManager presentViewController:[[MPMakeRuleViewController alloc] init] fromController:self];
 }
 
 #pragma mark cell targets
@@ -263,11 +263,11 @@
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     //Blank cell
     if([self.sectionHeaderNames[indexPath.section] isEqualToString:
-        [MPGameModesViewController noneFoundHeader]]) {
+        [MPRulesViewController noneFoundHeader]]) {
         UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                                 [MPGameModesViewController blankReuseIdentifier] forIndexPath:indexPath];
+                                 [MPRulesViewController blankReuseIdentifier] forIndexPath:indexPath];
         if(!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPGameModesViewController blankReuseIdentifier]];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPRulesViewController blankReuseIdentifier]];
         }
         cell.backgroundColor = [UIColor clearColor];
         return cell;
@@ -288,7 +288,7 @@
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if([self.sectionHeaderNames[section] isEqualToString:[MPGameModesViewController noneFoundHeader]])
+    if([self.sectionHeaderNames[section] isEqualToString:[MPRulesViewController noneFoundHeader]])
         return 1;
     MPTableSectionUtility* sectionUtility = [self tableSectionWithHeader:self.sectionHeaderNames[section]];
     return  sectionUtility.dataObjects.count;
@@ -351,7 +351,7 @@
 #pragma mark constants
 
 
-+ (NSString*) ownedModesHeader { return @"MY GAME MODES"; }
++ (NSString*) ownedRulesHeader { return @"MY RULES"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
 
 + (NSString*) rulesReuseIdentifier { return @"ModesCell"; }

@@ -223,6 +223,6 @@
                            ]];
 }
 
-+ (NSString*) defaultSubtitle { return @"Game Modes"; }
++ (NSString*) defaultSubtitle { return @"Rules"; }
 
 @end

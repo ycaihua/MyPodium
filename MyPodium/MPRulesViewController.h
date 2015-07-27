@@ -1,5 +1,5 @@
 //
-//  MPGameModesViewController.h
+//  MPRulesViewController.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPGameModesViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MPRulesViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property NSArray* tableSections;
 

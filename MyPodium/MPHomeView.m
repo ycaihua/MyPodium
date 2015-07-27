@@ -53,17 +53,17 @@
     self.teamsButton.subtitleLabel.text = @"TEAMS";
     [self addSubview: self.teamsButton];
     
-    //self.modesButton
-    self.modesButton = [[MPBoldColorButton alloc] init];
-    self.modesButton.backgroundColor = self.buttonColors[2];
-    if([self.modesButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
-        [self.modesButton setCombinedTextColor: [UIColor whiteColor]];
+    //self.rulesButton
+    self.rulesButton = [[MPBoldColorButton alloc] init];
+    self.rulesButton.backgroundColor = self.buttonColors[2];
+    if([self.rulesButton.backgroundColor isEqual: [UIColor MPBlackColor]]) {
+        [self.rulesButton setCombinedTextColor: [UIColor whiteColor]];
     }
     else {
-        [self.modesButton setCombinedTextColor: [UIColor MPBlackColor]];
+        [self.rulesButton setCombinedTextColor: [UIColor MPBlackColor]];
     }
-    self.modesButton.subtitleLabel.text = @"MODES";
-    [self addSubview: self.modesButton];
+    self.rulesButton.subtitleLabel.text = @"RULES";
+    [self addSubview: self.rulesButton];
     
     //self.eventsButton
     self.eventsButton = [[MPBoldColorButton alloc] init];
@@ -151,7 +151,7 @@
                             [NSLayoutConstraint constraintWithItem:self.friendsButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
-                                                            toItem:self.modesButton
+                                                            toItem:self.rulesButton
                                                          attribute:NSLayoutAttributeTop
                                                         multiplier:1.0f
                                                           constant:-(2*buttonPadding)],
@@ -184,36 +184,36 @@
                                                          attribute:NSLayoutAttributeTop
                                                         multiplier:1.0f
                                                           constant:-(2*buttonPadding)],
-                            //self.gameModesButton
-                            [NSLayoutConstraint constraintWithItem:self.modesButton
+                            //self.rulesButton
+                            [NSLayoutConstraint constraintWithItem:self.rulesButton
                                                          attribute:NSLayoutAttributeLeading
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeLeading
                                                         multiplier:1.0f
                                                           constant:buttonPadding*2],
-                            [NSLayoutConstraint constraintWithItem:self.modesButton
+                            [NSLayoutConstraint constraintWithItem:self.rulesButton
                                                          attribute:NSLayoutAttributeTrailing
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self
                                                          attribute:NSLayoutAttributeCenterX
                                                         multiplier:1.0f
                                                           constant:-buttonPadding],
-                            [NSLayoutConstraint constraintWithItem:self.modesButton
+                            [NSLayoutConstraint constraintWithItem:self.rulesButton
                                                          attribute:NSLayoutAttributeTop
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.friendsButton
                                                          attribute:NSLayoutAttributeBottom
                                                         multiplier:1.0f
                                                           constant:2*buttonPadding],
-                            [NSLayoutConstraint constraintWithItem:self.modesButton
+                            [NSLayoutConstraint constraintWithItem:self.rulesButton
                                                          attribute:NSLayoutAttributeHeight
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.friendsButton
                                                          attribute:NSLayoutAttributeHeight
                                                         multiplier:1.0f
                                                           constant:0.0f],
-                            [NSLayoutConstraint constraintWithItem:self.modesButton
+                            [NSLayoutConstraint constraintWithItem:self.rulesButton
                                                          attribute:NSLayoutAttributeBottom
                                                          relatedBy:NSLayoutRelationEqual
                                                             toItem:self.tipView

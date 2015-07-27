@@ -1,5 +1,5 @@
 //
-//  MPMakeGameModeViewController.m
+//  MPMakeRuleViewController.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
@@ -10,16 +10,16 @@
 #import "MPLimitConstants.h"
 #import "MPErrorAlerter.h"
 
-#import "MPMakeGameModeViewController.h"
+#import "MPMakeRuleViewController.h"
 #import "MPMakeRuleView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 
-@interface MPMakeGameModeViewController ()
+@interface MPMakeRuleViewController ()
 
 @end
 
-@implementation MPMakeGameModeViewController
+@implementation MPMakeRuleViewController
 
 - (id) init {
     self = [super init];
@@ -43,7 +43,7 @@
     UIView* focusedSubview = view.modeSubviews[view.subviewIndex];
     
     BOOL (^block)(UIView* subview, MPErrorAlerter* alerter) =
-    [MPMakeGameModeViewController errorCheckingBlocks][0];
+    [MPMakeRuleViewController errorCheckingBlocks][view.subviewIndex];
     
     dispatch_async(dispatch_queue_create("CheckErrorsQueue", 0), ^{
         BOOL errorsFound = block(focusedSubview, alerter);
@@ -84,8 +84,8 @@
 + (NSArray*) errorCheckingBlocks {
     return @[^(UIView* subview, MPErrorAlerter* alerter) {
         MPTextField* usernameField = (MPTextField*)[subview viewWithTag:1];
-        [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Game mode names must be at least %d characters long.", [MPLimitConstants minGameModeCharacters]]];
-        [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Game mode names can be at most %d characters long.", [MPLimitConstants maxGameModeCharacters]]];
+        [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minGameModeCharacters]]];
+        [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxGameModeCharacters]]];
         
         return [alerter hasFoundError];
     

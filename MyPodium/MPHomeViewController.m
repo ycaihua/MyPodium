@@ -20,7 +20,7 @@
 #import "MMDrawerController.h"
 #import "MPFriendsViewController.h"
 #import "MPTeamsViewController.h"
-#import "MPGameModesViewController.h"
+#import "MPRulesViewController.h"
 #import "MPHomeViewController.h"
 #import "UIViewController+MMDrawerController.h"
 
@@ -42,7 +42,7 @@
                      forControlEvents:UIControlEventTouchUpInside];
         [view.teamsButton addTarget:self action:@selector(teamsButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
-        [view.modesButton addTarget:self action:@selector(modesButtonPressed:)
+        [view.rulesButton addTarget:self action:@selector(rulesButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
         [view.tipView addTarget:self action:@selector(tipViewPressed:)
                forControlEvents: UIControlEventTouchUpInside];
@@ -72,12 +72,12 @@
              [NSString stringWithFormat:@"%lu", (long)teams]];
         });
     });
-    dispatch_queue_t gameModesQueue = dispatch_queue_create("ModesLabelQueue", 0);
-    dispatch_async(gameModesQueue, ^{
-        NSInteger modes = [MPRulesModel countRulesForUser:[PFUser currentUser]];
+    dispatch_queue_t rulesQueue = dispatch_queue_create("RulesLabelQueue", 0);
+    dispatch_async(rulesQueue, ^{
+        NSInteger rules = [MPRulesModel countRulesForUser:[PFUser currentUser]];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [view.modesButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", (long)modes]];
+            [view.rulesButton.customTitleLabel setText:
+             [NSString stringWithFormat:@"%lu", (long)rules]];
         });
     });
     
@@ -96,8 +96,8 @@
     [MPControllerManager presentViewController:[[MPTeamsViewController alloc] init] fromController:self];
 }
 
-- (void) modesButtonPressed: (id) sender {
-    [MPControllerManager presentViewController:[[MPGameModesViewController alloc] init] fromController:self];
+- (void) rulesButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPRulesViewController alloc] init] fromController:self];
 }
 
 @end

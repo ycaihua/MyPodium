@@ -19,7 +19,7 @@
 
 @property MPBoldColorButton* friendsButton;
 @property MPBoldColorButton* teamsButton;
-@property MPBoldColorButton* modesButton;
+@property MPBoldColorButton* rulesButton;
 @property MPBoldColorButton* eventsButton;
 
 @property MPHomeTipView* tipView;
