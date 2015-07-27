@@ -27,5 +27,5 @@
     return [query countObjects];
 }
 
-+ (NSString*) tableName { return @"GameMode"; }
++ (NSString*) tableName { return @"Rule"; }
 @end

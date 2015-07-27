@@ -1,5 +1,5 @@
 //
-//  MPMakeGameModeView.h
+//  MPMakeRuleView.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/22/15.
@@ -10,7 +10,7 @@
 
 @class MPBottomEdgeButton;
 
-@interface MPMakeGameModeView : MPMenuView
+@interface MPMakeRuleView : MPMenuView
 
 @property NSArray* modeSubviews;
 @property int subviewIndex;

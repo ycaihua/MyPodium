@@ -1,5 +1,5 @@
 //
-//  MPMakeGameModeSubviews.h
+//  MPMakeRuleSubviews.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/22/15.
@@ -10,7 +10,7 @@
 
 @class MPView;
 
-@interface MPMakeGameModeSubviews : NSObject
+@interface MPMakeRuleSubviews : NSObject
 
 + (MPView*) introAndNamingView;
 + (MPView*) participantTypeView;

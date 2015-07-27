@@ -11,7 +11,7 @@
 #import "MPErrorAlerter.h"
 
 #import "MPMakeGameModeViewController.h"
-#import "MPMakeGameModeView.h"
+#import "MPMakeRuleView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 
@@ -24,7 +24,7 @@
 - (id) init {
     self = [super init];
     if(self) {
-        MPMakeGameModeView* view = [[MPMakeGameModeView alloc] init];
+        MPMakeRuleView* view = [[MPMakeRuleView alloc] init];
         self.view = view;
         [self makeControlActions];
     }
@@ -32,13 +32,13 @@
 }
 
 - (void) makeControlActions {
-    MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) nextButtonPressed: (id) sender {
-    MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     UIView* focusedSubview = view.modeSubviews[view.subviewIndex];
     
@@ -65,7 +65,7 @@
 }
 
 - (void) previousButtonPressed: (id) sender {
-    MPMakeGameModeView* view = (MPMakeGameModeView*) self.view;
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     if(view.subviewIndex == 0) {
         [MPControllerManager dismissViewController:self];
     }

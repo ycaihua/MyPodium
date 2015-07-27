@@ -1,5 +1,5 @@
 //
-//  MPGameModesView.h
+//  MPRulesView.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
@@ -12,7 +12,7 @@
 @class MPTableHeader;
 @class MPBottomEdgeButton;
 
-@interface MPGameModesView : MPMenuView
+@interface MPRulesView : MPMenuView
 
 @property MPSearchControl* filterSearch;
 @property UITableView* modesTable;

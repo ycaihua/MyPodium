@@ -14,8 +14,8 @@
 #import "MPRulesModel.h"
 #import "MPGlobalModel.h"
 
-#import "MPGameModesView.h"
-#import "MPGameModeCell.h"
+#import "MPRulesView.h"
+#import "MPRuleCell.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
@@ -39,7 +39,7 @@
 - (id) init {
     self = [super init];
     if(self) {
-        MPGameModesView* view = [[MPGameModesView alloc] init];
+        MPRulesView* view = [[MPRulesView alloc] init];
         self.view = view;
         [view startLoading];
         //Filter init
@@ -51,8 +51,8 @@
         [self makeControlActions];
         [self makeTableSections];
         UITableView* table = view.modesTable;
-        [table registerClass:[MPGameModeCell class]
-      forCellReuseIdentifier:[MPGameModesViewController modesReuseIdentifier]];
+        [table registerClass:[MPRuleCell class]
+      forCellReuseIdentifier:[MPGameModesViewController rulesReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
       forCellReuseIdentifier:[MPGameModesViewController blankReuseIdentifier]];
         table.delegate = self;
@@ -68,16 +68,16 @@
                             withDataBlock:^(){
                                 NSArray* ownedModes = [MPRulesModel rulesForUser:[PFUser currentUser]];
                                 if(self.isFiltered) {
-                                    MPGameModesView* view = (MPGameModesView*) self.view;
+                                    MPRulesView* view = (MPRulesView*) self.view;
                                     return [MPGlobalModel modesList:ownedModes searchForString:view.filterSearch.searchField.text];
                                 }
                                 else return ownedModes;
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPGameModeCell* cell = [tableView dequeueReusableCellWithIdentifier:
-                                                    [MPGameModesViewController modesReuseIdentifier] forIndexPath:indexPath];
+                                MPRuleCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                    [MPGameModesViewController rulesReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPGameModeCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPGameModesViewController modesReuseIdentifier]];
+                                    cell = [[MPRuleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPGameModesViewController rulesReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
                                 //Remove any existing actions
@@ -103,13 +103,13 @@
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPGameModeCell*)cell updateForGameMode:object];
+                                [(MPRuleCell*)cell updateForRule:object];
                             }]
                            ];
 }
 
 - (void) loadOnDismiss: (id) sender {
-    MPGameModesView* view = (MPGameModesView*) self.view;
+    MPRulesView* view = (MPRulesView*) self.view;
     [view startLoading];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
     dispatch_async(backgroundQueue, ^{
@@ -125,7 +125,7 @@
 }
 
 - (void) refreshData {
-    MPGameModesView* view = (MPGameModesView*) self.view;
+    MPRulesView* view = (MPRulesView*) self.view;
     dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
     dispatch_async(backgroundQueue, ^{
         for(MPTableSectionUtility* section in self.tableSections) {
@@ -152,13 +152,13 @@
 }
 
 - (void) makeControlActions {
-    MPGameModesView* view = (MPGameModesView*) self.view;
+    MPRulesView* view = (MPRulesView*) self.view;
     [view.searchButton addTarget: self action:@selector(searchButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.makeGameModeButton addTarget:self action:@selector(makeGameModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) searchButtonPressed: (id) sender {
-    MPGameModesView* view = (MPGameModesView*) self.view;
+    MPRulesView* view = (MPRulesView*) self.view;
     if(view.searchAvailable) {
         [view hideSearch];
     }
@@ -178,7 +178,7 @@
            withErrorMessage: (NSString*) errorMessage
       withConfirmationAlert: (BOOL) showAlert
     withConfirmationMessage: (NSString*) alertMessage {
-    MPGameModesView* view = (MPGameModesView*) self.view;
+    MPRulesView* view = (MPRulesView*) self.view;
     [view startLoading];
     if(showAlert) {
         UIAlertController* confirmationAlert =
@@ -193,7 +193,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        view.menu.subtitleLabel.persistentText = [MPGameModesView defaultSubtitle];
+                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                         [view.menu.subtitleLabel displayMessage: successMessage
                                                     revertAfter:TRUE
@@ -202,7 +202,7 @@
                         [view.modesTable reloadData];
                     }
                     else {
-                        view.menu.subtitleLabel.persistentText = [MPGameModesView defaultSubtitle];
+                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                         [view.menu.subtitleLabel displayMessage:errorMessage
                                                     revertAfter:TRUE
@@ -212,7 +212,7 @@
             });
         }];
         UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPGameModesView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
+            [view.menu.subtitleLabel displayMessage:[MPRulesView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
             
         }];
         [confirmationAlert addAction: confirmAction];
@@ -226,7 +226,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    view.menu.subtitleLabel.persistentText = [MPGameModesView defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage: successMessage
                                                 revertAfter:TRUE
@@ -235,7 +235,7 @@
                     [view.modesTable reloadData];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPGameModesView defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:errorMessage
                                                 revertAfter:TRUE
@@ -296,7 +296,7 @@
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPGameModeCell cellHeight];
+    return [MPRuleCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -318,7 +318,7 @@
 #pragma mark search filtering
 
 - (void) filterSearchButtonPressed: (id) sender {
-    MPGameModesView* view = (MPGameModesView*) self.view;
+    MPRulesView* view = (MPRulesView*) self.view;
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     self.isFiltered = !(filterString.length == 0);
@@ -354,6 +354,6 @@
 + (NSString*) ownedModesHeader { return @"MY GAME MODES"; }
 + (NSString*) noneFoundHeader { return @"NO RESULTS"; }
 
-+ (NSString*) modesReuseIdentifier { return @"ModesCell"; }
++ (NSString*) rulesReuseIdentifier { return @"ModesCell"; }
 + (NSString*) blankReuseIdentifier { return @"BlankCell"; }
 @end

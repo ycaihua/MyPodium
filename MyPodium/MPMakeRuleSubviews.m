@@ -1,5 +1,5 @@
 //
-//  MPMakeGameModeSubviews.m
+//  MPMakeRuleSubviews.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/22/15.
@@ -9,12 +9,12 @@
 #import "UIButton+MPImage.h"
 #import "UIColor+MPColor.h"
 
-#import "MPMakeGameModeSubviews.h"
+#import "MPMakeRuleSubviews.h"
 #import "MPView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 
-@implementation MPMakeGameModeSubviews
+@implementation MPMakeRuleSubviews
 
 + (MPView*) introAndNamingView {
     MPView* view = [[MPView alloc] init];

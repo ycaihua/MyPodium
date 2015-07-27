@@ -1,12 +1,12 @@
 //
-//  MPGameModesView.m
+//  MPRulesView.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPGameModesView.h"
+#import "MPRulesView.h"
 #import "UIColor+MPColor.h"
 
 #import "MPBottomEdgeButton.h"
@@ -16,10 +16,10 @@
 #import "MPMenu.h"
 #import "MPLabel.h"
 
-@implementation MPGameModesView
+@implementation MPRulesView
 
 - (id) init {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPGameModesView defaultSubtitle]];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPRulesView defaultSubtitle]];
     if(self) {
         self.backgroundColor = [UIColor MPGrayColor];
         self.searchAvailable = NO;

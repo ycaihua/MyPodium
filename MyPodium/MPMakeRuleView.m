@@ -1,19 +1,19 @@
 //
-//  MPMakeGameModeView.m
+//  MPMakeRuleView.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/22/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPMakeGameModeView.h"
-#import "MPMakeGameModeSubviews.h"
+#import "MPMakeRuleView.h"
+#import "MPMakeRuleSubviews.h"
 #import "MPBottomEdgeButton.h"
 
-@implementation MPMakeGameModeView
+@implementation MPMakeRuleView
 
 - (id) init {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPMakeGameModeView defaultSubtitle]];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPMakeRuleView defaultSubtitle]];
     if(self) {
         self.subviewIndex = 0;
         [self makeControls];
@@ -24,7 +24,7 @@
 
 - (void) makeControls {
     //self.modeSubviews
-    self.modeSubviews = @[[MPMakeGameModeSubviews introAndNamingView], [MPMakeGameModeSubviews participantTypeView]];
+    self.modeSubviews = @[[MPMakeRuleSubviews introAndNamingView], [MPMakeRuleSubviews participantTypeView]];
     for(MPView* view in self.modeSubviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview: view];
@@ -208,6 +208,6 @@
     }];
 }
 
-+ (NSString*) defaultSubtitle { return @"New Game Mode"; }
++ (NSString*) defaultSubtitle { return @"New Rule"; }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MPGameModeCell.m
+//  MPRuleCell.m
 //  MyPodium
 //
 //  Created by Connor Neville on 6/5/15.
@@ -9,10 +9,10 @@
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
 
-#import "MPGameModeCell.h"
+#import "MPRuleCell.h"
 #import "MPLabel.h"
 
-@implementation MPGameModeCell
+@implementation MPRuleCell
 
 - (id) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style
@@ -34,13 +34,13 @@
     }
 }
 
-- (void) updateForGameMode:(PFObject *)mode {
-    [self.modeNameLabel setText: mode[@"name"]];
-    BOOL teamParticipants = [mode[@"usesTeamParticipants"] boolValue];
+- (void) updateForRule:(PFObject *)rule {
+    [self.modeNameLabel setText: rule[@"name"]];
+    BOOL teamParticipants = [rule[@"usesTeamParticipants"] boolValue];
     if(teamParticipants)
-        self.modeDetailsLabel.text = @"Team-based mode";
+        self.modeDetailsLabel.text = @"Team vs. team";
     else
-        self.modeDetailsLabel.text = @"Free-for-all mode";
+        self.modeDetailsLabel.text = @"Player vs. player";
 }
 
 - (void) makeControls {
@@ -130,7 +130,7 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[MPGameModeCell cellContentHeight]],
+                                                         constant:[MPRuleCell cellContentHeight]],
                            //self.bottomBorder
                            [NSLayoutConstraint constraintWithItem:self.bottomBorder
                                                         attribute:NSLayoutAttributeLeading

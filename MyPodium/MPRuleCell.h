@@ -1,5 +1,5 @@
 //
-//  MPGameModeCell.h
+//  MPRuleCell.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/20/15.
@@ -10,7 +10,7 @@
 #import <Parse/Parse.h>
 @class MPLabel;
 
-@interface MPGameModeCell : UITableViewCell
+@interface MPRuleCell : UITableViewCell
 
 @property UIView* solidColorView;
 @property UIView* bottomBorder;
@@ -25,7 +25,7 @@
 
 @property NSIndexPath* indexPath;
 
-- (void) updateForGameMode: (PFObject*) mode;
+- (void) updateForRule: (PFObject*) rule;
 
 - (void) showLeftButton;
 - (void) hideLeftButton;
