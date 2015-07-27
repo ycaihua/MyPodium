@@ -191,7 +191,7 @@
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPBottomEdgeButton defaultHeight]],
-                           //self.makeGameModeButton
+                           //self.makeRuleButton
                            [NSLayoutConstraint constraintWithItem:self.makeRuleButton
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual

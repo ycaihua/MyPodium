@@ -9,6 +9,7 @@
 #import "MPMenuView.h"
 
 @class MPBottomEdgeButton;
+@class MPTextField;
 
 @interface MPMakeRuleView : MPMenuView
 
@@ -22,5 +23,6 @@
 - (void) returnToLastSubview;
 
 - (void) adjustNameSubviewForKeyboardShowing: (BOOL) keyboardShowing;
+- (void) adjustStatSubviewForKeyboardShowing: (BOOL) keyboardShowing withField: (MPTextField*) field;
 
 @end

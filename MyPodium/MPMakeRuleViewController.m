@@ -95,8 +95,12 @@
         [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxGameModeCharacters]]];
         
         return [alerter hasFoundError];
-    
-    }];
+        
+    },
+              ^(UIView* subview, MPErrorAlerter* alerter) {
+                  return NO;
+              }
+              ];
 }
 
 - (void) keyboardWillShow: (NSNotification*) notification {
@@ -104,12 +108,34 @@
     if(view.subviewIndex == 0) {
         [view adjustNameSubviewForKeyboardShowing: YES];
     }
+    else if(view.subviewIndex == 2) {
+        MPView* activeSubview = view.ruleSubviews[view.subviewIndex];
+        MPTextField* playerStatsField = (MPTextField*)[activeSubview viewWithTag:3];
+        MPTextField* teamStatsField = (MPTextField*)[activeSubview viewWithTag:5];
+        if([playerStatsField isFirstResponder]) {
+            [view adjustStatSubviewForKeyboardShowing:YES withField:playerStatsField];
+        }
+        else {
+            [view adjustStatSubviewForKeyboardShowing:YES withField:teamStatsField];
+        }
+    }
 }
 
 - (void) keyboardWillHide: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     if(view.subviewIndex == 0) {
         [view adjustNameSubviewForKeyboardShowing: NO];
+    }
+    else if(view.subviewIndex == 2) {
+        MPView* activeSubview = view.ruleSubviews[view.subviewIndex];
+        MPTextField* playerStatsField = (MPTextField*)[activeSubview viewWithTag:3];
+        MPTextField* teamStatsField = (MPTextField*)[activeSubview viewWithTag:5];
+        if([playerStatsField isFirstResponder]) {
+            [view adjustStatSubviewForKeyboardShowing:NO withField:playerStatsField];
+        }
+        else {
+            [view adjustStatSubviewForKeyboardShowing:NO withField:teamStatsField];
+        }
     }
 }
 

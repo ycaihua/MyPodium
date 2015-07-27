@@ -26,7 +26,7 @@
 
 - (void) makeControls {
     //self.ruleSubviews
-    self.ruleSubviews = @[[MPMakeRuleSubviews introAndNamingView], [MPMakeRuleSubviews participantTypeView]];
+    self.ruleSubviews = @[[MPMakeRuleSubviews introAndNamingView], [MPMakeRuleSubviews participantTypeView], [MPMakeRuleSubviews statView]];
     for(MPView* view in self.ruleSubviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview: view];
@@ -216,7 +216,8 @@
     MPLabel* infoLabel = (MPLabel*)[nameSubview viewWithTag: 2];
     if(keyboardShowing)
         infoLabel.hidden = YES;
-    MPLabel* titleLabel = (MPLabel*)[nameSubview viewWithTag: 1];    for(NSLayoutConstraint* constraint in nameSubview.constraints) {
+    MPLabel* titleLabel = (MPLabel*)[nameSubview viewWithTag: 1];
+    for(NSLayoutConstraint* constraint in nameSubview.constraints) {
         if([constraint.firstItem isEqual: nameField] &&
            constraint.firstAttribute == NSLayoutAttributeTop) {
             [nameSubview removeConstraint: constraint];
@@ -250,6 +251,55 @@
     } completion:^(BOOL finished) {
         if(!keyboardShowing)
             infoLabel.hidden = NO;
+    }];
+}
+
+- (void) adjustStatSubviewForKeyboardShowing: (BOOL) keyboardShowing withField: (MPTextField*) field {
+    NSInteger tagNumber = field.tag;
+    MPView* superview = (MPView*)field.superview;
+    for(NSLayoutConstraint* constraint in superview.constraints) {
+        if([constraint.firstItem isEqual: field] &&
+           constraint.firstAttribute == NSLayoutAttributeTop) {
+            [superview removeConstraint: constraint];
+            break;
+        }
+    }
+    if(keyboardShowing) {
+        for(int i = 2; i < tagNumber; i++) {
+            [superview viewWithTag:i].hidden = YES;
+        }
+        MPLabel* titleLabel = (MPLabel*)[superview viewWithTag:1];
+        [superview addConstraint:
+         [NSLayoutConstraint constraintWithItem:field
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:titleLabel
+                                      attribute:NSLayoutAttributeBottom
+                                     multiplier:1.0f
+                                       constant:5.0f]];
+    }
+    else {
+        UIView* previousView = [superview viewWithTag:tagNumber-1];
+        [superview addConstraint:
+         [NSLayoutConstraint constraintWithItem:field
+                                      attribute:NSLayoutAttributeTop
+                                      relatedBy:NSLayoutRelationEqual
+                                         toItem:previousView
+                                      attribute:NSLayoutAttributeBottom
+                                     multiplier:1.0f
+                                       constant:5.0f]];
+        
+    }
+    [self setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:0.75f animations:^{
+        [self layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        if(!keyboardShowing){
+            for(int i = 2; i < tagNumber; i++) {
+                [superview viewWithTag:i].hidden = NO;
+            }
+        }
     }];
 }
 
