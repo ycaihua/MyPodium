@@ -14,8 +14,6 @@
 
 #import "MPHelpViewController.h"
 
-#import <MessageUI/MessageUI.h>
-
 @interface MPHelpViewController ()
 
 @end

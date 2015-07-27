@@ -35,12 +35,14 @@
     self.tipDescriptionLabel = [[MPLabel alloc] initWithText:@"TIP"];
     self.tipDescriptionLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:28.0f];
     self.tipDescriptionLabel.textColor = [UIColor whiteColor];
+    self.tipDescriptionLabel.numberOfLines = 1;
     self.tipDescriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.tipDescriptionLabel];
     
     //self.tipContentLabel
     self.tipContentLabel = [[MPLabel alloc] initWithText:@"Tip goes here"];
     self.tipContentLabel.textColor = [UIColor whiteColor];
+    self.tipContentLabel.numberOfLines = 3;
     self.tipContentLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.tipContentLabel];
     
