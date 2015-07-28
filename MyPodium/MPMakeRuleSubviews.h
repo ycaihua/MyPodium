@@ -12,8 +12,6 @@
 
 @interface MPMakeRuleSubviews : NSObject
 
-+ (MPView*) introAndNamingView;
-+ (MPView*) participantTypeView;
 + (MPView*) statView;
 
 @end
