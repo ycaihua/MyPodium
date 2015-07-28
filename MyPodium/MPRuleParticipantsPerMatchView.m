@@ -6,6 +6,7 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "MPLimitConstants.h"
 #import "UIButton+MPImage.h"
 #import "UIColor+MPColor.h"
 
@@ -48,12 +49,14 @@
     self.decrementButton = [[UIButton alloc] init];
     [self.decrementButton setImageString:@"minus" withColorString:@"black" withHighlightedColorString:@"black"];
     self.decrementButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.decrementButton addTarget:self action:@selector(decrementButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview: self.decrementButton];
     
     //self.incrementButton
     self.incrementButton = [[UIButton alloc] init];
     [self.incrementButton setImageString:@"plus" withColorString:@"black" withHighlightedColorString:@"black"];
     self.incrementButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.incrementButton addTarget:self action:@selector(incrementButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview: self.incrementButton];
 }
 
@@ -184,6 +187,14 @@
                                                          constant:[UIButton standardWidthAndHeight]]
                            ]];
     
+}
+
+- (void) decrementButtonPressed: (id) sender {
+    [self.participantsPerMatchCounter decrementTextAndRevertAfter:NO withBound:2];
+}
+
+- (void) incrementButtonPressed: (id) sender {
+    [self.participantsPerMatchCounter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxParticipantsPerMatch]];
 }
 
 @end

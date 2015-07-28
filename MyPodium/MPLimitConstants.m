@@ -19,8 +19,10 @@
 + (int) maxTeamNameCharacters { return 28; }
 + (int) minTeamNameCharacters { return 3; }
 
-+ (int) maxGameModeCharacters { return 28; }
-+ (int) minGameModeCharacters { return 3; }
++ (int) maxRuleNameCharacters { return 28; }
++ (int) minRuleNameCharacters { return 3; }
+
++ (int) maxParticipantsPerMatch { return 6; }
 
 + (int) maxRealNameCharacters { return 18; }
 + (int) minRealNameCharacters { return 3; }

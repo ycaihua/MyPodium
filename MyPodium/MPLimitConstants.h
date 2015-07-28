@@ -19,8 +19,10 @@
 + (int) maxTeamNameCharacters;
 + (int) minTeamNameCharacters;
 
-+ (int) maxGameModeCharacters;
-+ (int) minGameModeCharacters;
++ (int) maxRuleNameCharacters;
++ (int) minRuleNameCharacters;
+
++ (int) maxParticipantsPerMatch;
 
 + (int) maxRealNameCharacters;
 + (int) minRealNameCharacters;

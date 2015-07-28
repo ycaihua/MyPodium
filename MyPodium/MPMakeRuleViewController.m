@@ -46,29 +46,8 @@
     MPTextField* nameField = nameView.nameField;
     nameField.delegate = self;
     
-    MPRuleParticipantView* participantView = view.ruleSubviews[1];
-    UIButton* decrementButton = participantView.decrementButton;
-    [decrementButton addTarget:self action:@selector(decrementCounterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton* incrementButton = participantView.incrementButton;
-    [incrementButton addTarget:self action:@selector(incrementCounterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void) decrementCounterButtonPressed: (id) sender {
-    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPRuleParticipantView* participantView = view.ruleSubviews[1];
-    MPLabel* counter = participantView.playersPerTeamCounter;
-    [counter decrementTextAndRevertAfter:NO withBound:2];
-}
-
-- (void) incrementCounterButtonPressed: (id) sender {
-    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPRuleParticipantView* participantView = view.ruleSubviews[1];
-    MPLabel* counter = participantView.playersPerTeamCounter;
-    [counter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxPlayersPerTeam]];
 }
 
 - (void) nextButtonPressed: (id) sender {
@@ -118,15 +97,18 @@
 + (NSArray*) errorCheckingBlocks {
     return @[^(MPView* subview, MPErrorAlerter* alerter) {
         MPTextField* usernameField = ((MPRuleNameView*)subview).nameField;
-        [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minGameModeCharacters]]];
-        [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxGameModeCharacters]]];
+        [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
+        [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
         
         return [alerter hasFoundError];
         
     },
-    ^(UIView* subview, MPErrorAlerter* alerter) {
-        return NO;
-    }];
+              ^(UIView* subview, MPErrorAlerter* alerter) {
+                  return NO;
+              },
+              ^(UIView* subview, MPErrorAlerter* alerter) {
+                  return NO;
+              }];
 }
 
 - (void) keyboardWillShow: (NSNotification*) notification {

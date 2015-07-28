@@ -6,6 +6,7 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "MPLimitConstants.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
 
@@ -72,6 +73,7 @@
     self.decrementButton = [[UIButton alloc] init];
     [self.decrementButton setImageString:@"minus" withColorString:@"black" withHighlightedColorString:@"black"];
     self.decrementButton.hidden = YES;
+    [self.decrementButton addTarget:self action:@selector(decrementButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.decrementButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.decrementButton];
     
@@ -79,6 +81,7 @@
     self.incrementButton = [[UIButton alloc] init];
     [self.incrementButton setImageString:@"plus" withColorString:@"black" withHighlightedColorString:@"black"];
     self.incrementButton.hidden = YES;
+    [self.incrementButton addTarget:self action:@selector(incrementButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     self.incrementButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.incrementButton];
 }
@@ -300,6 +303,14 @@
     else {
         playerStatsField.returnKeyType = UIReturnKeyNext;
     }
+}
+
+- (void) decrementButtonPressed: (id) sender {
+    [self.playersPerTeamCounter decrementTextAndRevertAfter:NO withBound:2];
+}
+
+- (void) incrementButtonPressed: (id) sender {
+    [self.playersPerTeamCounter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxPlayersPerTeam]];
 }
 
 @end
