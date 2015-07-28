@@ -10,6 +10,7 @@
 #import "MPTextField.h"
 #import "MPMakeRuleView.h"
 #import "MPMakeRuleSubviews.h"
+#import "MPRuleNameView.h"
 #import "MPBottomEdgeButton.h"
 
 @implementation MPMakeRuleView
@@ -26,7 +27,7 @@
 
 - (void) makeControls {
     //self.ruleSubviews
-    self.ruleSubviews = @[[MPMakeRuleSubviews introAndNamingView], [MPMakeRuleSubviews participantTypeView], [MPMakeRuleSubviews statView]];
+    self.ruleSubviews = @[[[MPRuleNameView alloc] init], [MPMakeRuleSubviews participantTypeView], [MPMakeRuleSubviews statView]];
     for(MPView* view in self.ruleSubviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview: view];
@@ -207,50 +208,6 @@
     
     [UIView animateWithDuration:0.75f animations:^{
         [self layoutIfNeeded];
-    }];
-}
-
-- (void) adjustNameSubviewForKeyboardShowing: (BOOL) keyboardShowing {
-    UIView* nameSubview = self.ruleSubviews[0];
-    MPTextField* nameField = (MPTextField*)[nameSubview viewWithTag:3];
-    MPLabel* infoLabel = (MPLabel*)[nameSubview viewWithTag: 2];
-    if(keyboardShowing)
-        infoLabel.hidden = YES;
-    MPLabel* titleLabel = (MPLabel*)[nameSubview viewWithTag: 1];
-    for(NSLayoutConstraint* constraint in nameSubview.constraints) {
-        if([constraint.firstItem isEqual: nameField] &&
-           constraint.firstAttribute == NSLayoutAttributeTop) {
-            [nameSubview removeConstraint: constraint];
-            break;
-        }
-    }
-    if(keyboardShowing) {
-        [nameSubview addConstraint:
-         [NSLayoutConstraint constraintWithItem:nameField
-                                      attribute:NSLayoutAttributeTop
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:titleLabel
-                                      attribute:NSLayoutAttributeBottom
-                                     multiplier:1.0f
-                                       constant:5.0f]];
-    }
-    else {
-        [nameSubview addConstraint:
-         [NSLayoutConstraint constraintWithItem:nameField
-                                      attribute:NSLayoutAttributeTop
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:infoLabel
-                                      attribute:NSLayoutAttributeBottom
-                                     multiplier:1.0f
-                                       constant:5.0f]];
-    }
-    [self setNeedsUpdateConstraints];
-    
-    [UIView animateWithDuration:0.75f animations:^{
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if(!keyboardShowing)
-            infoLabel.hidden = NO;
     }];
 }
 

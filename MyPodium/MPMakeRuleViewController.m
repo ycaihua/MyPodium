@@ -12,6 +12,7 @@
 
 #import "MPMakeRuleViewController.h"
 #import "MPMakeRuleView.h"
+#import "MPRuleNameView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 #import "MPLabel.h"
@@ -23,7 +24,6 @@
 @implementation MPMakeRuleViewController
 
 - (id) init {
-    NSLog(@"A");
     self = [super init];
     if(self) {
         MPMakeRuleView* view = [[MPMakeRuleView alloc] init];
@@ -126,7 +126,8 @@
 - (void) keyboardWillShow: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     if(view.subviewIndex == 0) {
-        [view adjustNameSubviewForKeyboardShowing: YES];
+        MPRuleNameView* nameView = view.ruleSubviews[view.subviewIndex];
+        [nameView adjustForKeyboardShowing: YES];
     }
     else if(view.subviewIndex == 2) {
         MPView* activeSubview = view.ruleSubviews[view.subviewIndex];
@@ -144,7 +145,8 @@
 - (void) keyboardWillHide: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     if(view.subviewIndex == 0) {
-        [view adjustNameSubviewForKeyboardShowing: NO];
+        MPRuleNameView* nameView = view.ruleSubviews[view.subviewIndex];
+        [nameView adjustForKeyboardShowing: NO];
     }
     else if(view.subviewIndex == 2) {
         MPView* activeSubview = view.ruleSubviews[view.subviewIndex];

@@ -23,6 +23,7 @@
 		2D3E67041B600591000B39FB /* MPMakeRuleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E67031B600591000B39FB /* MPMakeRuleView.m */; };
 		2D3E67071B600636000B39FB /* MPMakeRuleSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E67061B600636000B39FB /* MPMakeRuleSubviews.m */; };
 		2D3FAE061B66BF62009804DF /* MPRuleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE051B66BF62009804DF /* MPRuleButton.m */; };
+		2D3FAE091B672C69009804DF /* MPRuleNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE081B672C69009804DF /* MPRuleNameView.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -152,6 +153,8 @@
 		2D3E67061B600636000B39FB /* MPMakeRuleSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeRuleSubviews.m; sourceTree = "<group>"; };
 		2D3FAE041B66BF62009804DF /* MPRuleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleButton.h; sourceTree = "<group>"; };
 		2D3FAE051B66BF62009804DF /* MPRuleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleButton.m; sourceTree = "<group>"; };
+		2D3FAE071B672C69009804DF /* MPRuleNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleNameView.h; sourceTree = "<group>"; };
+		2D3FAE081B672C69009804DF /* MPRuleNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleNameView.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -438,6 +441,8 @@
 				2D3E67061B600636000B39FB /* MPMakeRuleSubviews.m */,
 				2D3FAE041B66BF62009804DF /* MPRuleButton.h */,
 				2D3FAE051B66BF62009804DF /* MPRuleButton.m */,
+				2D3FAE071B672C69009804DF /* MPRuleNameView.h */,
+				2D3FAE081B672C69009804DF /* MPRuleNameView.m */,
 			);
 			name = MakeRule;
 			sourceTree = "<group>";
@@ -986,6 +991,7 @@
 				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
 				2DE9FCF01B21F5E800F748C9 /* MPSearchControl.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
+				2D3FAE091B672C69009804DF /* MPRuleNameView.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */,
 				2DB8E5851B583C4D00623F4E /* MPProfileControlBlock.m in Sources */,
