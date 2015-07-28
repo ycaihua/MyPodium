@@ -10,6 +10,7 @@
 #import "UIButton+MPImage.h"
 
 #import "MPRuleParticipantView.h"
+#import "MPRuleStatsView.h"
 #import "MPLabel.h"
 #import "MPRuleButton.h"
 #import "MPMakeRuleView.h"
@@ -289,11 +290,11 @@
     
     //Update next view same way
     MPMakeRuleView* mainView = (MPMakeRuleView*)self.superview;
-    MPView* statsView = mainView.ruleSubviews[mainView.subviewIndex + 1];
-    for(UIView* subview in @[]) {
+    MPRuleStatsView* statsView = mainView.ruleSubviews[mainView.subviewIndex + 1];
+    for(UIView* subview in @[statsView.teamInfoLabel, statsView.teamStatsField]) {
         subview.hidden = playerParticipantState;
     }
-    MPTextField* playerStatsField = (MPTextField*)[statsView viewWithTag:3];
+    MPTextField* playerStatsField = statsView.playerStatsField;
     if(playerParticipantState) {
         playerStatsField.returnKeyType = UIReturnKeyGo;
     }

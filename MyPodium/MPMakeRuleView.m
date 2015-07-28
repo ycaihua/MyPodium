@@ -9,9 +9,9 @@
 #import "MPLabel.h"
 #import "MPTextField.h"
 #import "MPMakeRuleView.h"
-#import "MPMakeRuleSubviews.h"
 #import "MPRuleNameView.h"
 #import "MPRuleParticipantView.h"
+#import "MPRuleStatsView.h"
 #import "MPBottomEdgeButton.h"
 
 @implementation MPMakeRuleView
@@ -28,7 +28,7 @@
 
 - (void) makeControls {
     //self.ruleSubviews
-    self.ruleSubviews = @[[[MPRuleNameView alloc] init], [[MPRuleParticipantView alloc] init], [MPMakeRuleSubviews statView]];
+    self.ruleSubviews = @[[[MPRuleNameView alloc] init], [[MPRuleParticipantView alloc] init], [[MPRuleStatsView alloc] init]];
     for(MPView* view in self.ruleSubviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview: view];
@@ -209,55 +209,6 @@
     
     [UIView animateWithDuration:0.75f animations:^{
         [self layoutIfNeeded];
-    }];
-}
-
-- (void) adjustStatSubviewForKeyboardShowing: (BOOL) keyboardShowing withField: (MPTextField*) field {
-    NSInteger tagNumber = field.tag;
-    MPView* superview = (MPView*)field.superview;
-    for(NSLayoutConstraint* constraint in superview.constraints) {
-        if([constraint.firstItem isEqual: field] &&
-           constraint.firstAttribute == NSLayoutAttributeTop) {
-            [superview removeConstraint: constraint];
-            break;
-        }
-    }
-    if(keyboardShowing) {
-        for(int i = 2; i < tagNumber; i++) {
-            [superview viewWithTag:i].hidden = YES;
-        }
-        MPLabel* titleLabel = (MPLabel*)[superview viewWithTag:1];
-        [superview addConstraint:
-         [NSLayoutConstraint constraintWithItem:field
-                                      attribute:NSLayoutAttributeTop
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:titleLabel
-                                      attribute:NSLayoutAttributeBottom
-                                     multiplier:1.0f
-                                       constant:5.0f]];
-    }
-    else {
-        UIView* previousView = [superview viewWithTag:tagNumber-1];
-        [superview addConstraint:
-         [NSLayoutConstraint constraintWithItem:field
-                                      attribute:NSLayoutAttributeTop
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:previousView
-                                      attribute:NSLayoutAttributeBottom
-                                     multiplier:1.0f
-                                       constant:5.0f]];
-        
-    }
-    [self setNeedsUpdateConstraints];
-    
-    [UIView animateWithDuration:0.75f animations:^{
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if(!keyboardShowing){
-            for(int i = 2; i < tagNumber; i++) {
-                [superview viewWithTag:i].hidden = NO;
-            }
-        }
     }];
 }
 

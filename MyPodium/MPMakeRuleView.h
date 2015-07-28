@@ -22,6 +22,4 @@
 - (void) advanceToNextSubview;
 - (void) returnToLastSubview;
 
-- (void) adjustStatSubviewForKeyboardShowing: (BOOL) keyboardShowing withField: (MPTextField*) field;
-
 @end

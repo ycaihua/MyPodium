@@ -21,10 +21,10 @@
 		2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D33D5321B4AF2B0006AF4F9 /* MPMessageComposerView.m */; };
 		2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */; };
 		2D3E67041B600591000B39FB /* MPMakeRuleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E67031B600591000B39FB /* MPMakeRuleView.m */; };
-		2D3E67071B600636000B39FB /* MPMakeRuleSubviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3E67061B600636000B39FB /* MPMakeRuleSubviews.m */; };
 		2D3FAE061B66BF62009804DF /* MPRuleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE051B66BF62009804DF /* MPRuleButton.m */; };
 		2D3FAE091B672C69009804DF /* MPRuleNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE081B672C69009804DF /* MPRuleNameView.m */; };
 		2D3FAE0C1B672F83009804DF /* MPRuleParticipantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */; };
+		2D3FAE0F1B6734DE009804DF /* MPRuleStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -150,14 +150,14 @@
 		2D33D5351B4AF343006AF4F9 /* MPMessageComposerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageComposerViewController.m; sourceTree = "<group>"; };
 		2D3E67021B600591000B39FB /* MPMakeRuleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeRuleView.h; sourceTree = "<group>"; };
 		2D3E67031B600591000B39FB /* MPMakeRuleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeRuleView.m; sourceTree = "<group>"; };
-		2D3E67051B600636000B39FB /* MPMakeRuleSubviews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeRuleSubviews.h; sourceTree = "<group>"; };
-		2D3E67061B600636000B39FB /* MPMakeRuleSubviews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeRuleSubviews.m; sourceTree = "<group>"; };
 		2D3FAE041B66BF62009804DF /* MPRuleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleButton.h; sourceTree = "<group>"; };
 		2D3FAE051B66BF62009804DF /* MPRuleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleButton.m; sourceTree = "<group>"; };
 		2D3FAE071B672C69009804DF /* MPRuleNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleNameView.h; sourceTree = "<group>"; };
 		2D3FAE081B672C69009804DF /* MPRuleNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleNameView.m; sourceTree = "<group>"; };
 		2D3FAE0A1B672F83009804DF /* MPRuleParticipantView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleParticipantView.h; sourceTree = "<group>"; };
 		2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleParticipantView.m; sourceTree = "<group>"; };
+		2D3FAE0D1B6734DE009804DF /* MPRuleStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleStatsView.h; sourceTree = "<group>"; };
+		2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatsView.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -440,14 +440,14 @@
 			children = (
 				2D3E67021B600591000B39FB /* MPMakeRuleView.h */,
 				2D3E67031B600591000B39FB /* MPMakeRuleView.m */,
-				2D3E67051B600636000B39FB /* MPMakeRuleSubviews.h */,
-				2D3E67061B600636000B39FB /* MPMakeRuleSubviews.m */,
 				2D3FAE041B66BF62009804DF /* MPRuleButton.h */,
 				2D3FAE051B66BF62009804DF /* MPRuleButton.m */,
 				2D3FAE071B672C69009804DF /* MPRuleNameView.h */,
 				2D3FAE081B672C69009804DF /* MPRuleNameView.m */,
 				2D3FAE0A1B672F83009804DF /* MPRuleParticipantView.h */,
 				2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */,
+				2D3FAE0D1B6734DE009804DF /* MPRuleStatsView.h */,
+				2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */,
 			);
 			name = MakeRule;
 			sourceTree = "<group>";
@@ -983,7 +983,6 @@
 				2D33D5331B4AF2B0006AF4F9 /* MPMessageComposerView.m in Sources */,
 				2D3E67041B600591000B39FB /* MPMakeRuleView.m in Sources */,
 				2DE9FC981B1A000B00F748C9 /* MPSidebarButton.m in Sources */,
-				2D3E67071B600636000B39FB /* MPMakeRuleSubviews.m in Sources */,
 				2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */,
 				2D4487801B0550580061EF86 /* MPLoginView.m in Sources */,
 				2D44879C1B05829C0061EF86 /* CNLabel.m in Sources */,
@@ -1003,6 +1002,7 @@
 				2DB8E5851B583C4D00623F4E /* MPProfileControlBlock.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */,
+				2D3FAE0F1B6734DE009804DF /* MPRuleStatsView.m in Sources */,
 				2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */,
 				2DE9FCE61B20AC7F00F748C9 /* MPSearchView.m in Sources */,
 				2D94D0BF1B2E99E0006C500A /* MPMakeTeamView.m in Sources */,

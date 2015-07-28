@@ -10,12 +10,15 @@
 #import "MPLimitConstants.h"
 #import "MPErrorAlerter.h"
 
-#import "MPMakeRuleViewController.h"
 #import "MPMakeRuleView.h"
 #import "MPRuleNameView.h"
+#import "MPRuleParticipantView.h"
+#import "MPRuleStatsView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 #import "MPLabel.h"
+
+#import "MPMakeRuleViewController.h"
 
 @interface MPMakeRuleViewController ()
 
@@ -39,13 +42,15 @@
 - (void) makeControlActions {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     
-    MPTextField* nameField = (MPTextField*)[view.ruleSubviews[0] viewWithTag:3];
+    MPRuleNameView* nameView = view.ruleSubviews[0];
+    MPTextField* nameField = nameView.nameField;
     nameField.delegate = self;
     
-    UIButton* decrementButton = (UIButton*)[view.ruleSubviews[1] viewWithTag:5];
+    MPRuleParticipantView* participantView = view.ruleSubviews[1];
+    UIButton* decrementButton = participantView.decrementButton;
     [decrementButton addTarget:self action:@selector(decrementCounterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton* incrementButton = (UIButton*)[view.ruleSubviews[1] viewWithTag:6];
+    UIButton* incrementButton = participantView.incrementButton;
     [incrementButton addTarget:self action:@selector(incrementCounterButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -54,13 +59,15 @@
 
 - (void) decrementCounterButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPLabel* counter = (MPLabel*)[view.ruleSubviews[1] viewWithTag:4];
+    MPRuleParticipantView* participantView = view.ruleSubviews[1];
+    MPLabel* counter = participantView.playersPerTeamCounter;
     [counter decrementTextAndRevertAfter:NO withBound:2];
 }
 
 - (void) incrementCounterButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPLabel* counter = (MPLabel*)[view.ruleSubviews[1] viewWithTag:4];
+    MPRuleParticipantView* participantView = view.ruleSubviews[1];
+    MPLabel* counter = participantView.playersPerTeamCounter;
     [counter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxPlayersPerTeam]];
 }
 
@@ -109,18 +116,17 @@
 }
 
 + (NSArray*) errorCheckingBlocks {
-    return @[^(UIView* subview, MPErrorAlerter* alerter) {
-        MPTextField* usernameField = (MPTextField*)[subview viewWithTag:3];
+    return @[^(MPView* subview, MPErrorAlerter* alerter) {
+        MPTextField* usernameField = ((MPRuleNameView*)subview).nameField;
         [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minGameModeCharacters]]];
         [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxGameModeCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxGameModeCharacters]]];
         
         return [alerter hasFoundError];
         
     },
-              ^(UIView* subview, MPErrorAlerter* alerter) {
-                  return NO;
-              }
-              ];
+    ^(UIView* subview, MPErrorAlerter* alerter) {
+        return NO;
+    }];
 }
 
 - (void) keyboardWillShow: (NSNotification*) notification {
@@ -130,14 +136,12 @@
         [nameView adjustForKeyboardShowing: YES];
     }
     else if(view.subviewIndex == 2) {
-        MPView* activeSubview = view.ruleSubviews[view.subviewIndex];
-        MPTextField* playerStatsField = (MPTextField*)[activeSubview viewWithTag:3];
-        MPTextField* teamStatsField = (MPTextField*)[activeSubview viewWithTag:5];
-        if([playerStatsField isFirstResponder]) {
-            [view adjustStatSubviewForKeyboardShowing:YES withField:playerStatsField];
+        MPRuleStatsView* statsView = view.ruleSubviews[view.subviewIndex];
+        if([statsView.playerStatsField isFirstResponder]) {
+            [statsView adjustForKeyboardShowing:YES withField:statsView.playerStatsField];
         }
         else {
-            [view adjustStatSubviewForKeyboardShowing:YES withField:teamStatsField];
+            [statsView adjustForKeyboardShowing:YES withField:statsView.teamStatsField];
         }
     }
 }
@@ -149,25 +153,24 @@
         [nameView adjustForKeyboardShowing: NO];
     }
     else if(view.subviewIndex == 2) {
-        MPView* activeSubview = view.ruleSubviews[view.subviewIndex];
-        MPTextField* playerStatsField = (MPTextField*)[activeSubview viewWithTag:3];
-        MPTextField* teamStatsField = (MPTextField*)[activeSubview viewWithTag:5];
-        if([playerStatsField isFirstResponder]) {
-            [view adjustStatSubviewForKeyboardShowing:NO withField:playerStatsField];
+        MPRuleStatsView* statsView = view.ruleSubviews[view.subviewIndex];
+        if([statsView.playerStatsField isFirstResponder]) {
+            [statsView adjustForKeyboardShowing:NO withField:statsView.playerStatsField];
         }
         else {
-            [view adjustStatSubviewForKeyboardShowing:NO withField:teamStatsField];
+            [statsView adjustForKeyboardShowing:NO withField:statsView.teamStatsField];
         }
     }
 }
 
 - (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {
+    [textField resignFirstResponder];
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPTextField* nameField = (MPTextField*)[view.ruleSubviews[0] viewWithTag:3];
+    MPRuleNameView* nameView = view.ruleSubviews[0];
+    MPTextField* nameField = nameView.nameField;
     if([textField isEqual: nameField] && textField.text.length > 0) {
         [self nextButtonPressed: self];
     }
-    [textField resignFirstResponder];
     return YES;
 }
 
