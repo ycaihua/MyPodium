@@ -25,6 +25,7 @@
 		2D3FAE091B672C69009804DF /* MPRuleNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE081B672C69009804DF /* MPRuleNameView.m */; };
 		2D3FAE0C1B672F83009804DF /* MPRuleParticipantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */; };
 		2D3FAE0F1B6734DE009804DF /* MPRuleStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */; };
+		2D3FAE121B673D4C009804DF /* MPRuleParticipantsPerMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -158,6 +159,8 @@
 		2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleParticipantView.m; sourceTree = "<group>"; };
 		2D3FAE0D1B6734DE009804DF /* MPRuleStatsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleStatsView.h; sourceTree = "<group>"; };
 		2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatsView.m; sourceTree = "<group>"; };
+		2D3FAE101B673D4C009804DF /* MPRuleParticipantsPerMatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleParticipantsPerMatchView.h; sourceTree = "<group>"; };
+		2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleParticipantsPerMatchView.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -448,6 +451,8 @@
 				2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */,
 				2D3FAE0D1B6734DE009804DF /* MPRuleStatsView.h */,
 				2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */,
+				2D3FAE101B673D4C009804DF /* MPRuleParticipantsPerMatchView.h */,
+				2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */,
 			);
 			name = MakeRule;
 			sourceTree = "<group>";
@@ -1012,6 +1017,7 @@
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */,
+				2D3FAE121B673D4C009804DF /* MPRuleParticipantsPerMatchView.m in Sources */,
 				2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */,
 				2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
