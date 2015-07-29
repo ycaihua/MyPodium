@@ -43,8 +43,11 @@
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     
     MPRuleNameView* nameView = view.ruleSubviews[0];
-    MPTextField* nameField = nameView.nameField;
-    nameField.delegate = self;
+    nameView.nameField.delegate = self;
+    
+    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    statsView.playerStatsField.delegate = self;
+    statsView.teamStatsField.delegate = self;
     
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -108,6 +111,9 @@
               },
               ^(UIView* subview, MPErrorAlerter* alerter) {
                   return NO;
+              },
+              ^(UIView* subview, MPErrorAlerter* alerter) {
+                  return NO;
               }];
 }
 
@@ -135,8 +141,18 @@
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     MPRuleNameView* nameView = view.ruleSubviews[0];
     MPTextField* nameField = nameView.nameField;
-    if([textField isEqual: nameField] && textField.text.length > 0) {
+    if([textField isEqual: nameField]) {
         [self nextButtonPressed: self];
+        return YES;
+    }
+    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    if([textField isEqual: statsView.playerStatsField] && !statsView.teamStatsField.hidden) {
+        [statsView.teamStatsField becomeFirstResponder];
+        return YES;
+    }
+    else {
+        [self nextButtonPressed: self];
+        return YES;
     }
     return YES;
 }
