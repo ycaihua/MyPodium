@@ -14,5 +14,6 @@
 
 @property MPLabel* titleLabel;
 @property MPLabel* infoLabel;
+@property UITableView* statTable;
 
 @end

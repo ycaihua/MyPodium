@@ -14,9 +14,12 @@
 #import "MPRuleNameView.h"
 #import "MPRuleParticipantView.h"
 #import "MPRuleStatsView.h"
+#import "MPRuleWinConditionView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 #import "MPLabel.h"
+#import "MPRuleStatCell.h"
+#import "MPTableHeader.h"
 
 #import "MPMakeRuleViewController.h"
 
@@ -49,6 +52,12 @@
     statsView.playerStatsField.delegate = self;
     statsView.teamStatsField.delegate = self;
     
+    MPRuleWinConditionView* winView = view.ruleSubviews[4];
+    [winView.statTable registerClass:[MPRuleStatCell class]
+  forCellReuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
+    winView.statTable.delegate = self;
+    winView.statTable.dataSource = self;
+    
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
@@ -65,6 +74,11 @@
         BOOL errorsFound = block(focusedSubview, alerter);
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!errorsFound) {
+                if(view.subviewIndex == 3) {
+                    self.statNameData = [self statsFromStatsSubview];
+                    MPRuleWinConditionView* winView = view.ruleSubviews[view.subviewIndex + 1];
+                    [winView.statTable reloadData];
+                }
                 [view advanceToNextSubview];
                 [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
                 [view.previousButton enable];
@@ -156,5 +170,60 @@
     }
     return YES;
 }
+
+- (NSMutableArray*) statsFromStatsSubview {
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity:2];
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    NSString* playerStatsString = statsView.playerStatsField.text;
+    NSArray* playerStats = [playerStatsString componentsSeparatedByString:@","];
+    if(playerStats.count > 0)
+        [results addObject:@{@"PLAYER STATS": playerStats}];
+    NSString* teamStatsString = statsView.teamStatsField.text;
+    NSArray* teamStats = [teamStatsString componentsSeparatedByString:@","];
+    if(teamStats.count > 0)
+        [results addObject:@{@"TEAM STATS": teamStats}];
+    
+    return results;
+}
+
+- (NSInteger) numberOfSectionsInTableView:(nonnull UITableView *)tableView {
+    return self.statNameData.count;
+}
+
+- (NSInteger) tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSDictionary* sectionData = self.statNameData[section];
+    NSArray* stats = [sectionData objectForKey:[[sectionData allKeys] objectAtIndex:0]];
+    return stats.count;
+}
+
+- (UITableViewCell*) tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    MPRuleStatCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                        [MPMakeRuleViewController statsReuseIdentifier] forIndexPath:indexPath];
+    if(!cell) {
+        cell = [[MPRuleStatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
+    }
+    cell.indexPath = indexPath;
+    
+    NSDictionary* sectionData = self.statNameData[indexPath.section];
+    NSArray* stats = [sectionData objectForKey:[[sectionData allKeys] objectAtIndex:0]];
+    cell.nameLabel.text = stats[indexPath.row];
+    
+    return cell;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MPRuleStatCell cellHeight];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [MPTableHeader headerHeight];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[MPTableHeader alloc] initWithText:[self.statNameData[section] allKeys][0]];
+}
+
++ (NSString*) statsReuseIdentifier { return @"StatsIdentifier"; }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  MPFriendsViewController.m
+//  MPMessagesViewController.m
 //  MyPodium
 //
 //  Created by Connor Neville on 6/2/15.

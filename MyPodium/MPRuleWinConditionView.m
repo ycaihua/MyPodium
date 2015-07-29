@@ -32,6 +32,14 @@
     self.infoLabel = [[MPLabel alloc] initWithText:@"Every game needs some way to reach victory. Choose one of your stats that will determine who wins (if you have more than 2 participants per match, this stat will rank them best to worst in each match)."];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
+    
+    //self.statTable
+    self.statTable = [[UITableView alloc] init];
+    self.statTable.backgroundColor = [UIColor clearColor];
+    self.statTable.translatesAutoresizingMaskIntoConstraints = NO;
+    self.statTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.statTable.scrollEnabled = YES;
+    [self addSubview: self.statTable];
 }
 
 - (void) makeControlConstraints {
@@ -72,6 +80,35 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           //self.statTable
+                           [NSLayoutConstraint constraintWithItem:self.statTable
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.statTable
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.statTable
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.infoLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.statTable
+                                                        attribute:NSLayoutAttributeBottom
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
                            ]];
 }
 

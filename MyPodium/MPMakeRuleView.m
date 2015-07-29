@@ -6,6 +6,8 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPLabel.h"
 #import "MPTextField.h"
 #import "MPMakeRuleView.h"
@@ -22,6 +24,7 @@
     self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPMakeRuleView defaultSubtitle]];
     if(self) {
         self.subviewIndex = 0;
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self setFirstResponder];
         [self makeControlConstraints];

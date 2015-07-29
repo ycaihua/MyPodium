@@ -8,6 +8,8 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPMakeRuleViewController : MPMenuViewController <UITextFieldDelegate>
+@interface MPMakeRuleViewController : MPMenuViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property NSArray* statNameData;
 
 @end

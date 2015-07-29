@@ -73,6 +73,7 @@
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
 		2D4F4A4F1B5D74B200F7F393 /* MPRulesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */; };
 		2D58D7481B695ADC00080F51 /* MPRuleWinConditionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */; };
+		2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
 		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
 		2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPSettingsView.m */; };
@@ -239,6 +240,8 @@
 		2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRulesModel.m; sourceTree = "<group>"; };
 		2D58D7461B695ADC00080F51 /* MPRuleWinConditionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleWinConditionView.h; sourceTree = "<group>"; };
 		2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleWinConditionView.m; sourceTree = "<group>"; };
+		2D58D74A1B695F2300080F51 /* MPRuleStatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleStatCell.h; sourceTree = "<group>"; };
+		2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatCell.m; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
 		2D5963FA1B505E930034F000 /* MPHomeTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeTipView.m; sourceTree = "<group>"; };
 		2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
@@ -444,20 +447,13 @@
 		2D3E67011B600554000B39FB /* MakeRule */ = {
 			isa = PBXGroup;
 			children = (
+				2D58D7491B695E8300080F51 /* Subviews */,
 				2D3E67021B600591000B39FB /* MPMakeRuleView.h */,
 				2D3E67031B600591000B39FB /* MPMakeRuleView.m */,
 				2D3FAE041B66BF62009804DF /* MPRuleButton.h */,
 				2D3FAE051B66BF62009804DF /* MPRuleButton.m */,
-				2D3FAE071B672C69009804DF /* MPRuleNameView.h */,
-				2D3FAE081B672C69009804DF /* MPRuleNameView.m */,
-				2D3FAE0A1B672F83009804DF /* MPRuleParticipantView.h */,
-				2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */,
-				2D3FAE0D1B6734DE009804DF /* MPRuleStatsView.h */,
-				2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */,
-				2D3FAE101B673D4C009804DF /* MPRuleParticipantsPerMatchView.h */,
-				2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */,
-				2D58D7461B695ADC00080F51 /* MPRuleWinConditionView.h */,
-				2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */,
+				2D58D74A1B695F2300080F51 /* MPRuleStatCell.h */,
+				2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */,
 			);
 			name = MakeRule;
 			sourceTree = "<group>";
@@ -708,6 +704,23 @@
 				2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */,
 			);
 			name = MMDrawerController;
+			sourceTree = "<group>";
+		};
+		2D58D7491B695E8300080F51 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				2D3FAE071B672C69009804DF /* MPRuleNameView.h */,
+				2D3FAE081B672C69009804DF /* MPRuleNameView.m */,
+				2D3FAE0A1B672F83009804DF /* MPRuleParticipantView.h */,
+				2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */,
+				2D3FAE0D1B6734DE009804DF /* MPRuleStatsView.h */,
+				2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */,
+				2D3FAE101B673D4C009804DF /* MPRuleParticipantsPerMatchView.h */,
+				2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */,
+				2D58D7461B695ADC00080F51 /* MPRuleWinConditionView.h */,
+				2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */,
+			);
+			name = Subviews;
 			sourceTree = "<group>";
 		};
 		2D94D0A91B23CB35006C500A /* Help */ = {
@@ -1030,6 +1043,7 @@
 				2DD285631B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
+				2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */,
 				2DB8E5821B58291600623F4E /* MPSettingsScrollView.m in Sources */,
 				2D05E8E91B5D8438006FF360 /* MPRuleCell.m in Sources */,
