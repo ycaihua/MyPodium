@@ -1,16 +1,16 @@
 //
-//  MPRuleWinConditionView.m
+//  MPRuleWinConditionStatView.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/29/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPRuleWinConditionView.h"
+#import "MPRuleWinConditionStatView.h"
 
 #import "MPLabel.h"
 
-@implementation MPRuleWinConditionView
+@implementation MPRuleWinConditionStatView
 
 - (id) init {
     self = [super init];
@@ -23,7 +23,7 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"WIN CONDITION"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"WIN CONDITION STAT"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];

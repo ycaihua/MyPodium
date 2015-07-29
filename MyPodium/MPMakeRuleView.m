@@ -14,7 +14,8 @@
 #import "MPRuleNameView.h"
 #import "MPRuleParticipantView.h"
 #import "MPRuleParticipantsPerMatchView.h"
-#import "MPRuleWinConditionView.h"
+#import "MPRuleWinConditionStatView.h"
+#import "MPRuleWinConditionValueView.h"
 #import "MPRuleStatsView.h"
 #import "MPBottomEdgeButton.h"
 
@@ -35,7 +36,7 @@
 - (void) makeControls {
     //self.ruleSubviews
     self.ruleSubviews = @[[[MPRuleNameView alloc] init], [[MPRuleParticipantView alloc] init],[[MPRuleParticipantsPerMatchView alloc] init], [[MPRuleStatsView alloc] init],
-                          [[MPRuleWinConditionView alloc] init]];
+                          [[MPRuleWinConditionStatView alloc] init], [[MPRuleWinConditionValueView alloc] init]];
     for(MPView* view in self.ruleSubviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
         [self addSubview: view];

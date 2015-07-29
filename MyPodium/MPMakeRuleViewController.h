@@ -11,5 +11,6 @@
 @interface MPMakeRuleViewController : MPMenuViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property NSArray* statNameData;
+@property NSIndexPath* selectedPath;
 
 @end

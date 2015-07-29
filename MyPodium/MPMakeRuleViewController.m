@@ -14,7 +14,8 @@
 #import "MPRuleNameView.h"
 #import "MPRuleParticipantView.h"
 #import "MPRuleStatsView.h"
-#import "MPRuleWinConditionView.h"
+#import "MPRuleWinConditionStatView.h"
+#import "MPRuleWinConditionValueView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 #import "MPLabel.h"
@@ -52,7 +53,7 @@
     statsView.playerStatsField.delegate = self;
     statsView.teamStatsField.delegate = self;
     
-    MPRuleWinConditionView* winView = view.ruleSubviews[4];
+    MPRuleWinConditionStatView* winView = view.ruleSubviews[4];
     [winView.statTable registerClass:[MPRuleStatCell class]
   forCellReuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
     winView.statTable.delegate = self;
@@ -64,20 +65,28 @@
 
 - (void) nextButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     UIView* focusedSubview = view.ruleSubviews[view.subviewIndex];
     
-    BOOL (^block)(UIView* subview, MPErrorAlerter* alerter) =
-    [MPMakeRuleViewController errorCheckingBlocks][view.subviewIndex];
+    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
+    BOOL errorsFound = NO;
+    if([focusedSubview isKindOfClass:[MPRuleNameView class]]) {
+        MPTextField* nameField = ((MPRuleNameView*)focusedSubview).nameField;
+        [alerter checkErrorCondition:(nameField.text.length < [MPLimitConstants minRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
+        [alerter checkErrorCondition:(nameField.text.length > [MPLimitConstants maxRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
+        errorsFound = [alerter hasFoundError];
+    }
     
     dispatch_async(dispatch_queue_create("CheckErrorsQueue", 0), ^{
-        BOOL errorsFound = block(focusedSubview, alerter);
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!errorsFound) {
-                if(view.subviewIndex == 3) {
+                if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
                     self.statNameData = [self statsFromStatsSubview];
-                    MPRuleWinConditionView* winView = view.ruleSubviews[view.subviewIndex + 1];
+                    MPRuleWinConditionStatView* winView = view.ruleSubviews[view.subviewIndex + 1];
                     [winView.statTable reloadData];
+                }
+                else if([focusedSubview isKindOfClass: [MPRuleWinConditionStatView class]]) {
+                    MPRuleWinConditionValueView* valueView = view.ruleSubviews[view.subviewIndex + 1];
+                    [valueView updateWithStatName: [self winConditionStatName]];
                 }
                 [view advanceToNextSubview];
                 [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
@@ -111,6 +120,13 @@
     }
 }
 
+- (NSString*) winConditionStatName {
+    NSDictionary* sectionData = self.statNameData[self.selectedPath.section];
+    NSArray* stats = [sectionData objectForKey:[[sectionData allKeys] objectAtIndex:0]];
+    return stats[self.selectedPath.row];
+}
+
+/*
 + (NSArray*) errorCheckingBlocks {
     return @[^(MPView* subview, MPErrorAlerter* alerter) {
         MPTextField* usernameField = ((MPRuleNameView*)subview).nameField;
@@ -128,8 +144,12 @@
               },
               ^(UIView* subview, MPErrorAlerter* alerter) {
                   return NO;
+              },
+              ^(UIView* subview, MPErrorAlerter* alerter) {
+                  return NO;
               }];
 }
+*/
 
 - (void) keyboardWillShow: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
@@ -184,13 +204,19 @@
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     MPRuleStatsView* statsView = view.ruleSubviews[3];
     NSString* playerStatsString = statsView.playerStatsField.text;
-    NSArray* playerStats = [playerStatsString componentsSeparatedByString:@","];
+    NSMutableArray* playerStats = [playerStatsString componentsSeparatedByString:@","].mutableCopy;
+    for(int i = 0; i < playerStats.count; i++) {
+        playerStats[i] = [playerStats[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
     NSMutableArray* uniquePlayerStats = [[NSSet setWithArray:playerStats] allObjects].mutableCopy;
     [uniquePlayerStats removeObject:@""];
     if(uniquePlayerStats.count > 0)
         [results addObject:@{@"PLAYER STATS": uniquePlayerStats}];
     NSString* teamStatsString = statsView.teamStatsField.text;
-    NSArray* teamStats = [teamStatsString componentsSeparatedByString:@","];
+    NSMutableArray* teamStats = [teamStatsString componentsSeparatedByString:@","].mutableCopy;
+    for(int i = 0; i < teamStats.count; i++) {
+        teamStats[i] = [teamStats[i] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    }
     NSMutableArray* uniqueTeamStats = [[NSSet setWithArray:teamStats] allObjects].mutableCopy;
     [uniqueTeamStats removeObject:@""];
     if(uniqueTeamStats.count > 0)
@@ -239,6 +265,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     [view.nextButton enable];
+    self.selectedPath = indexPath;
 }
 
 + (NSString*) statsReuseIdentifier { return @"StatsIdentifier"; }

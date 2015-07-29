@@ -1,5 +1,5 @@
 //
-//  MPRuleWinConditionView.h
+//  MPRuleWinConditionStatView.h
 //  MyPodium
 //
 //  Created by Connor Neville on 7/29/15.
@@ -10,7 +10,7 @@
 
 @class MPLabel;
 
-@interface MPRuleWinConditionView : MPView
+@interface MPRuleWinConditionStatView : MPView
 
 @property MPLabel* titleLabel;
 @property MPLabel* infoLabel;

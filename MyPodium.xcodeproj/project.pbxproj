@@ -72,8 +72,9 @@
 		2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487F81B083B050061EF86 /* MMDrawerVisualState.m */; };
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
 		2D4F4A4F1B5D74B200F7F393 /* MPRulesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */; };
-		2D58D7481B695ADC00080F51 /* MPRuleWinConditionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */; };
+		2D58D7481B695ADC00080F51 /* MPRuleWinConditionStatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */; };
 		2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */; };
+		2D58D74F1B696F7F00080F51 /* MPRuleWinConditionValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74E1B696F7F00080F51 /* MPRuleWinConditionValueView.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
 		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
 		2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPSettingsView.m */; };
@@ -238,10 +239,12 @@
 		2D4487FF1B083B470061EF86 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
 		2D4F4A4D1B5D74B200F7F393 /* MPRulesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRulesModel.h; sourceTree = "<group>"; };
 		2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRulesModel.m; sourceTree = "<group>"; };
-		2D58D7461B695ADC00080F51 /* MPRuleWinConditionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleWinConditionView.h; sourceTree = "<group>"; };
-		2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleWinConditionView.m; sourceTree = "<group>"; };
+		2D58D7461B695ADC00080F51 /* MPRuleWinConditionStatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleWinConditionStatView.h; sourceTree = "<group>"; };
+		2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleWinConditionStatView.m; sourceTree = "<group>"; };
 		2D58D74A1B695F2300080F51 /* MPRuleStatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleStatCell.h; sourceTree = "<group>"; };
 		2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatCell.m; sourceTree = "<group>"; };
+		2D58D74D1B696F7F00080F51 /* MPRuleWinConditionValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleWinConditionValueView.h; sourceTree = "<group>"; };
+		2D58D74E1B696F7F00080F51 /* MPRuleWinConditionValueView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleWinConditionValueView.m; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
 		2D5963FA1B505E930034F000 /* MPHomeTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeTipView.m; sourceTree = "<group>"; };
 		2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
@@ -717,8 +720,10 @@
 				2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */,
 				2D3FAE101B673D4C009804DF /* MPRuleParticipantsPerMatchView.h */,
 				2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */,
-				2D58D7461B695ADC00080F51 /* MPRuleWinConditionView.h */,
-				2D58D7471B695ADC00080F51 /* MPRuleWinConditionView.m */,
+				2D58D7461B695ADC00080F51 /* MPRuleWinConditionStatView.h */,
+				2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */,
+				2D58D74D1B696F7F00080F51 /* MPRuleWinConditionValueView.h */,
+				2D58D74E1B696F7F00080F51 /* MPRuleWinConditionValueView.m */,
 			);
 			name = Subviews;
 			sourceTree = "<group>";
@@ -972,7 +977,7 @@
 				2D3FAE061B66BF62009804DF /* MPRuleButton.m in Sources */,
 				2D4487E31B07A6B70061EF86 /* MPLabel.m in Sources */,
 				2D4487FD1B083B050061EF86 /* MMDrawerVisualState.m in Sources */,
-				2D58D7481B695ADC00080F51 /* MPRuleWinConditionView.m in Sources */,
+				2D58D7481B695ADC00080F51 /* MPRuleWinConditionStatView.m in Sources */,
 				2D4487991B057C150061EF86 /* UIColor+MPColor.m in Sources */,
 				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
@@ -1023,6 +1028,7 @@
 				2D3FAE091B672C69009804DF /* MPRuleNameView.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */,
+				2D58D74F1B696F7F00080F51 /* MPRuleWinConditionValueView.m in Sources */,
 				2DB8E5851B583C4D00623F4E /* MPProfileControlBlock.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
 				2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */,
