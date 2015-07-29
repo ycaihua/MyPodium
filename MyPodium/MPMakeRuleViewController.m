@@ -82,7 +82,7 @@
                 [view advanceToNextSubview];
                 [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
                 [view.previousButton enable];
-                if(view.subviewIndex == view.ruleSubviews.count - 1) {
+                if(view.subviewIndex == view.ruleSubviews.count - 1 || view.subviewIndex == 4) {
                     [view.nextButton disable];
                 }
                 else {
@@ -177,12 +177,16 @@
     MPRuleStatsView* statsView = view.ruleSubviews[3];
     NSString* playerStatsString = statsView.playerStatsField.text;
     NSArray* playerStats = [playerStatsString componentsSeparatedByString:@","];
-    if(playerStats.count > 0)
-        [results addObject:@{@"PLAYER STATS": playerStats}];
+    NSMutableArray* uniquePlayerStats = [[NSSet setWithArray:playerStats] allObjects].mutableCopy;
+    [uniquePlayerStats removeObject:@""];
+    if(uniquePlayerStats.count > 0)
+        [results addObject:@{@"PLAYER STATS": uniquePlayerStats}];
     NSString* teamStatsString = statsView.teamStatsField.text;
     NSArray* teamStats = [teamStatsString componentsSeparatedByString:@","];
-    if(teamStats.count > 0)
-        [results addObject:@{@"TEAM STATS": teamStats}];
+    NSMutableArray* uniqueTeamStats = [[NSSet setWithArray:teamStats] allObjects].mutableCopy;
+    [uniqueTeamStats removeObject:@""];
+    if(uniqueTeamStats.count > 0)
+        [results addObject:@{@"TEAM STATS": uniqueTeamStats}];
     
     return results;
 }
@@ -222,6 +226,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return [[MPTableHeader alloc] initWithText:[self.statNameData[section] allKeys][0]];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    [view.nextButton enable];
 }
 
 + (NSString*) statsReuseIdentifier { return @"StatsIdentifier"; }
