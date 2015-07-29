@@ -22,6 +22,7 @@
     if(self) {
         self.subviewIndex = 0;
         [self makeControls];
+        [self setFirstResponder];
         [self makeControlConstraints];
     }
     return self;
@@ -46,6 +47,11 @@
     [self.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
     self.nextButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.nextButton];
+}
+
+- (void) setFirstResponder {
+    MPRuleNameView* nameView = self.ruleSubviews[0];
+    [nameView.nameField becomeFirstResponder];
 }
 
 - (void) makeControlConstraints {
@@ -172,8 +178,12 @@
         }
     }
     self.subviewIndex++;
+    MPView* newDisplayedView = self.ruleSubviews[self.subviewIndex];
+    if([newDisplayedView isKindOfClass:[MPRuleStatsView class]]) {
+        [((MPRuleStatsView*)newDisplayedView).playerStatsField becomeFirstResponder];
+    }
     [self addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.ruleSubviews[self.subviewIndex]
+     [NSLayoutConstraint constraintWithItem:newDisplayedView
                                   attribute:NSLayoutAttributeLeading
                                   relatedBy:NSLayoutRelationEqual
                                      toItem:self
@@ -197,6 +207,15 @@
         }
     }
     self.subviewIndex--;
+    
+    MPView* newDisplayedView = self.ruleSubviews[self.subviewIndex];
+    if([newDisplayedView isKindOfClass:[MPRuleNameView class]]) {
+        [((MPRuleNameView*)newDisplayedView).nameField becomeFirstResponder];
+    }
+    else if([newDisplayedView isKindOfClass:[MPRuleStatsView class]]) {
+        [((MPRuleStatsView*)newDisplayedView).playerStatsField becomeFirstResponder];
+    }
+    
     [self addConstraint:
      [NSLayoutConstraint constraintWithItem:self.ruleSubviews[self.subviewIndex]
                                   attribute:NSLayoutAttributeLeading

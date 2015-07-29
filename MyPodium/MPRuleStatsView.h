@@ -19,6 +19,6 @@
 @property MPLabel* teamInfoLabel;
 @property MPTextField* teamStatsField;
 
-- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing withField: (MPTextField*) field;
+- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing;
 
 @end

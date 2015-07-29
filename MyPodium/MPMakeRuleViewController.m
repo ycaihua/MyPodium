@@ -114,17 +114,9 @@
 - (void) keyboardWillShow: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     MPView* activeView = view.ruleSubviews[view.subviewIndex];
-    if([activeView isKindOfClass:[MPRuleNameView class]]) {
-        [(MPRuleNameView*)activeView adjustForKeyboardShowing: YES];
-    }
-    else if([activeView isKindOfClass:[MPRuleStatsView class]]) {
-        if([((MPRuleStatsView*)activeView).playerStatsField isFirstResponder]) {
-            [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:YES
-                                                           withField:((MPRuleStatsView*)activeView).playerStatsField];
-        }
-        else {
-            [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:YES
-                                                           withField:((MPRuleStatsView*)activeView).teamStatsField];
+   if([activeView isKindOfClass:[MPRuleStatsView class]]) {
+       if([((MPRuleStatsView*)activeView).teamStatsField isFirstResponder]) {
+            [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:YES];
         }
     }
 }
@@ -132,17 +124,9 @@
 - (void) keyboardWillHide: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     MPView* activeView = view.ruleSubviews[view.subviewIndex];
-    if([activeView isKindOfClass:[MPRuleNameView class]]) {
-        [(MPRuleNameView*)activeView adjustForKeyboardShowing: NO];
-    }
-    else if([activeView isKindOfClass:[MPRuleStatsView class]]) {
-        if([((MPRuleStatsView*)activeView).playerStatsField isFirstResponder]) {
-            [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:NO
-                                                           withField:((MPRuleStatsView*)activeView).playerStatsField];
-        }
-        else {
-            [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:NO
-                                                           withField:((MPRuleStatsView*)activeView).teamStatsField];
+    if([activeView isKindOfClass:[MPRuleStatsView class]]) {
+        if([((MPRuleStatsView*)activeView).teamStatsField isFirstResponder]) {
+            [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:NO];
         }
     }}
 

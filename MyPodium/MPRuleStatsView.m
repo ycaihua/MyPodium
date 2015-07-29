@@ -29,7 +29,7 @@
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"You can choose custom stats to record during your MyPodium games. Just enter the names of any stats you want to track, separated by commas. For example, if you're playing Basketball, you could enter \"points, rebounds, assists\"."];
+    self.infoLabel = [[MPLabel alloc] initWithText:@"You can choose custom stats to record during your MyPodium games by entering them below, separated by commas. For example, if you're playing Basketball, you could enter \"points, rebounds, assists\"."];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
 
@@ -68,7 +68,7 @@
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeTopMargin
+                                                        attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            //self.infoLabel
@@ -177,24 +177,20 @@
 
 }
 
-- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing withField: (MPTextField*) field {
+- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing {
     for(NSLayoutConstraint* constraint in self.constraints) {
-        if([constraint.firstItem isEqual: field] &&
+        if([constraint.firstItem isEqual: self.teamInfoLabel] &&
            constraint.firstAttribute == NSLayoutAttributeTop) {
             [self removeConstraint: constraint];
             break;
         }
     }
     if(keyboardShowing) {
-        if([field isEqual:self.playerStatsField])
-            self.infoLabel.hidden = YES;
-        else {
-            for(UIView* view in @[self.infoLabel, self.playerStatsField, self.teamInfoLabel]) {
+        for(UIView* view in @[self.infoLabel, self.playerStatsField]) {
                 view.hidden = YES;
-            }
         }
         [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:field
+         [NSLayoutConstraint constraintWithItem:self.teamInfoLabel
                                       attribute:NSLayoutAttributeTop
                                       relatedBy:NSLayoutRelationEqual
                                          toItem:self.titleLabel
@@ -203,14 +199,11 @@
                                        constant:5.0f]];
     }
     else {
-        UIView* previousView = self.infoLabel;
-        if([field isEqual: self.teamStatsField])
-            previousView = self.teamInfoLabel;
         [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:field
+         [NSLayoutConstraint constraintWithItem:self.teamInfoLabel
                                       attribute:NSLayoutAttributeTop
                                       relatedBy:NSLayoutRelationEqual
-                                         toItem:previousView
+                                         toItem:self.playerStatsField
                                       attribute:NSLayoutAttributeBottom
                                      multiplier:1.0f
                                        constant:5.0f]];
@@ -225,7 +218,6 @@
             for(UIView* view in @[self.infoLabel, self.playerStatsField]) {
                 view.hidden = NO;
             }
-            self.teamInfoLabel.hidden = self.teamStatsField.hidden;
         }
     }];
 }

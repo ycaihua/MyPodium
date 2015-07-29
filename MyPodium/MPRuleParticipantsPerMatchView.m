@@ -73,7 +73,7 @@
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeTopMargin
+                                                        attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            //self.infoLabel

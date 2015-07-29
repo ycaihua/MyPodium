@@ -29,7 +29,7 @@
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Every event you make needs a set of rules. We try to make these rules easy to create and highly flexible, so you can create the type of event you want. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
+    self.infoLabel = [[MPLabel alloc] initWithText:@"Every event or match you make needs a set of rules. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
 
@@ -54,7 +54,7 @@
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeTopMargin
+                                                        attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            //self.infoLabel

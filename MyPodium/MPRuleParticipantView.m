@@ -36,7 +36,7 @@
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Choose whether games played with these rules should be player versus player or team versus team. (In other words, are players the participants in your games, or teams?)"];
+    self.infoLabel = [[MPLabel alloc] initWithText:@"Choose whether games played with these rules should be player-versus-player games, or team-versus-team games."];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
     
@@ -99,7 +99,7 @@
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeTopMargin
+                                                        attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            //self.infoLabel
