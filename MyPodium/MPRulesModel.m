@@ -12,6 +12,14 @@
 
 @implementation MPRulesModel
 
++ (BOOL) ruleNameInUse:(NSString *)name forUser:(PFUser *)user {
+    NSString* searchName = name.lowercaseString;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@) AND (name_searchable = %@)",
+                              user, searchName];
+    PFQuery *query = [PFQuery queryWithClassName:[MPRulesModel tableName] predicate:predicate];
+    return ([query countObjects] > 0);
+}
+
 + (NSArray*) rulesForUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
                               user];

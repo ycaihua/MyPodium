@@ -12,6 +12,8 @@
 
 @interface MPRulesModel : NSObject
 
++ (BOOL) ruleNameInUse: (NSString*) name forUser: (PFUser*) user;
+
 + (NSArray*) rulesForUser: (PFUser*) user;
 
 + (NSInteger) countRulesForUser: (PFUser*) user;
