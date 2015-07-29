@@ -171,6 +171,14 @@
     return YES;
 }
 
+- (void) textFieldDidBeginEditing:(nonnull UITextField *)textField {
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    if([textField isEqual: statsView.teamStatsField]) {
+        [self keyboardWillShow: nil];
+    }
+}
+
 - (NSMutableArray*) statsFromStatsSubview {
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity:2];
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;

@@ -46,7 +46,7 @@
     self.teamInfoLabel.hidden = YES;
     [self addSubview: self.teamInfoLabel];
     
-    //self.teamStatsFIeld
+    //self.teamStatsField
     self.teamStatsField = [[MPTextField alloc] initWithPlaceholder:@"TEAM STATS"];
     self.teamStatsField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.teamStatsField.returnKeyType = UIReturnKeyGo;
