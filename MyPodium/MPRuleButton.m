@@ -11,10 +11,14 @@
 
 @implementation MPRuleButton
 
-- (id) init {
+- (id) initWithToggledOnTitle: (NSString*) onTitle onSubtitle: (NSString*) onSubtitle offTitle: (NSString*) offTitle offSubtitle: (NSString*) offSubtitle {
     self = [super init];
     if(self) {
-        self.playerModeSelected = YES;
+        self.toggledOn = YES;
+        self.toggledOnTitle = onTitle;
+        self.toggledOnSubtitle = onSubtitle;
+        self.toggledOffTitle = offTitle;
+        self.toggledOffSubtitle = offSubtitle;
         [self adjustControls];
         [self makeControlConstraints];
     }
@@ -28,12 +32,12 @@
     //self.customTitleLabel
     self.customTitleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:18.0f];
     self.customTitleLabel.textAlignment = NSTextAlignmentCenter;
-    self.customTitleLabel.text = @"PLAYER VS. PLAYER GAMES";
+    self.customTitleLabel.text = self.toggledOnTitle;
     
     //self.subtitleLabel
     self.subtitleLabel.font = [UIFont fontWithName:@"Lato-Regular" size:12.0f];
     self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
-    self.subtitleLabel.text = @"tap to toggle";
+    self.subtitleLabel.text = self.toggledOnSubtitle;
     self.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
@@ -85,15 +89,15 @@
 }
 
 - (void) toggleSelected {
-    if(self.playerModeSelected) {
-        self.customTitleLabel.text = @"TEAM VS. TEAM GAMES";
-        self.subtitleLabel.text = @"tap to toggle player vs. player";
+    self.toggledOn = !self.toggledOn;
+    if(self.toggledOn) {
+        self.customTitleLabel.text = self.toggledOnTitle;
+        self.subtitleLabel.text =self.toggledOnSubtitle;
     }
     else {
-        self.customTitleLabel.text = @"PLAYER VS. PLAYER GAMES";
-        self.subtitleLabel.text = @"tap to toggle team vs. team";
+        self.customTitleLabel.text = self.toggledOffTitle;
+        self.subtitleLabel.text = self.toggledOffSubtitle;
     }
-    self.playerModeSelected = !self.playerModeSelected;
 }
 
 - (void) setHighlighted:(BOOL)highlighted {

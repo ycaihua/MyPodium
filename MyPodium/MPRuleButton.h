@@ -10,10 +10,18 @@
 
 @interface MPRuleButton : MPDualLabelButton
 
-@property BOOL playerModeSelected;
+@property BOOL toggledOn;
+@property NSString* toggledOnTitle;
+@property NSString* toggledOnSubtitle;
+@property NSString* toggledOffTitle;
+@property NSString* toggledOffSubtitle;
 
 - (void) toggleSelected;
+
+- (id) initWithToggledOnTitle: (NSString*) onTitle onSubtitle: (NSString*) onSubtitle offTitle: (NSString*) offTitle offSubtitle: (NSString*) offSubtitle;
 
 + (CGFloat) defaultHeight;
 
 @end
+
+

@@ -35,5 +35,16 @@
     return [query countObjects];
 }
 
++ (BOOL) makeRuleWithCreator: (PFUser*) user withSettingsDictionary: (NSDictionary*) settings {
+    PFObject* newRule = [[PFObject alloc] initWithClassName:[MPRulesModel tableName]];
+    newRule[@"creator"] = user;
+    
+    for(id key in settings) {
+        newRule[key] = [settings valueForKey: key];
+    }
+    
+    return [newRule save];
+}
+
 + (NSString*) tableName { return @"Rule"; }
 @end

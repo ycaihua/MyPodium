@@ -6,23 +6,29 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
 #import "MPControllerManager.h"
 #import "MPLimitConstants.h"
 #import "MPErrorAlerter.h"
 
 #import "MPRulesModel.h"
 
+#import "MPRuleButton.h"
 #import "MPMakeRuleView.h"
-#import "MPRuleNameView.h"
-#import "MPRuleParticipantView.h"
-#import "MPRuleStatsView.h"
-#import "MPRuleWinConditionStatView.h"
-#import "MPRuleWinConditionValueView.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTextField.h"
 #import "MPLabel.h"
+#import "MPMenu.h"
 #import "MPRuleStatCell.h"
 #import "MPTableHeader.h"
+
+#import "MPRuleNameView.h"
+#import "MPRuleParticipantView.h"
+#import "MPRuleParticipantsPerMatchView.h"
+#import "MPRuleStatsView.h"
+#import "MPRuleWinConditionStatView.h"
+#import "MPRuleWinConditionValueView.h"
+#import "MPRuleTimerView.h"
 
 #import "MPMakeRuleViewController.h"
 
@@ -91,11 +97,18 @@
                     MPRuleWinConditionValueView* valueView = view.ruleSubviews[view.subviewIndex + 1];
                     [valueView updateWithStatName: [self winConditionStatName]];
                 }
+                if(view.subviewIndex == view.ruleSubviews.count - 1) {
+                    [self createAndSaveGameMode];
+                    return;
+                }
                 [view advanceToNextSubview];
                 [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
                 [view.previousButton enable];
-                if(view.subviewIndex == view.ruleSubviews.count - 1 || view.subviewIndex == 4) {
+                if(view.subviewIndex == 4) {
                     [view.nextButton disable];
+                }
+                else if(view.subviewIndex == view.ruleSubviews.count - 1) {
+                    [view.nextButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
                 }
                 else {
                     [view.nextButton enable];
@@ -114,6 +127,7 @@
     else {
         [view returnToLastSubview];
         [view.nextButton enable];
+        [view.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
         if(view.subviewIndex == 0) {
             [view.previousButton setTitle:@"CANCEL" forState:UIControlStateNormal];
         }
@@ -129,30 +143,45 @@
     return stats[self.selectedPath.row];
 }
 
-/*
-+ (NSArray*) errorCheckingBlocks {
-    return @[^(MPView* subview, MPErrorAlerter* alerter) {
-        MPTextField* usernameField = ((MPRuleNameView*)subview).nameField;
-        [alerter checkErrorCondition:(usernameField.text.length < [MPLimitConstants minRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
-        [alerter checkErrorCondition:(usernameField.text.length > [MPLimitConstants maxRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
-        
-        return [alerter hasFoundError];
-        
-    },
-              ^(UIView* subview, MPErrorAlerter* alerter) {
-                  return NO;
-              },
-              ^(UIView* subview, MPErrorAlerter* alerter) {
-                  return NO;
-              },
-              ^(UIView* subview, MPErrorAlerter* alerter) {
-                  return NO;
-              },
-              ^(UIView* subview, MPErrorAlerter* alerter) {
-                  return NO;
-              }];
+- (void) createAndSaveGameMode {
+    MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    NSString* name = ((MPRuleNameView*)view.ruleSubviews[0]).nameField.text;
+    NSString* name_searchable = name.lowercaseString;
+    NSNumber* usesTeamParticipants = [NSNumber numberWithBool: !((MPRuleParticipantView*)view.ruleSubviews[1]).participantsButton.toggledOn];
+    NSNumber* playersPerTeam = @0;
+    if(usesTeamParticipants.boolValue) {
+        playersPerTeam = [NSNumber numberWithInt: ((MPRuleParticipantView*)view.ruleSubviews[1]).playersPerTeamCounter.text.intValue];
+    }
+    NSNumber* participantsPerMatch = [NSNumber numberWithInt:((MPRuleParticipantsPerMatchView*)view.ruleSubviews[2]).participantsPerMatchCounter.text.intValue];
+    NSLog(@"%@", self.statNameData);
+    NSArray* playerStats = self.statNameData[0][@"PLAYER STATS"];
+    NSArray* teamStats = @[];
+    if(usesTeamParticipants.boolValue) {
+        teamStats = self.statNameData[1][@"TEAM STATS"];
+    }
+    NSArray* winConditionStatPath = @[[NSNumber numberWithInteger:self.selectedPath.section], [NSNumber numberWithInteger:self.selectedPath.row]];
+    NSNumber* winConditionValue = [NSNumber numberWithInt: ((MPRuleWinConditionValueView*)view.ruleSubviews[5]).winConditionCounter.text.intValue];
+    NSNumber* timerEnabled = [NSNumber numberWithBool:!((MPRuleTimerView*)view.ruleSubviews[6]).timerButton.toggledOn];
+    NSNumber* timerDuration = @0;
+    if(timerEnabled.boolValue) {
+        timerDuration = [NSNumber numberWithInt: ((MPRuleTimerView*)view.ruleSubviews[6]).timerDurationCounter.text.intValue];
+    }
+    
+    dispatch_async(dispatch_queue_create("CreateRuleQueue", 0), ^{
+        NSDictionary* settings = @{@"name": name, @"name_searchable": name_searchable, @"usesTeamParticipants": usesTeamParticipants,
+                                   @"playersPerTeam": playersPerTeam, @"participantsPerMatch": participantsPerMatch, @"playerStats": playerStats,
+                                   @"teamStats": teamStats, @"winConditionStatPath": winConditionStatPath, @"winConditionStatValue": winConditionValue,
+                                   @"timerEnabled": timerEnabled, @"timerDuration": timerDuration};
+        BOOL success = [MPRulesModel makeRuleWithCreator:[PFUser currentUser] withSettingsDictionary:settings];
+        dispatch_async(dispatch_get_main_queue(), ^{
+           if(success)
+               [MPControllerManager dismissViewController: self];
+           else {
+               [view.menu.subtitleLabel displayMessage:@"There was an error saving your rules. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+           }
+        });
+    });
 }
-*/
 
 - (void) keyboardWillShow: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
@@ -206,6 +235,7 @@
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity:2];
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     MPRuleStatsView* statsView = view.ruleSubviews[3];
+    
     NSString* playerStatsString = statsView.playerStatsField.text;
     NSMutableArray* playerStats = [playerStatsString componentsSeparatedByString:@","].mutableCopy;
     for(int i = 0; i < playerStats.count; i++) {
@@ -215,6 +245,7 @@
     [uniquePlayerStats removeObject:@""];
     if(uniquePlayerStats.count > 0)
         [results addObject:@{@"PLAYER STATS": uniquePlayerStats}];
+    
     NSString* teamStatsString = statsView.teamStatsField.text;
     NSMutableArray* teamStats = [teamStatsString componentsSeparatedByString:@","].mutableCopy;
     for(int i = 0; i < teamStats.count; i++) {

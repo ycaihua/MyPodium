@@ -1,23 +1,22 @@
 //
-//  MPRuleParticipantView.m
+//  MPRuleTimerView.m
 //  MyPodium
 //
-//  Created by Connor Neville on 7/27/15.
+//  Created by Connor Neville on 7/29/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
-
 #import "MPLimitConstants.h"
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
 
-#import "MPRuleParticipantView.h"
+#import "MPRuleTimerView.h"
 #import "MPRuleStatsView.h"
 #import "MPLabel.h"
 #import "MPRuleButton.h"
 #import "MPMakeRuleView.h"
 #import "MPTextField.h"
 
-@implementation MPRuleParticipantView
+@implementation MPRuleTimerView
 
 - (id) init {
     self = [super init];
@@ -30,44 +29,44 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"PARTICIPANTS"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"TIMER"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Choose whether games played with these rules should be player-versus-player games, or team-versus-team games."];
+    self.infoLabel = [[MPLabel alloc] initWithText:@"Choose whether you want a timer to appear in your matches for you to manage."];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
     
-    //self.participantsButton
-    self.participantsButton = [[MPRuleButton alloc] initWithToggledOnTitle:@"PLAYER VS. PLAYER GAMES" onSubtitle:@"toggle for team vs. team games" offTitle:@"TEAM VS. TEAM GAMES" offSubtitle:@"toggle for player vs. player games"];
-    self.participantsButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.participantsButton addTarget:self action:@selector(participantsChanged:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview: self.participantsButton];
+    //self.timerButton
+    self.timerButton = [[MPRuleButton alloc] initWithToggledOnTitle:@"TIMER DISABLED" onSubtitle:@"tap to toggle timer on" offTitle:@"TIMER ENABLED" offSubtitle:@"tap to toggle timer off"];
+    self.timerButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.timerButton addTarget:self action:@selector(timerSettingChanged:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview: self.timerButton];
     
-    //self.playersPerTeamTitle
-    self.playersPerTeamTitle = [[MPLabel alloc] initWithText:@"PLAYERS PER TEAM"];
-    self.playersPerTeamTitle.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
-    self.playersPerTeamTitle.translatesAutoresizingMaskIntoConstraints = NO;
-    self.playersPerTeamTitle.hidden = YES;
-    [self addSubview: self.playersPerTeamTitle];
-
-    //self.playersPerTeamLabel
-    self.playersPerTeamLabel = [[MPLabel alloc] initWithText:@"Since you have team participants selected, you need to enter how many players per team can play."];
-    self.playersPerTeamLabel.hidden = YES;
-    self.playersPerTeamLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.playersPerTeamLabel];
+    //self.timerDurationTitle
+    self.timerDurationTitle = [[MPLabel alloc] initWithText:@"DEFAULT TIMER DURATION"];
+    self.timerDurationTitle.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
+    self.timerDurationTitle.translatesAutoresizingMaskIntoConstraints = NO;
+    self.timerDurationTitle.hidden = YES;
+    [self addSubview: self.timerDurationTitle];
     
-    //self.playersPerTeamCounter
-    self.playersPerTeamCounter = [[MPLabel alloc] initWithText:@"2"];
-    self.playersPerTeamCounter.textColor = [UIColor whiteColor];
-    self.playersPerTeamCounter.textAlignment = NSTextAlignmentCenter;
-    self.playersPerTeamCounter.backgroundColor = [UIColor MPBlackColor];
-    self.playersPerTeamCounter.font = [UIFont fontWithName:@"Oswald-Bold" size:32.0f];
-    self.playersPerTeamCounter.hidden = YES;
-    self.playersPerTeamCounter.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.playersPerTeamCounter];
+    //self.timerDurationLabel
+    self.timerDurationLabel = [[MPLabel alloc] initWithText:@"You can always change or reset your timer during matches, but choose a default time (in minutes) below."];
+    self.timerDurationLabel.hidden = YES;
+    self.timerDurationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.timerDurationLabel];
+    
+    //self.timerDurationCounter
+    self.timerDurationCounter = [[MPLabel alloc] initWithText:@"5"];
+    self.timerDurationCounter.textColor = [UIColor whiteColor];
+    self.timerDurationCounter.textAlignment = NSTextAlignmentCenter;
+    self.timerDurationCounter.backgroundColor = [UIColor MPBlackColor];
+    self.timerDurationCounter.font = [UIFont fontWithName:@"Oswald-Bold" size:32.0f];
+    self.timerDurationCounter.hidden = YES;
+    self.timerDurationCounter.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.timerDurationCounter];
     
     //self.decrementButton
     self.decrementButton = [[UIButton alloc] init];
@@ -124,95 +123,95 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           //self.participantsButton
-                           [NSLayoutConstraint constraintWithItem:self.participantsButton
+                           //self.timerButton
+                           [NSLayoutConstraint constraintWithItem:self.timerButton
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.participantsButton
+                           [NSLayoutConstraint constraintWithItem:self.timerButton
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeTrailingMargin
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           [NSLayoutConstraint constraintWithItem:self.participantsButton
+                           [NSLayoutConstraint constraintWithItem:self.timerButton
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.infoLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           [NSLayoutConstraint constraintWithItem:self.participantsButton
+                           [NSLayoutConstraint constraintWithItem:self.timerButton
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPRuleButton defaultHeight]],
-                           //self.playersPerTeamTitle
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamTitle
+                           //self.timerDurationTitle
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationTitle
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamTitle
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationTitle
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.participantsButton
+                                                           toItem:self.timerButton
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           //self.playersPerTeamLabel
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamLabel
+                           //self.timerDurationLabel
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationLabel
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamLabel
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationLabel
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeTrailingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamLabel
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationLabel
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.playersPerTeamTitle
+                                                           toItem:self.timerDurationTitle
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           //self.playersPerTeamCounter
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamCounter
+                           //self.timerDurationCounter
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamCounter
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.playersPerTeamLabel
+                                                           toItem:self.timerDurationLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamCounter
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeWidth
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeWidth
                                                        multiplier:0.25f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.playersPerTeamCounter
+                           [NSLayoutConstraint constraintWithItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
@@ -223,14 +222,14 @@
                            [NSLayoutConstraint constraintWithItem:self.decrementButton
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.playersPerTeamCounter
+                                                           toItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeLeading
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.decrementButton
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.playersPerTeamCounter
+                                                           toItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
@@ -252,14 +251,14 @@
                            [NSLayoutConstraint constraintWithItem:self.incrementButton
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.playersPerTeamCounter
+                                                           toItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeTrailing
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.incrementButton
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.playersPerTeamCounter
+                                                           toItem:self.timerDurationCounter
                                                         attribute:NSLayoutAttributeTop
                                                        multiplier:1.0f
                                                          constant:0.0f],
@@ -281,36 +280,22 @@
     
 }
 
-- (void) participantsChanged: (id) sender {
+- (void) timerSettingChanged: (id) sender {
     MPRuleButton* buttonSender = (MPRuleButton*) sender;
     [buttonSender toggleSelected];
-    BOOL usesTeams = ![buttonSender toggledOn];
+    BOOL usesTimer = ![buttonSender toggledOn];
     //Hide and show views based on toggle selected
-    for(UIView* subview in @[self.playersPerTeamTitle, self.playersPerTeamLabel, self.playersPerTeamCounter, self.incrementButton, self.decrementButton]) {
-        subview.hidden = !usesTeams;
-    }
-    
-    //Update stats view same way - stats view is 2 subviews down in rotation
-    MPMakeRuleView* mainView = (MPMakeRuleView*)self.superview;
-    MPRuleStatsView* statsView = mainView.ruleSubviews[mainView.subviewIndex + 2];
-    for(UIView* subview in @[statsView.teamInfoLabel, statsView.teamStatsField]) {
-        subview.hidden = !usesTeams;
-    }
-    MPTextField* playerStatsField = statsView.playerStatsField;
-    if(usesTeams) {
-        playerStatsField.returnKeyType = UIReturnKeyGo;
-    }
-    else {
-        playerStatsField.returnKeyType = UIReturnKeyNext;
+    for(UIView* subview in @[self.timerDurationTitle, self.timerDurationLabel, self.timerDurationCounter, self.incrementButton, self.decrementButton]) {
+        subview.hidden = !usesTimer;
     }
 }
 
 - (void) decrementButtonPressed: (id) sender {
-    [self.playersPerTeamCounter decrementTextAndRevertAfter:NO withBound:2];
+    [self.timerDurationCounter decrementTextAndRevertAfter:NO withBound:2];
 }
 
 - (void) incrementButtonPressed: (id) sender {
-    [self.playersPerTeamCounter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxPlayersPerTeam]];
+    [self.timerDurationCounter incrementTextAndRevertAfter:NO withBound:[MPLimitConstants maxPlayersPerTeam]];
 }
 
 @end
