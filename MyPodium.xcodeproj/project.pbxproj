@@ -124,6 +124,8 @@
 		2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */; };
 		2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */; };
 		2DEE90C01B72970500F61BE2 /* MPFormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90BF1B72970500F61BE2 /* MPFormView.m */; };
+		2DEE90C41B72A54800F61BE2 /* MPRuleProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90C31B72A54800F61BE2 /* MPRuleProfileViewController.m */; };
+		2DEE90C81B72A66100F61BE2 /* MPRuleProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90C71B72A66100F61BE2 /* MPRuleProfileView.m */; };
 		2DF3D3D81B405EC7009C5304 /* MPTableSectionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */; };
 /* End PBXBuildFile section */
 
@@ -340,6 +342,10 @@
 		2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpViewController.m; sourceTree = "<group>"; };
 		2DEE90BE1B72970500F61BE2 /* MPFormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFormView.h; sourceTree = "<group>"; };
 		2DEE90BF1B72970500F61BE2 /* MPFormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFormView.m; sourceTree = "<group>"; };
+		2DEE90C21B72A54800F61BE2 /* MPRuleProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleProfileViewController.h; sourceTree = "<group>"; };
+		2DEE90C31B72A54800F61BE2 /* MPRuleProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleProfileViewController.m; sourceTree = "<group>"; };
+		2DEE90C61B72A66100F61BE2 /* MPRuleProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleProfileView.h; sourceTree = "<group>"; };
+		2DEE90C71B72A66100F61BE2 /* MPRuleProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleProfileView.m; sourceTree = "<group>"; };
 		2DF3D3D61B405EC7009C5304 /* MPTableSectionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableSectionUtility.h; sourceTree = "<group>"; };
 		2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableSectionUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -525,6 +531,7 @@
 				2D94D0C01B2F7F12006C500A /* MakeTeam */,
 				2D05E8DC1B5D7F05006FF360 /* Rules */,
 				2D05E8E31B5D83B1006FF360 /* MakeRule */,
+				2DEE90C11B72A52E00F61BE2 /* RuleProfile */,
 				2DE9FCE71B20ACFB00F748C9 /* Search */,
 				2D4487EB1B08387B0061EF86 /* SidebarAndMenu */,
 				2D4487471B039B600061EF86 /* LoginRegister */,
@@ -587,6 +594,7 @@
 				2D94D0BC1B2E9991006C500A /* MakeTeam */,
 				2D05E8DB1B5D7EF4006FF360 /* Rules */,
 				2D3E67011B600554000B39FB /* MakeRule */,
+				2DEE90C51B72A61A00F61BE2 /* RuleProfile */,
 				2DE9FCE31B20AC6C00F748C9 /* Search */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
 				2DEE90BD1B7296D900F61BE2 /* Reusable */,
@@ -911,6 +919,24 @@
 			name = Reusable;
 			sourceTree = "<group>";
 		};
+		2DEE90C11B72A52E00F61BE2 /* RuleProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2DEE90C21B72A54800F61BE2 /* MPRuleProfileViewController.h */,
+				2DEE90C31B72A54800F61BE2 /* MPRuleProfileViewController.m */,
+			);
+			name = RuleProfile;
+			sourceTree = "<group>";
+		};
+		2DEE90C51B72A61A00F61BE2 /* RuleProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2DEE90C61B72A66100F61BE2 /* MPRuleProfileView.h */,
+				2DEE90C71B72A66100F61BE2 /* MPRuleProfileView.m */,
+			);
+			name = RuleProfile;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1039,6 +1065,7 @@
 				2DE9FCD91B1E561600F748C9 /* MPFriendsViewController.m in Sources */,
 				2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */,
 				2DD285661B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m in Sources */,
+				2DEE90C41B72A54800F61BE2 /* MPRuleProfileViewController.m in Sources */,
 				2DE9FCF31B22199800F748C9 /* MPGlobalModel.m in Sources */,
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
 				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
@@ -1067,6 +1094,7 @@
 				2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2DD285631B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m in Sources */,
+				2DEE90C81B72A66100F61BE2 /* MPRuleProfileView.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
 				2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */,

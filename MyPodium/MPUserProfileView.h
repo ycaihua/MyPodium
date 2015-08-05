@@ -7,7 +7,6 @@
 //
 
 #import "MPMenuView.h"
-#import "MPFriendsModel.h"
 
 @class MPLabel;
 @class MPBottomEdgeButton;

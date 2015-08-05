@@ -24,6 +24,7 @@
 #import "MPLabel.h"
 
 #import "MPRulesViewController.h"
+#import "MPRuleProfileViewController.h"
 #import "MPMakeRuleViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -97,9 +98,9 @@
                                 [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
                                 [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(newEventWithModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.centerButton addTarget:self action:@selector(modeProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(deleteModeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.leftButton addTarget:self action:@selector(newEventWithRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.centerButton addTarget:self action:@selector(ruleProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.rightButton addTarget:self action:@selector(deleteRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
@@ -245,15 +246,19 @@
     }
 }
 
-- (void) newEventWithModeButtonPressed: (id) sender {
+- (void) newEventWithRuleButtonPressed: (id) sender {
     NSLog(@"Green button");
 }
 
-- (void) modeProfileButtonPressed: (id) sender {
-    NSLog(@"Yellow button");
+- (void) ruleProfileButtonPressed: (id) sender {
+    MPRuleCell* cell = (MPRuleCell*)((UIButton*)sender).superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPRulesViewController ownedRulesHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPRuleProfileViewController alloc] initWithRule:other] fromController:self];
 }
 
-- (void) deleteModeButtonPressed: (id) sender {
+- (void) deleteRuleButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
     MPRuleCell* cell = (MPRuleCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
