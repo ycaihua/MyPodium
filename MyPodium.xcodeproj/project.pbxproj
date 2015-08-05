@@ -75,7 +75,6 @@
 		2D58D7481B695ADC00080F51 /* MPRuleWinConditionStatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */; };
 		2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */; };
 		2D58D74F1B696F7F00080F51 /* MPRuleWinConditionValueView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74E1B696F7F00080F51 /* MPRuleWinConditionValueView.m */; };
-		2D58D7521B6997ED00080F51 /* MPRuleTimerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D7511B6997ED00080F51 /* MPRuleTimerView.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
 		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
 		2D67BFD21B4997370043BD96 /* MPSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD11B4997370043BD96 /* MPSettingsView.m */; };
@@ -249,8 +248,6 @@
 		2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatCell.m; sourceTree = "<group>"; };
 		2D58D74D1B696F7F00080F51 /* MPRuleWinConditionValueView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleWinConditionValueView.h; sourceTree = "<group>"; };
 		2D58D74E1B696F7F00080F51 /* MPRuleWinConditionValueView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleWinConditionValueView.m; sourceTree = "<group>"; };
-		2D58D7501B6997ED00080F51 /* MPRuleTimerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleTimerView.h; sourceTree = "<group>"; };
-		2D58D7511B6997ED00080F51 /* MPRuleTimerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleTimerView.m; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
 		2D5963FA1B505E930034F000 /* MPHomeTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHomeTipView.m; sourceTree = "<group>"; };
 		2D67BFCD1B4997050043BD96 /* MPSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSettingsViewController.h; sourceTree = "<group>"; };
@@ -735,8 +732,6 @@
 				2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */,
 				2D58D74D1B696F7F00080F51 /* MPRuleWinConditionValueView.h */,
 				2D58D74E1B696F7F00080F51 /* MPRuleWinConditionValueView.m */,
-				2D58D7501B6997ED00080F51 /* MPRuleTimerView.h */,
-				2D58D7511B6997ED00080F51 /* MPRuleTimerView.m */,
 			);
 			name = Subviews;
 			sourceTree = "<group>";
@@ -1049,7 +1044,6 @@
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
 				2DBF869B1B462D7400FB0AF5 /* MPMessagesModel.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,
-				2D58D7521B6997ED00080F51 /* MPRuleTimerView.m in Sources */,
 				2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */,
 				2D4487D41B05A3980061EF86 /* MPRegisterViewController.m in Sources */,
 				2D44877D1B054E0F0061EF86 /* MPLoginViewController.m in Sources */,

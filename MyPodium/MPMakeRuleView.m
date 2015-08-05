@@ -16,7 +16,6 @@
 #import "MPRuleParticipantsPerMatchView.h"
 #import "MPRuleWinConditionStatView.h"
 #import "MPRuleWinConditionValueView.h"
-#import "MPRuleTimerView.h"
 #import "MPRuleStatsView.h"
 #import "MPBottomEdgeButton.h"
 
@@ -34,7 +33,7 @@
 - (void) makeSlides {
     //self.ruleSubviews
     self.slideViews = @[[[MPRuleNameView alloc] init], [[MPRuleParticipantView alloc] init],[[MPRuleParticipantsPerMatchView alloc] init], [[MPRuleStatsView alloc] init],
-                          [[MPRuleWinConditionStatView alloc] init], [[MPRuleWinConditionValueView alloc] init], [[MPRuleTimerView alloc] init]];
+                          [[MPRuleWinConditionStatView alloc] init], [[MPRuleWinConditionValueView alloc] init]];
     [self addSlideViews];
 }
 

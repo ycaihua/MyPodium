@@ -28,7 +28,6 @@
 #import "MPRuleStatsView.h"
 #import "MPRuleWinConditionStatView.h"
 #import "MPRuleWinConditionValueView.h"
-#import "MPRuleTimerView.h"
 
 #import "MPMakeRuleViewController.h"
 
@@ -154,17 +153,10 @@
     }
     NSArray* winConditionStatPath = @[[NSNumber numberWithInteger:self.selectedPath.section], [NSNumber numberWithInteger:self.selectedPath.row]];
     NSNumber* winConditionValue = [NSNumber numberWithInt: ((MPRuleWinConditionValueView*)[view slideWithClass:[MPRuleWinConditionValueView class]]).winConditionCounter.text.intValue];
-    NSNumber* timerEnabled = [NSNumber numberWithBool:!((MPRuleTimerView*)[view slideWithClass:[MPRuleTimerView class]]).timerButton.toggledOn];
-    NSNumber* timerDuration = @0;
-    if(timerEnabled.boolValue) {
-        timerDuration = [NSNumber numberWithInt: ((MPRuleTimerView*)[view slideWithClass:[MPRuleTimerView class]]).timerDurationCounter.text.intValue];
-    }
-    
     dispatch_async(dispatch_queue_create("CreateRuleQueue", 0), ^{
         NSDictionary* settings = @{@"name": name, @"name_searchable": name_searchable, @"usesTeamParticipants": usesTeamParticipants,
                                    @"playersPerTeam": playersPerTeam, @"participantsPerMatch": participantsPerMatch, @"playerStats": playerStats,
-                                   @"teamStats": teamStats, @"winConditionStatPath": winConditionStatPath, @"winConditionStatValue": winConditionValue,
-                                   @"timerEnabled": timerEnabled, @"timerDuration": timerDuration};
+                                   @"teamStats": teamStats, @"winConditionStatPath": winConditionStatPath, @"winConditionStatValue": winConditionValue};
         BOOL success = [MPRulesModel makeRuleWithCreator:[PFUser currentUser] withSettingsDictionary:settings];
         dispatch_async(dispatch_get_main_queue(), ^{
            if(success)
