@@ -54,14 +54,14 @@
 - (void) makeControlActions {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     
-    MPRuleNameView* nameView = view.ruleSubviews[0];
+    MPRuleNameView* nameView = (MPRuleNameView*)[view subviewWithClass:[MPRuleNameView class]];
     nameView.nameField.delegate = self;
     
-    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[view subviewWithClass:[MPRuleStatsView class]];;
     statsView.playerStatsField.delegate = self;
     statsView.teamStatsField.delegate = self;
     
-    MPRuleWinConditionStatView* winView = view.ruleSubviews[4];
+    MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view subviewWithClass:[MPRuleWinConditionStatView class]];
     [winView.statTable registerClass:[MPRuleStatCell class]
   forCellReuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
     winView.statTable.delegate = self;
@@ -73,7 +73,7 @@
 
 - (void) nextButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    UIView* focusedSubview = view.ruleSubviews[view.subviewIndex];
+    UIView* focusedSubview = [view currentVisibleSubview];
     
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     
@@ -90,11 +90,11 @@
             if(!errorsFound) {
                 if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
                     self.statNameData = [self statsFromStatsSubview];
-                    MPRuleWinConditionStatView* winView = view.ruleSubviews[view.subviewIndex + 1];
+                    MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view subviewWithClass:[MPRuleWinConditionStatView class]];
                     [winView.statTable reloadData];
                 }
                 else if([focusedSubview isKindOfClass: [MPRuleWinConditionStatView class]]) {
-                    MPRuleWinConditionValueView* valueView = view.ruleSubviews[view.subviewIndex + 1];
+                    MPRuleWinConditionValueView* valueView = (MPRuleWinConditionValueView*)[view subviewWithClass:[MPRuleWinConditionValueView class]];
                     [valueView updateWithStatName: [self winConditionStatName]];
                 }
                 if(view.subviewIndex == view.ruleSubviews.count - 1) {
@@ -104,7 +104,7 @@
                 [view advanceToNextSubview];
                 [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
                 [view.previousButton enable];
-                if(view.subviewIndex == 4) {
+                if([[view currentVisibleSubview] isKindOfClass:[MPRuleWinConditionStatView class]]) {
                     [view.nextButton disable];
                 }
                 else if(view.subviewIndex == view.ruleSubviews.count - 1) {

@@ -57,7 +57,7 @@
 }
 
 - (void) setFirstResponder {
-    MPRuleNameView* nameView = self.ruleSubviews[0];
+    MPRuleNameView* nameView = (MPRuleNameView*)[self subviewWithClass:[MPRuleNameView class]];
     [nameView.nameField becomeFirstResponder];
 }
 
@@ -185,7 +185,7 @@
         }
     }
     self.subviewIndex++;
-    MPView* newDisplayedView = self.ruleSubviews[self.subviewIndex];
+    MPView* newDisplayedView = [self currentVisibleSubview];
     if([newDisplayedView isKindOfClass:[MPRuleStatsView class]]) {
         [((MPRuleStatsView*)newDisplayedView).playerStatsField becomeFirstResponder];
     }
@@ -215,7 +215,7 @@
     }
     self.subviewIndex--;
     
-    MPView* newDisplayedView = self.ruleSubviews[self.subviewIndex];
+    MPView* newDisplayedView = [self currentVisibleSubview];
     if([newDisplayedView isKindOfClass:[MPRuleNameView class]]) {
         [((MPRuleNameView*)newDisplayedView).nameField becomeFirstResponder];
     }
@@ -224,7 +224,7 @@
     }
     
     [self addConstraint:
-     [NSLayoutConstraint constraintWithItem:self.ruleSubviews[self.subviewIndex]
+     [NSLayoutConstraint constraintWithItem:newDisplayedView
                                   attribute:NSLayoutAttributeLeading
                                   relatedBy:NSLayoutRelationEqual
                                      toItem:self
@@ -237,6 +237,18 @@
     [UIView animateWithDuration:0.75f animations:^{
         [self layoutIfNeeded];
     }];
+}
+
+- (MPView*) subviewWithClass:(Class)subviewClass {
+    for(MPView* view in self.ruleSubviews) {
+        if([view isKindOfClass: subviewClass])
+            return view;
+    }
+    return nil;
+}
+
+- (MPView*) currentVisibleSubview {
+    return  self.ruleSubviews[self.subviewIndex];
 }
 
 + (NSString*) defaultSubtitle { return @"New Rule"; }

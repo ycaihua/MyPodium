@@ -22,4 +22,7 @@
 - (void) advanceToNextSubview;
 - (void) returnToLastSubview;
 
+- (MPView*) subviewWithClass: (Class) subviewClass;
+- (MPView*) currentVisibleSubview;
+
 @end
