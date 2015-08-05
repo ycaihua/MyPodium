@@ -57,7 +57,7 @@
       forCellReuseIdentifier:[MPRulesViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [self refreshData];
+        [self loadOnDismiss: self];
     }
     return self;
 }
@@ -134,7 +134,6 @@
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
             [view.modesTable reloadData];
-            [view finishLoading];
         });
     });
 }
@@ -255,7 +254,19 @@
 }
 
 - (void) deleteModeButtonPressed: (id) sender {
-    NSLog(@"Red button");
+    UIButton* buttonSender = (UIButton*) sender;
+    MPRuleCell* cell = (MPRuleCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPRulesViewController ownedRulesHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
+    [self performModelUpdate:^BOOL{
+        return [MPRulesModel deleteRule:other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You deleted your rule, %@.", other[@"name"]]
+            withErrorMessage:@"There was an error processing the request."
+       withConfirmationAlert:showConfirmation
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your rule, %@?", other[@"name"]]];
 }
 
 #pragma mark table view data/delegate

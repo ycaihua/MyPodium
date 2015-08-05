@@ -38,6 +38,7 @@
     self.playerStatsField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.playerStatsField.translatesAutoresizingMaskIntoConstraints = NO;
     self.playerStatsField.returnKeyType = UIReturnKeyGo;
+    self.playerStatsField.clearButtonMode = UITextFieldViewModeNever;
     [self addSubview: self.playerStatsField];
     
     //self.teamInfoLabel
@@ -50,6 +51,7 @@
     self.teamStatsField = [[MPTextField alloc] initWithPlaceholder:@"TEAM STATS"];
     self.teamStatsField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.teamStatsField.returnKeyType = UIReturnKeyGo;
+    self.teamStatsField.clearButtonMode = UITextFieldViewModeNever;
     self.teamStatsField.hidden = YES;
     self.teamStatsField.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.teamStatsField];

@@ -46,5 +46,9 @@
     return [newRule save];
 }
 
++ (BOOL) deleteRule: (PFObject*) rule {
+    return [rule delete];
+}
+
 + (NSString*) tableName { return @"Rule"; }
 @end

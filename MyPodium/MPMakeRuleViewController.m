@@ -84,8 +84,12 @@
             [alerter checkErrorCondition:(nameField.text.length < [MPLimitConstants minRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
             [alerter checkErrorCondition:(nameField.text.length > [MPLimitConstants maxRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
             [alerter checkErrorCondition:[MPRulesModel ruleNameInUse:nameField.text forUser:[PFUser currentUser]] withMessage:@"You have already used this name for a set of rules before. Please try another."];
-            errorsFound = [alerter hasFoundError];
         }
+        else if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
+            self.statNameData = [self statsFromStatsSubview];
+            [alerter checkErrorCondition:(self.statNameData.count == 0) withMessage:@"You need at least one statistic to track (so you can tell who wins in your games)!"];
+        }
+        errorsFound = [alerter hasFoundError];
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!errorsFound) {
                 if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
