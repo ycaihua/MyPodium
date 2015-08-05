@@ -6,11 +6,12 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPFormView.h"
+#import "MPMenuView.h"
 
-@class MPBottomEdgeButton;
-@class MPTextField;
+@class MPFormView;
 
-@interface MPMakeRuleView : MPFormView
+@interface MPMakeRuleView : MPMenuView
+
+@property MPFormView* form;
 
 @end

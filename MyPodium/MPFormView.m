@@ -16,8 +16,8 @@
 
 @implementation MPFormView
 
-- (id) initWithTitleText:(NSString *)titleText subtitleText:(NSString *)subtitleText {
-    self = [super initWithTitleText:titleText subtitleText:subtitleText];
+- (id) init {
+    self = [super init];
     if(self) {
         self.slideViewIndex = 0;
         self.backgroundColor = [UIColor MPGrayColor];
@@ -120,10 +120,10 @@
         [self addConstraints:@[[NSLayoutConstraint constraintWithItem:self.slideViews[i]
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.menu
-                                                            attribute:NSLayoutAttributeBottom
+                                                               toItem:self
+                                                            attribute:NSLayoutAttributeTop
                                                            multiplier:1.0f
-                                                             constant:10.0f],
+                                                             constant:0.0f],
                                [NSLayoutConstraint constraintWithItem:self.slideViews[i]
                                                             attribute:NSLayoutAttributeBottom
                                                             relatedBy:NSLayoutRelationEqual

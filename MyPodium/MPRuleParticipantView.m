@@ -10,6 +10,7 @@
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
 
+#import "MPFormView.h"
 #import "MPRuleParticipantView.h"
 #import "MPRuleStatsView.h"
 #import "MPLabel.h"
@@ -291,8 +292,8 @@
     }
     
     //Update stats view same way - stats view is 2 subviews down in rotation
-    MPMakeRuleView* mainView = (MPMakeRuleView*)self.superview;
-    MPRuleStatsView* statsView = (MPRuleStatsView*)[mainView slideWithClass:[MPRuleStatsView class]];
+    MPMakeRuleView* mainView = (MPMakeRuleView*)(self.superview.superview);
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[mainView.form slideWithClass:[MPRuleStatsView class]];
     for(UIView* subview in @[statsView.teamInfoLabel, statsView.teamStatsField]) {
         subview.hidden = teamsDisabled;
     }

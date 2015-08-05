@@ -6,12 +6,12 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPMenuView.h"
+#import "MPView.h"
 
 @class MPBottomEdgeButton;
 @class MPTextField;
 
-@interface MPFormView : MPMenuView
+@interface MPFormView : MPView
 
 @property NSArray* slideViews;
 @property int slideViewIndex;
