@@ -27,7 +27,7 @@
 #import "MPRuleParticipantsPerMatchView.h"
 #import "MPRuleStatsView.h"
 #import "MPRuleWinConditionStatView.h"
-#import "MPRuleWinConditionValueView.h"
+#import "MPRuleScoreLimitView.h"
 
 #import "MPMakeRuleViewController.h"
 
@@ -43,6 +43,7 @@
         MPMakeRuleView* view = [[MPMakeRuleView alloc] init];
         self.view = view;
         [self makeControlActions];
+        self.scoreLimitEnabled = YES;
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -65,6 +66,9 @@
   forCellReuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
     winView.statTable.delegate = self;
     winView.statTable.dataSource = self;
+    
+    MPRuleScoreLimitView* scoreView = (MPRuleScoreLimitView*)[view slideWithClass:[MPRuleScoreLimitView class]];
+    [scoreView.scoreLimitButton addTarget:self action:@selector(scoreLimitButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     
     [view.nextButton addTarget:self action:@selector(nextButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [view.previousButton addTarget:self action:@selector(previousButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -97,7 +101,7 @@
                     [winView.statTable reloadData];
                 }
                 else if([focusedSubview isKindOfClass: [MPRuleWinConditionStatView class]]) {
-                    MPRuleWinConditionValueView* valueView = (MPRuleWinConditionValueView*)[view slideWithClass:[MPRuleWinConditionValueView class]];
+                    MPRuleScoreLimitView* valueView = (MPRuleScoreLimitView*)[view slideWithClass:[MPRuleScoreLimitView class]];
                     [valueView updateWithStatName: [self winConditionStatName]];
                 }
                 if(view.slideViewIndex == view.slideViews.count - 1) {
@@ -115,7 +119,6 @@
             }
         });
     });
-    
 }
 
 - (void) previousButtonPressed: (id) sender {
@@ -127,6 +130,12 @@
         [view returnToLastSlide];
         [view.nextButton enable];
     }
+}
+
+- (void) scoreLimitButtonPressed: (id) sender {
+    MPRuleButton* buttonSender = (MPRuleButton*) sender;
+    [buttonSender toggleSelected];
+    self.scoreLimitEnabled = [buttonSender toggledOn];
 }
 
 - (NSString*) winConditionStatName {
@@ -152,18 +161,21 @@
         teamStats = self.statNameData[1][@"TEAM STATS"];
     }
     NSArray* winConditionStatPath = @[[NSNumber numberWithInteger:self.selectedPath.section], [NSNumber numberWithInteger:self.selectedPath.row]];
-    NSNumber* winConditionValue = [NSNumber numberWithInt: ((MPRuleWinConditionValueView*)[view slideWithClass:[MPRuleWinConditionValueView class]]).winConditionCounter.text.intValue];
+    
+    NSNumber* scoreLimit = @0;
+    if(self.scoreLimitEnabled) {
+        scoreLimit = [NSNumber numberWithInt: ((MPRuleScoreLimitView*)[view slideWithClass:[MPRuleScoreLimitView class]]).winConditionCounter.text.intValue];
+    }
+    
     dispatch_async(dispatch_queue_create("CreateRuleQueue", 0), ^{
-        NSDictionary* settings = @{@"name": name, @"name_searchable": name_searchable, @"usesTeamParticipants": usesTeamParticipants,
-                                   @"playersPerTeam": playersPerTeam, @"participantsPerMatch": participantsPerMatch, @"playerStats": playerStats,
-                                   @"teamStats": teamStats, @"winConditionStatPath": winConditionStatPath, @"winConditionStatValue": winConditionValue};
+        NSDictionary* settings = @{@"name": name, @"name_searchable": name_searchable, @"usesTeamParticipants": usesTeamParticipants, @"playersPerTeam": playersPerTeam, @"participantsPerMatch": participantsPerMatch, @"playerStats": playerStats, @"teamStats": teamStats, @"winConditionStatPath": winConditionStatPath, @"scoreLimitEnabled": [NSNumber numberWithBool:self.scoreLimitEnabled], @"scoreLimit": scoreLimit};
         BOOL success = [MPRulesModel makeRuleWithCreator:[PFUser currentUser] withSettingsDictionary:settings];
         dispatch_async(dispatch_get_main_queue(), ^{
-           if(success)
+            if(success)
                [MPControllerManager dismissViewController: self];
-           else {
+            else {
                [view.menu.subtitleLabel displayMessage:@"There was an error saving your rules. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
-           }
+            }
         });
     });
 }

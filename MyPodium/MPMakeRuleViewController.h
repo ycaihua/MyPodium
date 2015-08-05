@@ -12,5 +12,6 @@
 
 @property NSArray* statNameData;
 @property NSIndexPath* selectedPath;
+@property BOOL scoreLimitEnabled;
 
 @end

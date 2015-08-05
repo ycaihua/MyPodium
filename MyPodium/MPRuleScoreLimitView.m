@@ -1,5 +1,5 @@
 //
-//  MPRuleWinConditionValueView.m
+//  MPRuleScoreLimitView.m
 //  MyPodium
 //
 //  Created by Connor Neville on 7/29/15.
@@ -10,10 +10,11 @@
 #import "UIButton+MPImage.h"
 #import "UIColor+MPColor.h"
 
-#import "MPRuleWinConditionValueView.h"
+#import "MPRuleScoreLimitView.h"
 #import "MPLabel.h"
+#import "MPRuleButton.h"
 
-@implementation MPRuleWinConditionValueView
+@implementation MPRuleScoreLimitView
 
 - (id) init {
     self = [super init];
@@ -26,7 +27,7 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"WIN CONITION VALUE"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"SCORE LIMIT"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
@@ -58,6 +59,16 @@
     self.incrementButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.incrementButton addTarget:self action:@selector(incrementButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview: self.incrementButton];
+    
+    //self.noLimitLabel
+    self.noLimitLabel = [[MPLabel alloc] initWithText:@"Or, instead, press this button if your games have no score limit (for example, if they use a timer instead)."];
+    self.noLimitLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.noLimitLabel];
+    
+    //self.scoreLimitButton
+    self.scoreLimitButton = [[MPRuleButton alloc] initWithToggledOnTitle:@"SCORE LIMIT ENABLED" onSubtitle:@"tap to disable" offTitle:@"SCORE LIMIT DISABLED" offSubtitle:@"tap to enable"];
+    self.scoreLimitButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.scoreLimitButton];
 }
 
 - (void) updateWithStatName:(NSString *)statName {
@@ -188,7 +199,58 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[UIButton standardWidthAndHeight]]
+                                                         constant:[UIButton standardWidthAndHeight]],
+                           //self.noLimitLabel
+                           [NSLayoutConstraint constraintWithItem:self.noLimitLabel
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.noLimitLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.noLimitLabel
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.winConditionCounter
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:10.0f],
+                           //self.scoreLimitButton
+                           [NSLayoutConstraint constraintWithItem:self.scoreLimitButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.decrementButton
+                                                        attribute:NSLayoutAttributeLeading
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.scoreLimitButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.incrementButton
+                                                        attribute:NSLayoutAttributeTrailing
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.scoreLimitButton
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.noLimitLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
+                           [NSLayoutConstraint constraintWithItem:self.scoreLimitButton
+                                                        attribute:NSLayoutAttributeHeight
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[MPRuleButton defaultHeight]],
                            ]];
     
 }
