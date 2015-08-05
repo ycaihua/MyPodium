@@ -284,20 +284,20 @@
 - (void) participantsChanged: (id) sender {
     MPRuleButton* buttonSender = (MPRuleButton*) sender;
     [buttonSender toggleSelected];
-    BOOL usesTeams = ![buttonSender toggledOn];
+    BOOL teamsDisabled = [buttonSender toggledOn];
     //Hide and show views based on toggle selected
     for(UIView* subview in @[self.playersPerTeamTitle, self.playersPerTeamLabel, self.playersPerTeamCounter, self.incrementButton, self.decrementButton]) {
-        subview.hidden = !usesTeams;
+        subview.hidden = teamsDisabled;
     }
     
     //Update stats view same way - stats view is 2 subviews down in rotation
     MPMakeRuleView* mainView = (MPMakeRuleView*)self.superview;
-    MPRuleStatsView* statsView = mainView.ruleSubviews[mainView.subviewIndex + 2];
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[mainView slideWithClass:[MPRuleStatsView class]];
     for(UIView* subview in @[statsView.teamInfoLabel, statsView.teamStatsField]) {
-        subview.hidden = !usesTeams;
+        subview.hidden = teamsDisabled;
     }
     MPTextField* playerStatsField = statsView.playerStatsField;
-    if(usesTeams) {
+    if(teamsDisabled) {
         playerStatsField.returnKeyType = UIReturnKeyGo;
     }
     else {

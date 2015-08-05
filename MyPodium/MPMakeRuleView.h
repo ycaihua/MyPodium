@@ -6,23 +6,11 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPMenuView.h"
+#import "MPFormView.h"
 
 @class MPBottomEdgeButton;
 @class MPTextField;
 
-@interface MPMakeRuleView : MPMenuView
-
-@property NSArray* ruleSubviews;
-@property int subviewIndex;
-
-@property MPBottomEdgeButton* previousButton;
-@property MPBottomEdgeButton* nextButton;
-
-- (void) advanceToNextSubview;
-- (void) returnToLastSubview;
-
-- (MPView*) subviewWithClass: (Class) subviewClass;
-- (MPView*) currentVisibleSubview;
+@interface MPMakeRuleView : MPFormView
 
 @end

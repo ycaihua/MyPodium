@@ -54,14 +54,14 @@
 - (void) makeControlActions {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
     
-    MPRuleNameView* nameView = (MPRuleNameView*)[view subviewWithClass:[MPRuleNameView class]];
+    MPRuleNameView* nameView = (MPRuleNameView*)[view slideWithClass:[MPRuleNameView class]];
     nameView.nameField.delegate = self;
     
-    MPRuleStatsView* statsView = (MPRuleStatsView*)[view subviewWithClass:[MPRuleStatsView class]];;
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[view slideWithClass:[MPRuleStatsView class]];;
     statsView.playerStatsField.delegate = self;
     statsView.teamStatsField.delegate = self;
     
-    MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view subviewWithClass:[MPRuleWinConditionStatView class]];
+    MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view slideWithClass:[MPRuleWinConditionStatView class]];
     [winView.statTable registerClass:[MPRuleStatCell class]
   forCellReuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
     winView.statTable.delegate = self;
@@ -73,7 +73,7 @@
 
 - (void) nextButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    UIView* focusedSubview = [view currentVisibleSubview];
+    UIView* focusedSubview = [view currentSlide];
     
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     
@@ -90,24 +90,24 @@
             if(!errorsFound) {
                 if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
                     self.statNameData = [self statsFromStatsSubview];
-                    MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view subviewWithClass:[MPRuleWinConditionStatView class]];
+                    MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view slideWithClass:[MPRuleWinConditionStatView class]];
                     [winView.statTable reloadData];
                 }
                 else if([focusedSubview isKindOfClass: [MPRuleWinConditionStatView class]]) {
-                    MPRuleWinConditionValueView* valueView = (MPRuleWinConditionValueView*)[view subviewWithClass:[MPRuleWinConditionValueView class]];
+                    MPRuleWinConditionValueView* valueView = (MPRuleWinConditionValueView*)[view slideWithClass:[MPRuleWinConditionValueView class]];
                     [valueView updateWithStatName: [self winConditionStatName]];
                 }
-                if(view.subviewIndex == view.ruleSubviews.count - 1) {
+                if(view.slideViewIndex == view.slideViews.count - 1) {
                     [self createAndSaveGameMode];
                     return;
                 }
-                [view advanceToNextSubview];
+                [view advanceToNextSlide];
                 [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
                 [view.previousButton enable];
-                if([[view currentVisibleSubview] isKindOfClass:[MPRuleWinConditionStatView class]]) {
+                if([[view currentSlide] isKindOfClass:[MPRuleWinConditionStatView class]]) {
                     [view.nextButton disable];
                 }
-                else if(view.subviewIndex == view.ruleSubviews.count - 1) {
+                else if(view.slideViewIndex == view.slideViews.count - 1) {
                     [view.nextButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
                 }
                 else {
@@ -121,14 +121,14 @@
 
 - (void) previousButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    if(view.subviewIndex == 0) {
+    if(view.slideViewIndex == 0) {
         [MPControllerManager dismissViewController:self];
     }
     else {
-        [view returnToLastSubview];
+        [view returnToLastSlide];
         [view.nextButton enable];
         [view.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
-        if(view.subviewIndex == 0) {
+        if(view.slideViewIndex == 0) {
             [view.previousButton setTitle:@"CANCEL" forState:UIControlStateNormal];
         }
         else {
@@ -145,26 +145,26 @@
 
 - (void) createAndSaveGameMode {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    NSString* name = ((MPRuleNameView*)view.ruleSubviews[0]).nameField.text;
+    NSString* name = ((MPRuleNameView*)[view slideWithClass:[MPRuleNameView class]]).nameField.text;
     NSString* name_searchable = name.lowercaseString;
-    NSNumber* usesTeamParticipants = [NSNumber numberWithBool: !((MPRuleParticipantView*)view.ruleSubviews[1]).participantsButton.toggledOn];
+    NSNumber* usesTeamParticipants = [NSNumber numberWithBool: !((MPRuleParticipantView*)[view slideWithClass:[MPRuleParticipantView class]]).participantsButton.toggledOn];
     NSNumber* playersPerTeam = @0;
     if(usesTeamParticipants.boolValue) {
-        playersPerTeam = [NSNumber numberWithInt: ((MPRuleParticipantView*)view.ruleSubviews[1]).playersPerTeamCounter.text.intValue];
+        playersPerTeam = [NSNumber numberWithInt: ((MPRuleParticipantView*)[view slideWithClass:[MPRuleParticipantView class]]).playersPerTeamCounter.text.intValue];
     }
-    NSNumber* participantsPerMatch = [NSNumber numberWithInt:((MPRuleParticipantsPerMatchView*)view.ruleSubviews[2]).participantsPerMatchCounter.text.intValue];
-    NSLog(@"%@", self.statNameData);
+    NSNumber* participantsPerMatch = [NSNumber numberWithInt:((MPRuleParticipantsPerMatchView*)[view slideWithClass:[MPRuleParticipantsPerMatchView class]]).participantsPerMatchCounter.text.intValue];
+    
     NSArray* playerStats = self.statNameData[0][@"PLAYER STATS"];
     NSArray* teamStats = @[];
     if(usesTeamParticipants.boolValue) {
         teamStats = self.statNameData[1][@"TEAM STATS"];
     }
     NSArray* winConditionStatPath = @[[NSNumber numberWithInteger:self.selectedPath.section], [NSNumber numberWithInteger:self.selectedPath.row]];
-    NSNumber* winConditionValue = [NSNumber numberWithInt: ((MPRuleWinConditionValueView*)view.ruleSubviews[5]).winConditionCounter.text.intValue];
-    NSNumber* timerEnabled = [NSNumber numberWithBool:!((MPRuleTimerView*)view.ruleSubviews[6]).timerButton.toggledOn];
+    NSNumber* winConditionValue = [NSNumber numberWithInt: ((MPRuleWinConditionValueView*)[view slideWithClass:[MPRuleWinConditionValueView class]]).winConditionCounter.text.intValue];
+    NSNumber* timerEnabled = [NSNumber numberWithBool:!((MPRuleTimerView*)[view slideWithClass:[MPRuleTimerView class]]).timerButton.toggledOn];
     NSNumber* timerDuration = @0;
     if(timerEnabled.boolValue) {
-        timerDuration = [NSNumber numberWithInt: ((MPRuleTimerView*)view.ruleSubviews[6]).timerDurationCounter.text.intValue];
+        timerDuration = [NSNumber numberWithInt: ((MPRuleTimerView*)[view slideWithClass:[MPRuleTimerView class]]).timerDurationCounter.text.intValue];
     }
     
     dispatch_async(dispatch_queue_create("CreateRuleQueue", 0), ^{
@@ -185,8 +185,8 @@
 
 - (void) keyboardWillShow: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPView* activeView = view.ruleSubviews[view.subviewIndex];
-   if([activeView isKindOfClass:[MPRuleStatsView class]]) {
+    MPView* activeView = [view currentSlide];
+    if([activeView isKindOfClass:[MPRuleStatsView class]]) {
        if([((MPRuleStatsView*)activeView).teamStatsField isFirstResponder]) {
             [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:YES];
         }
@@ -195,7 +195,7 @@
 
 - (void) keyboardWillHide: (NSNotification*) notification {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPView* activeView = view.ruleSubviews[view.subviewIndex];
+    MPView* activeView = [view currentSlide];
     if([activeView isKindOfClass:[MPRuleStatsView class]]) {
         if([((MPRuleStatsView*)activeView).teamStatsField isFirstResponder]) {
             [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:NO];
@@ -205,13 +205,13 @@
 - (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {
     [textField resignFirstResponder];
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPRuleNameView* nameView = view.ruleSubviews[0];
+    MPRuleNameView* nameView = (MPRuleNameView*)[view slideWithClass:[MPRuleNameView class]];
     MPTextField* nameField = nameView.nameField;
     if([textField isEqual: nameField]) {
         [self nextButtonPressed: self];
         return YES;
     }
-    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[view slideWithClass:[MPRuleStatsView class]];
     if([textField isEqual: statsView.playerStatsField] && !statsView.teamStatsField.hidden) {
         [statsView.teamStatsField becomeFirstResponder];
         return YES;
@@ -225,7 +225,7 @@
 
 - (void) textFieldDidBeginEditing:(nonnull UITextField *)textField {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[view slideWithClass:[MPRuleStatsView class]];
     if([textField isEqual: statsView.teamStatsField]) {
         [self keyboardWillShow: nil];
     }
@@ -234,7 +234,7 @@
 - (NSMutableArray*) statsFromStatsSubview {
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity:2];
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    MPRuleStatsView* statsView = view.ruleSubviews[3];
+    MPRuleStatsView* statsView = (MPRuleStatsView*)[view slideWithClass:[MPRuleStatsView class]];
     
     NSString* playerStatsString = statsView.playerStatsField.text;
     NSMutableArray* playerStats = [playerStatsString componentsSeparatedByString:@","].mutableCopy;

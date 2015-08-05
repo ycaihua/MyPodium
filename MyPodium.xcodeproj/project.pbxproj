@@ -123,6 +123,7 @@
 		2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFB1B2275F800F748C9 /* Reachability.m */; };
 		2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */; };
 		2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */; };
+		2DEE90C01B72970500F61BE2 /* MPFormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90BF1B72970500F61BE2 /* MPFormView.m */; };
 		2DF3D3D81B405EC7009C5304 /* MPTableSectionUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */; };
 /* End PBXBuildFile section */
 
@@ -337,6 +338,8 @@
 		2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpView.m; sourceTree = "<group>"; };
 		2DE9FD001B2288C600F748C9 /* MPHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpViewController.h; sourceTree = "<group>"; };
 		2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpViewController.m; sourceTree = "<group>"; };
+		2DEE90BE1B72970500F61BE2 /* MPFormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFormView.h; sourceTree = "<group>"; };
+		2DEE90BF1B72970500F61BE2 /* MPFormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFormView.m; sourceTree = "<group>"; };
 		2DF3D3D61B405EC7009C5304 /* MPTableSectionUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableSectionUtility.h; sourceTree = "<group>"; };
 		2DF3D3D71B405EC7009C5304 /* MPTableSectionUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableSectionUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -586,6 +589,7 @@
 				2D3E67011B600554000B39FB /* MakeRule */,
 				2DE9FCE31B20AC6C00F748C9 /* Search */,
 				2D4487E41B0836610061EF86 /* SidebarAndMenu */,
+				2DEE90BD1B7296D900F61BE2 /* Reusable */,
 				2D4487811B05553D0061EF86 /* Controls */,
 				2D44877A1B054BFF0061EF86 /* LoginRegister */,
 			);
@@ -612,10 +616,6 @@
 				2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */,
 				2D94D0B91B2E1213006C500A /* MPBottomEdgeButton.h */,
 				2D94D0BA1B2E1213006C500A /* MPBottomEdgeButton.m */,
-				2DE9FCDD1B1EB8BE00F748C9 /* MPTableHeader.h */,
-				2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */,
-				2D4487781B0546580061EF86 /* MPView.m */,
-				2D4487771B0546580061EF86 /* MPView.h */,
 				2D44879A1B05829C0061EF86 /* CNLabel.h */,
 				2D44879B1B05829C0061EF86 /* CNLabel.m */,
 				2D4487821B05554F0061EF86 /* MPTextField.h */,
@@ -898,6 +898,19 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
+		2DEE90BD1B7296D900F61BE2 /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				2D4487781B0546580061EF86 /* MPView.m */,
+				2D4487771B0546580061EF86 /* MPView.h */,
+				2DE9FCDD1B1EB8BE00F748C9 /* MPTableHeader.h */,
+				2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */,
+				2DEE90BE1B72970500F61BE2 /* MPFormView.h */,
+				2DEE90BF1B72970500F61BE2 /* MPFormView.m */,
+			);
+			name = Reusable;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1030,6 +1043,7 @@
 				2D4487E01B079FBD0061EF86 /* MPForgotPasswordView.m in Sources */,
 				2DE9FCDF1B1EB8BE00F748C9 /* MPTableHeader.m in Sources */,
 				2DE9FCF01B21F5E800F748C9 /* MPSearchControl.m in Sources */,
+				2DEE90C01B72970500F61BE2 /* MPFormView.m in Sources */,
 				2D4487EA1B0837240061EF86 /* MPMenu.m in Sources */,
 				2D3FAE091B672C69009804DF /* MPRuleNameView.m in Sources */,
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
