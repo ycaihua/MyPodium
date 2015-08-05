@@ -111,6 +111,7 @@
     }
     
     [self makeSlideViewConstraints];
+    [self hideInactiveSlides];
 }
 
 - (void) makeSlideViewConstraints {
@@ -183,6 +184,7 @@
 
 - (void) returnToLastSlide {
     self.slideViewIndex--;
+    [self hideInactiveSlides];
     [self refreshConstraints];
     [self.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
     if(self.slideViewIndex == 0) {
@@ -217,7 +219,18 @@
     
     [UIView animateWithDuration:0.75f animations:^{
         [self layoutIfNeeded];
+    } completion:^(BOOL finished) {
+        [self hideInactiveSlides];
     }];
+}
+
+- (void) hideInactiveSlides {
+    for(int i = 0; i < self.slideViews.count; i++) {
+        MPView* current = self.slideViews[i];
+        //Only the previous (-1) needs to be hidden
+        int distanceFromCurrent = i - self.slideViewIndex;
+        current.hidden = (distanceFromCurrent == -1);
+    }
 }
 
 - (MPView*) slideWithClass: (Class) slideClass {
