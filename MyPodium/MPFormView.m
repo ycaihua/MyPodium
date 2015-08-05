@@ -172,11 +172,25 @@
 - (void) advanceToNextSlide {
     self.slideViewIndex++;
     [self refreshConstraints];
+    [self.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
+    if(self.slideViewIndex == self.slideViews.count - 1) {
+        [self.nextButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
+    }
+    else {
+        [self.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
+    }
 }
 
 - (void) returnToLastSlide {
     self.slideViewIndex--;
     [self refreshConstraints];
+    [self.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
+    if(self.slideViewIndex == 0) {
+        [self.previousButton setTitle:@"CANCEL" forState:UIControlStateNormal];
+    }
+    else {
+        [self.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
+    }
 }
 
 - (void) refreshConstraints {

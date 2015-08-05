@@ -102,13 +102,9 @@
                     return;
                 }
                 [view advanceToNextSlide];
-                [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
                 [view.previousButton enable];
                 if([[view currentSlide] isKindOfClass:[MPRuleWinConditionStatView class]]) {
                     [view.nextButton disable];
-                }
-                else if(view.slideViewIndex == view.slideViews.count - 1) {
-                    [view.nextButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
                 }
                 else {
                     [view.nextButton enable];
@@ -127,13 +123,6 @@
     else {
         [view returnToLastSlide];
         [view.nextButton enable];
-        [view.nextButton setTitle:@"NEXT" forState:UIControlStateNormal];
-        if(view.slideViewIndex == 0) {
-            [view.previousButton setTitle:@"CANCEL" forState:UIControlStateNormal];
-        }
-        else {
-            [view.previousButton setTitle:@"PREVIOUS" forState:UIControlStateNormal];
-        }
     }
 }
 
