@@ -86,4 +86,13 @@
     return ([query countObjects] > 0);
 }
 
++ (BOOL) emailInUse: (NSString*) email {
+    if(email.length == 0) return YES;
+    NSString* searchString = [email lowercaseString];
+    PFQuery* query = [PFUser query];
+    [query whereKey:@"email_searchable" equalTo:searchString];
+    return ([query countObjects] > 0);
+    
+}
+
 @end

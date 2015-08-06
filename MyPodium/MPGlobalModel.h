@@ -20,5 +20,6 @@
 + (NSArray*) modesList: (NSArray*) modes searchForString: (NSString*) string;
 
 + (BOOL) usernameInUse: (NSString*) username;
++ (BOOL) emailInUse: (NSString*) email;
 
 @end

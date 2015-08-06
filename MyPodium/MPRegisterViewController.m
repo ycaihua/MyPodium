@@ -89,6 +89,7 @@
         else if([focusedSubview isKindOfClass: [MPRegisterEmailView class]]) {
             NSString* email = self.emailView.emailField.text;
             [alerter checkErrorCondition:!([email isValidEmail]) withMessage: @"You didn't enter a valid email."];
+            [alerter checkErrorCondition:[MPGlobalModel emailInUse:email] withMessage:@"This email address is already in use. Are you sure you haven't signed up already?"];
         }
         else if([focusedSubview isKindOfClass: [MPRegisterDisplayNameView class]]) {
             NSString* realName = self.nameView.nameField.text;
@@ -102,10 +103,38 @@
                 }
                 else {
                     [view.form advanceToNextSlide];
+                    if([[view.form currentSlide] isKindOfClass: [MPRegisterPasswordView class]]) {
+                        [self.passwordView.passwordField becomeFirstResponder];
+                    }
+                    else if([[view.form currentSlide] isKindOfClass: [MPRegisterEmailView class]]) {
+                        [self.emailView.emailField becomeFirstResponder];
+                    }
+                    else {
+                        [self.nameView.nameField becomeFirstResponder];
+                    }
                 }
             }
         });
     });
+}
+
+- (void) previousButtonPressed: (id) sender {
+    MPRegisterView* view = (MPRegisterView*) self.view;
+    if(view.form.slideViewIndex == 0) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else {
+        [view.form returnToLastSlide];
+        if([[view.form currentSlide] isKindOfClass: [MPRegisterUsernameView class]]) {
+            [self.usernameView.usernameField becomeFirstResponder];
+        }
+        else if([[view.form currentSlide] isKindOfClass: [MPRegisterPasswordView class]]) {
+            [self.passwordView.passwordField becomeFirstResponder];
+        }
+        else if([[view.form currentSlide] isKindOfClass: [MPRegisterEmailView class]]) {
+            [self.emailView.emailField becomeFirstResponder];
+        }
+    }
 }
 
 - (void) registerAccount {
@@ -162,16 +191,6 @@
         [self nextButtonPressed: self];
     }
     return YES;
-}
-
-- (void) previousButtonPressed: (id) sender {
-    MPRegisterView* view = (MPRegisterView*) self.view;
-    if(view.form.slideViewIndex == 0) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-    else {
-        [view.form returnToLastSlide];
-    }
 }
 
 - (void) keyboardWillShow: (NSNotification*) notification {

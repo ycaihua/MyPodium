@@ -25,13 +25,13 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"DISPLAY NAME"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"DISPLAY NAME (OPTIONAL)"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"(Optional) Enter your real name or a display name of your choice. It is only visible to people on your friends list. Up to %d characters.", [MPLimitConstants maxRealNameCharacters]]];
+    self.infoLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"Enter your real name or a display name of your choice. It is only visible to people on your friends list. Up to %d characters.", [MPLimitConstants maxRealNameCharacters]]];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
     
