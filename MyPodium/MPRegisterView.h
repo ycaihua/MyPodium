@@ -11,19 +11,12 @@
 #import <UIKit/UIKit.h>
 
 @class MPLabel;
+@class MPFormView;
 @class MPTextField;
 
 @interface MPRegisterView : MPView
 
 @property MPLabel* titleLabel;
-@property MPTextField* usernameField;
-@property MPLabel* usernameLabel;
-@property MPTextField* passwordField;
-@property MPLabel* passwordLabel;
-@property MPTextField* emailField;
-@property MPLabel* emailLabel;
-@property UIButton* registerButton;
-@property MPLabel* descriptorLabel;
-@property UIButton* goBackButton;
+@property MPFormView* form;
 
 @end

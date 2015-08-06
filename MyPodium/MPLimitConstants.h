@@ -16,6 +16,8 @@
 + (int) maxPasswordCharacters;
 + (int) minPasswordCharacters;
 
++ (int) maxRealNameCharacters;
+
 + (int) maxTeamNameCharacters;
 + (int) minTeamNameCharacters;
 
@@ -23,9 +25,6 @@
 + (int) minRuleNameCharacters;
 
 + (int) maxParticipantsPerMatch;
-
-+ (int) maxRealNameCharacters;
-+ (int) minRealNameCharacters;
 
 + (int) maxPlayersPerTeam;
 

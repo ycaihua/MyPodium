@@ -1,16 +1,16 @@
 //
-//  MPRuleNameView.m
+//  MPRegisterEmailView.m
 //  MyPodium
 //
-//  Created by Connor Neville on 7/27/15.
+//  Created by Connor Neville on 8/6/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPRuleNameView.h"
+#import "MPRegisterEmailView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 
-@implementation MPRuleNameView
+@implementation MPRegisterEmailView
 
 - (id) init {
     self = [super init];
@@ -23,22 +23,22 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"RULE SET CREATION"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"EMAIL"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Every event or match you make needs a set of rules. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
+    self.infoLabel = [[MPLabel alloc] initWithText:@"Enter your email address. It must be a valid email. We will only ever email you if you request to change your password."];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
-
-    //self.nameField
-    self.nameField = [[MPTextField alloc] initWithPlaceholder:@"RULE NAME"];
-    self.nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    self.nameField.translatesAutoresizingMaskIntoConstraints = NO;
-    self.nameField.returnKeyType = UIReturnKeyGo;
-    [self addSubview: self.nameField];
+    
+    //self.emailField
+    self.emailField = [[MPTextField alloc] initWithPlaceholder:@"EMAIL ADDRESS"];
+    self.emailField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.emailField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.emailField.returnKeyType = UIReturnKeyGo;
+    [self addSubview: self.emailField];
 }
 
 - (void) makeControlConstraints {
@@ -79,29 +79,29 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           //self.nameField
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           //self.emailField
+                           [NSLayoutConstraint constraintWithItem:self.emailField
                                                         attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           [NSLayoutConstraint constraintWithItem:self.emailField
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.infoLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:10.0f],
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           [NSLayoutConstraint constraintWithItem:self.emailField
                                                         attribute:NSLayoutAttributeWidth
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPTextField standardWidth]],
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           [NSLayoutConstraint constraintWithItem:self.emailField
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
@@ -116,7 +116,7 @@
     if(keyboardShowing)
         self.infoLabel.hidden = YES;
     for(NSLayoutConstraint* constraint in self.constraints) {
-        if([constraint.firstItem isEqual: self.nameField] &&
+        if([constraint.firstItem isEqual: self.emailField] &&
            constraint.firstAttribute == NSLayoutAttributeTop) {
             [self removeConstraint: constraint];
             break;
@@ -124,7 +124,7 @@
     }
     if(keyboardShowing) {
         [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.nameField
+         [NSLayoutConstraint constraintWithItem:self.emailField
                                       attribute:NSLayoutAttributeTop
                                       relatedBy:NSLayoutRelationEqual
                                          toItem:self.titleLabel
@@ -134,7 +134,7 @@
     }
     else {
         [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.nameField
+         [NSLayoutConstraint constraintWithItem:self.emailField
                                       attribute:NSLayoutAttributeTop
                                       relatedBy:NSLayoutRelationEqual
                                          toItem:self.infoLabel

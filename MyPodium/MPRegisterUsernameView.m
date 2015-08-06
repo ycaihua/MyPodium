@@ -1,16 +1,18 @@
 //
-//  MPRuleNameView.m
+//  MPRegisterUsernameView.m
 //  MyPodium
 //
-//  Created by Connor Neville on 7/27/15.
+//  Created by Connor Neville on 8/6/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPRuleNameView.h"
+#import "MPLimitConstants.h"
+
+#import "MPRegisterUsernameView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 
-@implementation MPRuleNameView
+@implementation MPRegisterUsernameView
 
 - (id) init {
     self = [super init];
@@ -23,22 +25,22 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"RULE SET CREATION"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"USERNAME"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Every event or match you make needs a set of rules. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
+    self.infoLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"Enter your username. You will use this to log in. %d-%d letters, numbers or underscores are allowed.", [MPLimitConstants minUsernameCharacters], [MPLimitConstants maxUsernameCharacters]]];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
-
-    //self.nameField
-    self.nameField = [[MPTextField alloc] initWithPlaceholder:@"RULE NAME"];
-    self.nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-    self.nameField.translatesAutoresizingMaskIntoConstraints = NO;
-    self.nameField.returnKeyType = UIReturnKeyGo;
-    [self addSubview: self.nameField];
+    
+    //self.usernameField
+    self.usernameField = [[MPTextField alloc] initWithPlaceholder:@"USERNAME"];
+    self.usernameField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    self.usernameField.translatesAutoresizingMaskIntoConstraints = NO;
+    self.usernameField.returnKeyType = UIReturnKeyGo;
+    [self addSubview: self.usernameField];
 }
 
 - (void) makeControlConstraints {
@@ -79,29 +81,29 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           //self.nameField
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           //self.usernameField
+                           [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeCenterX
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeCenterX
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.infoLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:10.0f],
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeWidth
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPTextField standardWidth]],
-                           [NSLayoutConstraint constraintWithItem:self.nameField
+                           [NSLayoutConstraint constraintWithItem:self.usernameField
                                                         attribute:NSLayoutAttributeHeight
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:nil
@@ -116,7 +118,7 @@
     if(keyboardShowing)
         self.infoLabel.hidden = YES;
     for(NSLayoutConstraint* constraint in self.constraints) {
-        if([constraint.firstItem isEqual: self.nameField] &&
+        if([constraint.firstItem isEqual: self.usernameField] &&
            constraint.firstAttribute == NSLayoutAttributeTop) {
             [self removeConstraint: constraint];
             break;
@@ -124,7 +126,7 @@
     }
     if(keyboardShowing) {
         [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.nameField
+         [NSLayoutConstraint constraintWithItem:self.usernameField
                                       attribute:NSLayoutAttributeTop
                                       relatedBy:NSLayoutRelationEqual
                                          toItem:self.titleLabel
@@ -134,7 +136,7 @@
     }
     else {
         [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.nameField
+         [NSLayoutConstraint constraintWithItem:self.usernameField
                                       attribute:NSLayoutAttributeTop
                                       relatedBy:NSLayoutRelationEqual
                                          toItem:self.infoLabel

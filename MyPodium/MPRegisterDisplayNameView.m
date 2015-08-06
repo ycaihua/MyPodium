@@ -1,16 +1,18 @@
 //
-//  MPRuleNameView.m
+//  MPRegisterDisplayNameView.m
 //  MyPodium
 //
-//  Created by Connor Neville on 7/27/15.
+//  Created by Connor Neville on 8/6/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPRuleNameView.h"
+#import "MPLimitConstants.h"
+
+#import "MPRegisterDisplayNameView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 
-@implementation MPRuleNameView
+@implementation MPRegisterDisplayNameView
 
 - (id) init {
     self = [super init];
@@ -23,18 +25,18 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"RULE SET CREATION"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"DISPLAY NAME"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Every event or match you make needs a set of rules. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
+    self.infoLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"(Optional) Enter your real name or a display name of your choice. It is only visible to people on your friends list. Up to %d characters.", [MPLimitConstants maxRealNameCharacters]]];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
-
+    
     //self.nameField
-    self.nameField = [[MPTextField alloc] initWithPlaceholder:@"RULE NAME"];
+    self.nameField = [[MPTextField alloc] initWithPlaceholder:@"DISPLAY NAME"];
     self.nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.nameField.translatesAutoresizingMaskIntoConstraints = NO;
     self.nameField.returnKeyType = UIReturnKeyGo;

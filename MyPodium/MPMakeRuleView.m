@@ -75,7 +75,6 @@
 }
 
 - (void) makeSlides {
-    //self.ruleSubviews
     self.form.slideViews = @[[[MPRuleNameView alloc] init], [[MPRuleParticipantView alloc] init],[[MPRuleParticipantsPerMatchView alloc] init], [[MPRuleStatsView alloc] init],
                           [[MPRuleWinConditionStatView alloc] init], [[MPRuleScoreLimitView alloc] init]];
     [self.form addSlideViews];

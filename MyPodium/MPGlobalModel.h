@@ -19,4 +19,6 @@
 + (NSArray*) messagesList: (NSArray*) messages searchForString: (NSString*) string;
 + (NSArray*) modesList: (NSArray*) modes searchForString: (NSString*) string;
 
++ (BOOL) usernameInUse: (NSString*) username;
+
 @end

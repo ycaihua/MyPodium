@@ -78,4 +78,12 @@
     return results;
 }
 
++ (BOOL) usernameInUse: (NSString*) username {
+    if(username.length == 0) return YES;
+    NSString* searchString = [username lowercaseString];
+    PFQuery* query = [PFUser query];
+    [query whereKey:@"username_searchable" equalTo:searchString];
+    return ([query countObjects] > 0);
+}
+
 @end

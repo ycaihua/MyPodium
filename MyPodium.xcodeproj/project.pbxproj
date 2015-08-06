@@ -81,6 +81,10 @@
 		2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD41B499E8A0043BD96 /* MPPreferencesButton.m */; };
 		2D67BFD81B49E7D80043BD96 /* MPMessageReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */; };
 		2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */; };
+		2D913DEB1B73BA7F00D523AD /* MPRegisterUsernameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DEA1B73BA7F00D523AD /* MPRegisterUsernameView.m */; };
+		2D913DEE1B73BBDC00D523AD /* MPRegisterPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DED1B73BBDC00D523AD /* MPRegisterPasswordView.m */; };
+		2D913DF11B73BDAD00D523AD /* MPRegisterEmailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DF01B73BDAD00D523AD /* MPRegisterEmailView.m */; };
+		2D913DF41B73BE4D00D523AD /* MPRegisterDisplayNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DF31B73BE4D00D523AD /* MPRegisterDisplayNameView.m */; };
 		2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0A71B23BD07006C500A /* MPHelpCell.m */; };
 		2D94D0AD1B279719006C500A /* MPTeamsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0AC1B279719006C500A /* MPTeamsModel.m */; };
 		2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D94D0B01B279FD2006C500A /* MPTeamsView.m */; };
@@ -260,6 +264,14 @@
 		2D67BFD71B49E7D80043BD96 /* MPMessageReaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageReaderView.m; sourceTree = "<group>"; };
 		2D67BFD91B49E9EE0043BD96 /* MPMessageReaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessageReaderViewController.h; sourceTree = "<group>"; };
 		2D67BFDA1B49E9EE0043BD96 /* MPMessageReaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessageReaderViewController.m; sourceTree = "<group>"; };
+		2D913DE91B73BA7F00D523AD /* MPRegisterUsernameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterUsernameView.h; sourceTree = "<group>"; };
+		2D913DEA1B73BA7F00D523AD /* MPRegisterUsernameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterUsernameView.m; sourceTree = "<group>"; };
+		2D913DEC1B73BBDC00D523AD /* MPRegisterPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterPasswordView.h; sourceTree = "<group>"; };
+		2D913DED1B73BBDC00D523AD /* MPRegisterPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterPasswordView.m; sourceTree = "<group>"; };
+		2D913DEF1B73BDAD00D523AD /* MPRegisterEmailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterEmailView.h; sourceTree = "<group>"; };
+		2D913DF01B73BDAD00D523AD /* MPRegisterEmailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterEmailView.m; sourceTree = "<group>"; };
+		2D913DF21B73BE4D00D523AD /* MPRegisterDisplayNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterDisplayNameView.h; sourceTree = "<group>"; };
+		2D913DF31B73BE4D00D523AD /* MPRegisterDisplayNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterDisplayNameView.m; sourceTree = "<group>"; };
 		2D94D0A61B23BD07006C500A /* MPHelpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpCell.h; sourceTree = "<group>"; };
 		2D94D0A71B23BD07006C500A /* MPHelpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpCell.m; sourceTree = "<group>"; };
 		2D94D0AB1B279719006C500A /* MPTeamsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamsModel.h; sourceTree = "<group>"; };
@@ -459,7 +471,7 @@
 		2D3E67011B600554000B39FB /* MakeRule */ = {
 			isa = PBXGroup;
 			children = (
-				2D58D7491B695E8300080F51 /* Subviews */,
+				2D58D7491B695E8300080F51 /* FormSubviews */,
 				2D3E67021B600591000B39FB /* MPMakeRuleView.h */,
 				2D3E67031B600591000B39FB /* MPMakeRuleView.m */,
 				2D3FAE041B66BF62009804DF /* MPRuleButton.h */,
@@ -604,6 +616,7 @@
 		2D44877A1B054BFF0061EF86 /* LoginRegister */ = {
 			isa = PBXGroup;
 			children = (
+				2D913DE81B73BA5600D523AD /* FormSubviews */,
 				2D44877E1B0550580061EF86 /* MPLoginView.h */,
 				2D44877F1B0550580061EF86 /* MPLoginView.m */,
 				2D4487D81B05AAC30061EF86 /* MPRegisterView.h */,
@@ -717,7 +730,7 @@
 			name = MMDrawerController;
 			sourceTree = "<group>";
 		};
-		2D58D7491B695E8300080F51 /* Subviews */ = {
+		2D58D7491B695E8300080F51 /* FormSubviews */ = {
 			isa = PBXGroup;
 			children = (
 				2D3FAE071B672C69009804DF /* MPRuleNameView.h */,
@@ -733,7 +746,22 @@
 				2D58D74D1B696F7F00080F51 /* MPRuleScoreLimitView.h */,
 				2D58D74E1B696F7F00080F51 /* MPRuleScoreLimitView.m */,
 			);
-			name = Subviews;
+			name = FormSubviews;
+			sourceTree = "<group>";
+		};
+		2D913DE81B73BA5600D523AD /* FormSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				2D913DE91B73BA7F00D523AD /* MPRegisterUsernameView.h */,
+				2D913DEA1B73BA7F00D523AD /* MPRegisterUsernameView.m */,
+				2D913DEC1B73BBDC00D523AD /* MPRegisterPasswordView.h */,
+				2D913DED1B73BBDC00D523AD /* MPRegisterPasswordView.m */,
+				2D913DEF1B73BDAD00D523AD /* MPRegisterEmailView.h */,
+				2D913DF01B73BDAD00D523AD /* MPRegisterEmailView.m */,
+				2D913DF21B73BE4D00D523AD /* MPRegisterDisplayNameView.h */,
+				2D913DF31B73BE4D00D523AD /* MPRegisterDisplayNameView.m */,
+			);
+			name = FormSubviews;
 			sourceTree = "<group>";
 		};
 		2D94D0A91B23CB35006C500A /* Help */ = {
@@ -1031,10 +1059,12 @@
 				2D3FAE0C1B672F83009804DF /* MPRuleParticipantView.m in Sources */,
 				2DBF86911B462A0400FB0AF5 /* MPMessagesCell.m in Sources */,
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
+				2D913DEB1B73BA7F00D523AD /* MPRegisterUsernameView.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
 				2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */,
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
 				2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */,
+				2D913DEE1B73BBDC00D523AD /* MPRegisterPasswordView.m in Sources */,
 				2D94D0B11B279FD2006C500A /* MPTeamsView.m in Sources */,
 				2D4F4A4F1B5D74B200F7F393 /* MPRulesModel.m in Sources */,
 				2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */,
@@ -1083,6 +1113,7 @@
 				2D4487FB1B083B050061EF86 /* MMDrawerBarButtonItem.m in Sources */,
 				2D4487791B0546580061EF86 /* MPView.m in Sources */,
 				2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */,
+				2D913DF41B73BE4D00D523AD /* MPRegisterDisplayNameView.m in Sources */,
 				2D3FAE121B673D4C009804DF /* MPRuleParticipantsPerMatchView.m in Sources */,
 				2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */,
 				2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */,
@@ -1100,6 +1131,7 @@
 				2D94D0B81B27A451006C500A /* MPTeamCell.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
+				2D913DF11B73BDAD00D523AD /* MPRegisterEmailView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 				2DE9FCF61B221AE600F748C9 /* MPUserCell.m in Sources */,
 				2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */,

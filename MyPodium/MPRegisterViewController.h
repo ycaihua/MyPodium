@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class MPRegisterUsernameView;
+@class MPRegisterPasswordView;
+@class MPRegisterEmailView;
+@class MPRegisterDisplayNameView;
+
 @interface MPRegisterViewController : UIViewController <UITextFieldDelegate>
+
+@property MPRegisterUsernameView* usernameView;
+@property MPRegisterPasswordView* passwordView;
+@property MPRegisterEmailView* emailView;
+@property MPRegisterDisplayNameView* nameView;
 
 @end

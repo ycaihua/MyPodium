@@ -201,7 +201,6 @@
     MPSettingsView* view = (MPSettingsView*)self.view;
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     NSString* name = view.realNameField.text;
-    [alerter checkErrorCondition:(name.length < [MPLimitConstants minRealNameCharacters]) withMessage:[NSString stringWithFormat:@"Real names need to be at least %d characters.", [MPLimitConstants minRealNameCharacters]]];
     [alerter checkErrorCondition:(name.length > [MPLimitConstants maxRealNameCharacters]) withMessage:[NSString stringWithFormat:@"Real names can be at most %d characters.", [MPLimitConstants maxRealNameCharacters]]];
     if(![alerter hasFoundError]) {
         dispatch_queue_t saveNameThread = dispatch_queue_create("SaveName", 0);
