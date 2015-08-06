@@ -17,6 +17,4 @@
 @property MPLabel* infoLabel;
 @property MPTextField* emailField;
 
-- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing;
-
 @end

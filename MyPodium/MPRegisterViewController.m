@@ -37,6 +37,9 @@
     if(self) {
         self.view = [[MPRegisterView alloc] init];
         [self addControlActions];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     }
     return self;
 }
@@ -168,6 +171,26 @@
     }
     else {
         [view.form returnToLastSlide];
+    }
+}
+
+- (void) keyboardWillShow: (NSNotification*) notification {
+    MPRegisterView* view = (MPRegisterView*) self.view;
+    MPView* activeView = [view.form currentSlide];
+    if([activeView isKindOfClass:[MPRegisterPasswordView class]]) {
+        if([((MPRegisterPasswordView*)activeView).confirmPasswordField isFirstResponder]) {
+            [((MPRegisterPasswordView*)activeView) adjustForKeyboardShowing:YES];
+        }
+    }
+}
+
+- (void) keyboardWillHide: (NSNotification*) notification {
+    MPRegisterView* view = (MPRegisterView*) self.view;
+    MPView* activeView = [view.form currentSlide];
+    if([activeView isKindOfClass:[MPRegisterPasswordView class]]) {
+        if([((MPRegisterPasswordView*)activeView).confirmPasswordField isFirstResponder]) {
+            [((MPRegisterPasswordView*)activeView) adjustForKeyboardShowing:NO];
+        }
     }
 }
 

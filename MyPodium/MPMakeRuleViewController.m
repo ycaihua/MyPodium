@@ -200,7 +200,8 @@
         if([((MPRuleStatsView*)activeView).teamStatsField isFirstResponder]) {
             [((MPRuleStatsView*)activeView) adjustForKeyboardShowing:NO];
         }
-    }}
+    }
+}
 
 - (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {
     [textField resignFirstResponder];

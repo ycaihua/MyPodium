@@ -17,6 +17,4 @@
 @property MPLabel* infoLabel;
 @property MPTextField* usernameField;
 
-- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing;
-
 @end

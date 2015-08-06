@@ -114,44 +114,4 @@
     
 }
 
-- (void) adjustForKeyboardShowing: (BOOL) keyboardShowing {
-    if(keyboardShowing)
-        self.infoLabel.hidden = YES;
-    for(NSLayoutConstraint* constraint in self.constraints) {
-        if([constraint.firstItem isEqual: self.nameField] &&
-           constraint.firstAttribute == NSLayoutAttributeTop) {
-            [self removeConstraint: constraint];
-            break;
-        }
-    }
-    if(keyboardShowing) {
-        [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.nameField
-                                      attribute:NSLayoutAttributeTop
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:self.titleLabel
-                                      attribute:NSLayoutAttributeBottom
-                                     multiplier:1.0f
-                                       constant:5.0f]];
-    }
-    else {
-        [self addConstraint:
-         [NSLayoutConstraint constraintWithItem:self.nameField
-                                      attribute:NSLayoutAttributeTop
-                                      relatedBy:NSLayoutRelationEqual
-                                         toItem:self.infoLabel
-                                      attribute:NSLayoutAttributeBottom
-                                     multiplier:1.0f
-                                       constant:5.0f]];
-    }
-    [self setNeedsUpdateConstraints];
-    
-    [UIView animateWithDuration:0.75f animations:^{
-        [self layoutIfNeeded];
-    } completion:^(BOOL finished) {
-        if(!keyboardShowing)
-            self.infoLabel.hidden = NO;
-    }];
-}
-
 @end
