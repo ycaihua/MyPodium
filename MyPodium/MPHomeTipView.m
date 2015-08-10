@@ -65,6 +65,13 @@
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.tipDescriptionLabel
+                                                        attribute:NSLayoutAttributeWidth
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:nil
+                                                        attribute:NSLayoutAttributeNotAnAttribute
+                                                       multiplier:1.0f
+                                                         constant:[MPHomeTipView tipLabelWidth]],
+                           [NSLayoutConstraint constraintWithItem:self.tipDescriptionLabel
                                                         attribute:NSLayoutAttributeCenterY
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
@@ -147,5 +154,6 @@
 
 + (CGFloat) defaultHeight { return 90.0f; }
 + (CGFloat) collapsedHeight { return 30.0f; }
++ (CGFloat) tipLabelWidth { return 35.0f; }
 
 @end
