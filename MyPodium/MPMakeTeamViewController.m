@@ -10,6 +10,7 @@
 #import "UIColor+MPColor.h"
 #import "MPErrorAlerter.h"
 #import "MPControllerManager.h"
+#import "MPTableSectionUtility.h"
 #import "MPLimitConstants.h"
 
 #import "MPFriendsModel.h"
@@ -18,7 +19,7 @@
 #import "MPMakeTeamView.h"
 #import "MPTeamsView.h"
 #import "MPTextField.h"
-#import "MPUserCell.h"
+#import "MPTableViewCell.h"
 #import "MPMenu.h"
 #import "MPLabel.h"
 #import "MPBottomEdgeButton.h"
@@ -47,7 +48,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Table UI init once data is retrieved
                 UITableView* table = view.playersTable;
-                [table registerClass:[MPUserCell class]
+                [table registerClass:[MPTableViewCell class]
               forCellReuseIdentifier:[MPMakeTeamViewController makeTeamReuseIdentifier]];
                 table.delegate = self;
                 table.dataSource = self;
@@ -77,22 +78,18 @@
 #pragma mark table view delegate/data source
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+    MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                         [MPMakeTeamViewController makeTeamReuseIdentifier] forIndexPath:indexPath];
     if(!cell) {
-        cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMakeTeamViewController makeTeamReuseIdentifier]];
+        cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMakeTeamViewController makeTeamReuseIdentifier]];
     }
     
     cell.indexPath = indexPath;
-    
-    //don't need buttons unless selected
-    [cell.leftButton removeFromSuperview];
-    [cell.centerButton removeFromSuperview];
-    [cell.rightButton removeFromSuperview];
+    [cell setNumberOfButtons: 0];
     
     //Update data for appropriate user
     PFUser* user = self.friends[indexPath.row];
-    [cell updateForUser: user];
+    [MPTableSectionUtility updateCell:cell withUserObject: user];
     
     return cell;
 }
@@ -106,7 +103,7 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPUserCell cellHeight];
+    return [MPTableViewCell cellHeight];
 }
 
 - (NSIndexPath*) indexPathForUser: (PFUser*) user {

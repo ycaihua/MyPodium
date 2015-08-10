@@ -14,7 +14,7 @@
 #import "MPFriendsModel.h"
 #import "MPGlobalModel.h"
 
-#import "MPUserCell.h"
+#import "MPTableViewCell.h"
 #import "MPFriendsView.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
@@ -49,7 +49,7 @@
         view.filterSearch.searchField.delegate = self;
         [self makeTableSections];
         UITableView* table = view.friendsTable;
-        [table registerClass:[MPUserCell class]
+        [table registerClass:[MPTableViewCell class]
       forCellReuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
       forCellReuseIdentifier:[MPFriendsViewController blankReuseIdentifier]];
@@ -73,36 +73,25 @@
                                 else return incoming;
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
                                 }
-                                cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                         action:NULL
-                                               forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
                                 
-                                //Set images
-                                [cell showLeftButton];
-                                [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                cell.indexPath = indexPath;
+                                [cell setNumberOfButtons:3];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"check", @"green"], @[@"info", @"yellow"], @[@"x", @"red"]]];
+                                
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.centerButton addTarget:self action:@selector(incomingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[2] addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(incomingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(denyIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
                             }],
                            
                            
@@ -117,34 +106,24 @@
                                 else return outgoing;
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
                                 }
-                                cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                         action:NULL
-                                               forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
                                 
-                                //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                cell.indexPath = indexPath;
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"info", @"yellow"], @[@"minus", @"red"]]];
+                                
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(cancelOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withUserObject:object];
                             }],
                            
                            
@@ -159,34 +138,23 @@
                                 else return friends;
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPFriendsViewController friendsReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPFriendsViewController friendsReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                         action:NULL
-                                               forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"info", @"yellow"], @[@"x", @"red"]]];
                                 
-                                //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withUserObject:object];
                             }]
                             ];
 }
@@ -309,7 +277,7 @@
 }
 
 - (void) acceptIncomingButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -323,7 +291,7 @@
 }
 
 - (void) incomingProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -331,7 +299,7 @@
 }
 
 - (void) denyIncomingButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController incomingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -346,7 +314,7 @@
 }
 
 - (void) outgoingProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController outgoingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -354,7 +322,7 @@
 }
 
 - (void) cancelOutgoingButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController outgoingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -369,7 +337,7 @@
 }
 
 - (void) friendProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -377,7 +345,7 @@
 }
 
 - (void) removeFriendButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPFriendsViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -429,7 +397,7 @@
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPUserCell cellHeight];
+    return [MPTableViewCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

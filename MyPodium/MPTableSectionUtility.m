@@ -7,6 +7,9 @@
 //
 
 #import "MPTableSectionUtility.h"
+
+#import "MPFriendsModel.h"
+
 #import "MPTableViewCell.h"
 #import "MPLabel.h"
 
@@ -30,6 +33,25 @@
 
 - (void) reloadData {
     self.dataObjects = self.dataBlock();
+}
+
++ (void) updateCell: (MPTableViewCell*) cell withUserObject: (PFUser*) user {
+    cell.titleLabel.text = user.username;
+    NSString* realName = user[@"realName"];
+    if(realName) {
+        dispatch_async(dispatch_queue_create("FriendStatusQueue", 0), ^{
+            MPFriendStatus status = [MPFriendsModel friendStatusFromUser:user toUser:[PFUser currentUser]];
+            BOOL displayName = (status == MPFriendStatusFriends || status == MPFriendStatusSameUser);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(displayName)
+                    cell.subtitleLabel.text = realName;
+                else
+                    cell.subtitleLabel.text = @"";
+            });
+        });
+    }
+    else
+        cell.subtitleLabel.text = @"";
 }
 
 + (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team {

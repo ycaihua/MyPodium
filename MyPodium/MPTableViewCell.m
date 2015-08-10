@@ -10,8 +10,6 @@
 
 #import "UIColor+MPColor.h"
 #import "UIButton+MPImage.h"
-
-#import "MPUserCell.h"
 #import "MPLabel.h"
 
 @implementation MPTableViewCell

@@ -18,7 +18,6 @@
 
 #import "MPSearchView.h"
 #import "MPTableViewCell.h"
-#import "MPUserCell.h"
 #import "MPMessagesCell.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
@@ -45,7 +44,7 @@
         [self makeTableSections];
         [self updateUnfilteredHeaders];
         UITableView* table = view.searchTable;
-        [table registerClass:[MPUserCell class]
+        [table registerClass:[MPTableViewCell class]
       forCellReuseIdentifier:[MPSearchViewController userReuseIdentifier]];
         [table registerClass:[MPTableViewCell class]
       forCellReuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
@@ -73,33 +72,23 @@
                                 return [MPGlobalModel userList:[MPFriendsModel friendsForUser:[PFUser currentUser]] searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath) {
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"info", @"yellow"], @[@"x", @"red"]]];
+                                
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(friendProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(removeFriendButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object) {
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withUserObject:object];
                             }],
                            
                            
@@ -111,35 +100,24 @@
                                 return [MPGlobalModel userList:incoming searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                //Set images
-                                [cell showLeftButton];
-                                [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell setNumberOfButtons:3];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"check", @"green"], @[@"info", @"yellow"], @[@"x", @"red"]]];
+                                
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.centerButton addTarget:self action:@selector(incomingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(removeIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[2] addTarget:self action:@selector(acceptIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(incomingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(removeIncomingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withUserObject:object];
                             }],
                            
                            
@@ -151,33 +129,23 @@
                                 return [MPGlobalModel userList:outgoing searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"info", @"yellow"], @[@"minus", @"red"]]];
+                                
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(removeOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(outgoingProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(removeOutgoingButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withUserObject:object];
                             }],
                            
                            
@@ -188,33 +156,23 @@
                                 return [MPGlobalModel userSearchContainingString:view.searchView.searchField.text forUser:[PFUser currentUser]];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPUserCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController userReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPUserCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController userReuseIdentifier]];
                                 }
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"info", @"yellow"], @[@"plus", @"green"]]];
+                                
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(userProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(sendUserRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(userProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(sendUserRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPUserCell*)cell updateForUser:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withUserObject:object];
                             }],
                            
                            
@@ -614,7 +572,7 @@
 }
 
 - (void) friendProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -622,7 +580,7 @@
 }
 
 - (void) removeFriendButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController friendsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -637,7 +595,7 @@
 }
 
 - (void) acceptIncomingButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -651,7 +609,7 @@
 }
 
 - (void) incomingProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -659,7 +617,7 @@
 }
 
 - (void) removeIncomingButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController incomingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -674,7 +632,7 @@
 }
 
 - (void) outgoingProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController outgoingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -682,7 +640,7 @@
 }
 
 - (void) removeOutgoingButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController outgoingRequestsHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -697,7 +655,7 @@
 }
 
 - (void) userProfileButtonPressed: (id) sender {
-    MPUserCell* cell = (MPUserCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController usersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -705,8 +663,7 @@
 }
 
 - (void) sendUserRequestButtonPressed: (id) sender {
-    UIButton* buttonSender = (UIButton*) sender;
-    MPUserCell* cell = (MPUserCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController usersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -958,7 +915,7 @@
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPUserCell cellHeight];
+    return [MPTableViewCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -11,6 +11,7 @@
 
 @class MPTableViewCell;
 @class PFObject;
+@class PFUser;
 
 @interface MPTableSectionUtility : NSObject
 
@@ -27,6 +28,7 @@
 
 - (void) reloadData;
 
++ (void) updateCell: (MPTableViewCell*) cell withUserObject: (PFUser*) user;
 + (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team;
 + (void) updateCell: (MPTableViewCell*) cell withRuleObject: (PFObject*) rule;
 
