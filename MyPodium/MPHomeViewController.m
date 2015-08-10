@@ -80,7 +80,6 @@
              [NSString stringWithFormat:@"%lu", (long)rules]];
         });
     });
-    
 }
 
 - (void) tipViewPressed: (id) sender {

@@ -11,6 +11,14 @@
 
 @interface MPTeamsModel : NSObject
 
+typedef NS_ENUM(NSInteger, MPTeamStatus) {
+    MPTeamStatusOwner,
+    MPTeamStatusMember,
+    MPTeamStatusInvited,
+    MPTeamStatusRequested,
+    MPTeamStatusNonMember
+};
+
 + (BOOL) acceptInviteFromTeam: (PFObject*) team forUser: (PFUser*) user;
 + (BOOL) denyInviteFromTeam: (PFObject*) team forUser: (PFUser*) user;
 + (BOOL) requestToJoinTeam: (PFObject*) team forUser: (PFUser*) user;
@@ -28,5 +36,7 @@
 + (NSArray*) teamsInvitingUser: (PFUser*) user;
 + (NSArray*) teamsRequestedByUser: (PFUser*) user;
 + (NSArray*) teamsVisibleToUser: (PFUser*) user;
+
++ (MPTeamStatus) teamStatusForUser: (PFUser*) user forTeam: (PFObject*) team;
 
 @end

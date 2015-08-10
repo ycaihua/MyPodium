@@ -135,5 +135,21 @@
     return results;
 }
 
++ (MPTeamStatus) teamStatusForUser:(PFUser *)user forTeam:(PFObject *)team {
+    PFUser* owner = team[@"owner"];
+    if([owner.username isEqualToString: user.username]) return MPTeamStatusOwner;
+    
+    NSArray* members = team[@"teamMembers"];
+    if([members containsObject: user.objectId]) return MPTeamStatusMember;
+    
+    NSArray* invited = team[@"invitedMembers"];
+    if([invited containsObject: user.objectId]) return MPTeamStatusInvited;
+    
+    NSArray* requested = team[@"joinRequests"];
+    if([requested containsObject: user.objectId]) return MPTeamStatusRequested;
+    
+    return MPTeamStatusNonMember;
+}
+
 + (NSString*) tableName { return @"Team"; }
 @end
