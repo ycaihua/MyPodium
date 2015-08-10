@@ -26,6 +26,8 @@
 		2D3FAE0C1B672F83009804DF /* MPRuleParticipantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE0B1B672F83009804DF /* MPRuleParticipantView.m */; };
 		2D3FAE0F1B6734DE009804DF /* MPRuleStatsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */; };
 		2D3FAE121B673D4C009804DF /* MPRuleParticipantsPerMatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */; };
+		2D40E8BF1B791BB8005500A5 /* MPTeamProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D40E8BE1B791BB8005500A5 /* MPTeamProfileView.m */; };
+		2D40E8C21B791C5F005500A5 /* MPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D40E8C11B791C5F005500A5 /* MPTableViewCell.m */; };
 		2D44871F1B02DE260061EF86 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D44871E1B02DE260061EF86 /* main.m */; };
 		2D4487221B02DE260061EF86 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487211B02DE260061EF86 /* AppDelegate.m */; };
 		2D44872A1B02DE260061EF86 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D4487291B02DE260061EF86 /* Images.xcassets */; };
@@ -73,7 +75,6 @@
 		2D4487FE1B083B050061EF86 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4487FA1B083B050061EF86 /* UIViewController+MMDrawerController.m */; };
 		2D4F4A4F1B5D74B200F7F393 /* MPRulesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */; };
 		2D58D7481B695ADC00080F51 /* MPRuleWinConditionStatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */; };
-		2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */; };
 		2D58D74F1B696F7F00080F51 /* MPRuleScoreLimitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D58D74E1B696F7F00080F51 /* MPRuleScoreLimitView.m */; };
 		2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D5963FA1B505E930034F000 /* MPHomeTipView.m */; };
 		2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D67BFCE1B4997050043BD96 /* MPSettingsViewController.m */; };
@@ -171,6 +172,10 @@
 		2D3FAE0E1B6734DE009804DF /* MPRuleStatsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatsView.m; sourceTree = "<group>"; };
 		2D3FAE101B673D4C009804DF /* MPRuleParticipantsPerMatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleParticipantsPerMatchView.h; sourceTree = "<group>"; };
 		2D3FAE111B673D4C009804DF /* MPRuleParticipantsPerMatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleParticipantsPerMatchView.m; sourceTree = "<group>"; };
+		2D40E8BD1B791BB8005500A5 /* MPTeamProfileView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamProfileView.h; sourceTree = "<group>"; };
+		2D40E8BE1B791BB8005500A5 /* MPTeamProfileView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamProfileView.m; sourceTree = "<group>"; };
+		2D40E8C01B791C5F005500A5 /* MPTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTableViewCell.h; sourceTree = "<group>"; };
+		2D40E8C11B791C5F005500A5 /* MPTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTableViewCell.m; sourceTree = "<group>"; };
 		2D4487191B02DE260061EF86 /* MyPodium.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPodium.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D44871D1B02DE260061EF86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D44871E1B02DE260061EF86 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -248,8 +253,6 @@
 		2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRulesModel.m; sourceTree = "<group>"; };
 		2D58D7461B695ADC00080F51 /* MPRuleWinConditionStatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleWinConditionStatView.h; sourceTree = "<group>"; };
 		2D58D7471B695ADC00080F51 /* MPRuleWinConditionStatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleWinConditionStatView.m; sourceTree = "<group>"; };
-		2D58D74A1B695F2300080F51 /* MPRuleStatCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleStatCell.h; sourceTree = "<group>"; };
-		2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleStatCell.m; sourceTree = "<group>"; };
 		2D58D74D1B696F7F00080F51 /* MPRuleScoreLimitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleScoreLimitView.h; sourceTree = "<group>"; };
 		2D58D74E1B696F7F00080F51 /* MPRuleScoreLimitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleScoreLimitView.m; sourceTree = "<group>"; };
 		2D5963F91B505E930034F000 /* MPHomeTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHomeTipView.h; sourceTree = "<group>"; };
@@ -476,10 +479,17 @@
 				2D3E67031B600591000B39FB /* MPMakeRuleView.m */,
 				2D3FAE041B66BF62009804DF /* MPRuleButton.h */,
 				2D3FAE051B66BF62009804DF /* MPRuleButton.m */,
-				2D58D74A1B695F2300080F51 /* MPRuleStatCell.h */,
-				2D58D74B1B695F2300080F51 /* MPRuleStatCell.m */,
 			);
 			name = MakeRule;
+			sourceTree = "<group>";
+		};
+		2D40E8BC1B791B9E005500A5 /* TeamProfile */ = {
+			isa = PBXGroup;
+			children = (
+				2D40E8BD1B791BB8005500A5 /* MPTeamProfileView.h */,
+				2D40E8BE1B791BB8005500A5 /* MPTeamProfileView.m */,
+			);
+			name = TeamProfile;
 			sourceTree = "<group>";
 		};
 		2D4487101B02DE260061EF86 = {
@@ -601,6 +611,7 @@
 				2D94D0C41B30DFF6006C500A /* UserProfile */,
 				2D94D0AE1B279FB2006C500A /* Teams */,
 				2D94D0BC1B2E9991006C500A /* MakeTeam */,
+				2D40E8BC1B791B9E005500A5 /* TeamProfile */,
 				2D05E8DB1B5D7EF4006FF360 /* Rules */,
 				2D3E67011B600554000B39FB /* MakeRule */,
 				2DEE90C51B72A61A00F61BE2 /* RuleProfile */,
@@ -938,6 +949,8 @@
 				2DE9FCDE1B1EB8BE00F748C9 /* MPTableHeader.m */,
 				2DEE90BE1B72970500F61BE2 /* MPFormView.h */,
 				2DEE90BF1B72970500F61BE2 /* MPFormView.m */,
+				2D40E8C01B791C5F005500A5 /* MPTableViewCell.h */,
+				2D40E8C11B791C5F005500A5 /* MPTableViewCell.m */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -1061,6 +1074,7 @@
 				2D4487EE1B0839D30061EF86 /* MPMenuViewController.m in Sources */,
 				2D913DEB1B73BA7F00D523AD /* MPRegisterUsernameView.m in Sources */,
 				2D2D5AD11B18E34800C46B53 /* MPDualLabelButton.m in Sources */,
+				2D40E8BF1B791BB8005500A5 /* MPTeamProfileView.m in Sources */,
 				2D94D0C71B30E061006C500A /* MPUserProfileView.m in Sources */,
 				2DE9FCF91B224C1B00F748C9 /* UIButton+MPImage.m in Sources */,
 				2D67BFCF1B4997050043BD96 /* MPSettingsViewController.m in Sources */,
@@ -1072,6 +1086,7 @@
 				2DE9FCD51B1E55E200F748C9 /* MPFriendsView.m in Sources */,
 				2D94D0C31B2F7F3B006C500A /* MPMakeTeamViewController.m in Sources */,
 				2D4487E71B0836C20061EF86 /* MPMenuView.m in Sources */,
+				2D40E8C21B791C5F005500A5 /* MPTableViewCell.m in Sources */,
 				2DBF869B1B462D7400FB0AF5 /* MPMessagesModel.m in Sources */,
 				2D4487F11B083A930061EF86 /* MPSidebarViewController.m in Sources */,
 				2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */,
@@ -1122,7 +1137,6 @@
 				2DEE90C81B72A66100F61BE2 /* MPRuleProfileView.m in Sources */,
 				2D94D0A81B23BD07006C500A /* MPHelpCell.m in Sources */,
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
-				2D58D74C1B695F2300080F51 /* MPRuleStatCell.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */,
 				2DB8E5821B58291600623F4E /* MPSettingsScrollView.m in Sources */,
 				2D05E8E91B5D8438006FF360 /* MPRuleCell.m in Sources */,

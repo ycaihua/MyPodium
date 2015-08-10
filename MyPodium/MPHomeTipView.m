@@ -148,7 +148,8 @@
 + (NSArray*) getAllTips {
     return @[@"You can always go back to the previous page by tapping \"My Podium\" at the top of the screen.",
              @"You can quickly access extra pages by holding down \"My Podium\" at the top of the screen.",
-             @"More than for just sports, MyPodium works great for board, video and card games, too."
+             @"More than for just sports, MyPodium works great for board, video and card games, too.",
+             @"Every event you play needs a set of Rules. In your Rules, you can choose which stats to record during your games."
              ];
 }
 

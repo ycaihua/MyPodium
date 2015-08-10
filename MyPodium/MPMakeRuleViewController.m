@@ -19,7 +19,7 @@
 #import "MPTextField.h"
 #import "MPLabel.h"
 #import "MPMenu.h"
-#import "MPRuleStatCell.h"
+#import "MPTableViewCell.h"
 #import "MPTableHeader.h"
 
 #import "MPFormView.h"
@@ -31,6 +31,8 @@
 #import "MPRuleScoreLimitView.h"
 
 #import "MPMakeRuleViewController.h"
+
+#import <Parse/Parse.h>
 
 @interface MPMakeRuleViewController ()
 
@@ -63,7 +65,7 @@
     statsView.teamStatsField.delegate = self;
     
     MPRuleWinConditionStatView* winView = (MPRuleWinConditionStatView*)[view.form slideWithClass:[MPRuleWinConditionStatView class]];
-    [winView.statTable registerClass:[MPRuleStatCell class]
+    [winView.statTable registerClass:[MPTableViewCell class]
   forCellReuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
     winView.statTable.delegate = self;
     winView.statTable.dataSource = self;
@@ -127,6 +129,7 @@
 
 - (void) previousButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
+    [view.form.nextButton enable];
     if(view.form.slideViewIndex == 0) {
         [MPControllerManager dismissViewController:self];
     }
@@ -271,22 +274,25 @@
 }
 
 - (UITableViewCell*) tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    MPRuleStatCell* cell = [tableView dequeueReusableCellWithIdentifier:
+    MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                         [MPMakeRuleViewController statsReuseIdentifier] forIndexPath:indexPath];
     if(!cell) {
-        cell = [[MPRuleStatCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
+        cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMakeRuleViewController statsReuseIdentifier]];
     }
     cell.indexPath = indexPath;
     
+    [cell setNumberOfButtons:0];
+    
     NSDictionary* sectionData = self.statNameData[indexPath.section];
     NSArray* stats = [sectionData objectForKey:[[sectionData allKeys] objectAtIndex:0]];
-    cell.nameLabel.text = stats[indexPath.row];
+    cell.titleLabel.text = stats[indexPath.row];
+    cell.subtitleLabel.text = @"";
     
     return cell;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPRuleStatCell cellHeight];
+    return [MPTableViewCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
