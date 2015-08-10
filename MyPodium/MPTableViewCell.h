@@ -24,6 +24,8 @@
 @property NSIndexPath* indexPath;
 
 - (void) setNumberOfButtons: (int) numberOfButtons;
+- (void) clearButtonActions;
+- (void) setButtonImageStrings: (NSArray*) imageStrings;
 
 + (CGFloat) cellHeight;
 

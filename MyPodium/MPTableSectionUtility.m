@@ -7,6 +7,10 @@
 //
 
 #import "MPTableSectionUtility.h"
+#import "MPTableViewCell.h"
+#import "MPLabel.h"
+
+#import <Parse/Parse.h>
 
 @implementation MPTableSectionUtility
 
@@ -26,6 +30,12 @@
 
 - (void) reloadData {
     self.dataObjects = self.dataBlock();
+}
+
++ (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team {
+    cell.titleLabel.text = team[@"teamName"];
+    PFUser* owner = team[@"owner"];
+    cell.subtitleLabel.text = [NSString stringWithFormat:@"owner: %@", owner.username];
 }
 
 @end

@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class MPTableViewCell;
+@class PFObject;
+
 @interface MPTableSectionUtility : NSObject
 
 @property NSString* headerTitle;
@@ -23,5 +26,7 @@
        withCellUpdateBlock: (void(^)(UITableViewCell* cell, id object)) cellUpdateBlock;
 
 - (void) reloadData;
+
++ (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team;
 
 @end

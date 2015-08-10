@@ -17,8 +17,8 @@
 #import "MPGlobalModel.h"
 
 #import "MPSearchView.h"
+#import "MPTableViewCell.h"
 #import "MPUserCell.h"
-#import "MPTeamCell.h"
 #import "MPMessagesCell.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
@@ -47,7 +47,7 @@
         UITableView* table = view.searchTable;
         [table registerClass:[MPUserCell class]
       forCellReuseIdentifier:[MPSearchViewController userReuseIdentifier]];
-        [table registerClass:[MPTeamCell class]
+        [table registerClass:[MPTableViewCell class]
       forCellReuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
         [table registerClass:[MPMessagesCell class]
       forCellReuseIdentifier:[MPSearchViewController messagesReuseIdentifier]];
@@ -226,36 +226,28 @@
                                 return [MPGlobalModel teamList:ownedTeams searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
                                 }
+                                
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
+                                [cell setNumberOfButtons:3];
+                                [cell clearButtonActions];
                                 
                                 //Set images
-                                [cell showLeftButton];
-                                [cell.leftButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.buttons[2] setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.buttons[1] setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.buttons[0] setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(leaveOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.centerButton addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[2] addTarget:self action:@selector(leaveOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(ownedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(deleteOwnedTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPTeamCell*)cell updateForTeam:object];
+                                [((MPTableViewCell*)cell).titleLabel setText:object[@"teamName"]];
                             }],
                            
                            
@@ -267,34 +259,26 @@
                                 return [MPGlobalModel teamList:memberTeams searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
                                 }
+                                
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
                                 
                                 //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.buttons[1] setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.buttons[0] setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(memberTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPTeamCell*)cell updateForTeam:object];
+                                [((MPTableViewCell*)cell).titleLabel setText:object[@"teamName"]];
                             }],
                            
                            
@@ -306,35 +290,28 @@
                                 return [MPGlobalModel teamList:invites searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
                                 }
+                                
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
+                                [cell setNumberOfButtons:3];
+                                [cell clearButtonActions];
+                                
                                 //Set images
-                                [cell showLeftButton];
-                                [cell.leftButton setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.buttons[2] setImageString:@"check" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.buttons[1] setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.buttons[0] setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(teamInviteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[2] addTarget:self action:@selector(acceptTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(teamInviteProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(denyTeamInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPTeamCell*)cell updateForTeam:object];
+                                [((MPTableViewCell*)cell).titleLabel setText:object[@"teamName"]];
                             }],
                            
                            
@@ -346,34 +323,26 @@
                                 return [MPGlobalModel teamList:joinRequests searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
                                 }
+                                
                                 cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
                                 
                                 //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
+                                [cell.buttons[1] setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.buttons[0] setImageString:@"minus" withColorString:@"red" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(requestedTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(cancelTeamRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPTeamCell*)cell updateForTeam: object];
+                                [((MPTableViewCell*)cell).titleLabel setText:object[@"teamName"]];
                             }],
                            
                            
@@ -385,36 +354,26 @@
                                 return [MPGlobalModel teamList:visibleTeams searchForString:view.searchView.searchField.text];
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPTeamCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPSearchViewController teamReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPTeamCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPSearchViewController teamReuseIdentifier]];
                                 }
                                 
                                 cell.indexPath = indexPath;
-                                
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
+                                [cell setNumberOfButtons:2];
+                                [cell clearButtonActions];
                                 
                                 //Set images
-                                [cell hideLeftButton];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
+                                [cell.buttons[1] setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
+                                [cell.buttons[0] setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
                                 //Add targets
-                                [cell.centerButton addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(requestToJoinTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(visibleTeamProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(requestToJoinTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPTeamCell*)cell updateForTeam:object];
+                                [((MPTableViewCell*)cell).titleLabel setText:object[@"teamName"]];
                             }],
                            
                            [[MPTableSectionUtility alloc]
@@ -766,7 +725,7 @@
 
 - (void) leaveOwnedTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -782,7 +741,7 @@
 
 - (void) deleteOwnedTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController ownedTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -802,7 +761,7 @@
 
 - (void) leaveTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsAsMemberHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -818,7 +777,7 @@
 
 - (void) acceptTeamInviteButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
@@ -837,7 +796,7 @@
 
 - (void) denyTeamInviteButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsInvitingHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -857,7 +816,7 @@
 
 - (void) cancelTeamRequestButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController teamsRequestedToJoinHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -877,7 +836,7 @@
 
 - (void) requestToJoinTeamButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPTeamCell* cell = (MPTeamCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPSearchViewController visibleTeamsHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];

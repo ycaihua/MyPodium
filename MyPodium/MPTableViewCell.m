@@ -40,6 +40,7 @@
 - (void) setNumberOfButtons:(int)numberOfButtons {
     if(numberOfButtons < 0 || numberOfButtons > 3)
         return;
+    self.visibleButtons = numberOfButtons;
     for(NSLayoutConstraint* constraint in self.constraints) {
         if(constraint.firstAttribute == NSLayoutAttributeTrailing &&
            constraint.relation == NSLayoutRelationLessThanOrEqual)
@@ -81,6 +82,20 @@
             [self.buttons[i] setAlpha: 1.0f];
         else
             [self.buttons[i] setAlpha: 0.0f];
+    }
+}
+
+- (void) clearButtonActions {
+    for(UIButton* button in self.buttons) {
+        [button removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    }
+}
+
+- (void) setButtonImageStrings: (NSArray*) imageStrings {
+    for(int i = 0; i < self.visibleButtons; i++) {
+        NSArray* currentImageData = imageStrings[i];
+        UIButton* currentButton = self.buttons[self.visibleButtons - i - 1];
+        [currentButton setImageString:currentImageData[0] withColorString:currentImageData[1] withHighlightedColorString:@"black"];
     }
 }
 

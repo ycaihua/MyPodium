@@ -42,20 +42,20 @@
     return [team save];
 }
 
-//If you leave a team as the owner, elect new creator
+//If you leave a team as the owner, elect new owner
 + (BOOL) leaveTeam: (PFObject*) team forUser: (PFUser*) user {
     NSString* userId = [user objectId];
-    NSString* creatorId = [team[@"creator"] objectId];
-    if([creatorId isEqualToString: userId]) {
+    NSString* ownerId = [team[@"owner"] objectId];
+    if([ownerId isEqualToString: userId]) {
         NSArray* members = team[@"teamMembers"];
         int i = 0;
         //find first member that isn't creator
-        while([members[i] isEqualToString: creatorId])
+        while([members[i] isEqualToString: ownerId])
             i++;
         PFQuery* query = [PFUser query];
         [query whereKey:@"objectId" equalTo:members[i]];
         PFUser* userWithId = [query findObjects][0];
-        [team setObject:userWithId forKey:@"creator"];
+        [team setObject:userWithId forKey:@"owner"];
     }
     [team removeObject: userId forKey:@"teamMembers"];
     return [team save];
@@ -63,7 +63,7 @@
 
 + (BOOL) makeTeamWithCreator: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName {
     PFObject* newTeam = [[PFObject alloc] initWithClassName:[MPTeamsModel tableName]];
-    newTeam[@"creator"] = user;
+    newTeam[@"owner"] = user;
     
     newTeam[@"teamMembers"] = @[];
     newTeam[@"invitedMembers"] = @[];
@@ -79,10 +79,10 @@
 }
 
 + (NSArray*) teamsCreatedByUser:(PFUser *)user {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(owner = %@)",
                               user];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
-    [query includeKey:@"creator"];
+    [query includeKey:@"owner"];
     return [query findObjects];
 }
 
@@ -90,7 +90,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN teamMembers)",
                               user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
-    [query includeKey:@"creator"];
+    [query includeKey:@"owner"];
     return [query findObjects];
 }
 
@@ -105,7 +105,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN invitedMembers)",
                               user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
-    [query includeKey:@"creator"];
+    [query includeKey:@"owner"];
     return [query findObjects];
 }
 
@@ -120,17 +120,17 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN joinRequests)",
                               user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
-    [query includeKey:@"creator"];
+    [query includeKey:@"owner"];
     return [query findObjects];
 }
 
 + (NSArray*) teamsVisibleToUser: (PFUser*)user {
     NSArray* friendsForUser = [MPFriendsModel friendsForUser:user];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:
-                              @"(creator IN %@) AND (creator != %@) AND !(%@ IN teamMembers) AND !(%@ IN invitedMembers) AND !(%@ IN joinRequests)",
+                              @"(owner IN %@) AND (owner != %@) AND !(%@ IN teamMembers) AND !(%@ IN invitedMembers) AND !(%@ IN joinRequests)",
                               friendsForUser, user, user.objectId, user.objectId, user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];
-    [query includeKey:@"creator"];
+    [query includeKey:@"owner"];
     NSArray* results = [query findObjects];
     return results;
 }
