@@ -15,7 +15,7 @@
 #import "MPGlobalModel.h"
 
 #import "MPRulesView.h"
-#import "MPRuleCell.h"
+#import "MPTableViewCell.h"
 #import "MPBottomEdgeButton.h"
 #import "MPTableHeader.h"
 #import "MPSearchControl.h"
@@ -52,7 +52,7 @@
         [self makeControlActions];
         [self makeTableSections];
         UITableView* table = view.modesTable;
-        [table registerClass:[MPRuleCell class]
+        [table registerClass:[MPTableViewCell class]
       forCellReuseIdentifier:[MPRulesViewController rulesReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
       forCellReuseIdentifier:[MPRulesViewController blankReuseIdentifier]];
@@ -75,36 +75,25 @@
                                 else return ownedModes;
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
-                                MPRuleCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
                                                     [MPRulesViewController rulesReuseIdentifier] forIndexPath:indexPath];
                                 if(!cell) {
-                                    cell = [[MPRuleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPRulesViewController rulesReuseIdentifier]];
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPRulesViewController rulesReuseIdentifier]];
                                 }
-                                cell.indexPath = indexPath;
-                                //Remove any existing actions
-                                [cell.leftButton removeTarget:nil
-                                                       action:NULL
-                                             forControlEvents:UIControlEventAllEvents];
-                                [cell.centerButton removeTarget:nil
-                                                         action:NULL
-                                               forControlEvents:UIControlEventAllEvents];
-                                [cell.rightButton removeTarget:nil
-                                                        action:NULL
-                                              forControlEvents:UIControlEventAllEvents];
                                 
-                                //Set images
-                                [cell showLeftButton];
-                                [cell.leftButton setImageString:@"plus" withColorString:@"green" withHighlightedColorString:@"black"];
-                                [cell.centerButton setImageString:@"info" withColorString:@"yellow" withHighlightedColorString:@"black"];
-                                [cell.rightButton setImageString:@"x" withColorString:@"red" withHighlightedColorString:@"black"];
+                                cell.indexPath = indexPath;
+                                [cell setNumberOfButtons:3];
+                                [cell clearButtonActions];
+                                [cell setButtonImageStrings:@[@[@"plus", @"green"], @[@"info", @"yellow"], @[@"x", @"red"]]];
+                                
                                 //Add targets
-                                [cell.leftButton addTarget:self action:@selector(newEventWithRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.centerButton addTarget:self action:@selector(ruleProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                                [cell.rightButton addTarget:self action:@selector(deleteRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[2] addTarget:self action:@selector(newEventWithRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[1] addTarget:self action:@selector(ruleProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                [cell.buttons[0] addTarget:self action:@selector(deleteRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                                 return cell;
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
-                                [(MPRuleCell*)cell updateForRule:object];
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*)cell withRuleObject:object];
                             }]
                            ];
 }
@@ -251,7 +240,7 @@
 }
 
 - (void) ruleProfileButtonPressed: (id) sender {
-    MPRuleCell* cell = (MPRuleCell*)((UIButton*)sender).superview;
+    MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPRulesViewController ownedRulesHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -260,7 +249,7 @@
 
 - (void) deleteRuleButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
-    MPRuleCell* cell = (MPRuleCell*)buttonSender.superview;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPRulesViewController ownedRulesHeader]];
     PFObject* other = utility.dataObjects[indexPath.row];
@@ -312,7 +301,7 @@
 
 
 - (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [MPRuleCell cellHeight];
+    return [MPTableViewCell cellHeight];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -10,7 +10,6 @@
 		2D05E8DF1B5D7F24006FF360 /* MPRulesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D05E8DE1B5D7F24006FF360 /* MPRulesView.m */; };
 		2D05E8E21B5D8323006FF360 /* MPRulesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D05E8E11B5D8323006FF360 /* MPRulesViewController.m */; };
 		2D05E8E61B5D83C7006FF360 /* MPMakeRuleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D05E8E51B5D83C7006FF360 /* MPMakeRuleViewController.m */; };
-		2D05E8E91B5D8438006FF360 /* MPRuleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D05E8E81B5D8438006FF360 /* MPRuleCell.m */; };
 		2D2B31A81B42EE2300781E0D /* MPLimitConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */; };
 		2D2B31B41B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B31B4486FD00781E0D /* TPKeyboardAvoidingScrollView.m */; };
 		2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D2B31B61B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
@@ -139,8 +138,6 @@
 		2D05E8E11B5D8323006FF360 /* MPRulesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRulesViewController.m; sourceTree = "<group>"; };
 		2D05E8E41B5D83C7006FF360 /* MPMakeRuleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeRuleViewController.h; sourceTree = "<group>"; };
 		2D05E8E51B5D83C7006FF360 /* MPMakeRuleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeRuleViewController.m; sourceTree = "<group>"; };
-		2D05E8E71B5D8438006FF360 /* MPRuleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleCell.h; sourceTree = "<group>"; };
-		2D05E8E81B5D8438006FF360 /* MPRuleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRuleCell.m; sourceTree = "<group>"; };
 		2D2B31A61B42EE2300781E0D /* MPLimitConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPLimitConstants.h; sourceTree = "<group>"; };
 		2D2B31A71B42EE2300781E0D /* MPLimitConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPLimitConstants.m; sourceTree = "<group>"; };
 		2D2B31B21B4486FD00781E0D /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
@@ -391,8 +388,6 @@
 			children = (
 				2D05E8DD1B5D7F24006FF360 /* MPRulesView.h */,
 				2D05E8DE1B5D7F24006FF360 /* MPRulesView.m */,
-				2D05E8E71B5D8438006FF360 /* MPRuleCell.h */,
-				2D05E8E81B5D8438006FF360 /* MPRuleCell.m */,
 			);
 			name = Rules;
 			sourceTree = "<group>";
@@ -1134,7 +1129,6 @@
 				2D94D0CB1B323812006C500A /* MPUserProfileViewController.m in Sources */,
 				2D94D0BB1B2E1213006C500A /* MPBottomEdgeButton.m in Sources */,
 				2DB8E5821B58291600623F4E /* MPSettingsScrollView.m in Sources */,
-				2D05E8E91B5D8438006FF360 /* MPRuleCell.m in Sources */,
 				2D67BFD81B49E7D80043BD96 /* MPMessageReaderView.m in Sources */,
 				2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */,

@@ -38,4 +38,13 @@
     cell.subtitleLabel.text = [NSString stringWithFormat:@"owner: %@", owner.username];
 }
 
++ (void) updateCell: (MPTableViewCell*) cell withRuleObject:(PFObject *)rule {
+    cell.titleLabel.text = rule[@"name"];
+    BOOL teamParticipants = [rule[@"usesTeamParticipants"] boolValue];
+    if(teamParticipants)
+        cell.subtitleLabel.text = @"team vs. team rules";
+    else
+        cell.subtitleLabel.text = @"player vs. player rules";
+}
+
 @end

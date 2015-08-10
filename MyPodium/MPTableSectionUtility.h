@@ -28,5 +28,6 @@
 - (void) reloadData;
 
 + (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team;
++ (void) updateCell: (MPTableViewCell*) cell withRuleObject: (PFObject*) rule;
 
 @end
