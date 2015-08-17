@@ -8,6 +8,6 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPSettingsViewController : MPMenuViewController <UITextFieldDelegate>
+@interface MPSettingsViewController : MPMenuViewController <UITextFieldDelegate, MPDataLoader>
 
 @end

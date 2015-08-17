@@ -31,8 +31,9 @@
     self = [super init];
     if(self) {
         self.view = [[MPSettingsView alloc] init];
+        self.delegate = self;
         [self makeControlActions];
-        [self initializeUserPreferences];
+        [self reloadData];
     }
     return self;
 }
@@ -62,36 +63,35 @@
     [view.confirmationAlertsButton addTarget:self action:@selector(confirmationAlertsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void) loadOnDismiss: (id) sender {
-    [self initializeUserPreferences];
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPSettingsViewController* settingsVC = (MPSettingsViewController*)controller;
+    MPSettingsView* view = (MPSettingsView*)settingsVC.view;
+    PFUser* currentUser = [PFUser currentUser];
+    [currentUser fetchIfNeeded];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(currentUser[@"realName"])
+            view.realNameField.text = currentUser[@"realName"];
+        
+        NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
+        if([prefFriendRequests isEqual: [NSNumber numberWithBool:FALSE]]) [view.friendRequestsButton toggleSelected];
+        
+        NSNumber* prefConfirmations = [currentUser objectForKey:@"pref_confirmation"];
+        if([prefConfirmations isEqual: [NSNumber numberWithBool:FALSE]]) [view.confirmationAlertsButton toggleSelected];
+        
+        NSString* email = currentUser[@"email"];
+        BOOL emailVerified = [currentUser[@"emailVerified"] boolValue];
+        if(emailVerified) {
+            [view setEmailVerified:email];
+            [view.emailVerifiedButton addTarget:self action:@selector(changeEmail:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        else
+            [view setEmailUnverified:email];
+            [view.emailVerifiedButton addTarget:self action:@selector(verifyOrChangeEmail:) forControlEvents:UIControlEventTouchUpInside];
+    });
 }
 
-- (void) initializeUserPreferences {
-    MPSettingsView* view = (MPSettingsView*)self.view;
-    PFUser* currentUser = [PFUser currentUser];
-    dispatch_async(dispatch_queue_create("FetchUserQueue", 0), ^{
-        [currentUser fetch];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(currentUser[@"realName"])
-                view.realNameField.text = currentUser[@"realName"];
-            
-            NSNumber* prefFriendRequests = [currentUser objectForKey:@"pref_friendRequests"];
-            if([prefFriendRequests isEqual: [NSNumber numberWithBool:FALSE]]) [view.friendRequestsButton toggleSelected];
-            
-            NSNumber* prefConfirmations = [currentUser objectForKey:@"pref_confirmation"];
-            if([prefConfirmations isEqual: [NSNumber numberWithBool:FALSE]]) [view.confirmationAlertsButton toggleSelected];
-            
-            NSString* email = currentUser[@"email"];
-            BOOL emailVerified = [currentUser[@"emailVerified"] boolValue];
-            if(emailVerified) {
-                [view setEmailVerified:email];
-                [view.emailVerifiedButton addTarget:self action:@selector(changeEmail:) forControlEvents:UIControlEventTouchUpInside];
-            }
-            else
-                [view setEmailUnverified:email];
-                [view.emailVerifiedButton addTarget:self action:@selector(verifyOrChangeEmail:) forControlEvents:UIControlEventTouchUpInside];
-        });
-    });
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    return nil;
 }
 
 - (void) changeEmail: (id) sender {
@@ -110,11 +110,18 @@
                 BOOL success = [currentUser save];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if(success) {
-                        [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"You changed your email to %@. A verification email has been sent.", emailEntered] revertAfter:YES withColor:[UIColor MPGreenColor]];
-                        [self initializeUserPreferences];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPSettingsView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"You changed your email to %@. A verification email has been sent.", emailEntered] revertAfter:YES withColor:[UIColor MPGreenColor]];
+                        }];
                     }
                     else
-                        [view.menu.subtitleLabel displayMessage:@"There was an error changing your email. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPSettingsView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:@"There was an error changing your email. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                        }];
                 });
             });
         }
@@ -149,11 +156,18 @@
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(success) {
-                    [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"A verification email has been sent to %@.", email] revertAfter:YES withColor:[UIColor MPGreenColor]];
-                    [self initializeUserPreferences];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPSettingsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"A verification email has been sent to %@.", email] revertAfter:YES withColor:[UIColor MPGreenColor]];
+                    }];
                 }
                else
-                    [view.menu.subtitleLabel displayMessage:@"There was an error sending the verification. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                   [self reloadDataWithCompletionBlock:^{
+                       view.menu.subtitleLabel.persistentText = [MPSettingsView defaultSubtitle];
+                       view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                       [view.menu.subtitleLabel displayMessage:@"There was an error sending the verification. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                   }];
             });
         });
     }];
