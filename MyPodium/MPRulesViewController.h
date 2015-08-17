@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPRulesViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MPRulesViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MPDataLoader>
 
 @property NSArray* tableSections;
 

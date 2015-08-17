@@ -42,6 +42,7 @@
     if(self) {
         MPRulesView* view = [[MPRulesView alloc] init];
         self.view = view;
+        self.delegate = self;
         [view startLoading];
         //Filter init
         self.isFiltered = NO;
@@ -58,7 +59,7 @@
       forCellReuseIdentifier:[MPRulesViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [self loadOnDismiss: self];
+        [self reloadData];
     }
     return self;
 }
@@ -98,34 +99,18 @@
                            ];
 }
 
-- (void) loadOnDismiss: (id) sender {
-    MPRulesView* view = (MPRulesView*) self.view;
-    [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.rulesTable reloadData];
-            [view finishLoading];
-        });
-    });
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPRulesViewController* rulesVC = (MPRulesViewController*) controller;
+    for(MPTableSectionUtility* section in rulesVC.tableSections) {
+        [section reloadData];
+    }
+    [rulesVC updateHeaders];
 }
 
-- (void) refreshData {
-    MPRulesView* view = (MPRulesView*) self.view;
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.rulesTable reloadData];
-        });
-    });
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    MPRulesViewController* rulesVC = (MPRulesViewController*) controller;
+    MPRulesView* view = (MPRulesView*) rulesVC.view;
+    return view.rulesTable;
 }
 
 - (void) updateHeaders {
@@ -182,20 +167,22 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                        [self refreshData];
-                        [view.rulesTable reloadData];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage: successMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPGreenColor]];
+                        }];
                     }
                     else {
-                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:errorMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPRedColor]];
+                        }];
                     }
                 });
             });
@@ -215,20 +202,22 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage: successMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [self refreshData];
-                    [view.rulesTable reloadData];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                    }];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:errorMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
                 }
             });
         });
@@ -327,7 +316,7 @@
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     self.isFiltered = !(filterString.length == 0);
-    [self refreshData];
+    [self reloadData];
 }
 
 
