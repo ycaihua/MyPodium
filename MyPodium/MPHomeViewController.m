@@ -37,7 +37,7 @@
     if(self) {
         MPHomeView* view = [[MPHomeView alloc] init];
         self.view = view;
-        [self refreshData];
+        self.delegate = self;
         [view.friendsButton addTarget:self action:@selector(friendsButtonPressed:)
                      forControlEvents:UIControlEventTouchUpInside];
         [view.teamsButton addTarget:self action:@selector(teamsButtonPressed:)
@@ -46,40 +46,33 @@
                    forControlEvents:UIControlEventTouchUpInside];
         [view.tipView addTarget:self action:@selector(tipViewPressed:)
                forControlEvents: UIControlEventTouchUpInside];
+        [self reloadData];
     }
     return self;
 }
 
-- (void) loadOnDismiss: (id) sender {
-    [self refreshData];
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPHomeViewController* homeVC = (MPHomeViewController*) controller;
+    MPHomeView* view = (MPHomeView*)homeVC.view;
+    
+    NSInteger friends = [MPFriendsModel countFriendsForUser:[PFUser currentUser]];
+    NSInteger teams = [MPTeamsModel countTeamsContainingUser:[PFUser currentUser]];
+    NSInteger rules = [MPRulesModel countRulesForUser:[PFUser currentUser]];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [view.friendsButton.customTitleLabel setText:
+         [NSString stringWithFormat:@"%lu", (long)friends]];
+        
+        [view.teamsButton.customTitleLabel setText:
+         [NSString stringWithFormat:@"%lu", (long)teams]];
+        
+        [view.rulesButton.customTitleLabel setText:
+         [NSString stringWithFormat:@"%lu", (long)rules]];
+    });
 }
 
-- (void) refreshData {
-    MPHomeView* view = (MPHomeView*) self.view;
-    dispatch_queue_t friendsQueue = dispatch_queue_create("FriendsLabelQueue", 0);
-    dispatch_async(friendsQueue, ^{
-        NSInteger friends = [MPFriendsModel countFriendsForUser:[PFUser currentUser]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.friendsButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", (long)friends]];
-        });
-    });
-    dispatch_queue_t teamsQueue = dispatch_queue_create("TeamsLabelQueue", 0);
-    dispatch_async(teamsQueue, ^{
-        NSInteger teams = [MPTeamsModel countTeamsContainingUser:[PFUser currentUser]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.teamsButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", (long)teams]];
-        });
-    });
-    dispatch_queue_t rulesQueue = dispatch_queue_create("RulesLabelQueue", 0);
-    dispatch_async(rulesQueue, ^{
-        NSInteger rules = [MPRulesModel countRulesForUser:[PFUser currentUser]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.rulesButton.customTitleLabel setText:
-             [NSString stringWithFormat:@"%lu", (long)rules]];
-        });
-    });
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    return nil;
 }
 
 - (void) tipViewPressed: (id) sender {

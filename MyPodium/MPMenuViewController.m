@@ -142,7 +142,6 @@
         [self.delegate refreshDataForController: self];
         dispatch_async(dispatch_get_main_queue(), ^{
             UITableView* table = [self.delegate tableViewToRefreshForController: self];
-            NSLog(@"%@", table);
             if(table) [table reloadData];
             [view finishLoading];
         });
@@ -157,7 +156,6 @@
         [self.delegate refreshDataForController: self];
         dispatch_async(dispatch_get_main_queue(), ^{
             UITableView* table = [self.delegate tableViewToRefreshForController: self];
-            NSLog(@"%@", table);
             if(table) [table reloadData];
             completion();
         });

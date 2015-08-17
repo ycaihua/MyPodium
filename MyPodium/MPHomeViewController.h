@@ -8,8 +8,6 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPHomeViewController : MPMenuViewController
-
-- (void) loadOnDismiss: (id) sender;
+@interface MPHomeViewController : MPMenuViewController<MPDataLoader>
 
 @end
