@@ -42,6 +42,7 @@
     if(self) {
         MPMessagesView* view = [[MPMessagesView alloc] init];
         self.view = view;
+        self.delegate = self;
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
@@ -56,10 +57,8 @@
       forCellReuseIdentifier:[MPMessagesViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        table.estimatedRowHeight = [MPMessagesCell cellHeight];
-        [self loadOnDismiss:self];
         [self makeControlActions];
-        [table reloadData];
+        [self reloadData];
     }
     return self;
 }
@@ -203,26 +202,17 @@
                            ];
 }
 
-- (void) loadOnDismiss: (id) sender {
-    MPMessagesView* view = (MPMessagesView*) self.view;
-    [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        MPMessagesView* view = (MPMessagesView*) self.view;
-        [self refreshData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.messagesTable reloadData];
-            [view.loadingHeader removeFromSuperview];
-            [view finishLoading];
-        });
-    });
-}
-
-- (void) refreshData {
-    for(MPTableSectionUtility* section in self.tableSections) {
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPMessagesViewController* messagesVC = (MPMessagesViewController*)controller;
+    for(MPTableSectionUtility* section in messagesVC.tableSections) {
         [section reloadData];
     }
-    [self updateHeaders];
+    [messagesVC updateHeaders];
+}
+
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    MPMessagesViewController* messagesVC = (MPMessagesViewController*)controller;
+    return ((MPMessagesView*)messagesVC.view).messagesTable;
 }
 
 - (void) updateHeaders {
@@ -258,24 +248,27 @@
             dispatch_async(backgroundQueue, ^{
                 BOOL success = methodAction();
                 if(success) {
-                    [self refreshData];
                     [MPControllerManager updateNotificationsForController: self];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage: successMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPGreenColor]];
+                        }];
                     }
                     else {
-                        view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:errorMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPRedColor]];
+                        }];
                     }
                     [view.messagesTable reloadData];
                 });
@@ -294,26 +287,29 @@
         dispatch_async(backgroundQueue, ^{
             BOOL success = methodAction();
             if(success) {
-                [self refreshData];
                 [MPControllerManager updateNotificationsForController: self];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage: successMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                        
+                    }];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:errorMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
                 }
-                [view.messagesTable reloadData];
             });
         });
     }
@@ -483,7 +479,7 @@
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     self.isFiltered = !(filterString.length == 0);
-    [self loadOnDismiss: self];
+    [self reloadData];
 }
 
 #pragma mark textfield delegate
