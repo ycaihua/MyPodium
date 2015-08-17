@@ -10,7 +10,7 @@
 
 @class PFUser;
 
-@interface MPUserProfileViewController : MPMenuViewController
+@interface MPUserProfileViewController : MPMenuViewController<MPDataLoader>
 
 @property PFUser* displayedUser;
 

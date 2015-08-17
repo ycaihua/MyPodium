@@ -30,27 +30,39 @@
         MPUserProfileView* view = [[MPUserProfileView alloc] initWithUser: user];
         self.view = view;
         self.displayedUser = user;
-        [self makeControlActions];
+        self.delegate = self;
+        [self reloadData];
     }
     return self;
 }
 
-- (void) makeControlActions {
-    MPUserProfileView* view = (MPUserProfileView*) self.view;
-    dispatch_async(dispatch_queue_create("ProfileControllerQueue", 0), ^{
-        MPFriendStatus friendStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser] toUser:self.displayedUser];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            switch (friendStatus) {
-                case MPFriendStatusNotFriends:
-                    [view.leftBottomButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                    [view.rightBottomButton addTarget:self action:@selector(sendFriendRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-                    break;
-                    
-                default:
-                    break;
-            }
-        });
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPUserProfileViewController* userProfileVC = (MPUserProfileViewController*)controller;
+    MPUserProfileView* view = (MPUserProfileView*) userProfileVC.view;
+    
+    [view updateForUser: userProfileVC.displayedUser];
+    
+    [view.leftBottomButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [view.rightBottomButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    
+    MPFriendStatus friendStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser]
+                                                                toUser:self.displayedUser];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        switch (friendStatus) {
+            case MPFriendStatusNotFriends:
+                [view.leftBottomButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                [view.rightBottomButton addTarget:self action:@selector(sendFriendRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                break;
+                
+            default:
+                break;
+        }
     });
+}
+
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    return nil;
 }
 
 - (void) goBackButtonPressed: (id) sender {
@@ -65,16 +77,25 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [view finishLoading];
             if(success)
-                [view.menu.subtitleLabel displayMessage:
-                 [NSString stringWithFormat:@"You sent %@ a friend request.",
-                  self.displayedUser.username]
-                                            revertAfter:YES
-                                              withColor:[UIColor MPGreenColor]];
+                [self reloadDataWithCompletionBlock:^{
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    view.menu.subtitleLabel.persistentText = [MPUserProfileView defaultSubtitle];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat:@"You sent %@ a friend request.",
+                      self.displayedUser.username]
+                                                revertAfter:YES
+                                                  withColor:[UIColor MPGreenColor]];
+                }];
             else
-                [view.menu.subtitleLabel displayMessage:
-                 @"There was an error sending your request. Please try again later."
-                                            revertAfter:YES
-                                              withColor:[UIColor MPRedColor]];
+                [self reloadDataWithCompletionBlock:^{
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    view.menu.subtitleLabel.persistentText = [MPUserProfileView defaultSubtitle];
+                    [view.menu.subtitleLabel displayMessage:
+                     [NSString stringWithFormat:@"There was an error sending %@ a request. Please try again later.",
+                      self.displayedUser.username]
+                                                revertAfter:YES
+                                                  withColor:[UIColor MPRedColor]];
+                }];
         });
     });
 }

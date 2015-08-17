@@ -32,4 +32,6 @@
 
 - (id) initWithUser: (PFUser*) user;
 
+- (void) updateForUser: (PFUser*) user;
+
 @end

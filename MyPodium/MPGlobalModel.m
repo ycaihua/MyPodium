@@ -20,6 +20,7 @@
 }
 
 + (NSArray*) userSearchContainingString: (NSString*) string forUser: (PFUser*) user {
+    if(string.length == 0) return @[];
     NSMutableArray* matches = [MPGlobalModel usersContainingString: string].mutableCopy;
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: matches.count];
     for(PFUser* user in matches) {
@@ -31,6 +32,7 @@
 }
 
 + (NSArray*) userList: (NSArray*) users searchForString: (NSString*) string {
+    if(string.length == 0) return @[];
     NSString* searchString = [string lowercaseString];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: users.count];
     for(PFUser* user in users) {
@@ -43,6 +45,7 @@
 }
 
 + (NSArray*) teamList: (NSArray*) teams searchForString: (NSString*) string {
+    if(string.length == 0) return @[];
     NSString* searchString = [string lowercaseString];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: teams.count];
     for(PFObject* team in teams) {
@@ -58,6 +61,7 @@
 }
 
 + (NSArray*) messagesList: (NSArray*) messages searchForString: (NSString*) string {
+    if(string.length == 0) return @[];
     NSString* searchString = [string lowercaseString];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: messages.count];
     for(PFObject* message in messages) {
@@ -74,6 +78,7 @@
 }
 
 + (NSArray*) rulesList: (NSArray*) rules searchForString: (NSString*) string {
+    if(string.length == 0) return @[];
     NSString* searchString = [string lowercaseString];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: rules.count];
     for(PFObject* rule in rules) {

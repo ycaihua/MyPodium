@@ -325,4 +325,6 @@
                            ]];
 }
 
++ (NSString*) defaultSubtitle { return @"User Profile"; }
+
 @end
