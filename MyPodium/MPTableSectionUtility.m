@@ -57,7 +57,14 @@
 + (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team {
     cell.titleLabel.text = team[@"teamName"];
     PFUser* owner = team[@"owner"];
-    cell.subtitleLabel.text = [NSString stringWithFormat:@"owner: %@", owner.username];
+    [owner fetchIfNeededInBackgroundWithBlock:^(PFObject* object, NSError* error) {
+        if(!error) {
+            cell.subtitleLabel.text = [NSString stringWithFormat:@"owner: %@", owner.username];
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
 }
 
 + (void) updateCell: (MPTableViewCell*) cell withRuleObject:(PFObject *)rule {

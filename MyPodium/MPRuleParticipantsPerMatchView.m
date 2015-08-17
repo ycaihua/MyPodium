@@ -58,6 +58,12 @@
     self.incrementButton.translatesAutoresizingMaskIntoConstraints = NO;
     [self.incrementButton addTarget:self action:@selector(incrementButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview: self.incrementButton];
+    
+    //self.warningLabel
+    self.warningLabel = [[MPLabel alloc] initWithText:@"Please note: this needs to be set to 2 (head to head matches) for league and tournament events."];
+    self.warningLabel.textColor = [UIColor MPRedColor];
+    self.warningLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.warningLabel];
 }
 
 - (void) makeControlConstraints {
@@ -184,7 +190,29 @@
                                                            toItem:nil
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
-                                                         constant:[UIButton standardWidthAndHeight]]
+                                                         constant:[UIButton standardWidthAndHeight]],
+                           //self.warningLabel
+                           [NSLayoutConstraint constraintWithItem:self.warningLabel
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.warningLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.warningLabel
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.participantsPerMatchCounter
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
                            ]];
     
 }

@@ -17,5 +17,6 @@
 @property MPLabel* participantsPerMatchCounter;
 @property UIButton* decrementButton;
 @property UIButton* incrementButton;
+@property MPLabel* warningLabel;
 
 @end

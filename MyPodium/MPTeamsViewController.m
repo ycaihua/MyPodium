@@ -375,10 +375,10 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
        withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned.", other[@"teamName"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned if possible.", other[@"teamName"]]];
 }
 
 - (void) acceptTeamInviteButtonPressed: (id) sender {

@@ -48,6 +48,10 @@
     NSString* ownerId = [team[@"owner"] objectId];
     if([ownerId isEqualToString: userId]) {
         NSArray* members = team[@"teamMembers"];
+        if(members.count == 0 || (members.count == 1 && [members[0] isEqualToString:ownerId])) {
+            [MPTeamsModel deleteTeam: team];
+            return YES;
+        }
         int i = 0;
         //find first member that isn't creator
         while([members[i] isEqualToString: ownerId])
