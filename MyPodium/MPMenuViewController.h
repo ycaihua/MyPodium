@@ -17,6 +17,6 @@
 @property id<MPDataLoader> delegate;
 
 - (void) checkNewNotifications;
-- (void) loadOnDismiss;
+- (void) reloadData;
 
 @end

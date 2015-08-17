@@ -134,13 +134,16 @@
     [MPControllerManager presentViewController:[[MPSettingsViewController alloc] init] fromController:self];
 }
 
-- (void) loadOnDismiss {
+- (void) reloadData {
+    NSLog(@"reloaddata called on class %@", [self class]);
     if(!self.delegate) return;
     MPMenuView* view = (MPMenuView*)self.view;
     [view startLoading];
     dispatch_async(dispatch_queue_create("LoadOnDismissQueue", 0), ^{
         [self.delegate refreshDataForController: self];
         dispatch_async(dispatch_get_main_queue(), ^{
+            UITableView* table = [self.delegate tableViewToRefreshForController: self];
+            if(table) [table reloadData];
             [view finishLoading];
         });
     });

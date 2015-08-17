@@ -57,26 +57,18 @@
         [MPControllerManager updateNotificationsForController:presenterDrawer];
         MPMenuViewController* center = (MPMenuViewController*)presenterDrawer.centerViewController;
         
-        SEL refresh = sel_registerName("loadOnDismiss:");
-        if([center respondsToSelector:refresh]) {
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [center performSelector:refresh withObject: self];
-            #pragma clang diagnostic pop
+        if(center.delegate) {
+            [center reloadData];
         }
         
         [(MMDrawerController*)presenter closeDrawerAnimated:NO completion:nil];
     }
     
     else {
-        SEL refresh = sel_registerName("loadOnDismiss:");
-        if([presenter respondsToSelector:refresh]) {
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [presenter performSelector:refresh withObject: self];
-            #pragma clang diagnostic pop
+        MPMenuViewController* presenterMenu = (MPMenuViewController*)presenter;
+        if(presenterMenu.delegate) {
+            [presenterMenu reloadData];
         }
-        
     }
 }
 

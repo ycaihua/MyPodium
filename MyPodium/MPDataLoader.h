@@ -13,5 +13,6 @@
 @protocol MPDataLoader <NSObject>
 
 - (void) refreshDataForController: (MPMenuViewController*) controller;
+- (UITableView*) tableViewToRefreshForController: (MPMenuViewController*) controller;
 
 @end

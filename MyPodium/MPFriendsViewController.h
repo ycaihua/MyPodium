@@ -8,7 +8,7 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPFriendsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MPFriendsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MPDataLoader>
 
 @property NSArray* tableSections;
 @property BOOL isFiltered;

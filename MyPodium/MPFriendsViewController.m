@@ -41,6 +41,7 @@
     if(self) {
         MPFriendsView* view = [[MPFriendsView alloc] init];
         self.view = view;
+        self.delegate = self;
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
@@ -55,8 +56,7 @@
       forCellReuseIdentifier:[MPFriendsViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [self refreshData];
-        [view.loadingHeader removeFromSuperview];
+        [self reloadData];
     }
     return self;
 }
@@ -159,34 +159,21 @@
                             ];
 }
 
-- (void) loadOnDismiss: (id) sender {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.friendsTable reloadData];
-            [view finishLoading];
-        });
-    });
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    NSLog(@"friendsVC delegate method");
+    MPFriendsViewController* friendsVC = (MPFriendsViewController*) self;
+    for(MPTableSectionUtility* section in friendsVC.tableSections) {
+        [section reloadData];
+    }
+    [friendsVC updateHeaders];
+    MPFriendsView* friendsView = (MPFriendsView*) friendsVC.view;
+    [friendsView.friendsTable reloadData];
 }
 
-- (void) refreshData {
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            MPFriendsView* view = (MPFriendsView*) self.view;
-            [view.friendsTable reloadData];
-        });
-    });
+- (UITableView*) tableViewToRefreshForController: (MPMenuViewController*) controller {
+    MPFriendsViewController* friendsVC = (MPFriendsViewController*) self;
+    MPFriendsView* friendsView = (MPFriendsView*) friendsVC.view;
+    return friendsView.friendsTable;
 }
 
 - (void) updateHeaders {
@@ -228,8 +215,7 @@
                         [view.menu.subtitleLabel displayMessage: successMessage
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPGreenColor]];
-                        [self refreshData];
-                        [view.friendsTable reloadData];
+                        [self refreshDataForController: self];
                     }
                     else {
                         view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
@@ -261,8 +247,7 @@
                     [view.menu.subtitleLabel displayMessage: successMessage
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
-                    [self refreshData];
-                    [view.friendsTable reloadData];
+                    [self refreshDataForController:self];
                 }
                 else {
                     view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
@@ -426,7 +411,7 @@
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     self.isFiltered = !(filterString.length == 0);
-    [self refreshData];
+    [self reloadData];
 }
 
 #pragma mark textfield delegate
