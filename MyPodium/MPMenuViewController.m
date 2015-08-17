@@ -134,6 +134,18 @@
     [MPControllerManager presentViewController:[[MPSettingsViewController alloc] init] fromController:self];
 }
 
+- (void) loadOnDismiss {
+    if(!self.delegate) return;
+    MPMenuView* view = (MPMenuView*)self.view;
+    [view startLoading];
+    dispatch_async(dispatch_queue_create("LoadOnDismissQueue", 0), ^{
+        [self.delegate refreshDataForController: self];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [view finishLoading];
+        });
+    });
+}
+
 - (BOOL) shouldAutorotate {
     return NO;
 }

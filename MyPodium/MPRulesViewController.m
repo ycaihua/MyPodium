@@ -51,7 +51,7 @@
         view.filterSearch.searchField.delegate = self;
         [self makeControlActions];
         [self makeTableSections];
-        UITableView* table = view.modesTable;
+        UITableView* table = view.rulesTable;
         [table registerClass:[MPTableViewCell class]
       forCellReuseIdentifier:[MPRulesViewController rulesReuseIdentifier]];
         [table registerClass:[UITableViewCell class]
@@ -108,7 +108,7 @@
         }
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [view.modesTable reloadData];
+            [view.rulesTable reloadData];
             [view finishLoading];
         });
     });
@@ -123,7 +123,7 @@
         }
         [self updateHeaders];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [view.modesTable reloadData];
+            [view.rulesTable reloadData];
         });
     });
 }
@@ -188,7 +188,7 @@
                                                     revertAfter:TRUE
                                                       withColor:[UIColor MPGreenColor]];
                         [self refreshData];
-                        [view.modesTable reloadData];
+                        [view.rulesTable reloadData];
                     }
                     else {
                         view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
@@ -221,7 +221,7 @@
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
                     [self refreshData];
-                    [view.modesTable reloadData];
+                    [view.rulesTable reloadData];
                 }
                 else {
                     view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];

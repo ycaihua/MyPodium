@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MPDataLoader.h"
 
 @interface MPMenuViewController : UIViewController
 
-//This method is made public because, if the controller's
-//drawer isn't connected, it isn't called on init
 - (void) addMenuActions;
 
 @property NSTimer* actionTimer;
+@property id<MPDataLoader> delegate;
 
 - (void) checkNewNotifications;
+- (void) loadOnDismiss;
 
 @end

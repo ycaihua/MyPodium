@@ -15,7 +15,7 @@
 @interface MPRulesView : MPMenuView
 
 @property MPSearchControl* filterSearch;
-@property UITableView* modesTable;
+@property UITableView* rulesTable;
 @property MPBottomEdgeButton* searchButton;
 @property MPBottomEdgeButton* makeRuleButton;
 

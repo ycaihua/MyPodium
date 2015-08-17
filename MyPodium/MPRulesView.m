@@ -34,15 +34,14 @@
     self.filterSearch = [[MPSearchControl alloc] init];
     [self.filterSearch.searchField setPlaceholder:@"FILTER MODES"];
     self.filterSearch.translatesAutoresizingMaskIntoConstraints = NO;
-    //NOT showing by default
     
-    //self.modesTable
-    self.modesTable = [[UITableView alloc] init];
-    self.modesTable.backgroundColor = [UIColor clearColor];
-    self.modesTable.translatesAutoresizingMaskIntoConstraints = NO;
-    self.modesTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.modesTable.scrollEnabled = YES;
-    [self addSubview: self.modesTable];
+    //self.rulesTable
+    self.rulesTable = [[UITableView alloc] init];
+    self.rulesTable.backgroundColor = [UIColor clearColor];
+    self.rulesTable.translatesAutoresizingMaskIntoConstraints = NO;
+    self.rulesTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.rulesTable.scrollEnabled = YES;
+    [self addSubview: self.rulesTable];
     
     //self.searchButton
     self.searchButton = [[MPBottomEdgeButton alloc] init];
@@ -70,7 +69,7 @@
     [self.searchButton setTitle:@"HIDE SEARCH" forState:UIControlStateNormal];
     [self addSubview: self.filterSearch];
     for(NSLayoutConstraint* constraint in self.constraints) {
-        if([constraint.firstItem isEqual: self.modesTable] &&
+        if([constraint.firstItem isEqual: self.rulesTable] &&
            constraint.firstAttribute == NSLayoutAttributeTop)
             [self removeConstraint: constraint];
     }
@@ -103,8 +102,8 @@
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPSearchControl standardHeight]],
-                           //self.modesTable
-                           [NSLayoutConstraint constraintWithItem:self.modesTable
+                           //self.rulesTable
+                           [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.filterSearch
@@ -119,11 +118,11 @@
     [self.searchButton setTitle:@"SHOW SEARCH" forState:UIControlStateNormal];
     self.searchAvailable = NO;
     for(NSLayoutConstraint* constraint in self.constraints) {
-        if([constraint.firstItem isEqual: self.modesTable] &&
+        if([constraint.firstItem isEqual: self.rulesTable] &&
            constraint.firstAttribute == NSLayoutAttributeTop)
             [self removeConstraint: constraint];
     }
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.modesTable
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.rulesTable
                                                      attribute:NSLayoutAttributeTop
                                                      relatedBy:NSLayoutRelationEqual
                                                         toItem:self.menu
@@ -133,29 +132,29 @@
 }
 
 - (void) makeControlConstraints {
-    [self addConstraints:@[//self.modesTable
-                           [NSLayoutConstraint constraintWithItem:self.modesTable
+    [self addConstraints:@[//self.rulesTable
+                           [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.menu
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:8.0f],
-                           [NSLayoutConstraint constraintWithItem:self.modesTable
+                           [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.modesTable
+                           [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
                                                         attribute:NSLayoutAttributeTrailingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.modesTable
+                           [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeBottom
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.searchButton
