@@ -10,7 +10,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MPTeamsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MPTeamsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MPDataLoader>
 
 @property NSArray* tableSections;
 

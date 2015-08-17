@@ -41,7 +41,7 @@
     if(self) {
         MPTeamsView* view = [[MPTeamsView alloc] init];
         self.view = view;
-        [view startLoading];
+        self.delegate = self;
         //Filter init
         self.isFiltered = NO;
         [view.filterSearch.searchButton addTarget:self
@@ -57,7 +57,7 @@
       forCellReuseIdentifier:[MPTeamsViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [self refreshData];
+        [self reloadData];
     }
     return self;
 }
@@ -198,35 +198,18 @@
                            ];
 }
 
-- (void) loadOnDismiss: (id) sender {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("ReloadQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.teamsTable reloadData];
-            [view finishLoading];
-        });
-    });
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPTeamsViewController* teamsVC = (MPTeamsViewController*) controller;
+    for(MPTableSectionUtility* section in teamsVC.tableSections) {
+        [section reloadData];
+    }
+    [teamsVC updateHeaders];
 }
 
-- (void) refreshData {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("RefreshQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* section in self.tableSections) {
-            [section reloadData];
-        }
-        [self updateHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.teamsTable reloadData];
-            [view finishLoading];
-        });
-    });
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    MPTeamsViewController* teamsVC = (MPTeamsViewController*) controller;
+    MPTeamsView* view = (MPTeamsView*)teamsVC.view;
+    return view.teamsTable;
 }
 
 - (void) updateHeaders {
@@ -283,20 +266,23 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                        [self refreshData];
-                        [view.teamsTable reloadData];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage: successMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPGreenColor]];
+                            
+                        }];
                     }
                     else {
-                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:errorMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPRedColor]];
+                        }];
                     }
                 });
             });
@@ -316,20 +302,23 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage: successMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [self refreshData];
-                    [view.teamsTable reloadData];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                        
+                    }];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:errorMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
                 }
             });
         });
@@ -511,7 +500,7 @@
     [view.filterSearch.searchField resignFirstResponder];
     NSString* filterString = view.filterSearch.searchField.text;
     self.isFiltered = !(filterString.length == 0);
-    [self refreshData];
+    [self reloadData];
 }
 
 
