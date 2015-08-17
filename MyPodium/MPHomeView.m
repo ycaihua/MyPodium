@@ -16,7 +16,7 @@
 @implementation MPHomeView
 
 - (id) init {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:@"Home"];
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPHomeView defaultSubtitle]];
     if(self) {
         self.backgroundColor = [UIColor whiteColor];
         self.buttonColors = @[[UIColor MPBlackColor], [UIColor MPGreenColor],
@@ -288,5 +288,7 @@
                             
                             ]];
 }
+
++ (NSString*) defaultSubtitle { return @"Home"; }
 
 @end

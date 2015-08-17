@@ -41,6 +41,7 @@
     if(self) {
         MPSearchView* view = [[MPSearchView alloc] init];
         self.view = view;
+        self.delegate = self;
         [self makeTableSections];
         [self updateUnfilteredHeaders];
         UITableView* table = view.searchTable;
@@ -54,12 +55,12 @@
       forCellReuseIdentifier:[MPSearchViewController blankReuseIdentifier]];
         table.delegate = self;
         table.dataSource = self;
-        [table reloadData];
         //searchView init
         [view.searchView.searchButton addTarget:self
                                            action:@selector(searchButtonPressed:)
                                  forControlEvents:UIControlEventTouchUpInside];
         view.searchView.searchField.delegate = self;
+        [self reloadData];
     }
     return self;
 }
@@ -452,24 +453,21 @@
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                 [(MPMessagesCell*)cell updateForMessage:object displaySender:NO];
                             }]
-];
+                           ];
 }
 
-- (void) loadOnDismiss: (id) sender {
-    MPSearchView* view = (MPSearchView*) self.view;
-    [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* sectionUtility in self.tableSections) {
-            [sectionUtility reloadData];
-        }
-        [self updateUnfilteredHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.searchTable reloadData];
-            [view finishLoading];
-        });
-    });
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPSearchViewController* searchVC = (MPSearchViewController*)controller;
+    for(MPTableSectionUtility* sectionUtility in searchVC.tableSections) {
+        [sectionUtility reloadData];
+    }
+    [searchVC updateUnfilteredHeaders];
+}
 
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    MPSearchViewController* searchVC = (MPSearchViewController*)controller;
+    MPSearchView* view = (MPSearchView*)searchVC.view;
+    return view.searchTable;
 }
 
 #pragma mark table view data/delegate
@@ -516,27 +514,31 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                        [self searchButtonPressed: self];
-                        [view.searchTable reloadData];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage: successMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPGreenColor]];
+                        }];
                     }
                     else {
-                        view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
-                        [view.searchTable reloadData];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:errorMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPRedColor]];
+                            
+                        }];
                     }
                 });
             });
         }];
         UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPSearchView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
+            [view.menu.subtitleLabel displayMessage:[MPSearchView defaultSubtitle]
+                                        revertAfter:false
+                                          withColor:[UIColor whiteColor]];
             
         }];
         [confirmationAlert addAction: confirmAction];
@@ -550,21 +552,22 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage: successMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    [self searchButtonPressed: self];
-                    [view.searchTable reloadData];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                    }];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:errorMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
-                    [view.searchTable reloadData];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPSearchView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
                 }
             });
         });
@@ -977,18 +980,7 @@
     
     MPSearchView* view = (MPSearchView*) self.view;
     [view.searchView.searchField resignFirstResponder];
-    [view startLoading];
-    dispatch_queue_t backgroundQueue = dispatch_queue_create("SearchQueue", 0);
-    dispatch_async(backgroundQueue, ^{
-        for(MPTableSectionUtility* sectionUtility in self.tableSections) {
-            [sectionUtility reloadData];
-        }
-        [self updateUnfilteredHeaders];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [view.searchTable reloadData];
-            [view finishLoading];
-        });
-    });
+    [self reloadData];
 }
 
 - (MPTableSectionUtility*) tableSectionWithHeader: (NSString*) header {

@@ -68,12 +68,12 @@
     self.tableSections = @[[[MPTableSectionUtility alloc]
                             initWithHeaderTitle:[MPRulesViewController ownedRulesHeader]
                             withDataBlock:^(){
-                                NSArray* ownedModes = [MPRulesModel rulesForUser:[PFUser currentUser]];
+                                NSArray* ownedRules = [MPRulesModel rulesForUser:[PFUser currentUser]];
                                 if(self.isFiltered) {
                                     MPRulesView* view = (MPRulesView*) self.view;
-                                    return [MPGlobalModel modesList:ownedModes searchForString:view.filterSearch.searchField.text];
+                                    return [MPGlobalModel rulesList:ownedRules searchForString:view.filterSearch.searchField.text];
                                 }
-                                else return ownedModes;
+                                else return ownedRules;
                             }
                             withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
                                 MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:

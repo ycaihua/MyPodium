@@ -34,6 +34,7 @@
     NSString* searchString = [string lowercaseString];
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: users.count];
     for(PFUser* user in users) {
+        [user fetchIfNeeded];
         if(([user[@"username_searchable"] containsString: searchString]) ||
            ([user[@"realName_searchable"] containsString: searchString]))
             [results addObject: user];
@@ -46,6 +47,8 @@
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: teams.count];
     for(PFObject* team in teams) {
         PFUser* creator = team[@"creator"];
+        [team fetchIfNeeded];
+        [creator fetchIfNeeded];
         if(([team[@"teamName_searchable"] containsString: searchString]) ||
            ([creator[@"username_searchable"] containsString: searchString]) ||
            ([creator[@"realName_searchable"] containsString: searchString]))
@@ -59,6 +62,8 @@
     NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: messages.count];
     for(PFObject* message in messages) {
         PFUser* sender = message[@"sender"];
+        [sender fetchIfNeeded];
+        [message fetchIfNeeded];
         if(([message[@"title_searchable"] containsString: searchString]) ||
            ([message[@"body_searchable"] containsString: searchString]) ||
            ([sender[@"username_searchable"] containsString: searchString]) ||
@@ -68,12 +73,13 @@
     return results;
 }
 
-+ (NSArray*) modesList: (NSArray*) modes searchForString: (NSString*) string {
++ (NSArray*) rulesList: (NSArray*) rules searchForString: (NSString*) string {
     NSString* searchString = [string lowercaseString];
-    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: modes.count];
-    for(PFObject* mode in modes) {
-        if([mode[@"name_searchable"] containsString: searchString])
-            [results addObject: mode];
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: rules.count];
+    for(PFObject* rule in rules) {
+        [rule fetchIfNeeded];
+        if([rule[@"name_searchable"] containsString: searchString])
+            [results addObject: rule];
     }
     return results;
 }

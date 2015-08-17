@@ -8,7 +8,7 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface MPSearchViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MPDataLoader>
 
 @property NSArray* tableSections;
 @property NSMutableArray* sectionHeaderNames;
