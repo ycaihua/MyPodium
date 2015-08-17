@@ -14,7 +14,6 @@
 @interface MPFriendsView : MPMenuView
 
 @property MPSearchControl* filterSearch;
-@property MPTableHeader* loadingHeader;
 @property UITableView* friendsTable;
 
 + (NSString*) defaultSubtitle;

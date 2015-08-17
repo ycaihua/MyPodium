@@ -18,5 +18,6 @@
 
 - (void) checkNewNotifications;
 - (void) reloadData;
+- (void) reloadDataWithCompletionBlock: (void (^)()) completion;
 
 @end

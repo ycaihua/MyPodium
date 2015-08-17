@@ -160,14 +160,11 @@
 }
 
 - (void) refreshDataForController:(MPMenuViewController *)controller {
-    NSLog(@"friendsVC delegate method");
     MPFriendsViewController* friendsVC = (MPFriendsViewController*) self;
     for(MPTableSectionUtility* section in friendsVC.tableSections) {
         [section reloadData];
     }
     [friendsVC updateHeaders];
-    MPFriendsView* friendsView = (MPFriendsView*) friendsVC.view;
-    [friendsView.friendsTable reloadData];
 }
 
 - (UITableView*) tableViewToRefreshForController: (MPMenuViewController*) controller {
@@ -210,19 +207,22 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     //Update UI, based on success
                     if(success) {
-                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                        [self refreshDataForController: self];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage: successMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPGreenColor]];
+                        }];
                     }
                     else {
-                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:errorMessage
+                                                        revertAfter:TRUE
+                                                          withColor:[UIColor MPRedColor]];
+                        }];
                     }
                 });
             });
@@ -242,19 +242,22 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //Update UI, based on success
                 if(success) {
-                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage: successMessage
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
                                                 revertAfter:TRUE
                                                   withColor:[UIColor MPGreenColor]];
-                    [self refreshDataForController:self];
+                    }];
                 }
                 else {
-                    view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                    [view.menu.subtitleLabel displayMessage:errorMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPRedColor]];
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
                 }
             });
         });

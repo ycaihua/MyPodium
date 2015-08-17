@@ -135,7 +135,6 @@
 }
 
 - (void) reloadData {
-    NSLog(@"reloaddata called on class %@", [self class]);
     if(!self.delegate) return;
     MPMenuView* view = (MPMenuView*)self.view;
     [view startLoading];
@@ -143,10 +142,27 @@
         [self.delegate refreshDataForController: self];
         dispatch_async(dispatch_get_main_queue(), ^{
             UITableView* table = [self.delegate tableViewToRefreshForController: self];
+            NSLog(@"%@", table);
             if(table) [table reloadData];
             [view finishLoading];
         });
     });
+}
+
+- (void) reloadDataWithCompletionBlock: (void (^)()) completion {
+    if(!self.delegate) return;
+    MPMenuView* view = (MPMenuView*)self.view;
+    [view startLoading];
+    dispatch_async(dispatch_queue_create("LoadOnDismissQueue", 0), ^{
+        [self.delegate refreshDataForController: self];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UITableView* table = [self.delegate tableViewToRefreshForController: self];
+            NSLog(@"%@", table);
+            if(table) [table reloadData];
+            completion();
+        });
+    });
+    
 }
 
 - (BOOL) shouldAutorotate {
