@@ -17,21 +17,16 @@
 
 @implementation MPUserProfileView
 
-- (id) initWithUser: (PFUser*) user {
-    self = [super initWithTitleText:@"MY PODIUM" subtitleText:
-            [NSString stringWithFormat:@"User Profile: %@", user.username]];
+- (id) initWithUser: (PFUser*) user withStatus: (MPFriendStatus) status acceptingRequests:(BOOL)acceptingRequests {
+    self = [super initWithTitleText:@"MY PODIUM" subtitleText: [MPUserProfileView defaultSubtitle]];
     if(self) {
-        dispatch_async(dispatch_queue_create("UserInfoQueue", 0), ^{
             self.displayedUser = user;
-            self.userStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser] toUser:self.displayedUser];
-            self.userAcceptingRequests = [self.displayedUser[@"pref_friendRequests"] boolValue];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.backgroundColor = [UIColor whiteColor];
-                [self makeControls];
-                [self makeControlConstraints];
-                [self updateControlsForNewUser];
-            });
-        });
+            self.userStatus = status;
+            self.userAcceptingRequests = acceptingRequests;
+            self.backgroundColor = [UIColor whiteColor];
+            [self makeControls];
+            [self makeControlConstraints];
+            [self refreshControlsForUser];
     }
     return self;
 }
@@ -94,12 +89,12 @@
         self.userAcceptingRequests = [self.displayedUser[@"pref_friendRequests"] boolValue];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.backgroundColor = [UIColor whiteColor];
-            [self updateControlsForNewUser];
+            [self refreshControlsForUser];
         });
     });
 }
 
-- (void) updateControlsForNewUser {
+- (void) refreshControlsForUser {
     self.usernameLabel.text = self.displayedUser.username.uppercaseString;
     self.realNameLabel.text = @"Display name not available";
     if((self.userStatus == MPFriendStatusFriends || self.userStatus == MPFriendStatusSameUser) && self.displayedUser[@"realName"]) {

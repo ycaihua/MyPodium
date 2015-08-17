@@ -27,11 +27,19 @@
 - (id) initWithUser: (PFUser*)user {
     self = [super init];
     if(self) {
-        MPUserProfileView* view = [[MPUserProfileView alloc] initWithUser: user];
-        self.view = view;
-        self.displayedUser = user;
-        self.delegate = self;
-        [self reloadData];
+        dispatch_async(dispatch_queue_create("UserInfoQueue", 0), ^{
+            MPFriendStatus friendStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser]
+                                                                        toUser:user];
+            BOOL acceptingRequests = [user[@"pref_friendRequests"] boolValue];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MPUserProfileView* view = [[MPUserProfileView alloc] initWithUser: user withStatus:friendStatus acceptingRequests:acceptingRequests];
+                self.view = view;
+                self.displayedUser = user;
+                self.delegate = self;
+                [self reloadData];
+                
+            });
+        });
     }
     return self;
 }
@@ -40,13 +48,18 @@
     MPUserProfileViewController* userProfileVC = (MPUserProfileViewController*)controller;
     MPUserProfileView* view = (MPUserProfileView*) userProfileVC.view;
     
-    [view updateForUser: userProfileVC.displayedUser];
+    MPFriendStatus friendStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser]
+                                                                toUser:self.displayedUser];
+    
+    view.displayedUser = userProfileVC.displayedUser;
+    view.userStatus = friendStatus;
+    view.userAcceptingRequests = [userProfileVC.displayedUser[@"pref_friendRequests"] boolValue];
+    
+    [view refreshControlsForUser];
     
     [view.leftBottomButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     [view.rightBottomButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
     
-    MPFriendStatus friendStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser]
-                                                                toUser:self.displayedUser];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         switch (friendStatus) {

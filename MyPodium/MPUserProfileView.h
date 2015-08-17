@@ -30,8 +30,8 @@
 @property MPBottomEdgeButton* leftBottomButton;
 @property MPBottomEdgeButton* rightBottomButton;
 
-- (id) initWithUser: (PFUser*) user;
+- (id) initWithUser: (PFUser*) user withStatus: (MPFriendStatus) status acceptingRequests: (BOOL) acceptingRequests;
 
-- (void) updateForUser: (PFUser*) user;
+- (void) refreshControlsForUser;
 
 @end
