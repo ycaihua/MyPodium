@@ -44,11 +44,6 @@
     self.messagesTable.allowsMultipleSelection = NO;
     [self addSubview: self.messagesTable];
     
-    //self.loadingHeader
-    self.loadingHeader = [[MPTableHeader alloc] initWithText:@"LOADING..."];
-    self.loadingHeader.translatesAutoresizingMaskIntoConstraints = NO;
-    [self addSubview: self.loadingHeader];
-    
     //self.composeButton
     self.composeButton = [[MPBottomEdgeButton alloc] init];
     [self.composeButton setTitle:@"COMPOSE MESSAGE" forState:UIControlStateNormal];
@@ -85,28 +80,6 @@
                                                         attribute:NSLayoutAttributeNotAnAttribute
                                                        multiplier:1.0f
                                                          constant:[MPSearchControl standardHeight]],
-                           //self.loadingHeader
-                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
-                                                        attribute:NSLayoutAttributeTop
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.filterSearch
-                                                        attribute:NSLayoutAttributeBottom
-                                                       multiplier:1.0f
-                                                         constant:-1.0f],
-                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
-                                                        attribute:NSLayoutAttributeLeading
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeLeadingMargin
-                                                       multiplier:1.0f
-                                                         constant:0.0f],
-                           [NSLayoutConstraint constraintWithItem:self.loadingHeader
-                                                        attribute:NSLayoutAttributeTrailing
-                                                        relatedBy:NSLayoutRelationEqual
-                                                           toItem:self
-                                                        attribute:NSLayoutAttributeTrailingMargin
-                                                       multiplier:1.0f
-                                                         constant:0.0f],
                            //self.messagesTable
                            [NSLayoutConstraint constraintWithItem:self.messagesTable
                                                         attribute:NSLayoutAttributeTop

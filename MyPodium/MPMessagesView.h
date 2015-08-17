@@ -15,7 +15,6 @@
 @interface MPMessagesView : MPMenuView
 
 @property MPSearchControl* filterSearch;
-@property MPTableHeader* loadingHeader;
 @property UITableView* messagesTable;
 @property MPBottomEdgeButton* composeButton;
 
