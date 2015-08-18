@@ -13,6 +13,8 @@
 @interface MPTeamRosterViewController : MPMenuViewController<UITableViewDataSource, UITableViewDelegate, MPDataLoader>
 
 @property PFObject* team;
+@property MPTeamStatus status;
+
 @property NSArray* tableSections;
 @property NSMutableArray* tableHeaders;
 

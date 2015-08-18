@@ -96,6 +96,34 @@
     [self addSubview: self.rightButton];
 }
 
+- (void) refreshControlsForTeamUpdate {
+    self.titleLabel.text = [self.team[@"teamName"] uppercaseString];
+    
+    switch (self.teamStatus) {
+        case MPTeamStatusOwner:
+            self.statusLabel.text = @"You are the owner of this team.";
+            [self.rightButton setTitle:@"OWNER SETTINGS" forState:UIControlStateNormal];
+            break;
+        case MPTeamStatusMember:
+            self.statusLabel.text = @"You are a member of this team.";
+            [self.rightButton setTitle:@"LEAVE TEAM" forState:UIControlStateNormal];
+            break;
+        case MPTeamStatusInvited:
+            self.statusLabel.text = @"You have been invited to join this team.";
+            [self.rightButton setTitle:@"ACCEPT/DENY" forState:UIControlStateNormal];
+            break;
+        case MPTeamStatusRequested:
+            self.statusLabel.text = @"You have requested to join this team.";
+            [self.rightButton setTitle:@"CANCEL REQUEST" forState:UIControlStateNormal];
+            break;
+        case MPTeamStatusNonMember:
+            self.statusLabel.text = @"You are not a member of this team.";
+            [self.rightButton setTitle:@"REQUEST TO JOIN" forState:UIControlStateNormal];
+        default:
+            break;
+    }
+}
+
 - (void) makeControlConstraints {
     [self addConstraints:@[//self.titleLabel
                            [NSLayoutConstraint constraintWithItem:self.titleLabel

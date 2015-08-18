@@ -20,6 +20,7 @@
 @property MPTeamStatus teamStatus;
 
 - (id) initWithTeam: (PFObject*) team andTeamStatus: (MPTeamStatus) status;
+- (void) refreshControlsForTeamUpdate;
 
 @property MPLabel* titleLabel;
 @property MPLabel* statusLabel;
