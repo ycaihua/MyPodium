@@ -31,13 +31,13 @@
     return [team save];
 }
 
-+ (BOOL) acceptTeamJoinRequest:(PFObject *)team forUser:(PFUser *)user {
++ (BOOL) acceptJoinRequestForTeam:(PFObject *)team forUser:(PFUser *)user {
     [team removeObject:user.objectId forKey:@"joinRequests"];
     [team addObject:user.objectId forKey:@"teamMembers"];
     return [team save];
 }
 
-+ (BOOL) denyTeamJoinRequest:(PFObject *)team forUser:(PFUser *)user {
++ (BOOL) denyJoinRequestForTeam:(PFObject *)team forUser:(PFUser *)user {
     [team removeObject:user.objectId forKey:@"joinRequests"];
     return [team save];
 }

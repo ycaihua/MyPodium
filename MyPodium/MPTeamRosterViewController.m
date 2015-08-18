@@ -197,6 +197,55 @@
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                 [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
                             }],
+                           
+                           
+                           
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPTeamRosterViewController requestedHeader]
+                            withDataBlock:^(){
+                                return [MPTeamsModel requestingUsersForTeam: self.team];
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                         [MPTeamRosterViewController usersReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamRosterViewController usersReuseIdentifier]];
+                                }
+                                
+                                cell.indexPath = indexPath;
+                                if(self.status == MPTeamStatusOwner) {
+                                    [cell setNumberOfButtons:3];
+                                    [cell clearButtonActions];
+                                    [cell setButtonImageStrings:@[@[@"check", @"green"],
+                                                                  @[@"info", @"yellow"],
+                                                                  @[@"x", @"red"]]];
+                                    
+                                    [cell.buttons[2] addTarget:self
+                                                        action:@selector(acceptRequestButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.buttons[1] addTarget:self
+                                                        action:@selector(requestedProfileButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.buttons[0] addTarget:self
+                                                        action:@selector(denyRequestButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                }
+                                else {
+                                    [cell setNumberOfButtons:1];
+                                    [cell clearButtonActions];
+                                    [cell setButtonImageStrings:@[@[@"info", @"yellow"]]];
+                                    
+                                    [cell.buttons[0] addTarget:self
+                                                        action:@selector(requestedProfileButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                }
+                                
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
+                            }],
+
                            ];
 }
 
@@ -405,10 +454,54 @@
     [self performModelUpdate:^{
         return [MPTeamsModel denyInviteFromTeam:self.team forUser:other];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have cancelled the invite to %@.", other.username]
-            withErrorMessage:@"There was an error cancelling the invite. Please try again later."
+          withSuccessMessage:[NSString stringWithFormat:@"You have canceled the invite to %@.", other.username]
+            withErrorMessage:@"There was an error canceling the invite. Please try again later."
        withConfirmationAlert: shouldConfirm
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your invite to %@ to join your team?", other.username]];
+}
+
+- (void) acceptRequestButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController requestedHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    
+    [self performModelUpdate:^{
+        return [MPTeamsModel acceptJoinRequestForTeam:self.team forUser:other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have accepted %@'s request to join %@.", other.username, self.team[@"teamName"]]
+            withErrorMessage:@"There was an error accepting the request. Please try again later."
+       withConfirmationAlert:NO
+     withConfirmationMessage:nil];
+}
+
+- (void) requestedProfileButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController requestedHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:
+     [[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
+- (void) denyRequestButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController requestedHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    
+    BOOL shouldConfirm = [[PFUser currentUser][@"pref_confirmation"] boolValue];
+    
+    [self performModelUpdate:^{
+        return [MPTeamsModel denyJoinRequestForTeam:self.team forUser:other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have denied %@'s request to join your team.", other.username]
+            withErrorMessage:@"There was an error denying the request. Please try again later."
+       withConfirmationAlert: shouldConfirm
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny %@'s request to join your team?", other.username]];
 }
 
 #pragma mark strings

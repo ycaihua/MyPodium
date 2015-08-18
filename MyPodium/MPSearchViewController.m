@@ -803,7 +803,7 @@
     PFObject* other = utility.dataObjects[indexPath.row];
     BOOL showConfirmation = [[PFUser currentUser][@"pref_confirmation"] boolValue];
     [self performModelUpdate:^BOOL{
-        return [MPTeamsModel denyTeamJoinRequest:other forUser:[PFUser currentUser]];
+        return [MPTeamsModel denyJoinRequestForTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
