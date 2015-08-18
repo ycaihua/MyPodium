@@ -41,6 +41,7 @@
     self.rulesTable.translatesAutoresizingMaskIntoConstraints = NO;
     self.rulesTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.rulesTable.scrollEnabled = YES;
+    self.rulesTable.allowsSelection = NO;
     [self addSubview: self.rulesTable];
     
     //self.searchButton

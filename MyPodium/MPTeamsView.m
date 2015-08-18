@@ -42,6 +42,7 @@
     self.teamsTable.translatesAutoresizingMaskIntoConstraints = NO;
     self.teamsTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.teamsTable.scrollEnabled = YES;
+    self.teamsTable.allowsSelection = NO;
     [self addSubview: self.teamsTable];
     
     //self.searchButton
