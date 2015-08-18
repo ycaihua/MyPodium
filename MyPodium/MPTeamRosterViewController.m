@@ -156,6 +156,47 @@
                                     [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
                                 }],
                            
+                           [[MPTableSectionUtility alloc]
+                            initWithHeaderTitle:[MPTeamRosterViewController invitedHeader]
+                            withDataBlock:^(){
+                                return [MPTeamsModel invitedUsersForTeam: self.team];
+                            }
+                            withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                         [MPTeamRosterViewController usersReuseIdentifier] forIndexPath:indexPath];
+                                if(!cell) {
+                                    cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamRosterViewController usersReuseIdentifier]];
+                                }
+                                
+                                cell.indexPath = indexPath;
+                                if(self.status == MPTeamStatusOwner) {
+                                    [cell setNumberOfButtons:2];
+                                    [cell clearButtonActions];
+                                    [cell setButtonImageStrings:@[@[@"info", @"yellow"],
+                                                                  @[@"x", @"red"]]];
+                                    
+                                    [cell.buttons[1] addTarget:self
+                                                        action:@selector(invitedProfileButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                    [cell.buttons[0] addTarget:self
+                                                        action:@selector(cancelInviteButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                }
+                                else {
+                                    [cell setNumberOfButtons:1];
+                                    [cell clearButtonActions];
+                                    [cell setButtonImageStrings:@[@[@"info", @"yellow"]]];
+                                    
+                                    [cell.buttons[0] addTarget:self
+                                                        action:@selector(invitedProfileButtonPressed:)
+                                              forControlEvents:UIControlEventTouchUpInside];
+                                }
+                                
+                                return cell;
+                            }
+                            withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
+                            }],
                            ];
 }
 
@@ -211,6 +252,85 @@
 
 #pragma mark buton actions
 
+- (void) performModelUpdate: (BOOL (^)(void)) methodAction
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+      withConfirmationAlert: (BOOL) showAlert
+    withConfirmationMessage: (NSString*) alertMessage {
+    MPTeamRosterView* view = (MPTeamRosterView*) self.view;
+    [view startLoading];
+    if(showAlert) {
+        UIAlertController* confirmationAlert =
+        [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                            message:alertMessage
+                                     preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+            //Background thread
+            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+            dispatch_async(backgroundQueue, ^{
+                BOOL success = methodAction();
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //Update UI, based on success
+                    if(success) {
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage: successMessage
+                                                        revertAfter:YES
+                                                          withColor:[UIColor MPGreenColor]];
+                            
+                        }];
+                    }
+                    else {
+                        [self reloadDataWithCompletionBlock:^{
+                            view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
+                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                            [view.menu.subtitleLabel displayMessage:errorMessage
+                                                        revertAfter:YES
+                                                          withColor:[UIColor MPRedColor]];
+                        }];
+                    }
+                });
+            });
+        }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+            [view.menu.subtitleLabel displayMessage:[MPTeamRosterView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
+            
+        }];
+        [confirmationAlert addAction: confirmAction];
+        [confirmationAlert addAction: cancelAction];
+        [self presentViewController: confirmationAlert animated:YES completion:nil];
+    }
+    else {
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL success = methodAction();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(success) {
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:YES
+                                                      withColor:[UIColor MPGreenColor]];
+                        
+                    }];
+                }
+                else {
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:YES
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
+                }
+            });
+        });
+    }
+}
+
 - (void) ownerProfileButtonPressed: (id) sender {
     PFUser* owner = self.team[@"owner"];
     [MPControllerManager presentViewController:
@@ -224,45 +344,16 @@
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController membersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
     
-    UIAlertController* confirm = [UIAlertController alertControllerWithTitle:@"Confirmation" message:
-                                  [NSString stringWithFormat:@"Are you sure you want to promote %@ to be the owner of your team? This cannot be undone.", other.username] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+    [self performModelUpdate:^{
         MPTeamRosterView* view = (MPTeamRosterView*)self.view;
-        [view startLoading];
-        dispatch_async(dispatch_queue_create("PromoteQueue", 0), ^{
-            self.team[@"owner"] = other;
-            view.teamStatus = MPTeamStatusMember;
-            BOOL success = [self.team save];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"You have promoted %@ to be the owner of %@.", other.username, self.team[@"teamName"]]
-                                                    revertAfter:YES
-                                                      withColor:[UIColor MPGreenColor]];
-                        
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:@"There was an error promoting your new owner. Please try again later."
-                                                    revertAfter:YES
-                                                      withColor:[UIColor MPRedColor]];
-                        
-                    }];
-                    
-                }
-            });
-        });
-    }];
-    [confirm addAction: confirmAction];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [confirm addAction: cancelAction];
-    
-    [self presentViewController:confirm animated:YES completion:nil];
+        self.team[@"owner"] = other;
+        view.teamStatus = MPTeamStatusMember;
+        return [self.team save];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have promoted %@ to be the owner of %@.", other.username, self.team[@"teamName"]]
+            withErrorMessage:@"There was an error promoting your new owner. Please try again later."
+       withConfirmationAlert:YES
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to promote %@ to be the owner of your team? This cannot be undone.", other.username]];
 }
 
 - (void) memberProfileButtonPressed: (id) sender {
@@ -281,44 +372,22 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController membersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
-    
-    UIAlertController* confirm = [UIAlertController alertControllerWithTitle:@"Confirmation" message:
-                                  [NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username] preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
-        MPTeamRosterView* view = (MPTeamRosterView*)self.view;
-        [view startLoading];
-        dispatch_async(dispatch_queue_create("RemoveQueue", 0), ^{
-            BOOL success = [MPTeamsModel leaveTeam:self.team forUser:other];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"You have removed %@ from your team.", other.username]
-                                                    revertAfter:YES
-                                                      withColor:[UIColor MPGreenColor]];
-                        
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:@"There was an error removing the team member. Please try again later."
-                                                    revertAfter:YES
-                                                      withColor:[UIColor MPRedColor]];
-                        
-                    }];
-                    
-                }
-            });
-        });
-    }];
-    [confirm addAction: confirmAction];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [confirm addAction: cancelAction];
-    
-    [self presentViewController:confirm animated:YES completion:nil];
+    [self performModelUpdate:^{
+        return [MPTeamsModel leaveTeam:self.team forUser:other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have removed %@ from your team, %@.", other.username, self.team[@"teamName"]]
+            withErrorMessage:@"There was an error removing the user. Please try again later."
+       withConfirmationAlert:YES
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username]];}
+
+- (void) invitedProfileButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController invitedHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:
+     [[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
 }
 
 #pragma mark strings
