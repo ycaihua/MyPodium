@@ -266,11 +266,59 @@
 }
 
 - (void) memberProfileButtonPressed: (id) sender {
-    
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController membersHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:
+     [[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
 }
 
 - (void) removeMemberButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController membersHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
     
+    UIAlertController* confirm = [UIAlertController alertControllerWithTitle:@"Confirmation" message:
+                                  [NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        MPTeamRosterView* view = (MPTeamRosterView*)self.view;
+        [view startLoading];
+        dispatch_async(dispatch_queue_create("RemoveQueue", 0), ^{
+            BOOL success = [MPTeamsModel leaveTeam:self.team forUser:other];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(success) {
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:[NSString stringWithFormat:@"You have removed %@ from your team.", other.username]
+                                                    revertAfter:YES
+                                                      withColor:[UIColor MPGreenColor]];
+                        
+                    }];
+                }
+                else {
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:@"There was an error removing the team member. Please try again later."
+                                                    revertAfter:YES
+                                                      withColor:[UIColor MPRedColor]];
+                        
+                    }];
+                    
+                }
+            });
+        });
+    }];
+    [confirm addAction: confirmAction];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [confirm addAction: cancelAction];
+    
+    [self presentViewController:confirm animated:YES completion:nil];
 }
 
 #pragma mark strings
