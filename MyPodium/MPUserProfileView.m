@@ -174,7 +174,7 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
-                           //self.realNameLabel
+                           //self.creationDateLabel
                            [NSLayoutConstraint constraintWithItem:self.creationDateLabel
                                                         attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
