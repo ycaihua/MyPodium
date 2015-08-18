@@ -6,6 +6,8 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPTeamRosterView.h"
 #import "MPLabel.h"
 #import "MPBottomEdgeButton.h"
@@ -19,6 +21,7 @@
     if(self) {
         self.team = team;
         self.teamStatus = status;
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
     }
@@ -57,9 +60,11 @@
     
     //self.rosterTable
     self.rosterTable = [[UITableView alloc] init];
+    self.rosterTable.backgroundColor = [UIColor clearColor];
     self.rosterTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.rosterTable.scrollEnabled = YES;
     self.rosterTable.translatesAutoresizingMaskIntoConstraints = NO;
+    self.rosterTable.allowsSelection = NO;
     [self addSubview: self.rosterTable];
     
     //self.leftButton
