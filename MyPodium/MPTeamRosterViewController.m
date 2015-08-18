@@ -11,6 +11,7 @@
 
 #import "MPTeamRosterView.h"
 #import "MPTableViewCell.h"
+#import "MPTableHeader.h"
 
 #import "MPUserProfileViewController.h"
 #import "MPTeamRosterViewController.h"
@@ -32,6 +33,9 @@
                 self.view = view;
                 self.team = team;
                 self.delegate = self;
+                [view.rosterTable registerClass:[MPTableViewCell class] forCellReuseIdentifier:[MPTeamRosterViewController usersReuseIdentifier]];
+                view.rosterTable.delegate = self;
+                view.rosterTable.dataSource = self;
                 [self makeTableSections];
                 [self addMenuActions];
                 [self reloadData];
@@ -84,7 +88,33 @@
                             }
                             withCellUpdateBlock:^(UITableViewCell* cell, id object){
                                 [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
-                            }],];
+                            }],
+                           [[MPTableSectionUtility alloc]
+                                initWithHeaderTitle:[MPTeamRosterViewController membersHeader]
+                                withDataBlock:^(){
+                                    return [MPTeamsModel membersForTeam: self.team];
+                                }
+                                withCellCreationBlock:^(UITableView* tableView, NSIndexPath* indexPath){
+                                    MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                                                             [MPTeamRosterViewController usersReuseIdentifier] forIndexPath:indexPath];
+                                    if(!cell) {
+                                        cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPTeamRosterViewController usersReuseIdentifier]];
+                                    }
+                                    
+                                    cell.indexPath = indexPath;
+                                    [cell setNumberOfButtons:1];
+                                    [cell clearButtonActions];
+                                    [cell setButtonImageStrings:@[@[@"info", @"yellow"]]];
+                                    
+                                    //Add targets
+                                    [cell.buttons[0] addTarget:self action:@selector(ownerProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+                                    return cell;
+                                }
+                                withCellUpdateBlock:^(UITableViewCell* cell, id object){
+                                    [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
+                                }],
+                           
+                           ];
 }
 
 - (void) updateHeaders {
@@ -95,6 +125,46 @@
         }
     }
     self.tableHeaders = headerNames;
+}
+
+#pragma mark UITableView delegate/data source
+
+- (NSInteger) tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    MPTableSectionUtility* sectionUtility = [self tableSectionWithHeader:self.tableHeaders[section]];
+    return  sectionUtility.dataObjects.count;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MPTableViewCell cellHeight];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [MPTableHeader headerHeight];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[MPTableHeader alloc] initWithText:self.tableHeaders[section]];
+}
+
+- (MPTableSectionUtility*) tableSectionWithHeader: (NSString*) header {
+    for(MPTableSectionUtility* section in self.tableSections) {
+        if([section.headerTitle isEqualToString: header])
+            return section;
+    }
+    return nil;
+}
+
+- (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString* sectionHeader = self.tableHeaders[indexPath.section];
+    MPTableSectionUtility* section = [self tableSectionWithHeader: sectionHeader];
+    UITableViewCell* cell = section.cellCreationBlock(tableView, indexPath);
+    id object = section.dataObjects[indexPath.row];
+    section.cellUpdateBlock(cell, object);
+    return cell;
+}
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.tableHeaders.count;
 }
 
 #pragma mark buton actions

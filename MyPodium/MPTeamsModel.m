@@ -155,5 +155,27 @@
     return MPTeamStatusNonMember;
 }
 
++ (NSArray*) membersForTeam:(PFObject *)team {
+    NSArray* memberIDs = team[@"teamMembers"];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", memberIDs];
+    PFQuery* query = [PFUser queryWithPredicate: predicate];
+    return [query findObjects];
+}
+
++ (NSArray*) invitedUsersForTeam:(PFObject *)team {
+    NSArray* invitedIDs = team[@"invitedMembers"];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", invitedIDs];
+    PFQuery* query = [PFUser queryWithPredicate: predicate];
+    return [query findObjects];
+}
+
++ (NSArray*) requestingUsersForTeam:(PFObject *)team {
+    NSArray* requestedIDs = team[@"joinRequests"];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", requestedIDs];
+    PFQuery* query = [PFUser queryWithPredicate: predicate];
+    return [query findObjects];
+    
+}
+
 + (NSString*) tableName { return @"Team"; }
 @end

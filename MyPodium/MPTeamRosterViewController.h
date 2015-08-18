@@ -10,7 +10,7 @@
 
 @class PFObject;
 
-@interface MPTeamRosterViewController : MPMenuViewController<MPDataLoader>
+@interface MPTeamRosterViewController : MPMenuViewController<UITableViewDataSource, UITableViewDelegate, MPDataLoader>
 
 @property PFObject* team;
 @property NSArray* tableSections;
