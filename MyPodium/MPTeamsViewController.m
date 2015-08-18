@@ -24,6 +24,7 @@
 #import "MPLabel.h"
 
 #import "MPTeamsViewController.h"
+#import "MPTeamRosterViewController.h"
 #import "MPMakeTeamViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -326,7 +327,12 @@
 }
 
 - (void) ownedTeamProfileButtonPressed: (id) sender {
-    //Need to create team profile
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController ownedTeamsHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPTeamRosterViewController alloc] initWithTeam:other] fromController:self];
 }
 
 - (void) leaveOwnedTeamButtonPressed: (id) sender {
@@ -362,7 +368,12 @@
 }
 
 - (void) memberTeamProfileButtonPressed: (id) sender {
-    //Need to create team profile
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsAsMemberHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPTeamRosterViewController alloc] initWithTeam:other] fromController:self];
 }
 
 - (void) leaveMemberTeamButtonPressed: (id) sender {
@@ -397,7 +408,12 @@
 }
 
 - (void) teamInviteProfileButtonPressed: (id) sender {
-    //Need to create team profile
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsInvitingHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPTeamRosterViewController alloc] initWithTeam:other] fromController:self];
 }
 
 - (void) denyTeamInviteButtonPressed: (id) sender {
@@ -417,7 +433,12 @@
 }
 
 - (void) requestedTeamProfileButtonPressed: (id) sender {
-    //Need to create team profile
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamsViewController teamsRequestedToJoinHeader]];
+    PFObject* other = utility.dataObjects[indexPath.row];
+    [MPControllerManager presentViewController:[[MPTeamRosterViewController alloc] initWithTeam:other] fromController:self];
 }
 
 - (void) cancelTeamRequestButtonPressed: (id) sender {
