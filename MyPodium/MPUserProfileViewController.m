@@ -36,8 +36,8 @@
                 self.view = view;
                 self.displayedUser = user;
                 self.delegate = self;
+                [self addMenuActions];
                 [self reloadData];
-                
             });
         });
     }

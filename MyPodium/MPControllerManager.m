@@ -38,8 +38,9 @@
         [menu hideIcons];
     }
     
-    if([controller isKindOfClass:[MPMenuViewController class]])
+    if([controller isKindOfClass:[MPMenuViewController class]]) {
         [(MPMenuViewController*)controller addMenuActions];
+    }
 }
 
 //Dismiss view controller. If controller has a drawer, call it on the drawer. If the presenter
