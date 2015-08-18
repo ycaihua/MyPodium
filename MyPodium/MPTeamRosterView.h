@@ -19,6 +19,9 @@
 @property PFObject* team;
 @property MPTeamStatus teamStatus;
 
+- (id) initWithTeam: (PFObject*) team andTeamStatus: (MPTeamStatus) status;
+
+@property MPLabel* titleLabel;
 @property MPLabel* statusLabel;
 @property UITableView* rosterTable;
 @property MPBottomEdgeButton* leftButton;

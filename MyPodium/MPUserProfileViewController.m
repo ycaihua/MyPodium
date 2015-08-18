@@ -33,6 +33,7 @@
 - (id) initWithUser: (PFUser*)user {
     self = [super init];
     if(self) {
+        self.view = [[MPMenuView alloc] initWithTitleText:@"MY PODIUM" subtitleText:@"Loading..."];
         dispatch_async(dispatch_queue_create("UserInfoQueue", 0), ^{
             MPFriendStatus friendStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser]
                                                                         toUser:user];
