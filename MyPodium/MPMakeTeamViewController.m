@@ -75,6 +75,19 @@
     return [self initWithSelectedUser: nil];
 }
 
+#pragma mark MPDataLoader
+
+- (void) refreshDataForController:(MPMenuViewController *)controller {
+    MPMakeTeamViewController* makeTeamVC = (MPMakeTeamViewController*)controller;
+    makeTeamVC.friends = [MPFriendsModel friendsForUser:[PFUser currentUser]];
+}
+
+- (UITableView*) tableViewToRefreshForController:(MPMenuViewController *)controller {
+    MPMakeTeamViewController* makeTeamVC = (MPMakeTeamViewController*)controller;
+    MPMakeTeamView* view = (MPMakeTeamView*)makeTeamVC.view;
+    return view.playersTable;
+}
+
 #pragma mark table view delegate/data source
 
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

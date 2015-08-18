@@ -11,7 +11,7 @@
 #import <UIKit/UIKit.h>
 @class PFUser;
 
-@interface MPMakeTeamViewController : MPMenuViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+@interface MPMakeTeamViewController : MPMenuViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, MPDataLoader>
 
 - (id) initWithSelectedUser: (PFUser*) user;
 
