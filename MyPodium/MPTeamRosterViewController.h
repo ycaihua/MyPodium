@@ -13,6 +13,8 @@
 @interface MPTeamRosterViewController : MPMenuViewController<MPDataLoader>
 
 @property PFObject* team;
+@property NSArray* tableSections;
+@property NSMutableArray* tableHeaders;
 
 - (id) initWithTeam: (PFObject*) team;
 
