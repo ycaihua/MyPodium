@@ -372,12 +372,15 @@
     NSIndexPath* indexPath = cell.indexPath;
     MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController membersHeader]];
     PFUser* other = utility.dataObjects[indexPath.row];
+    
+    BOOL shouldConfirm = [[PFUser currentUser][@"pref_confirmation"] boolValue];
+    
     [self performModelUpdate:^{
         return [MPTeamsModel leaveTeam:self.team forUser:other];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have removed %@ from your team, %@.", other.username, self.team[@"teamName"]]
             withErrorMessage:@"There was an error removing the user. Please try again later."
-       withConfirmationAlert:YES
+       withConfirmationAlert:shouldConfirm
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username]];}
 
 - (void) invitedProfileButtonPressed: (id) sender {
@@ -388,6 +391,24 @@
     PFUser* other = utility.dataObjects[indexPath.row];
     [MPControllerManager presentViewController:
      [[MPUserProfileViewController alloc] initWithUser:other] fromController:self];
+}
+
+- (void) cancelInviteButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
+    NSIndexPath* indexPath = cell.indexPath;
+    MPTableSectionUtility* utility = [self tableSectionWithHeader:[MPTeamRosterViewController invitedHeader]];
+    PFUser* other = utility.dataObjects[indexPath.row];
+    
+    BOOL shouldConfirm = [[PFUser currentUser][@"pref_confirmation"] boolValue];
+    
+    [self performModelUpdate:^{
+        return [MPTeamsModel denyInviteFromTeam:self.team forUser:other];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have cancelled the invite to %@.", other.username]
+            withErrorMessage:@"There was an error cancelling the invite. Please try again later."
+       withConfirmationAlert: shouldConfirm
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your invite to %@ to join your team?", other.username]];
 }
 
 #pragma mark strings
