@@ -154,10 +154,10 @@
                 if(success) {
                     UIAlertController* successAlert =
                     [UIAlertController alertControllerWithTitle:@"Success"
-                                                        message:[NSString stringWithFormat:@"You've created a new team named %@. You'll now be returned to the home page.", view.teamNameField.text]
+                                                        message:[NSString stringWithFormat:@"You've created a new team named %@. You'll now be returned to the previous screen.", view.teamNameField.text]
                                                  preferredStyle:UIAlertControllerStyleAlert];
                     UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-                        [MPLoginViewController login];
+                        [MPControllerManager dismissViewController: self];
                     }];
                     [successAlert addAction:action];
                     [self presentViewController:successAlert animated:true completion:nil];
@@ -167,8 +167,7 @@
                     [UIAlertController alertControllerWithTitle:@"Error"
                                                         message:@"There was an error creating the team. Please try again later."
                                                  preferredStyle:UIAlertControllerStyleAlert];
-                    UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-                    }];
+                    UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleDefault handler:nil];
                     [errorAlert addAction:action];
                     [self presentViewController:errorAlert animated:true completion:nil];
                 }

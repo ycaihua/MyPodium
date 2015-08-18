@@ -82,18 +82,6 @@
     [self addSubview: self.rightBottomButton];
 }
 
-- (void) updateForUser: (PFUser*) user {
-    dispatch_async(dispatch_queue_create("UserInfoQueue", 0), ^{
-        self.displayedUser = user;
-        self.userStatus = [MPFriendsModel friendStatusFromUser:[PFUser currentUser] toUser:self.displayedUser];
-        self.userAcceptingRequests = [self.displayedUser[@"pref_friendRequests"] boolValue];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.backgroundColor = [UIColor whiteColor];
-            [self refreshControlsForUser];
-        });
-    });
-}
-
 - (void) refreshControlsForUser {
     self.usernameLabel.text = self.displayedUser.username.uppercaseString;
     self.realNameLabel.text = @"Display name not available";
@@ -120,8 +108,8 @@
             break;
         case MPFriendStatusIncomingPending:
             self.friendStatusLabel.text = @"You have an incoming friend request from this user.";
-            [self.leftBottomButton setTitle:@"ACCEPT REQUEST" forState:UIControlStateNormal];
-            [self.rightBottomButton setTitle:@"DENY REQUEST" forState:UIControlStateNormal];
+            [self.leftBottomButton setTitle:@"GO BACK" forState:UIControlStateNormal];
+            [self.rightBottomButton setTitle:@"ACCEPT/DENY" forState:UIControlStateNormal];
             self.controlBlock.hidden = YES;
             break;
         case MPFriendStatusOutgoingPending:
@@ -133,7 +121,7 @@
         case MPFriendStatusSameUser:
             self.friendStatusLabel.text = @"This is your profile page.";
             [self.leftBottomButton setTitle:@"GO BACK" forState:UIControlStateNormal];
-            [self.rightBottomButton setTitle:@"SETTINGS" forState:UIControlStateNormal];
+            [self.rightBottomButton setTitle:@"MY SETTINGS" forState:UIControlStateNormal];
             self.controlBlock.hidden = YES;
             break;
         default:
