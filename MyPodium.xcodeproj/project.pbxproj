@@ -107,6 +107,8 @@
 		2DBF86941B462B8B00FB0AF5 /* MPMessagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86931B462B8B00FB0AF5 /* MPMessagesView.m */; };
 		2DBF86981B462C2B00FB0AF5 /* MPMessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */; };
 		2DBF869B1B462D7400FB0AF5 /* MPMessagesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF869A1B462D7400FB0AF5 /* MPMessagesModel.m */; };
+		2DC36B231B8422E4000E6FA2 /* MPTeamInviteUsersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC36B221B8422E4000E6FA2 /* MPTeamInviteUsersViewController.m */; };
+		2DC36B261B8422FA000E6FA2 /* MPTeamInviteUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC36B251B8422FA000E6FA2 /* MPTeamInviteUsersView.m */; };
 		2DD285631B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD285621B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m */; };
 		2DD285661B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD285651B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m */; };
 		2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */; };
@@ -311,6 +313,10 @@
 		2DBF86971B462C2B00FB0AF5 /* MPMessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessagesViewController.m; sourceTree = "<group>"; };
 		2DBF86991B462D7400FB0AF5 /* MPMessagesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMessagesModel.h; sourceTree = "<group>"; };
 		2DBF869A1B462D7400FB0AF5 /* MPMessagesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMessagesModel.m; sourceTree = "<group>"; };
+		2DC36B211B8422E4000E6FA2 /* MPTeamInviteUsersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamInviteUsersViewController.h; sourceTree = "<group>"; };
+		2DC36B221B8422E4000E6FA2 /* MPTeamInviteUsersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamInviteUsersViewController.m; sourceTree = "<group>"; };
+		2DC36B241B8422FA000E6FA2 /* MPTeamInviteUsersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPTeamInviteUsersView.h; sourceTree = "<group>"; };
+		2DC36B251B8422FA000E6FA2 /* MPTeamInviteUsersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPTeamInviteUsersView.m; sourceTree = "<group>"; };
 		2DD285611B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSelectMessageRecipientsView.h; sourceTree = "<group>"; };
 		2DD285621B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSelectMessageRecipientsView.m; sourceTree = "<group>"; };
 		2DD285641B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSelectMessageRecipientsViewController.h; sourceTree = "<group>"; };
@@ -469,6 +475,8 @@
 			children = (
 				2D3135A41B83A48C006E6187 /* MPTeamRosterViewController.h */,
 				2D3135A51B83A48C006E6187 /* MPTeamRosterViewController.m */,
+				2DC36B211B8422E4000E6FA2 /* MPTeamInviteUsersViewController.h */,
+				2DC36B221B8422E4000E6FA2 /* MPTeamInviteUsersViewController.m */,
 			);
 			name = TeamRoster;
 			sourceTree = "<group>";
@@ -490,6 +498,8 @@
 			children = (
 				2D40E8BD1B791BB8005500A5 /* MPTeamRosterView.h */,
 				2D40E8BE1B791BB8005500A5 /* MPTeamRosterView.m */,
+				2DC36B241B8422FA000E6FA2 /* MPTeamInviteUsersView.h */,
+				2DC36B251B8422FA000E6FA2 /* MPTeamInviteUsersView.m */,
 			);
 			name = TeamRoster;
 			sourceTree = "<group>";
@@ -1052,6 +1062,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2DC36B231B8422E4000E6FA2 /* MPTeamInviteUsersViewController.m in Sources */,
 				2DF3D3D81B405EC7009C5304 /* MPTableSectionUtility.m in Sources */,
 				2D4487D71B05A7030061EF86 /* MPForgotPasswordViewController.m in Sources */,
 				2D3FAE061B66BF62009804DF /* MPRuleButton.m in Sources */,
@@ -1062,6 +1073,7 @@
 				2DE9FCD11B1D5F1500F748C9 /* MPFriendsModel.m in Sources */,
 				2D4487841B05554F0061EF86 /* MPTextField.m in Sources */,
 				2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */,
+				2DC36B261B8422FA000E6FA2 /* MPTeamInviteUsersView.m in Sources */,
 				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
 				2D05E8DF1B5D7F24006FF360 /* MPRulesView.m in Sources */,
 				2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,

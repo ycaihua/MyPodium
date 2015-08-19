@@ -119,7 +119,7 @@
             self.controlBlock.hidden = YES;
             break;
         case MPFriendStatusSameUser:
-            self.friendStatusLabel.text = @"This is your profile page.";
+            self.friendStatusLabel.text = @"This is your account.";
             [self.leftBottomButton setTitle:@"GO BACK" forState:UIControlStateNormal];
             [self.rightBottomButton setTitle:@"MY SETTINGS" forState:UIControlStateNormal];
             self.controlBlock.hidden = YES;

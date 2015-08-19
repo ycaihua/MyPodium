@@ -24,6 +24,7 @@
 #import "MPUserProfileViewController.h"
 #import "MPTeamRosterViewController.h"
 #import "MPMessageComposerViewController.h"
+#import "MPTeamInviteUsersViewController.h"
 
 @interface MPTeamRosterViewController ()
 
@@ -605,6 +606,7 @@
 - (void) ownerSettingsButtonPressed: (id) sender {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Owner Settings" message:@"Select an option below." preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* inviteMembersAction = [UIAlertAction actionWithTitle:@"Invite More Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        [MPControllerManager presentViewController:[[MPTeamInviteUsersViewController alloc] initWithTeam:self.team] fromController:self];
     }];
     UIAlertAction* messageMembersAction = [UIAlertAction actionWithTitle:@"Message Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
         [self messageMembers];
