@@ -516,6 +516,7 @@
     [view.leftButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     switch (self.status) {
         case MPTeamStatusOwner:
+            [view.rightButton addTarget:self action:@selector(ownerSettingsButtonPressed:) forControlEvents:UIControlEventAllEvents];
             break;
         case MPTeamStatusMember:
             [view.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -594,6 +595,26 @@
             withErrorMessage:@"There was an error processing your request. Please try again later."
        withConfirmationAlert:NO
      withConfirmationMessage:nil];
+}
+
+- (void) ownerSettingsButtonPressed: (id) sender {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Owner Settings" message:@"Select an option below." preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* inviteMembersAction = [UIAlertAction actionWithTitle:@"Invite More Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+    }];
+    UIAlertAction* messageMembersAction = [UIAlertAction actionWithTitle:@"Message Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+    }];
+    UIAlertAction* renameAction = [UIAlertAction actionWithTitle:@"Rename Team" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+    }];
+    UIAlertAction* deleteAction = [UIAlertAction actionWithTitle:@"Delete Team" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* handler) {
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction: inviteMembersAction];
+    [alert addAction: messageMembersAction];
+    [alert addAction: renameAction];
+    [alert addAction: deleteAction];
+    [alert addAction: cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark strings
