@@ -14,11 +14,14 @@
 #import "MPTableViewCell.h"
 #import "MPTableHeader.h"
 #import "MPLabel.h"
+#import "MPTextField.h"
 #import "MPMenu.h"
 #import "MPBottomEdgeButton.h"
+#import "MPMessageComposerView.h"
 
 #import "MPUserProfileViewController.h"
 #import "MPTeamRosterViewController.h"
+#import "MPMessageComposerViewController.h"
 
 @interface MPTeamRosterViewController ()
 
@@ -602,6 +605,15 @@
     UIAlertAction* inviteMembersAction = [UIAlertAction actionWithTitle:@"Invite More Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
     }];
     UIAlertAction* messageMembersAction = [UIAlertAction actionWithTitle:@"Message Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        dispatch_async(dispatch_queue_create("MembersStringQueue", 0), ^{
+            NSString* membersString = [self stringFromMemberNames];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MPMessageComposerViewController* destination = [[MPMessageComposerViewController alloc] init];
+                MPMessageComposerView* view = (MPMessageComposerView*)destination.view;
+                view.recipientsField.text = membersString;
+                [MPControllerManager presentViewController:destination fromController:self];
+            });
+        });
     }];
     UIAlertAction* renameAction = [UIAlertAction actionWithTitle:@"Rename Team" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
     }];
@@ -615,6 +627,21 @@
     [alert addAction: deleteAction];
     [alert addAction: cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark message composer
+
+//Will stall main queue if not called inside background thread
+- (NSString*) stringFromMemberNames {
+    NSArray* members = [MPTeamsModel membersForTeam: self.team];
+    PFUser* firstUser = members[0];
+    NSString* membersString = firstUser.username;
+    for(int i = 1; i < members.count; i++) {
+        PFUser* currentUser = members[i];
+        membersString = [membersString stringByAppendingString:
+                         [NSString stringWithFormat:@", %@", currentUser.username]];
+    }
+    return membersString;
 }
 
 #pragma mark strings
