@@ -15,6 +15,7 @@
 #import "MPTableHeader.h"
 #import "MPLabel.h"
 #import "MPMenu.h"
+#import "MPBottomEdgeButton.h"
 
 #import "MPUserProfileViewController.h"
 #import "MPTeamRosterViewController.h"
@@ -42,6 +43,7 @@
                 view.rosterTable.dataSource = self;
                 [self makeTableSections];
                 [self addMenuActions];
+                [self makeBottomButtonActions];
                 [self reloadData];
             });
         });
@@ -58,8 +60,12 @@
     }
     [rosterVC updateHeaders];
     MPTeamRosterView* view = (MPTeamRosterView*) self.view;
+    MPTeamStatus newStatus = [MPTeamsModel teamStatusForUser:[PFUser currentUser] forTeam:self.team];
+    self.status = newStatus;
+    view.teamStatus = newStatus;
     dispatch_async(dispatch_get_main_queue(), ^{
         [view refreshControlsForTeamUpdate];
+        [self makeBottomButtonActions];
     });
 }
 
@@ -198,8 +204,6 @@
                                 [MPTableSectionUtility updateCell:(MPTableViewCell*) cell withUserObject:object];
                             }],
                            
-                           
-                           
                            [[MPTableSectionUtility alloc]
                             initWithHeaderTitle:[MPTeamRosterViewController requestedHeader]
                             withDataBlock:^(){
@@ -299,7 +303,7 @@
     return self.tableHeaders.count;
 }
 
-#pragma mark buton actions
+#pragma mark button actions
 
 - (void) performModelUpdate: (BOOL (^)(void)) methodAction
          withSuccessMessage: (NSString*) successMessage
@@ -394,9 +398,7 @@
     PFUser* other = utility.dataObjects[indexPath.row];
     
     [self performModelUpdate:^{
-        MPTeamRosterView* view = (MPTeamRosterView*)self.view;
         self.team[@"owner"] = other;
-        view.teamStatus = MPTeamStatusMember;
         return [self.team save];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have promoted %@ to be the owner of %@.", other.username, self.team[@"teamName"]]
@@ -502,6 +504,96 @@
             withErrorMessage:@"There was an error denying the request. Please try again later."
        withConfirmationAlert: shouldConfirm
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny %@'s request to join your team?", other.username]];
+}
+
+#pragma mark bottom buttons
+
+- (void) makeBottomButtonActions {
+    MPTeamRosterView* view = (MPTeamRosterView*)self.view;
+    [view.leftButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    [view.rightButton removeTarget:nil action:NULL forControlEvents:UIControlEventAllEvents];
+    
+    [view.leftButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    switch (self.status) {
+        case MPTeamStatusOwner:
+            break;
+        case MPTeamStatusMember:
+            [view.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case MPTeamStatusInvited:
+            [view.rightButton addTarget:self action:@selector(respondToInviteButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case MPTeamStatusRequested:
+            [view.rightButton addTarget:self action:@selector(cancelRequestButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        case MPTeamStatusNonMember:
+            [view.rightButton addTarget:self action:@selector(requestJoinButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void) goBackButtonPressed: (id) sender {
+    [MPControllerManager dismissViewController:self];
+}
+
+- (void) leaveTeamButtonPressed: (id) sender {
+    [self performModelUpdate:^{
+        return [MPTeamsModel leaveTeam:self.team forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have left the team, %@.", self.team[@"teamName"]]
+            withErrorMessage:@"There was an error leaving the team. Please try again later."
+       withConfirmationAlert:NO
+     withConfirmationMessage:nil];
+}
+
+- (void) respondToInviteButtonPressed: (id) sender {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Team Invitation" message:[NSString stringWithFormat:@"You have been invited to the team, %@. Would you like to accept or deny the invite?", self.team[@"teamName"]] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* accept = [UIAlertAction actionWithTitle:@"Accept" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        [self performModelUpdate:^{
+            return [MPTeamsModel acceptInviteFromTeam:self.team forUser:[PFUser currentUser]];
+        }
+              withSuccessMessage:[NSString stringWithFormat:@"You have accepted the invite to join %@.", self.team[@"teamName"]]
+                withErrorMessage:@"There was an error accepting the invite. Please try again later."
+           withConfirmationAlert:NO
+         withConfirmationMessage:nil];
+    }];
+    UIAlertAction* deny = [UIAlertAction actionWithTitle:@"Deny" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* handler) {
+        [self performModelUpdate:^{
+            return [MPTeamsModel denyInviteFromTeam:self.team forUser:[PFUser currentUser]];
+        }
+              withSuccessMessage:[NSString stringWithFormat:@"You have denied the invite to join %@.", self.team[@"teamName"]]
+                withErrorMessage:@"There was an error denying the invite. Please try again later."
+           withConfirmationAlert:NO
+         withConfirmationMessage:nil];
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction: accept];
+    [alert addAction: deny];
+    [alert addAction: cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void) cancelRequestButtonPressed: (id) sender {
+    [self performModelUpdate:^{
+        return [MPTeamsModel denyJoinRequestForTeam:self.team forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have canceled your request to join %@.", self.team[@"teamName"]]
+            withErrorMessage:@"There was an error canceling your request. Please try again later."
+       withConfirmationAlert:NO
+     withConfirmationMessage:nil];
+}
+
+- (void) requestJoinButtonPressed: (id) sender {
+    [self performModelUpdate:^{
+        return [MPTeamsModel requestToJoinTeam:self.team forUser:[PFUser currentUser]];
+    }
+          withSuccessMessage:[NSString stringWithFormat:@"You have requested to join %@.", self.team[@"teamName"]]
+            withErrorMessage:@"There was an error processing your request. Please try again later."
+       withConfirmationAlert:NO
+     withConfirmationMessage:nil];
 }
 
 #pragma mark strings

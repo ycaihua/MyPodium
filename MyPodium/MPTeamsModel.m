@@ -174,7 +174,6 @@
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", requestedIDs];
     PFQuery* query = [PFUser queryWithPredicate: predicate];
     return [query findObjects];
-    
 }
 
 + (NSString*) tableName { return @"Team"; }
