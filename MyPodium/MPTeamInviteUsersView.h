@@ -18,6 +18,7 @@
 @property NSInteger remainingSpots;
 
 - (id) initWithTeam: (PFObject*) team withRemainingSpots: (NSInteger) remainingSpots;
+- (void) updateForRemainingSpots;
 
 @property MPLabel* infoLabel;
 @property UITableView* friendsTable;

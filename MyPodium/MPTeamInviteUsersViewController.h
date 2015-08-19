@@ -10,10 +10,12 @@
 
 @class PFObject;
 
-@interface MPTeamInviteUsersViewController : MPMenuViewController
+@interface MPTeamInviteUsersViewController : MPMenuViewController<MPDataLoader, UITableViewDataSource, UITableViewDelegate>
 
 @property PFObject* team;
 @property NSInteger remainingSpots;
+@property NSArray* eligibleFriends;
+@property NSMutableArray* selectedFriends;
 
 - (id) initWithTeam: (PFObject*) team;
 
