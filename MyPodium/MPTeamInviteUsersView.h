@@ -9,11 +9,19 @@
 #import "MPMenuView.h"
 
 @class PFObject;
+@class MPLabel;
+@class MPBottomEdgeButton;
 
 @interface MPTeamInviteUsersView : MPMenuView
 
 @property PFObject* team;
+@property NSInteger remainingSpots;
 
-- (id) initWithTeam: (PFObject*) team;
+- (id) initWithTeam: (PFObject*) team withRemainingSpots: (NSInteger) remainingSpots;
+
+@property MPLabel* infoLabel;
+@property UITableView* friendsTable;
+@property MPBottomEdgeButton* leftButton;
+@property MPBottomEdgeButton* rightButton;
 
 @end

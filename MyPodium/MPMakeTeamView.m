@@ -58,8 +58,7 @@
     self.submitButton = [[MPBottomEdgeButton alloc] init];
     [self.submitButton setTitle:@"SUBMIT" forState:UIControlStateNormal];
     self.submitButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.submitButton setBackgroundColor:[UIColor MPDarkGrayColor]];
-    [self.submitButton setEnabled:NO];
+    [self.submitButton disable];
     [self addSubview:self.submitButton];
 }
 

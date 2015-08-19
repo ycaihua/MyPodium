@@ -8,6 +8,8 @@
 
 #import <Parse/Parse.h>
 
+#import "MPTeamsModel.h"
+
 #import "MPTeamInviteUsersView.h"
 
 #import "MPTeamInviteUsersViewController.h"
@@ -21,9 +23,17 @@
 - (id) initWithTeam:(PFObject *)team {
     self = [super init];
     if(self) {
-        MPTeamInviteUsersView* view = [[MPTeamInviteUsersView alloc] initWithTeam: team];
-        self.view = view;
-        self.team = team;
+        self.view = [[MPMenuView alloc] initWithTitleText:@"MY PODIUM" subtitleText:@"Loading..."];
+        dispatch_async(dispatch_queue_create("CountSpotsQueue", 0), ^{
+            NSInteger remainingSpots = [MPTeamsModel countRemainingOpeningsOnTeam: team];
+            self.team = team;
+            self.remainingSpots = remainingSpots;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MPTeamInviteUsersView* view = [[MPTeamInviteUsersView alloc] initWithTeam: team withRemainingSpots: remainingSpots];
+                self.view = view;
+                [self addMenuActions];
+            });
+        });
     }
     return self;
 }

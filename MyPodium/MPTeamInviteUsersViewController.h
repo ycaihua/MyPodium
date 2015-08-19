@@ -13,6 +13,7 @@
 @interface MPTeamInviteUsersViewController : MPMenuViewController
 
 @property PFObject* team;
+@property NSInteger remainingSpots;
 
 - (id) initWithTeam: (PFObject*) team;
 

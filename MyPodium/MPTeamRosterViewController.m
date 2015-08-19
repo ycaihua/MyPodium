@@ -606,7 +606,14 @@
 - (void) ownerSettingsButtonPressed: (id) sender {
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Owner Settings" message:@"Select an option below." preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* inviteMembersAction = [UIAlertAction actionWithTitle:@"Invite More Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
-        [MPControllerManager presentViewController:[[MPTeamInviteUsersViewController alloc] initWithTeam:self.team] fromController:self];
+        dispatch_async(dispatch_queue_create("VerifyMemberCountQueue", 0), ^{
+            MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController:self];
+            [alerter checkErrorCondition:([MPTeamsModel countRemainingOpeningsOnTeam:self.team] == 0) withMessage:@"You currently have the maximum number of slots filled for your team. Remove existing members or cancel invitations to make more room."];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(![alerter hasFoundError])
+                    [MPControllerManager presentViewController:[[MPTeamInviteUsersViewController alloc] initWithTeam:self.team] fromController:self];
+            });
+        });
     }];
     UIAlertAction* messageMembersAction = [UIAlertAction actionWithTitle:@"Message Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
         [self messageMembers];
