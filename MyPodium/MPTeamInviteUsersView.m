@@ -6,6 +6,8 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPTeamInviteUsersView.h"
 #import "MPLabel.h"
 #import "MPBottomEdgeButton.h"
@@ -19,6 +21,7 @@
     if(self) {
         self.team = team;
         self.remainingSpots = remainingSpots;
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
     }

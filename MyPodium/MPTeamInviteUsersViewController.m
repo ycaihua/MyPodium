@@ -8,6 +8,9 @@
 
 #import <Parse/Parse.h>
 #import "MPTableSectionUtility.h"
+#import "MPControllerManager.h"
+#import "UIColor+MPColor.h"
+#import "MPErrorAlerter.h"
 
 #import "MPTeamsModel.h"
 #import "MPFriendsModel.h"
@@ -16,6 +19,8 @@
 #import "MPBottomEdgeButton.h"
 #import "MPTableViewCell.h"
 #import "MPTableHeader.h"
+#import "MPLabel.h"
+#import "MPMenu.h"
 
 #import "MPTeamInviteUsersViewController.h"
 
@@ -43,6 +48,7 @@
                 view.friendsTable.delegate = self;
                 view.friendsTable.dataSource = self;
                 [self addMenuActions];
+                [self makeControlActions];
             });
         });
     }
@@ -132,6 +138,43 @@
     return 1;
 }
 
+#pragma mark bottom buttons
+
+- (void) makeControlActions {
+    MPTeamInviteUsersView* view = (MPTeamInviteUsersView*) self.view;
+    [view.leftButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [view.rightButton addTarget:self action:@selector(submitButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void) goBackButtonPressed: (id) sender {
+    [MPControllerManager dismissViewController: self];
+}
+
+- (void) submitButtonPressed: (id) sender {
+    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController:self];
+    [alerter checkErrorCondition:(self.selectedFriends.count > self.remainingSpots) withMessage:[NSString stringWithFormat:@"You have too many members selected. You can currently invite %ld more members.", (long)self.remainingSpots]];
+    if(![alerter hasFoundError]) {
+        [self inviteSelectedUsers];
+    }
+}
+
+- (void) inviteSelectedUsers {
+    dispatch_async(dispatch_queue_create("InviteUsersQueue", 0), ^{
+        for(PFUser* user in self.selectedFriends) {
+            NSString* userID = user.objectId;
+            [self.team addObject:userID forKey:@"invitedMembers"];
+        }
+        BOOL success = [self.team save];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(success)
+                [MPControllerManager dismissViewController: self];
+            else {
+                MPTeamInviteUsersView* view = (MPTeamInviteUsersView*) self.view;
+                [view.menu.subtitleLabel displayMessage:@"There was an error inviting the users. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+            }
+        });
+    });
+}
 
 #pragma mark strings
 
