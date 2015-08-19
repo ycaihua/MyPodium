@@ -521,7 +521,7 @@
     [view.leftButton addTarget:self action:@selector(goBackButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     switch (self.status) {
         case MPTeamStatusOwner:
-            [view.rightButton addTarget:self action:@selector(ownerSettingsButtonPressed:) forControlEvents:UIControlEventAllEvents];
+            [view.rightButton addTarget:self action:@selector(ownerSettingsButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
             break;
         case MPTeamStatusMember:
             [view.rightButton addTarget:self action:@selector(leaveTeamButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
