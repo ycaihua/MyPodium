@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 connorneville. All rights reserved.
 //
 
+#import "MPLimitConstants.h"
+
 #import "MPTeamsModel.h"
 #import "MPFriendsModel.h"
 
@@ -174,6 +176,11 @@
     NSPredicate* predicate = [NSPredicate predicateWithFormat:@"objectId IN %@", requestedIDs];
     PFQuery* query = [PFUser queryWithPredicate: predicate];
     return [query findObjects];
+}
+
++ (NSInteger) countRemainingOpeningsOnTeam:(PFObject *)team {
+    NSUInteger spacesTaken = [team[@"teamMembers"] count] + [team[@"invitedMembers"] count];
+    return [MPLimitConstants maxPlayersPerTeam] - spacesTaken;
 }
 
 + (NSString*) tableName { return @"Team"; }

@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger, MPTeamStatus) {
 + (NSInteger) countTeamsInvitingUser: (PFUser*) user;
 + (NSInteger) countTeamsContainingUser: (PFUser*) user;
 
++ (NSInteger) countRemainingOpeningsOnTeam: (PFObject*) team;
+
 + (NSArray*) teamsCreatedByUser: (PFUser*) user;
 + (NSArray*) teamsContainingUser: (PFUser*) user;
 + (NSArray*) teamsInvitingUser: (PFUser*) user;

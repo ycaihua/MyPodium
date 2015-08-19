@@ -9,6 +9,8 @@
 #import "MPTableSectionUtility.h"
 #import "MPControllerManager.h"
 #import "UIColor+MPColor.h"
+#import "MPLimitConstants.h"
+#import "MPErrorAlerter.h"
 
 #import "MPTeamRosterView.h"
 #import "MPTableViewCell.h"
@@ -605,19 +607,13 @@
     UIAlertAction* inviteMembersAction = [UIAlertAction actionWithTitle:@"Invite More Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
     }];
     UIAlertAction* messageMembersAction = [UIAlertAction actionWithTitle:@"Message Members" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
-        dispatch_async(dispatch_queue_create("MembersStringQueue", 0), ^{
-            NSString* membersString = [self stringFromMemberNames];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                MPMessageComposerViewController* destination = [[MPMessageComposerViewController alloc] init];
-                MPMessageComposerView* view = (MPMessageComposerView*)destination.view;
-                view.recipientsField.text = membersString;
-                [MPControllerManager presentViewController:destination fromController:self];
-            });
-        });
+        [self messageMembers];
     }];
     UIAlertAction* renameAction = [UIAlertAction actionWithTitle:@"Rename Team" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        [self displayRenameAlert];
     }];
     UIAlertAction* deleteAction = [UIAlertAction actionWithTitle:@"Delete Team" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* handler) {
+        [self confirmDeleteTeam];
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     
@@ -625,6 +621,74 @@
     [alert addAction: messageMembersAction];
     [alert addAction: renameAction];
     [alert addAction: deleteAction];
+    [alert addAction: cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void) messageMembers {
+    dispatch_async(dispatch_queue_create("MembersStringQueue", 0), ^{
+        NSString* membersString = [self stringFromMemberNames];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            MPMessageComposerViewController* destination = [[MPMessageComposerViewController alloc] init];
+            MPMessageComposerView* view = (MPMessageComposerView*)destination.view;
+            view.recipientsField.text = membersString;
+            [MPControllerManager presentViewController:destination fromController:self];
+        });
+    });
+}
+
+- (void) displayRenameAlert {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Rename Team" message:[NSString stringWithFormat:@"Enter your team's new name. It must be between %d-%d characters.", [MPLimitConstants minTeamNameCharacters], [MPLimitConstants maxTeamNameCharacters]] preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addTextFieldWithConfigurationHandler:^(UITextField* field) {
+        field.autocapitalizationType = UITextAutocapitalizationTypeWords;
+    }];
+    
+    UIAlertAction* submit = [UIAlertAction actionWithTitle:@"Submit" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        NSString* text = [alert.textFields objectAtIndex:0].text;
+        MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController:self];
+        [alerter checkErrorCondition:(text.length > [MPLimitConstants maxTeamNameCharacters]) withMessage:[NSString stringWithFormat:@"The team name you entered was too short (minimum %d characters).", [MPLimitConstants minTeamNameCharacters]]];
+        [alerter checkErrorCondition:(text.length > [MPLimitConstants maxTeamNameCharacters]) withMessage:[NSString stringWithFormat:@"The team name you entered was too long (max %d characters).", [MPLimitConstants maxTeamNameCharacters]]];
+        if(![alerter hasFoundError]) {
+            [self performModelUpdate:^{
+                self.team[@"teamName"] = text;
+                self.team[@"teamName_searchable"] = text.lowercaseString;
+                return [self.team save];
+            }
+                  withSuccessMessage:[NSString stringWithFormat:@"You have changed your team's name to %@.", text]
+                    withErrorMessage:@"There was an error processing your request. Please try again later."
+               withConfirmationAlert:NO
+             withConfirmationMessage:nil];
+        }
+    }];
+    UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction: submit];
+    [alert addAction: cancel];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+- (void) confirmDeleteTeam {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation" message:[NSString stringWithFormat:@"Are you sure you want to delete your team, %@? This cannot be undone.",self.team[@"teamName"]] preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
+        dispatch_async(dispatch_queue_create("DeleteQueue", 0), ^{
+            BOOL success = [MPTeamsModel deleteTeam: self.team];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if(success) {
+                    [MPControllerManager dismissViewController: self];
+                }
+                else {
+                    MPTeamRosterView* view = (MPTeamRosterView*)self.view;
+                    [view.menu.subtitleLabel displayMessage:@"There was an error deleting your team. Please try again later." revertAfter:YES withColor:[UIColor MPRedColor]];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    [alert addAction: confirmAction];
     [alert addAction: cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
