@@ -182,7 +182,7 @@
                 //Update UI, based on success
                 if(success) {
                     [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                        view.menu.subtitleLabel.persistentText = [[self.view class] defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                         [view.menu.subtitleLabel displayMessage: successMessage
                                                     revertAfter:TRUE
@@ -192,7 +192,7 @@
                 }
                 else {
                     [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                        view.menu.subtitleLabel.persistentText = [[self.view class] defaultSubtitle];
                         view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                         [view.menu.subtitleLabel displayMessage:errorMessage
                                                     revertAfter:TRUE
@@ -236,7 +236,7 @@
             //Update UI, based on success
             if(success) {
                 [self reloadDataWithCompletionBlock:^{
-                    view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [[self.view class] defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage: successMessage
                                                 revertAfter:TRUE
@@ -246,7 +246,7 @@
             }
             else {
                 [self reloadDataWithCompletionBlock:^{
-                    view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [[self.view class] defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:errorMessage
                                                 revertAfter:TRUE
@@ -271,7 +271,7 @@
             }
             else {
                 [self reloadDataWithCompletionBlock:^{
-                    view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                    view.menu.subtitleLabel.persistentText = [[self.view class] defaultSubtitle];
                     view.menu.subtitleLabel.textColor = [UIColor whiteColor];
                     [view.menu.subtitleLabel displayMessage:errorMessage
                                                 revertAfter:TRUE
