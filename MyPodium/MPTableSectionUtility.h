@@ -31,5 +31,6 @@
 + (void) updateCell: (MPTableViewCell*) cell withUserObject: (PFUser*) user;
 + (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team;
 + (void) updateCell: (MPTableViewCell*) cell withRuleObject: (PFObject*) rule;
++ (void) updateCell: (MPTableViewCell*) cell withEventObject: (PFObject*) event;
 
 @end

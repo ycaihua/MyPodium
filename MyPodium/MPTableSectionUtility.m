@@ -76,4 +76,23 @@
         cell.subtitleLabel.text = @"player vs. player rules";
 }
 
++ (void) updateCell:(MPTableViewCell *)cell withEventObject:(PFObject *)event {
+    cell.titleLabel.text = event[@"name"];
+    PFObject* rule = event[@"rule"];
+    NSString* eventType = [event[@"eventType"] lowercaseString];
+    [rule fetchIfNeededInBackgroundWithBlock:^(PFObject* object, NSError* error) {
+        if(!error) {
+            BOOL teamParticipants = [rule[@"usesTeamParticipants"] boolValue];
+            if(teamParticipants)
+                cell.subtitleLabel.text = [NSString stringWithFormat:@"team vs. team %@", eventType];
+            else
+                cell.subtitleLabel.text = [NSString stringWithFormat:@"player vs. player %@", eventType];
+        }
+        else {
+            NSLog(@"%@", error);
+        }
+    }];
+    
+}
+
 @end

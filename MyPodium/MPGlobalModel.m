@@ -89,6 +89,19 @@
     return results;
 }
 
++ (NSArray*) eventList: (NSArray*) events searchForString: (NSString*) string {
+    if(string.length == 0) return @[];
+    NSString* searchString = [string lowercaseString];
+    NSMutableArray* results = [[NSMutableArray alloc] initWithCapacity: events.count];
+    for(PFObject* event in events) {
+        [event fetchIfNeeded];
+        if([event[@"name_searchable"] containsString: searchString])
+            [results addObject: event];
+    }
+    return results;
+    
+}
+
 + (BOOL) usernameInUse: (NSString*) username {
     if(username.length == 0) return YES;
     NSString* searchString = [username lowercaseString];

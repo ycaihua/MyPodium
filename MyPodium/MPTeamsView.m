@@ -34,7 +34,6 @@
     self.filterSearch = [[MPSearchControl alloc] init];
     [self.filterSearch.searchField setPlaceholder:@"FILTER TEAMS"];
     self.filterSearch.translatesAutoresizingMaskIntoConstraints = NO;
-    //NOT showing by default
     
     //self.teamsTable
     self.teamsTable = [[UITableView alloc] init];

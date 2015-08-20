@@ -9,10 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @class PFUser;
+@class PFObject;
 
 @interface MPEventsModel : NSObject
 
++ (BOOL) deleteEvent: (PFObject*) event;
+
 + (NSArray*) eventsOwnedByUser: (PFUser*) user;
++ (NSArray*) eventsWithParticipatingUser: (PFUser*) user;
++ (NSArray*) eventsInvitingUser: (PFUser*) user;
 
 + (NSInteger) countEventsForUser: (PFUser*) user;
 

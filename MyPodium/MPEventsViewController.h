@@ -8,6 +8,14 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPEventsViewController : MPMenuViewController
+#import <UIKit/UIKit.h>
+
+@interface MPEventsViewController : MPMenuViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, MPDataLoader>
+
+@property NSArray* tableSections;
+
+@property BOOL isFiltered;
+
+@property NSMutableArray* sectionHeaderNames;
 
 @end

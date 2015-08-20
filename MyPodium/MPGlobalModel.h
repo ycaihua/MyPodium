@@ -18,6 +18,7 @@
 + (NSArray*) teamList: (NSArray*) teams searchForString: (NSString*) string;
 + (NSArray*) messagesList: (NSArray*) messages searchForString: (NSString*) string;
 + (NSArray*) rulesList: (NSArray*) rules searchForString: (NSString*) string;
++ (NSArray*) eventList: (NSArray*) events searchForString: (NSString*) string;
 
 + (BOOL) usernameInUse: (NSString*) username;
 + (BOOL) emailInUse: (NSString*) email;

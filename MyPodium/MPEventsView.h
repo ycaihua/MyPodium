@@ -8,6 +8,20 @@
 
 #import "MPMenuView.h"
 
+@class MPSearchControl;
+@class MPTableHeader;
+@class MPBottomEdgeButton;
+
 @interface MPEventsView : MPMenuView
+
+@property MPSearchControl* filterSearch;
+@property UITableView* eventsTable;
+@property MPBottomEdgeButton* searchButton;
+@property MPBottomEdgeButton* makeEventButton;
+
+@property BOOL searchAvailable;
+- (void) displaySearch;
+- (void) hideSearch;
+- (void) finishLoading;
 
 @end
