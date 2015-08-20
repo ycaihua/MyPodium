@@ -7,6 +7,7 @@
 //
 
 #import "MPControllerManager.h"
+#import "UIColor+MPColor.h"
 
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
@@ -160,13 +161,119 @@
             completion();
         });
     });
-    
 }
+
+- (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+    withConfirmationMessage: (NSString*) alertMessage {
+    MPMenuView* view = (MPMenuView*) self.view;
+    [view startLoading];
+    UIAlertController* confirmationAlert =
+    [UIAlertController alertControllerWithTitle:@"Confirmation"
+                                        message:alertMessage
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
+        //Background thread
+        dispatch_queue_t backgroundQueue = dispatch_queue_create("ModelUpdateQueue", 0);
+        dispatch_async(backgroundQueue, ^{
+            BOOL success = modelUpdate();
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //Update UI, based on success
+                if(success) {
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage: successMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPGreenColor]];
+                        
+                    }];
+                }
+                else {
+                    [self reloadDataWithCompletionBlock:^{
+                        view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                        [view.menu.subtitleLabel displayMessage:errorMessage
+                                                    revertAfter:TRUE
+                                                      withColor:[UIColor MPRedColor]];
+                    }];
+                }
+            });
+        });
+    }];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
+        [view.menu.subtitleLabel displayMessage:[[self class] defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
+        
+    }];
+    [confirmationAlert addAction: confirmAction];
+    [confirmationAlert addAction: cancelAction];
+    [self presentViewController: confirmationAlert animated: true completion:nil];
+}
+
+- (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage {
+    MPMenuView* view = (MPMenuView*) self.view;
+    [view startLoading];
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("ModelUpdateQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        BOOL success = modelUpdate();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //Update UI, based on success
+            if(success) {
+                [self reloadDataWithCompletionBlock:^{
+                    view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage: successMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPGreenColor]];
+                    
+                }];
+            }
+            else {
+                [self reloadDataWithCompletionBlock:^{
+                    view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:errorMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                }];
+            }
+        });
+    });
+}
+
+- (void) performModelUpdateAndDismissOnSuccess: (BOOL (^)(void)) modelUpdate
+                              withErrorMessage: (NSString*) errorMessage {
+    MPMenuView* view = (MPMenuView*) self.view;
+    [view startLoading];
+    dispatch_queue_t backgroundQueue = dispatch_queue_create("ModelUpdateQueue", 0);
+    dispatch_async(backgroundQueue, ^{
+        BOOL success = modelUpdate();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //Update UI, based on success
+            if(success) {
+                [MPControllerManager dismissViewController: self];
+            }
+            else {
+                [self reloadDataWithCompletionBlock:^{
+                    view.menu.subtitleLabel.persistentText = [[self class] defaultSubtitle];
+                    view.menu.subtitleLabel.textColor = [UIColor whiteColor];
+                    [view.menu.subtitleLabel displayMessage:errorMessage
+                                                revertAfter:TRUE
+                                                  withColor:[UIColor MPRedColor]];
+                }];
+            }
+        });
+    });
+}
+
 
 - (BOOL) shouldAutorotate {
     return NO;
 }
 
-+ (NSTimeInterval) iconHoldDuration { return 1.0f; }
++ (NSTimeInterval) iconHoldDuration { return 0.75f; }
 
 @end

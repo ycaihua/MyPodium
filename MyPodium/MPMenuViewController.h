@@ -20,4 +20,14 @@
 - (void) reloadData;
 - (void) reloadDataWithCompletionBlock: (void (^)()) completion;
 
+- (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+    withConfirmationMessage: (NSString*) alertMessage;
+- (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage;
+- (void) performModelUpdateAndDismissOnSuccess: (BOOL (^)(void)) modelUpdate
+                              withErrorMessage: (NSString*) errorMessage;
+
 @end
