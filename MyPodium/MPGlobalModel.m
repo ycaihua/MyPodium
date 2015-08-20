@@ -52,7 +52,7 @@
         PFUser* creator = team[@"creator"];
         [team fetchIfNeeded];
         [creator fetchIfNeeded];
-        if(([team[@"teamName_searchable"] containsString: searchString]) ||
+        if(([team[@"name_searchable"] containsString: searchString]) ||
            ([creator[@"username_searchable"] containsString: searchString]) ||
            ([creator[@"realName_searchable"] containsString: searchString]))
             [results addObject: team];

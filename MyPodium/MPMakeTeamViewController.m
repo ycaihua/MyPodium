@@ -162,7 +162,7 @@
     if(![alerter hasFoundError]) {
         dispatch_queue_t backgroundQueue = dispatch_queue_create("MakeTeamQueue", 0);
         dispatch_async(backgroundQueue, ^{
-            BOOL success = [MPTeamsModel makeTeamWithCreator:[PFUser currentUser] withPlayers:self.selectedFriends withTeamName:view.teamNameField.text];
+            BOOL success = [MPTeamsModel makeTeamWithOwner:[PFUser currentUser] withPlayers:self.selectedFriends withTeamName:view.teamNameField.text];
             dispatch_async(dispatch_get_main_queue(), ^{
                 if(success) {
                     UIAlertController* successAlert =

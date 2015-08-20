@@ -328,7 +328,7 @@
         self.team[@"owner"] = other;
         return [self.team save];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have promoted %@ to be the owner of %@.", other.username, self.team[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You have promoted %@ to be the owner of %@.", other.username, self.team[@"name"]]
             withErrorMessage:@"There was an error promoting your new owner. Please try again later."
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to promote %@ to be the owner of your team? This cannot be undone.", other.username]];
 }
@@ -355,7 +355,7 @@
     [self performModelUpdate:^{
         return [MPTeamsModel leaveTeam:self.team forUser:other];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have removed %@ from your team, %@.", other.username, self.team[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You have removed %@ from your team, %@.", other.username, self.team[@"name"]]
             withErrorMessage:@"There was an error removing the user. Please try again later."
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username]
       shouldShowConfirmation:shouldConfirm];
@@ -399,7 +399,7 @@
     [self performModelUpdate:^{
         return [MPTeamsModel acceptJoinRequestForTeam:self.team forUser:other];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have accepted %@'s request to join %@.", other.username, self.team[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You have accepted %@'s request to join %@.", other.username, self.team[@"name"]]
             withErrorMessage:@"There was an error accepting the request. Please try again later."];
 }
 
@@ -468,24 +468,24 @@
     [self performModelUpdate:^{
         return [MPTeamsModel leaveTeam:self.team forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have left the team, %@.", self.team[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You have left the team, %@.", self.team[@"name"]]
             withErrorMessage:@"There was an error leaving the team. Please try again later."];
 }
 
 - (void) respondToInviteButtonPressed: (id) sender {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Team Invitation" message:[NSString stringWithFormat:@"You have been invited to the team, %@. Would you like to accept or deny the invite?", self.team[@"teamName"]] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Team Invitation" message:[NSString stringWithFormat:@"You have been invited to the team, %@. Would you like to accept or deny the invite?", self.team[@"name"]] preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction* accept = [UIAlertAction actionWithTitle:@"Accept" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
         [self performModelUpdate:^{
             return [MPTeamsModel acceptInviteFromTeam:self.team forUser:[PFUser currentUser]];
         }
-              withSuccessMessage:[NSString stringWithFormat:@"You have accepted the invite to join %@.", self.team[@"teamName"]]
+              withSuccessMessage:[NSString stringWithFormat:@"You have accepted the invite to join %@.", self.team[@"name"]]
                 withErrorMessage:@"There was an error accepting the invite. Please try again later."];
     }];
     UIAlertAction* deny = [UIAlertAction actionWithTitle:@"Deny" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* handler) {
         [self performModelUpdate:^{
             return [MPTeamsModel denyInviteFromTeam:self.team forUser:[PFUser currentUser]];
         }
-              withSuccessMessage:[NSString stringWithFormat:@"You have denied the invite to join %@.", self.team[@"teamName"]]
+              withSuccessMessage:[NSString stringWithFormat:@"You have denied the invite to join %@.", self.team[@"name"]]
                 withErrorMessage:@"There was an error denying the invite. Please try again later."];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
@@ -500,7 +500,7 @@
     [self performModelUpdate:^{
         return [MPTeamsModel denyJoinRequestForTeam:self.team forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have canceled your request to join %@.", self.team[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You have canceled your request to join %@.", self.team[@"name"]]
             withErrorMessage:@"There was an error canceling your request. Please try again later."];
 }
 
@@ -508,7 +508,7 @@
     [self performModelUpdate:^{
         return [MPTeamsModel requestToJoinTeam:self.team forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You have requested to join %@.", self.team[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You have requested to join %@.", self.team[@"name"]]
             withErrorMessage:@"There was an error processing your request. Please try again later."];
 }
 
@@ -569,8 +569,8 @@
         [alerter checkErrorCondition:(text.length > [MPLimitConstants maxTeamNameCharacters]) withMessage:[NSString stringWithFormat:@"The team name you entered was too long (max %d characters).", [MPLimitConstants maxTeamNameCharacters]]];
         if(![alerter hasFoundError]) {
             [self performModelUpdate:^{
-                self.team[@"teamName"] = text;
-                self.team[@"teamName_searchable"] = text.lowercaseString;
+                self.team[@"name"] = text;
+                self.team[@"name_searchable"] = text.lowercaseString;
                 return [self.team save];
             }
                   withSuccessMessage:[NSString stringWithFormat:@"You have changed your team's name to %@.", text]
@@ -586,7 +586,7 @@
 }
 
 - (void) confirmDeleteTeam {
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation" message:[NSString stringWithFormat:@"Are you sure you want to delete your team, %@? This cannot be undone.",self.team[@"teamName"]] preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Confirmation" message:[NSString stringWithFormat:@"Are you sure you want to delete your team, %@? This cannot be undone.",self.team[@"name"]] preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler) {
         dispatch_async(dispatch_queue_create("DeleteQueue", 0), ^{

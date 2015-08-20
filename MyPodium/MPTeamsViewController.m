@@ -67,7 +67,7 @@
     self.tableSections = @[[[MPTableSectionUtility alloc]
                             initWithHeaderTitle:[MPTeamsViewController ownedTeamsHeader]
                             withDataBlock:^(){
-                                NSArray* ownedTeams = [MPTeamsModel teamsCreatedByUser:[PFUser currentUser]];
+                                NSArray* ownedTeams = [MPTeamsModel teamsOwnedByUser:[PFUser currentUser]];
                                 if(self.isFiltered) {
                                     MPTeamsView* view = (MPTeamsView*) self.view;
                                     return [MPGlobalModel teamList:ownedTeams searchForString:view.filterSearch.searchField.text];
@@ -266,9 +266,9 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"name"]]
       shouldShowConfirmation:showConfirmation];
 }
 
@@ -282,9 +282,9 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel deleteTeam: other];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"name"]]
       shouldShowConfirmation:showConfirmation];
 }
 
@@ -307,9 +307,9 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel leaveTeam:other forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned if possible.", other[@"teamName"]]
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned if possible.", other[@"name"]]
       shouldShowConfirmation:showConfirmation];
 }
 
@@ -322,7 +322,7 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel acceptInviteFromTeam:other forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."];
 }
 
@@ -345,9 +345,9 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyInviteFromTeam:other forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"name"]]
       shouldShowConfirmation:showConfirmation];
 }
 
@@ -370,9 +370,9 @@
     [self performModelUpdate:^BOOL{
         return [MPTeamsModel denyJoinRequestForTeam:other forUser:[PFUser currentUser]];
     }
-          withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
+          withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"name"]]
       shouldShowConfirmation:showConfirmation];
 }
 

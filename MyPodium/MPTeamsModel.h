@@ -26,14 +26,14 @@ typedef NS_ENUM(NSInteger, MPTeamStatus) {
 + (BOOL) denyJoinRequestForTeam: (PFObject*) team forUser: (PFUser*) user;
 + (BOOL) deleteTeam: (PFObject*) team;
 + (BOOL) leaveTeam: (PFObject*) team forUser: (PFUser*) user;
-+ (BOOL) makeTeamWithCreator: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName;
++ (BOOL) makeTeamWithOwner: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName;
 
 + (NSInteger) countTeamsInvitingUser: (PFUser*) user;
 + (NSInteger) countTeamsContainingUser: (PFUser*) user;
 
 + (NSInteger) countRemainingOpeningsOnTeam: (PFObject*) team;
 
-+ (NSArray*) teamsCreatedByUser: (PFUser*) user;
++ (NSArray*) teamsOwnedByUser: (PFUser*) user;
 + (NSArray*) teamsContainingUser: (PFUser*) user;
 + (NSArray*) teamsInvitingUser: (PFUser*) user;
 + (NSArray*) teamsRequestedByUser: (PFUser*) user;

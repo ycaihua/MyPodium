@@ -67,7 +67,7 @@
     return [team save];
 }
 
-+ (BOOL) makeTeamWithCreator: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName {
++ (BOOL) makeTeamWithOwner: (PFUser*) user withPlayers: (NSArray*) players withTeamName: (NSString*) teamName {
     PFObject* newTeam = [[PFObject alloc] initWithClassName:[MPTeamsModel tableName]];
     newTeam[@"owner"] = user;
     
@@ -79,12 +79,12 @@
         [newTeam addObject:[member objectId] forKey:@"invitedMembers"];
     }
 
-    newTeam[@"teamName"] = teamName;
-    newTeam[@"teamName_searchable"] = [teamName lowercaseString];
+    newTeam[@"name"] = teamName;
+    newTeam[@"name_searchable"] = [teamName lowercaseString];
     return [newTeam save];
 }
 
-+ (NSArray*) teamsCreatedByUser:(PFUser *)user {
++ (NSArray*) teamsOwnedByUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(owner = %@)",
                               user];
     PFQuery *query = [PFQuery queryWithClassName:[MPTeamsModel tableName] predicate:predicate];

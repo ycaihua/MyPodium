@@ -55,7 +55,7 @@
 }
 
 + (void) updateCell: (MPTableViewCell*) cell withTeamObject: (PFObject*) team {
-    cell.titleLabel.text = team[@"teamName"];
+    cell.titleLabel.text = team[@"name"];
     PFUser* owner = team[@"owner"];
     [owner fetchIfNeededInBackgroundWithBlock:^(PFObject* object, NSError* error) {
         if(!error) {

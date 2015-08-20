@@ -30,7 +30,7 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:[self.team[@"teamName"] uppercaseString]];
+    self.titleLabel = [[MPLabel alloc] initWithText:[self.team[@"name"] uppercaseString]];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
@@ -97,7 +97,7 @@
 }
 
 - (void) refreshControlsForTeamUpdate {
-    self.titleLabel.text = [self.team[@"teamName"] uppercaseString];
+    self.titleLabel.text = [self.team[@"name"] uppercaseString];
     
     switch (self.teamStatus) {
         case MPTeamStatusOwner:

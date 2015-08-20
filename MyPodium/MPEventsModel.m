@@ -35,7 +35,7 @@
 
 + (NSArray*) eventsWithParticipatingUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN userIDs)",
-                              user];
+                              user.objectId];
     PFQuery *query = [PFQuery queryWithClassName:[MPEventsModel tableName] predicate:predicate];
     [query includeKey:@"owner"];
     [query includeKey:@"rule"];

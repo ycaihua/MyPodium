@@ -30,7 +30,7 @@
 
 - (void) makeControls {
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"Select users to invite to your team, %@. You have room on your team to send up to %ld invitations.", self.team[@"teamName"], (long)self.remainingSpots]];
+    self.infoLabel = [[MPLabel alloc] initWithText:[NSString stringWithFormat:@"Select users to invite to your team, %@. You have room on your team to send up to %ld invitations.", self.team[@"name"], (long)self.remainingSpots]];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
     
@@ -172,7 +172,7 @@
 }
 
 - (void) updateForRemainingSpots {
-    self.infoLabel.text = [NSString stringWithFormat:@"Select users to invite to your team, %@. You have room on your team to send up to %ld invitations.", self.team[@"teamName"], (long)self.remainingSpots];
+    self.infoLabel.text = [NSString stringWithFormat:@"Select users to invite to your team, %@. You have room on your team to send up to %ld invitations.", self.team[@"name"], (long)self.remainingSpots];
 }
 
 + (NSString*) defaultSubtitle { return @"Invite Users"; }
