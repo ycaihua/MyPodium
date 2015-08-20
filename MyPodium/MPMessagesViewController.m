@@ -229,92 +229,6 @@
 
 #pragma mark cell targets
 
-- (void) performModelUpdate: (BOOL (^)(void)) methodAction
-         withSuccessMessage: (NSString*) successMessage
-           withErrorMessage: (NSString*) errorMessage
-      withConfirmationAlert: (BOOL) showAlert
-    withConfirmationMessage: (NSString*) alertMessage {
-    MPMessagesView* view = (MPMessagesView*) self.view;
-    [view startLoading];
-    
-    if(showAlert) {
-        UIAlertController* confirmationAlert =
-        [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                            message:alertMessage
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-            //Background thread
-            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-            dispatch_async(backgroundQueue, ^{
-                BOOL success = methodAction();
-                if(success) {
-                    [MPControllerManager updateNotificationsForController: self];
-                }
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //Update UI, based on success
-                    if(success) {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage: successMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPGreenColor]];
-                        }];
-                    }
-                    else {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage:errorMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPRedColor]];
-                        }];
-                    }
-                    [view.messagesTable reloadData];
-                });
-            });
-        }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPMessagesView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
-            
-        }];
-        [confirmationAlert addAction: confirmAction];
-        [confirmationAlert addAction: cancelAction];
-        [self presentViewController: confirmationAlert animated: true completion:nil];
-    }
-    else {
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL success = methodAction();
-            if(success) {
-                [MPControllerManager updateNotificationsForController: self];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                        
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPMessagesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
-                    }];
-                }
-            });
-        });
-    }
-}
-
 - (void) readNewMessageButtonPressed: (id) sender {
     MPMessagesCell* cell = (MPMessagesCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -332,9 +246,7 @@
         return [MPMessagesModel markMessageRead: other];
     }
           withSuccessMessage:@"You marked the message as read."
-            withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:NO
-     withConfirmationMessage:nil];
+            withErrorMessage:@"There was an error processing the request."];
 }
 
 - (void) deleteNewMessageButtonPressed: (id) sender {
@@ -348,8 +260,8 @@
     }
           withSuccessMessage:@"You deleted the message."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"
+      shouldShowConfirmation:showConfirmation];
 }
 
 - (void) rereadMessageButtonPressed: (id) sender {
@@ -369,9 +281,7 @@
         return [MPMessagesModel markMessageUnread: other];
     }
           withSuccessMessage:@"You marked the message as unread."
-            withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:NO
-     withConfirmationMessage:nil];
+            withErrorMessage:@"There was an error processing the request."];
 }
 
 - (void) deleteReadMessageButtonPressed: (id) sender {
@@ -385,8 +295,8 @@
     }
           withSuccessMessage:@"You deleted the message."
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"];
+     withConfirmationMessage:@"Are you sure you want to permanently delete this message?"
+      shouldShowConfirmation:showConfirmation];
 }
 
 - (void) readSentMessageButtonPressed: (id) sender {
@@ -406,10 +316,7 @@
         return [MPMessagesModel hideMessageFromSender: other];
     }
           withSuccessMessage:@"You removed the message from your sent box."
-            withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:NO
-     withConfirmationMessage: nil
-     ];
+            withErrorMessage:@"There was an error processing the request."];
 }
 
 #pragma mark table view data/delegate

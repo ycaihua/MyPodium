@@ -311,85 +311,6 @@
 
 #pragma mark button actions
 
-- (void) performModelUpdate: (BOOL (^)(void)) methodAction
-         withSuccessMessage: (NSString*) successMessage
-           withErrorMessage: (NSString*) errorMessage
-      withConfirmationAlert: (BOOL) showAlert
-    withConfirmationMessage: (NSString*) alertMessage {
-    MPTeamRosterView* view = (MPTeamRosterView*) self.view;
-    [view startLoading];
-    if(showAlert) {
-        UIAlertController* confirmationAlert =
-        [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                            message:alertMessage
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-            //Background thread
-            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-            dispatch_async(backgroundQueue, ^{
-                BOOL success = methodAction();
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //Update UI, based on success
-                    if(success) {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage: successMessage
-                                                        revertAfter:YES
-                                                          withColor:[UIColor MPGreenColor]];
-                            
-                        }];
-                    }
-                    else {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage:errorMessage
-                                                        revertAfter:YES
-                                                          withColor:[UIColor MPRedColor]];
-                        }];
-                    }
-                });
-            });
-        }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPTeamRosterView defaultSubtitle] revertAfter:NO withColor:[UIColor whiteColor]];
-            
-        }];
-        [confirmationAlert addAction: confirmAction];
-        [confirmationAlert addAction: cancelAction];
-        [self presentViewController: confirmationAlert animated:YES completion:nil];
-    }
-    else {
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL success = methodAction();
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:YES
-                                                      withColor:[UIColor MPGreenColor]];
-                        
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamRosterView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:YES
-                                                      withColor:[UIColor MPRedColor]];
-                    }];
-                }
-            });
-        });
-    }
-}
-
 - (void) ownerProfileButtonPressed: (id) sender {
     PFUser* owner = self.team[@"owner"];
     [MPControllerManager presentViewController:
@@ -409,7 +330,6 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have promoted %@ to be the owner of %@.", other.username, self.team[@"teamName"]]
             withErrorMessage:@"There was an error promoting your new owner. Please try again later."
-       withConfirmationAlert:YES
      withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to promote %@ to be the owner of your team? This cannot be undone.", other.username]];
 }
 
@@ -437,8 +357,9 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have removed %@ from your team, %@.", other.username, self.team[@"teamName"]]
             withErrorMessage:@"There was an error removing the user. Please try again later."
-       withConfirmationAlert:shouldConfirm
-     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username]];}
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ from your team?", other.username]
+      shouldShowConfirmation:shouldConfirm];
+}
 
 - (void) invitedProfileButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
@@ -464,8 +385,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have canceled the invite to %@.", other.username]
             withErrorMessage:@"There was an error canceling the invite. Please try again later."
-       withConfirmationAlert: shouldConfirm
-     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your invite to %@ to join your team?", other.username]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your invite to %@ to join your team?", other.username]
+      shouldShowConfirmation:shouldConfirm];
 }
 
 - (void) acceptRequestButtonPressed: (id) sender {
@@ -479,9 +400,7 @@
         return [MPTeamsModel acceptJoinRequestForTeam:self.team forUser:other];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have accepted %@'s request to join %@.", other.username, self.team[@"teamName"]]
-            withErrorMessage:@"There was an error accepting the request. Please try again later."
-       withConfirmationAlert:NO
-     withConfirmationMessage:nil];
+            withErrorMessage:@"There was an error accepting the request. Please try again later."];
 }
 
 - (void) requestedProfileButtonPressed: (id) sender {
@@ -508,8 +427,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have denied %@'s request to join your team.", other.username]
             withErrorMessage:@"There was an error denying the request. Please try again later."
-       withConfirmationAlert: shouldConfirm
-     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny %@'s request to join your team?", other.username]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny %@'s request to join your team?", other.username]
+      shouldShowConfirmation:shouldConfirm];
 }
 
 #pragma mark bottom buttons
@@ -550,9 +469,7 @@
         return [MPTeamsModel leaveTeam:self.team forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have left the team, %@.", self.team[@"teamName"]]
-            withErrorMessage:@"There was an error leaving the team. Please try again later."
-       withConfirmationAlert:NO
-     withConfirmationMessage:nil];
+            withErrorMessage:@"There was an error leaving the team. Please try again later."];
 }
 
 - (void) respondToInviteButtonPressed: (id) sender {
@@ -562,18 +479,14 @@
             return [MPTeamsModel acceptInviteFromTeam:self.team forUser:[PFUser currentUser]];
         }
               withSuccessMessage:[NSString stringWithFormat:@"You have accepted the invite to join %@.", self.team[@"teamName"]]
-                withErrorMessage:@"There was an error accepting the invite. Please try again later."
-           withConfirmationAlert:NO
-         withConfirmationMessage:nil];
+                withErrorMessage:@"There was an error accepting the invite. Please try again later."];
     }];
     UIAlertAction* deny = [UIAlertAction actionWithTitle:@"Deny" style:UIAlertActionStyleDestructive handler:^(UIAlertAction* handler) {
         [self performModelUpdate:^{
             return [MPTeamsModel denyInviteFromTeam:self.team forUser:[PFUser currentUser]];
         }
               withSuccessMessage:[NSString stringWithFormat:@"You have denied the invite to join %@.", self.team[@"teamName"]]
-                withErrorMessage:@"There was an error denying the invite. Please try again later."
-           withConfirmationAlert:NO
-         withConfirmationMessage:nil];
+                withErrorMessage:@"There was an error denying the invite. Please try again later."];
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     
@@ -588,9 +501,7 @@
         return [MPTeamsModel denyJoinRequestForTeam:self.team forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have canceled your request to join %@.", self.team[@"teamName"]]
-            withErrorMessage:@"There was an error canceling your request. Please try again later."
-       withConfirmationAlert:NO
-     withConfirmationMessage:nil];
+            withErrorMessage:@"There was an error canceling your request. Please try again later."];
 }
 
 - (void) requestJoinButtonPressed: (id) sender {
@@ -598,9 +509,7 @@
         return [MPTeamsModel requestToJoinTeam:self.team forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You have requested to join %@.", self.team[@"teamName"]]
-            withErrorMessage:@"There was an error processing your request. Please try again later."
-       withConfirmationAlert:NO
-     withConfirmationMessage:nil];
+            withErrorMessage:@"There was an error processing your request. Please try again later."];
 }
 
 - (void) ownerSettingsButtonPressed: (id) sender {
@@ -665,9 +574,7 @@
                 return [self.team save];
             }
                   withSuccessMessage:[NSString stringWithFormat:@"You have changed your team's name to %@.", text]
-                    withErrorMessage:@"There was an error processing your request. Please try again later."
-               withConfirmationAlert:NO
-             withConfirmationMessage:nil];
+                    withErrorMessage:@"There was an error processing your request. Please try again later."];
         }
     }];
     UIAlertAction* cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];

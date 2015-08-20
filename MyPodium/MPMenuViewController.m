@@ -168,7 +168,6 @@
            withErrorMessage: (NSString*) errorMessage
     withConfirmationMessage: (NSString*) alertMessage {
     MPMenuView* view = (MPMenuView*) self.view;
-    [view startLoading];
     UIAlertController* confirmationAlert =
     [UIAlertController alertControllerWithTitle:@"Confirmation"
                                         message:alertMessage
@@ -228,7 +227,6 @@
          withSuccessMessage: (NSString*) successMessage
            withErrorMessage: (NSString*) errorMessage {
     MPMenuView* view = (MPMenuView*) self.view;
-    [view startLoading];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("ModelUpdateQueue", 0);
     dispatch_async(backgroundQueue, ^{
         BOOL success = modelUpdate();
@@ -260,7 +258,6 @@
 - (void) performModelUpdateAndDismissOnSuccess: (BOOL (^)(void)) modelUpdate
                               withErrorMessage: (NSString*) errorMessage {
     MPMenuView* view = (MPMenuView*) self.view;
-    [view startLoading];
     dispatch_queue_t backgroundQueue = dispatch_queue_create("ModelUpdateQueue", 0);
     dispatch_async(backgroundQueue, ^{
         BOOL success = modelUpdate();

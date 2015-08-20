@@ -247,85 +247,6 @@
 
 #pragma mark cell targets
 
-- (void) performModelUpdate: (BOOL (^)(void)) methodAction
-         withSuccessMessage: (NSString*) successMessage
-           withErrorMessage: (NSString*) errorMessage
-      withConfirmationAlert: (BOOL) showAlert
-    withConfirmationMessage: (NSString*) alertMessage {
-    MPTeamsView* view = (MPTeamsView*) self.view;
-    [view startLoading];
-    if(showAlert) {
-        UIAlertController* confirmationAlert =
-        [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                            message:alertMessage
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-            //Background thread
-            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-            dispatch_async(backgroundQueue, ^{
-                BOOL success = methodAction();
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //Update UI, based on success
-                    if(success) {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage: successMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPGreenColor]];
-                            
-                        }];
-                    }
-                    else {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage:errorMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPRedColor]];
-                        }];
-                    }
-                });
-            });
-        }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPTeamsView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
-            
-        }];
-        [confirmationAlert addAction: confirmAction];
-        [confirmationAlert addAction: cancelAction];
-        [self presentViewController: confirmationAlert animated: true completion:nil];
-    }
-    else {
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL success = methodAction();
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                        
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPTeamsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
-                    }];
-                }
-            });
-        });
-    }
-}
-
 - (void) ownedTeamProfileButtonPressed: (id) sender {
     UIButton* buttonSender = (UIButton*) sender;
     MPTableViewCell* cell = (MPTableViewCell*)buttonSender.superview;
@@ -347,8 +268,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? A new owner will be chosen.", other[@"teamName"]]
+      shouldShowConfirmation:showConfirmation];
 }
 
 - (void) deleteOwnedTeamButtonPressed: (id) sender {
@@ -363,8 +284,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your team, %@? This cannot be undone.", other[@"teamName"]]
+      shouldShowConfirmation:showConfirmation];
 }
 
 - (void) memberTeamProfileButtonPressed: (id) sender {
@@ -388,8 +309,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You left your team, %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned if possible.", other[@"teamName"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to leave your team, %@? If you are the owner, a new owner will be assigned if possible.", other[@"teamName"]]
+      shouldShowConfirmation:showConfirmation];
 }
 
 - (void) acceptTeamInviteButtonPressed: (id) sender {
@@ -402,9 +323,7 @@
         return [MPTeamsModel acceptInviteFromTeam:other forUser:[PFUser currentUser]];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You joined the team %@.", other[@"teamName"]]
-            withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:NO
-     withConfirmationMessage:@""];
+            withErrorMessage:@"There was an error processing the request."];
 }
 
 - (void) teamInviteProfileButtonPressed: (id) sender {
@@ -428,8 +347,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You denied the team invite from %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to deny the invitation from %@?", other[@"teamName"]]
+      shouldShowConfirmation:showConfirmation];
 }
 
 - (void) requestedTeamProfileButtonPressed: (id) sender {
@@ -453,8 +372,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your join request for %@.", other[@"teamName"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to cancel your join request for the team %@?", other[@"teamName"]]
+      shouldShowConfirmation:showConfirmation];
 }
 
 #pragma mark table view data/delegate

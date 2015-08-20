@@ -147,83 +147,6 @@
 
 #pragma mark cell targets
 
-- (void) performModelUpdate: (BOOL (^)(void)) methodAction
-         withSuccessMessage: (NSString*) successMessage
-           withErrorMessage: (NSString*) errorMessage
-      withConfirmationAlert: (BOOL) showAlert
-    withConfirmationMessage: (NSString*) alertMessage {
-    MPRulesView* view = (MPRulesView*) self.view;
-    [view startLoading];
-    if(showAlert) {
-        UIAlertController* confirmationAlert =
-        [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                            message:alertMessage
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-            //Background thread
-            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-            dispatch_async(backgroundQueue, ^{
-                BOOL success = methodAction();
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //Update UI, based on success
-                    if(success) {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage: successMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPGreenColor]];
-                        }];
-                    }
-                    else {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage:errorMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPRedColor]];
-                        }];
-                    }
-                });
-            });
-        }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPRulesView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
-            
-        }];
-        [confirmationAlert addAction: confirmAction];
-        [confirmationAlert addAction: cancelAction];
-        [self presentViewController: confirmationAlert animated: true completion:nil];
-    }
-    else {
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL success = methodAction();
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPGreenColor]];
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPRulesView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
-                    }];
-                }
-            });
-        });
-    }
-}
-
 - (void) newEventWithRuleButtonPressed: (id) sender {
     NSLog(@"Green button");
 }
@@ -248,8 +171,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You deleted your rule, %@.", other[@"name"]]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your rule, %@?", other[@"name"]]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Do you want to delete your rule, %@?", other[@"name"]]
+      shouldShowConfirmation:showConfirmation];
 }
 
 #pragma mark table view data/delegate
