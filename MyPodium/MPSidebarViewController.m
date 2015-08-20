@@ -21,11 +21,11 @@
 #import "MPRegisterViewController.h"
 #import "MPFriendsViewController.h"
 #import "MPTeamsViewController.h"
-#import "MPMakeTeamViewController.h"
+#import "MPRulesViewController.h"
+#import "MPEventsViewController.h"
 #import "MPSearchViewController.h"
 #import "MPSettingsViewController.h"
 #import "MPMessagesViewController.h"
-#import "MPMessageComposerViewController.h"
 
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
@@ -156,11 +156,10 @@
 + (NSArray*) cellControllerTargets {
     return @[[MPHomeViewController class],
              [MPFriendsViewController class],
-             [MPMessagesViewController class],
-             [MPMessageComposerViewController class],
              [MPTeamsViewController class],
-             [MPMakeTeamViewController class],
-             [MPMenuViewController class],
+             [MPRulesViewController class],
+             [MPEventsViewController class],
+             [MPMessagesViewController class],
              [MPSearchViewController class],
              [MPSettingsViewController class],
              [MPMenuViewController class],
