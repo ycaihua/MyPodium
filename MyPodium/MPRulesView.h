@@ -24,6 +24,4 @@
 - (void) hideSearch;
 - (void) finishLoading;
 
-+ (NSString*) defaultSubtitle;
-
 @end

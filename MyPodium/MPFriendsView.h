@@ -16,6 +16,4 @@
 @property MPSearchControl* filterSearch;
 @property UITableView* friendsTable;
 
-+ (NSString*) defaultSubtitle;
-
 @end

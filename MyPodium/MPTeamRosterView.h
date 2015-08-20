@@ -28,6 +28,4 @@
 @property MPBottomEdgeButton* leftButton;
 @property MPBottomEdgeButton* rightButton;
 
-+ (NSString*) defaultSubtitle;
-
 @end

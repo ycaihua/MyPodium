@@ -18,6 +18,4 @@
 @property UITableView* messagesTable;
 @property MPBottomEdgeButton* composeButton;
 
-+ (NSString*) defaultSubtitle;
-
 @end

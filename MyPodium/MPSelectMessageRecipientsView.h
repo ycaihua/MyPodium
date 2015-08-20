@@ -18,6 +18,4 @@
 @property MPBottomEdgeButton* goBackButton;
 @property MPBottomEdgeButton* selectButton;
 
-+ (NSString*) defaultSubtitle;
-
 @end

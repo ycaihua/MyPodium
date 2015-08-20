@@ -22,6 +22,7 @@
 #import "MPFriendsViewController.h"
 #import "MPTeamsViewController.h"
 #import "MPRulesViewController.h"
+#import "MPEventsViewController.h"
 #import "MPHomeViewController.h"
 #import "UIViewController+MMDrawerController.h"
 
@@ -45,6 +46,8 @@
                    forControlEvents:UIControlEventTouchUpInside];
         [view.rulesButton addTarget:self action:@selector(rulesButtonPressed:)
                    forControlEvents:UIControlEventTouchUpInside];
+        [view.eventsButton addTarget:self action:@selector(eventsButtonPressed:)
+                    forControlEvents:UIControlEventTouchUpInside];
         [view.tipView addTarget:self action:@selector(tipViewPressed:)
                forControlEvents: UIControlEventTouchUpInside];
         [self reloadData];
@@ -95,6 +98,10 @@
 
 - (void) rulesButtonPressed: (id) sender {
     [MPControllerManager presentViewController:[[MPRulesViewController alloc] init] fromController:self];
+}
+
+- (void) eventsButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPEventsViewController alloc] init] fromController:self];
 }
 
 @end

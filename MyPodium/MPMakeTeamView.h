@@ -20,6 +20,4 @@
 @property MPBottomEdgeButton* goBackButton;
 @property MPBottomEdgeButton* submitButton;
 
-+ (NSString*) defaultSubtitle;
-
 @end

@@ -26,6 +26,5 @@
 
 - (void) shiftVerticalConstraintsBy: (CGFloat) amount;
 - (void) restoreDefaultConstraints;
-+ (NSString*) defaultSubtitle;
 
 @end

@@ -15,6 +15,4 @@
 @property MPSearchControl* searchView;
 @property UITableView* searchTable;
 
-+ (NSString*) defaultSubtitle;
-
 @end
