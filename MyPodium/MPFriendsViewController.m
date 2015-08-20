@@ -187,83 +187,6 @@
 
 #pragma mark cell targets
 
-- (void) performModelUpdate: (BOOL (^)(void)) methodAction
-         withSuccessMessage: (NSString*) successMessage
-           withErrorMessage: (NSString*) errorMessage
-      withConfirmationAlert: (BOOL) showAlert
-    withConfirmationMessage: (NSString*) alertMessage {
-    MPFriendsView* view = (MPFriendsView*) self.view;
-    
-    if(showAlert) {
-        UIAlertController* confirmationAlert =
-        [UIAlertController alertControllerWithTitle:@"Confirmation"
-                                            message:alertMessage
-                                     preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* confirmAction = [UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDefault handler:^(UIAlertAction* handler){
-            //Background thread
-            dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-            dispatch_async(backgroundQueue, ^{
-                BOOL success = methodAction();
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    //Update UI, based on success
-                    if(success) {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage: successMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPGreenColor]];
-                        }];
-                    }
-                    else {
-                        [self reloadDataWithCompletionBlock:^{
-                            view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                            view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                            [view.menu.subtitleLabel displayMessage:errorMessage
-                                                        revertAfter:TRUE
-                                                          withColor:[UIColor MPRedColor]];
-                        }];
-                    }
-                });
-            });
-        }];
-        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-            [view.menu.subtitleLabel displayMessage:[MPFriendsView defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
-            
-        }];
-        [confirmationAlert addAction: confirmAction];
-        [confirmationAlert addAction: cancelAction];
-        [self presentViewController: confirmationAlert animated: true completion:nil];
-    }
-    else {
-        dispatch_queue_t backgroundQueue = dispatch_queue_create("ActionQueue", 0);
-        dispatch_async(backgroundQueue, ^{
-            BOOL success = methodAction();
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //Update UI, based on success
-                if(success) {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage: successMessage
-                                                revertAfter:TRUE
-                                                  withColor:[UIColor MPGreenColor]];
-                    }];
-                }
-                else {
-                    [self reloadDataWithCompletionBlock:^{
-                        view.menu.subtitleLabel.persistentText = [MPFriendsView defaultSubtitle];
-                        view.menu.subtitleLabel.textColor = [UIColor whiteColor];
-                        [view.menu.subtitleLabel displayMessage:errorMessage
-                                                    revertAfter:TRUE
-                                                      withColor:[UIColor MPRedColor]];
-                    }];
-                }
-            });
-        });
-    }
-}
-
 - (void) acceptIncomingButtonPressed: (id) sender {
     MPTableViewCell* cell = (MPTableViewCell*)((UIButton*)sender).superview;
     NSIndexPath* indexPath = cell.indexPath;
@@ -274,7 +197,6 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You accepted %@'s friend request.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:NO
      withConfirmationMessage:@""];
 }
 
@@ -296,9 +218,8 @@
         return [MPFriendsModel removeRequestFromUser:other toUser:[PFUser currentUser] canReverse:YES];
     }
           withSuccessMessage:[NSString stringWithFormat:@"You denied %@'s friend request.", other.username]
-            withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username]];
+            withErrorMessage:@"There was an error processing the request. Please try again later."
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to deny the friend request from %@?", other.username] shouldShowConfirmation:showConfirmation];
 }
 
 - (void) outgoingProfileButtonPressed: (id) sender {
@@ -320,8 +241,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You cancelled your friend request to %@.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to cancel your friend request to %@?", other.username]
+      shouldShowConfirmation: showConfirmation];
 }
 
 - (void) friendProfileButtonPressed: (id) sender {
@@ -343,8 +264,8 @@
     }
           withSuccessMessage:[NSString stringWithFormat:@"You successfully removed %@ as a friend.", other.username]
             withErrorMessage:@"There was an error processing the request."
-       withConfirmationAlert:showConfirmation
-     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]];
+     withConfirmationMessage:[NSString stringWithFormat:@"Are you sure you want to remove %@ as a friend?", other.username]
+      shouldShowConfirmation:showConfirmation];
 }
 
 #pragma mark table view data/delegate

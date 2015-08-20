@@ -213,6 +213,19 @@
 
 - (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
          withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+    withConfirmationMessage: (NSString*) alertMessage
+     shouldShowConfirmation: (BOOL) showConfirmation {
+    if(showConfirmation) {
+        [self performModelUpdate:modelUpdate withSuccessMessage:successMessage withErrorMessage:errorMessage withConfirmationMessage:alertMessage];
+    }
+    else {
+        [self performModelUpdate:modelUpdate withSuccessMessage:successMessage withErrorMessage:errorMessage];
+    }
+}
+
+- (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
+         withSuccessMessage: (NSString*) successMessage
            withErrorMessage: (NSString*) errorMessage {
     MPMenuView* view = (MPMenuView*) self.view;
     [view startLoading];

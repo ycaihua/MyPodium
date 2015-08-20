@@ -29,5 +29,10 @@
            withErrorMessage: (NSString*) errorMessage;
 - (void) performModelUpdateAndDismissOnSuccess: (BOOL (^)(void)) modelUpdate
                               withErrorMessage: (NSString*) errorMessage;
+- (void) performModelUpdate: (BOOL (^)(void)) modelUpdate
+         withSuccessMessage: (NSString*) successMessage
+           withErrorMessage: (NSString*) errorMessage
+    withConfirmationMessage: (NSString*) alertMessage
+     shouldShowConfirmation: (BOOL) showConfirmation;
 
 @end
