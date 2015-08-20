@@ -11,6 +11,7 @@
 #import "MPFriendsModel.h"
 #import "MPTeamsModel.h"
 #import "MPRulesModel.h"
+#import "MPEventsModel.h"
 
 #import "MPHomeView.h"
 #import "MPHomeTipView.h"
@@ -58,6 +59,7 @@
     NSInteger friends = [MPFriendsModel countFriendsForUser:[PFUser currentUser]];
     NSInteger teams = [MPTeamsModel countTeamsContainingUser:[PFUser currentUser]];
     NSInteger rules = [MPRulesModel countRulesForUser:[PFUser currentUser]];
+    NSInteger events = [MPEventsModel countEventsForUser:[PFUser currentUser]];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [view.friendsButton.customTitleLabel setText:
@@ -68,6 +70,9 @@
         
         [view.rulesButton.customTitleLabel setText:
          [NSString stringWithFormat:@"%lu", (long)rules]];
+        
+        [view.eventsButton.customTitleLabel setText:
+         [NSString stringWithFormat:@"%lu", (long)events]];
     });
 }
 
