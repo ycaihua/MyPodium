@@ -24,6 +24,7 @@
 #import "MPLabel.h"
 
 #import "MPEventsViewController.h"
+#import "MPMakeEventViewController.h"
 #import "MMDrawerController.h"
 #import "UIViewController+MMDrawerController.h"
 
@@ -83,7 +84,7 @@
                                 [cell setNumberOfButtons:2];
                                 [cell clearButtonActions];
                                 
-                                [cell setButtonImageStrings:@[@[@"info", @"yellow"], @[@"x", @"red"]]];
+                                [cell setButtonImageStrings:@[@[@"info", @"green"], @[@"x", @"red"]]];
                                 
                                 //Add targets
                                 [cell.buttons[1] addTarget:self action:@selector(ownedEventProfileButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
@@ -139,7 +140,7 @@
 }
 
 - (void) makeEventButtonPressed: (id) sender {
-    NSLog(@"Make event");
+    [MPControllerManager presentViewController:[[MPMakeEventViewController alloc] init] fromController:self];
 }
 
 #pragma mark cell targets

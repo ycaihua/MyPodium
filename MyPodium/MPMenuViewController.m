@@ -202,7 +202,7 @@
         });
     }];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* handler) {
-        [view.menu.subtitleLabel displayMessage:[[self class] defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
+        [view.menu.subtitleLabel displayMessage:[[self.view class] defaultSubtitle] revertAfter:false withColor:[UIColor whiteColor]];
         
     }];
     [confirmationAlert addAction: confirmAction];
