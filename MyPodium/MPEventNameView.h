@@ -1,8 +1,8 @@
 //
-//  MPRuleNameView.h
+//  MPEventNameView.h
 //  MyPodium
 //
-//  Created by Connor Neville on 7/27/15.
+//  Created by Connor Neville on 8/21/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 @class MPLabel;
 @class MPTextField;
 
-@interface MPRuleNameView : MPView
+@interface MPEventNameView : MPView
 
 @property MPLabel* titleLabel;
 @property MPLabel* infoLabel;

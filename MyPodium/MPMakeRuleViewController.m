@@ -79,23 +79,9 @@
 
 - (void) nextButtonPressed: (id) sender {
     MPMakeRuleView* view = (MPMakeRuleView*) self.view;
-    UIView* focusedSubview = [view.form currentSlide];
-    
-    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
-    
+    MPView* focusedSubview = [view.form currentSlide];
     dispatch_async(dispatch_queue_create("CheckErrorsQueue", 0), ^{
-        BOOL errorsFound = NO;
-        if([focusedSubview isKindOfClass:[MPRuleNameView class]]) {
-            MPTextField* nameField = ((MPRuleNameView*)focusedSubview).nameField;
-            [alerter checkErrorCondition:(nameField.text.length < [MPLimitConstants minRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
-            [alerter checkErrorCondition:(nameField.text.length > [MPLimitConstants maxRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
-            [alerter checkErrorCondition:[MPRulesModel ruleNameInUse:nameField.text forUser:[PFUser currentUser]] withMessage:@"You have already used this name for a set of rules before. Please try another."];
-        }
-        else if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
-            self.statNameData = [self statsFromStatsSubview];
-            [alerter checkErrorCondition:(self.statNameData.count == 0) withMessage:@"You need at least one statistic to track (so you can tell who wins in your games)!"];
-        }
-        errorsFound = [alerter hasFoundError];
+        BOOL errorsFound = [self errorFoundInSubview: focusedSubview];
         dispatch_async(dispatch_get_main_queue(), ^{
             if(!errorsFound) {
                 if([focusedSubview isKindOfClass: [MPRuleStatsView class]]) {
@@ -136,6 +122,21 @@
     else {
         [view.form returnToLastSlide];
     }
+}
+
+- (BOOL) errorFoundInSubview: (MPView*) subview {
+    MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
+    if([subview isKindOfClass:[MPRuleNameView class]]) {
+        MPTextField* nameField = ((MPRuleNameView*)subview).nameField;
+        [alerter checkErrorCondition:(nameField.text.length < [MPLimitConstants minRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
+        [alerter checkErrorCondition:(nameField.text.length > [MPLimitConstants maxRuleNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
+        [alerter checkErrorCondition:[MPRulesModel ruleNameInUse:nameField.text forUser:[PFUser currentUser]] withMessage:@"You have already used this name for a set of rules before. Please try another."];
+    }
+    else if([subview isKindOfClass: [MPRuleStatsView class]]) {
+        self.statNameData = [self statsFromStatsSubview];
+        [alerter checkErrorCondition:(self.statNameData.count == 0) withMessage:@"You need at least one statistic to track (so you can tell who wins in your games)!"];
+    }
+    return [alerter hasFoundError];
 }
 
 - (void) scoreLimitButtonPressed: (id) sender {

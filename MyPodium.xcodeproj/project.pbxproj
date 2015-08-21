@@ -87,6 +87,7 @@
 		2D7534A51B8647F000BAAB20 /* MPEventsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7534A41B8647F000BAAB20 /* MPEventsModel.m */; };
 		2D7534A81B877B9300BAAB20 /* MPMakeEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7534A71B877B9300BAAB20 /* MPMakeEventViewController.m */; };
 		2D7534AB1B877BB400BAAB20 /* MPMakeEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7534AA1B877BB400BAAB20 /* MPMakeEventView.m */; };
+		2D7534B11B87809100BAAB20 /* MPEventNameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D7534B01B87809100BAAB20 /* MPEventNameView.m */; };
 		2D913DEB1B73BA7F00D523AD /* MPRegisterUsernameView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DEA1B73BA7F00D523AD /* MPRegisterUsernameView.m */; };
 		2D913DEE1B73BBDC00D523AD /* MPRegisterPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DED1B73BBDC00D523AD /* MPRegisterPasswordView.m */; };
 		2D913DF11B73BDAD00D523AD /* MPRegisterEmailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D913DF01B73BDAD00D523AD /* MPRegisterEmailView.m */; };
@@ -283,6 +284,8 @@
 		2D7534A71B877B9300BAAB20 /* MPMakeEventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeEventViewController.m; sourceTree = "<group>"; };
 		2D7534A91B877BB400BAAB20 /* MPMakeEventView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeEventView.h; sourceTree = "<group>"; };
 		2D7534AA1B877BB400BAAB20 /* MPMakeEventView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeEventView.m; sourceTree = "<group>"; };
+		2D7534AF1B87809100BAAB20 /* MPEventNameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPEventNameView.h; sourceTree = "<group>"; };
+		2D7534B01B87809100BAAB20 /* MPEventNameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPEventNameView.m; sourceTree = "<group>"; };
 		2D913DE91B73BA7F00D523AD /* MPRegisterUsernameView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterUsernameView.h; sourceTree = "<group>"; };
 		2D913DEA1B73BA7F00D523AD /* MPRegisterUsernameView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPRegisterUsernameView.m; sourceTree = "<group>"; };
 		2D913DEC1B73BBDC00D523AD /* MPRegisterPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRegisterPasswordView.h; sourceTree = "<group>"; };
@@ -821,10 +824,20 @@
 		2D7534AD1B877EA500BAAB20 /* MakeEvent */ = {
 			isa = PBXGroup;
 			children = (
+				2D7534AE1B87806E00BAAB20 /* FormSubviews */,
 				2D7534A91B877BB400BAAB20 /* MPMakeEventView.h */,
 				2D7534AA1B877BB400BAAB20 /* MPMakeEventView.m */,
 			);
 			name = MakeEvent;
+			sourceTree = "<group>";
+		};
+		2D7534AE1B87806E00BAAB20 /* FormSubviews */ = {
+			isa = PBXGroup;
+			children = (
+				2D7534AF1B87809100BAAB20 /* MPEventNameView.h */,
+				2D7534B01B87809100BAAB20 /* MPEventNameView.m */,
+			);
+			name = FormSubviews;
 			sourceTree = "<group>";
 		};
 		2D913DE81B73BA5600D523AD /* FormSubviews */ = {
@@ -1217,6 +1230,7 @@
 				2D67BFD51B499E8A0043BD96 /* MPPreferencesButton.m in Sources */,
 				2DE9FCEA1B20AD3A00F748C9 /* MPSearchViewController.m in Sources */,
 				2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */,
+				2D7534B11B87809100BAAB20 /* MPEventNameView.m in Sources */,
 				2D913DF11B73BDAD00D523AD /* MPRegisterEmailView.m in Sources */,
 				2D44879F1B0585E60061EF86 /* MPErrorAlerter.m in Sources */,
 				2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */,

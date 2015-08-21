@@ -1,16 +1,16 @@
 //
-//  MPRuleNameView.m
+//  MPEventNameView.m
 //  MyPodium
 //
-//  Created by Connor Neville on 7/27/15.
+//  Created by Connor Neville on 8/21/15.
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
-#import "MPRuleNameView.h"
+#import "MPEventNameView.h"
 #import "MPLabel.h"
 #import "MPTextField.h"
 
-@implementation MPRuleNameView
+@implementation MPEventNameView
 
 - (id) init {
     self = [super init];
@@ -23,18 +23,18 @@
 
 - (void) makeControls {
     //self.titleLabel
-    self.titleLabel = [[MPLabel alloc] initWithText:@"RULE SET CREATION"];
+    self.titleLabel = [[MPLabel alloc] initWithText:@"CREATE NEW EVENT"];
     self.titleLabel.font = [UIFont fontWithName:@"Oswald-Bold" size:24.0f];
     self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.titleLabel];
     
     //self.infoLabel
-    self.infoLabel = [[MPLabel alloc] initWithText:@"Every event or match you make needs a set of rules. Start by entering a name for the rule set, for instance \"Basketball\" or \"Chess.\""];
+    self.infoLabel = [[MPLabel alloc] initWithText:@"Enter a name for your event. It does not have to be unique."];
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
-
+    
     //self.nameField
-    self.nameField = [[MPTextField alloc] initWithPlaceholder:@"RULE NAME"];
+    self.nameField = [[MPTextField alloc] initWithPlaceholder:@"EVENT NAME"];
     self.nameField.autocapitalizationType = UITextAutocapitalizationTypeWords;
     self.nameField.translatesAutoresizingMaskIntoConstraints = NO;
     self.nameField.returnKeyType = UIReturnKeyGo;
