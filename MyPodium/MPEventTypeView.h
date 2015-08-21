@@ -12,11 +12,14 @@
 @interface MPEventTypeView : MPView
 
 @property NSArray* allImages;
+@property NSArray* allTitles;
+@property NSArray* allDescriptions;
+@property NSInteger selectedIndex;
 
-@property UIImageView* currentImage;
+@property UIImageView* currentImageView;
 @property MPLabel* currentTitle;
 @property MPLabel* currentDescription;
 @property MPLabel* infoLabel;
-@property NSArray* unselectedImages;
+@property NSArray* unselectedImageViews;
 
 @end
