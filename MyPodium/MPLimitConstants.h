@@ -33,4 +33,7 @@
 
 + (int) maxRecipientsPerMessage;
 
++ (int) maxEventNameCharacters;
++ (int) minEventNameCharacters;
+
 @end

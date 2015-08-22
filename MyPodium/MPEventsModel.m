@@ -17,6 +17,13 @@
     return [event delete];
 }
 
++ (BOOL) eventNameInUse:(NSString *)name forUser:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(owner = %@) AND (name = %@)",
+                              user, name];
+    PFQuery *query = [PFQuery queryWithClassName:[MPEventsModel tableName] predicate:predicate];
+    return ([query countObjects] > 0);
+}
+
 + (NSInteger) countEventsForUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(owner = %@) OR (%@ IN userIDs)",
                               user, user.objectId];

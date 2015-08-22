@@ -14,6 +14,7 @@
 @interface MPEventsModel : NSObject
 
 + (BOOL) deleteEvent: (PFObject*) event;
++ (BOOL) eventNameInUse: (NSString*) name forUser: (PFUser*) user;
 
 + (NSArray*) eventsOwnedByUser: (PFUser*) user;
 + (NSArray*) eventsWithParticipatingUser: (PFUser*) user;

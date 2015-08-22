@@ -34,4 +34,7 @@
 
 + (int) maxRecipientsPerMessage { return 5; }
 
++ (int) maxEventNameCharacters { return 28; }
++ (int) minEventNameCharacters { return 3; }
+
 @end
