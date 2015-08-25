@@ -29,10 +29,10 @@
                            @"TOURNAMENT",
                            @"LEAGUE",
                            @"LADDER"];
-        self.allDescriptions = @[@"Play a quick single match without the commitment of the other event types. You can still see your stats after.",
+        self.allDescriptions = @[@"Play a quick single match without the commitment of the other event types.",
                                  @"Create a single or double elimination tournament. We'll setup a bracket for you.",
-                                 @"Play in a league format that schedules a series of matches against the different participants.",
-                                 @"After each match in a ladder, the winner climbs up the ladder while the loser drops down. Play as many matches as you want in this event."];
+                                 @"Play in a league format that schedules a series of matches in rounds.",
+                                 @"Make an ongoing ladder in which match winners climb to the top."];
         self.smallImageColors = @[[UIColor MPRedColor],
                                   [UIColor MPYellowColor],
                                   [UIColor MPGreenColor],
@@ -44,6 +44,17 @@
     return self;
 }
 
+- (void) changeIndexSelected:(int)newIndex {
+    self.selectedIndex = newIndex;
+    self.currentImageView.image = self.allImages[self.selectedIndex];
+    [self.currentTitle displayMessage:self.allTitles[self.selectedIndex] revertAfter:NO];
+    [self.currentDescription displayMessage:self.allDescriptions[self.selectedIndex] revertAfter:NO];
+}
+
+- (MPEventType) selectedEventType {
+    return self.selectedIndex;
+}
+
 - (void) makeControls {
     //self.titleLabel
     self.titleLabel = [[MPLabel alloc] initWithText:@"CHOOSE EVENT TYPE"];
@@ -53,6 +64,9 @@
     
     //self.currentImageView
     self.currentImageView = [[UIImageView alloc] initWithImage:self.allImages[self.selectedIndex]];
+    self.currentImageView.layer.cornerRadius = 5.0f;
+    self.currentImageView.layer.borderWidth = 2.0f;
+    self.currentImageView.layer.borderColor = [UIColor MPBlackColor].CGColor;
     self.currentImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.currentImageView];
     
@@ -113,10 +127,10 @@
                            [NSLayoutConstraint constraintWithItem:self.currentImageView
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.titleLabel
-                                                        attribute:NSLayoutAttributeBottomMargin
+                                                           toItem:self.allButtons[0]
+                                                        attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:5.0f],
                            //self.currentTitle
                            [NSLayoutConstraint constraintWithItem:self.currentTitle
                                                         attribute:NSLayoutAttributeCenterX
@@ -129,9 +143,9 @@
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self.currentImageView
-                                                        attribute:NSLayoutAttributeBottomMargin
+                                                        attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
-                                                         constant:0.0f],
+                                                         constant:5.0f],
                            //self.currentDescription
                            [NSLayoutConstraint constraintWithItem:self.currentDescription
                                                         attribute:NSLayoutAttributeLeading
@@ -192,7 +206,7 @@
         [self addConstraints:@[[NSLayoutConstraint constraintWithItem:button
                                                             attribute:NSLayoutAttributeTop
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:self.currentDescription
+                                                               toItem:self.titleLabel
                                                             attribute:NSLayoutAttributeBottom
                                                            multiplier:1.0f
                                                              constant:5.0f],

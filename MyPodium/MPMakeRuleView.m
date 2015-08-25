@@ -25,6 +25,7 @@
 - (id) init {
     self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPMakeRuleView defaultSubtitle]];
     if(self) {
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
         [self makeSlides];

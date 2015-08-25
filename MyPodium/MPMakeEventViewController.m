@@ -14,6 +14,8 @@
 
 #import "MPMakeEventView.h"
 #import "MPEventNameView.h"
+#import "MPEventTypeView.h"
+#import "MPEventRuleView.h"
 #import "MPFormView.h"
 #import "MPTextField.h"
 #import "MPBottomEdgeButton.h"
@@ -46,6 +48,11 @@
         
     MPEventNameView* nameView = (MPEventNameView*)[view.form slideWithClass:[MPEventNameView class]];
     nameView.nameField.delegate = self;
+    
+    MPEventTypeView* typeView = (MPEventTypeView*)[view.form slideWithClass:[MPEventTypeView class]];
+    for(UIButton* button in typeView.allButtons) {
+        [button addTarget:self action:@selector(typeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    }
 }
 
 - (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {
@@ -54,7 +61,7 @@
     MPEventNameView* nameView = (MPEventNameView*)[view.form slideWithClass:[MPEventNameView class]];
     MPTextField* nameField = nameView.nameField;
     if([textField isEqual: nameField]) {
-        //[self nextButtonPressed: self];
+        [self nextButtonPressed: self];
         return YES;
     }
     return YES;
@@ -63,14 +70,15 @@
 - (void) nextButtonPressed: (id) sender {
     MPMakeEventView* view = (MPMakeEventView*) self.view;
     MPView* focusedSubview = [view.form currentSlide];
-    dispatch_async(dispatch_queue_create("CheckErrorsQueue", 0), ^{
-        BOOL errorsFound = [self errorFoundInSubview: focusedSubview];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if(!errorsFound) {
-                [view.form advanceToNextSlide];
-            }
-        });
-    });
+    BOOL errorsFound = [self errorFoundInSubview: focusedSubview];
+    if(!errorsFound) {
+        if(view.form.slideViewIndex == view.form.slideViews.count - 1) {
+            
+        }
+        else {
+            [view.form advanceToNextSlide];
+        }
+    }
 }
 
 - (void) previousButtonPressed: (id) sender {
@@ -83,15 +91,28 @@
     }
 }
 
+- (void) typeButtonPressed: (id) sender {
+    UIButton* buttonSender = (UIButton*) sender;
+    MPMakeEventView* view = (MPMakeEventView*) self.view;
+    MPEventTypeView* typeView = (MPEventTypeView*)[view.form slideWithClass:[MPEventTypeView class]];
+    [typeView changeIndexSelected: (int)[typeView.allButtons indexOfObject:buttonSender]];
+    MPEventRuleView* ruleView = (MPEventRuleView*)[view.form slideWithClass:[MPEventRuleView class]];
+    [ruleView updateForEventType:[typeView selectedEventType]];
+}
+
 - (BOOL) errorFoundInSubview: (MPView*) subview {
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     if([subview isKindOfClass:[MPEventNameView class]]) {
         MPTextField* nameField = ((MPEventNameView*)subview).nameField;
         [alerter checkErrorCondition:(nameField.text.length < [MPLimitConstants minEventNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
         [alerter checkErrorCondition:(nameField.text.length > [MPLimitConstants maxEventNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
+        //need to move to background somehow
         [alerter checkErrorCondition:[MPEventsModel eventNameInUse:nameField.text forUser:[PFUser currentUser]] withMessage:@"You have already used this name for an event before. Please try another."];
+        return [alerter hasFoundError];
     }
-    return [alerter hasFoundError];
+    else {
+        return NO;
+    }
 }
 
 

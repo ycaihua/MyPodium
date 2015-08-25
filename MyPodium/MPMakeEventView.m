@@ -6,10 +6,13 @@
 //  Copyright © 2015 connorneville. All rights reserved.
 //
 
+#import "UIColor+MPColor.h"
+
 #import "MPMakeEventView.h"
 #import "MPFormView.h"
 #import "MPEventNameView.h"
 #import "MPEventTypeView.h"
+#import "MPEventRuleView.h"
 #import "MPTextField.h"
 
 @implementation MPMakeEventView
@@ -17,6 +20,7 @@
 - (id) init {
     self = [super initWithTitleText:@"MY PODIUM" subtitleText:[MPMakeEventView defaultSubtitle]];
     if(self) {
+        self.backgroundColor = [UIColor MPGrayColor];
         [self makeControls];
         [self makeControlConstraints];
         [self makeSlides];
@@ -67,7 +71,8 @@
 }
 
 - (void) makeSlides {
-    self.form.slideViews = @[[[MPEventNameView alloc] init], [[MPEventTypeView alloc] init]];
+    self.form.slideViews = @[[[MPEventNameView alloc] init], [[MPEventTypeView alloc] init],
+                             [[MPEventRuleView alloc] initWithEventType:MPEventTypeMatch]];
     [self.form addSlideViews];
 }
 
