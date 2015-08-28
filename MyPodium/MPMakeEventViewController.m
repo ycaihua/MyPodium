@@ -88,15 +88,19 @@
 - (void) nextButtonPressed: (id) sender {
     MPMakeEventView* view = (MPMakeEventView*) self.view;
     MPView* focusedSubview = [view.form currentSlide];
-    BOOL errorsFound = [self errorFoundInSubview: focusedSubview];
-    if(!errorsFound) {
-        if(view.form.slideViewIndex == view.form.slideViews.count - 1) {
-            
-        }
-        else {
-            [view.form advanceToNextSlide];
-        }
-    }
+    dispatch_async(dispatch_queue_create("CheckErrorsQueue", 0), ^{
+        BOOL errorsFound = [self errorFoundInSubview: focusedSubview];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if(!errorsFound) {
+                if(view.form.slideViewIndex == view.form.slideViews.count - 1) {
+                    
+                }
+                else {
+                    [view.form advanceToNextSlide];
+                }
+            }
+        });
+    });
 }
 
 - (void) previousButtonPressed: (id) sender {
@@ -128,13 +132,12 @@
         MPTextField* nameField = ((MPEventNameView*)subview).nameField;
         [alerter checkErrorCondition:(nameField.text.length < [MPLimitConstants minEventNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names must be at least %d characters long.", [MPLimitConstants minRuleNameCharacters]]];
         [alerter checkErrorCondition:(nameField.text.length > [MPLimitConstants maxEventNameCharacters]) withMessage:[NSString stringWithFormat:@"Rule names can be at most %d characters long.", [MPLimitConstants maxRuleNameCharacters]]];
-        //need to move to background somehow
         [alerter checkErrorCondition:[MPEventsModel eventNameInUse:nameField.text forUser:[PFUser currentUser]] withMessage:@"You have already used this name for an event before. Please try another."];
-        return [alerter hasFoundError];
     }
-    else {
-        return NO;
+    else if([subview isKindOfClass:[MPEventRuleView class]]) {
+        [alerter checkErrorCondition:(self.selectedRule == nil) withMessage:@"Please select a rule."];
     }
+    return [alerter hasFoundError];
 }
 
 #pragma mark UITableView

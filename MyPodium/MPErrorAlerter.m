@@ -31,9 +31,11 @@
     if(condition && !self.hasFoundError) {
         self.hasFoundError = true;
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Error" message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action){}];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:@"Okay" style:UIAlertActionStyleCancel handler:nil];
         [alert addAction: action];
-        [self.presentingController presentViewController:alert animated:TRUE completion:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.presentingController presentViewController:alert animated:TRUE completion:nil];
+        });
     }
 }
 
