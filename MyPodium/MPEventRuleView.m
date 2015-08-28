@@ -129,18 +129,18 @@
                            
                            //self.makeRuleButton
                            [NSLayoutConstraint constraintWithItem:self.makeRuleButton
-                                                        attribute:NSLayoutAttributeCenterX
+                                                        attribute:NSLayoutAttributeLeading
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeCenterX
+                                                        attribute:NSLayoutAttributeLeadingMargin
                                                        multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.makeRuleButton
-                                                        attribute:NSLayoutAttributeWidth
+                                                        attribute:NSLayoutAttributeTrailing
                                                         relatedBy:NSLayoutRelationEqual
                                                            toItem:self
-                                                        attribute:NSLayoutAttributeWidth
-                                                       multiplier:0.75f
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
                                                          constant:0.0f],
                            [NSLayoutConstraint constraintWithItem:self.makeRuleButton
                                                         attribute:NSLayoutAttributeTop

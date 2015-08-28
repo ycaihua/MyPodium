@@ -11,6 +11,7 @@
 #import "MPControllerManager.h"
 
 #import "MPEventsModel.h"
+#import "MPRulesModel.h"
 
 #import "MPMakeEventView.h"
 #import "MPEventNameView.h"
@@ -19,8 +20,12 @@
 #import "MPFormView.h"
 #import "MPTextField.h"
 #import "MPBottomEdgeButton.h"
+#import "MPTableHeader.h"
+#import "MPTableSectionUtility.h"
+#import "MPTableViewCell.h"
 
 #import "MPMakeEventViewController.h"
+#import "MPMakeRuleViewController.h"
 
 #import <Parse/Parse.h>
 
@@ -36,6 +41,16 @@
         MPMakeEventView* view = [[MPMakeEventView alloc] init];
         self.view = view;
         [self makeControlActions];
+        dispatch_async(dispatch_queue_create("TableQueue", 0), ^{
+            self.eligibleRules = [self generateEligibleRulesForEventType:MPEventTypeMatch];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                MPEventRuleView* ruleView = (MPEventRuleView*)[view.form slideWithClass:[MPEventRuleView class]];
+                [ruleView.rulesTable registerClass:[MPTableViewCell class] forCellReuseIdentifier:[MPMakeEventViewController ruleReuseIdentifier]];
+                ruleView.rulesTable.delegate = self;
+                ruleView.rulesTable.dataSource = self;
+                [ruleView.rulesTable reloadData];
+            });
+        });
     }
     return self;
 }
@@ -53,6 +68,9 @@
     for(UIButton* button in typeView.allButtons) {
         [button addTarget:self action:@selector(typeButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     }
+    
+    MPEventRuleView* ruleView = (MPEventRuleView*)[view.form slideWithClass:[MPEventRuleView class]];
+    [ruleView.makeRuleButton addTarget:self action:@selector(makeRuleButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (BOOL) textFieldShouldReturn:(nonnull UITextField *)textField {
@@ -100,6 +118,10 @@
     [ruleView updateForEventType:[typeView selectedEventType]];
 }
 
+- (void) makeRuleButtonPressed: (id) sender {
+    [MPControllerManager presentViewController:[[MPMakeRuleViewController alloc] init] fromController:self];
+}
+
 - (BOOL) errorFoundInSubview: (MPView*) subview {
     MPErrorAlerter* alerter = [[MPErrorAlerter alloc] initFromController: self];
     if([subview isKindOfClass:[MPEventNameView class]]) {
@@ -115,5 +137,54 @@
     }
 }
 
+#pragma mark UITableView
+
+- (NSArray*) generateEligibleRulesForEventType: (MPEventType) eventType {
+    if(eventType == MPEventTypeLeague || eventType == MPEventTypeTournament)
+        return [MPRulesModel rulesForUserWith2ParticipantsPerMatch:[PFUser currentUser]];
+    else return [MPRulesModel rulesForUser:[PFUser currentUser]];
+}
+
+- (UITableViewCell*) tableView:(nonnull UITableView *)tableView
+         cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    MPTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:
+                             [MPMakeEventViewController ruleReuseIdentifier] forIndexPath:indexPath];
+    
+    if(!cell)
+        cell = [[MPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:[MPMakeEventViewController ruleReuseIdentifier]];
+    
+    cell.indexPath = indexPath;
+    [cell setNumberOfButtons: 0];
+    [MPTableSectionUtility updateCell:cell withRuleObject:self.eligibleRules[indexPath.row]];
+    
+    return cell;
+}
+
+- (NSInteger) tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.eligibleRules.count;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    PFObject* rule = self.eligibleRules[indexPath.row];
+    self.selectedRule = rule;
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [MPTableViewCell cellHeight];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return [MPTableHeader headerHeight];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[MPTableHeader alloc] initWithText:@"RULES"];
+}
+
+- (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
++ (NSString*) ruleReuseIdentifier { return @"RuleCell"; }
 
 @end

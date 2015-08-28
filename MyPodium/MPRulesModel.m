@@ -28,6 +28,14 @@
     return [query findObjects];
 }
 
++ (NSArray*) rulesForUserWith2ParticipantsPerMatch:(PFUser *)user {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@) AND (participantsPerMatch = 2)",
+                              user];
+    PFQuery *query = [PFQuery queryWithClassName:[MPRulesModel tableName] predicate:predicate];
+    [query includeKey:@"creator"];
+    return [query findObjects];
+}
+
 + (NSInteger) countRulesForUser:(PFUser*)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(creator = %@)",
                               user];

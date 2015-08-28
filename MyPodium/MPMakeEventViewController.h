@@ -8,6 +8,11 @@
 
 #import "MPMenuViewController.h"
 
-@interface MPMakeEventViewController : MPMenuViewController<UITextFieldDelegate>
+@class PFObject;
+
+@interface MPMakeEventViewController : MPMenuViewController<UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+
+@property NSArray* eligibleRules;
+@property PFObject* selectedRule;
 
 @end

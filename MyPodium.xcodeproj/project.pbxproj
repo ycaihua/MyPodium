@@ -135,6 +135,7 @@
 		2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFB1B2275F800F748C9 /* Reachability.m */; };
 		2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */; };
 		2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */; };
+		2DEAA8981B90A50B002CAC57 /* MPMakeEventRuleHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAA8971B90A50B002CAC57 /* MPMakeEventRuleHandler.m */; };
 		2DEE90C01B72970500F61BE2 /* MPFormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90BF1B72970500F61BE2 /* MPFormView.m */; };
 		2DEE90C41B72A54800F61BE2 /* MPRuleProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90C31B72A54800F61BE2 /* MPRuleProfileViewController.m */; };
 		2DEE90C81B72A66100F61BE2 /* MPRuleProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90C71B72A66100F61BE2 /* MPRuleProfileView.m */; };
@@ -377,6 +378,8 @@
 		2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpView.m; sourceTree = "<group>"; };
 		2DE9FD001B2288C600F748C9 /* MPHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpViewController.h; sourceTree = "<group>"; };
 		2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpViewController.m; sourceTree = "<group>"; };
+		2DEAA8961B90A50B002CAC57 /* MPMakeEventRuleHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMakeEventRuleHandler.h; sourceTree = "<group>"; };
+		2DEAA8971B90A50B002CAC57 /* MPMakeEventRuleHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMakeEventRuleHandler.m; sourceTree = "<group>"; };
 		2DEE90BE1B72970500F61BE2 /* MPFormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFormView.h; sourceTree = "<group>"; };
 		2DEE90BF1B72970500F61BE2 /* MPFormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFormView.m; sourceTree = "<group>"; };
 		2DEE90C21B72A54800F61BE2 /* MPRuleProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleProfileViewController.h; sourceTree = "<group>"; };
@@ -823,6 +826,8 @@
 			children = (
 				2D7534A61B877B9300BAAB20 /* MPMakeEventViewController.h */,
 				2D7534A71B877B9300BAAB20 /* MPMakeEventViewController.m */,
+				2DEAA8961B90A50B002CAC57 /* MPMakeEventRuleHandler.h */,
+				2DEAA8971B90A50B002CAC57 /* MPMakeEventRuleHandler.m */,
 			);
 			name = MakeEvent;
 			sourceTree = "<group>";
@@ -1156,6 +1161,7 @@
 				2D5963FB1B505E930034F000 /* MPHomeTipView.m in Sources */,
 				2DC36B261B8422FA000E6FA2 /* MPTeamInviteUsersView.m in Sources */,
 				2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */,
+				2DEAA8981B90A50B002CAC57 /* MPMakeEventRuleHandler.m in Sources */,
 				2D05E8DF1B5D7F24006FF360 /* MPRulesView.m in Sources */,
 				2D2B31B71B44875E00781E0D /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				2DBF86981B462C2B00FB0AF5 /* MPMessagesViewController.m in Sources */,

@@ -18,6 +18,7 @@
 + (BOOL) deleteRule: (PFObject*) rule;
 
 + (NSArray*) rulesForUser: (PFUser*) user;
++ (NSArray*) rulesForUserWith2ParticipantsPerMatch: (PFUser*)user;
 
 + (NSInteger) countRulesForUser: (PFUser*) user;
 
