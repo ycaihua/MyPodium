@@ -24,6 +24,37 @@
     return ([query countObjects] > 0);
 }
 
++ (BOOL) createEventWithName:(NSString *)name withOwner:(PFObject *)user withType:(MPEventType)type withRule:(PFObject *)rule withParticipants:(NSArray *)participants {
+    PFObject* newEvent = [[PFObject alloc] initWithClassName:[MPEventsModel tableName]];
+    newEvent[@"name"] = name;
+    newEvent[@"name_searchable"] = name.lowercaseString;
+    newEvent[@"owner"] = user;
+    switch (type) {
+        case MPEventTypeMatch:
+            newEvent[@"eventType"] = @"Match";
+            break;
+        case MPEventTypeLadder:
+            newEvent[@"eventType"] = @"Ladder";
+            break;
+        case MPEventTypeLeague:
+            newEvent[@"eventType"] = @"League";
+            break;
+        case MPEventTypeTournament:
+            newEvent[@"eventType"] = @"Tournament";
+            break;
+        default:
+            break;
+    }
+    newEvent[@"rule"] = rule;
+    newEvent[@"participantIDs"] = @[];
+    newEvent[@"invitedParticipantIDs"] = @[];
+    for(PFUser* participant in participants) {
+        [newEvent addObject:participant.objectId forKey:@"invitedParticipantIDs"];
+    }
+    newEvent[@"testDict"] = @{@"test1": @"test2"};
+    return [newEvent save];
+}
+
 + (NSInteger) countEventsForUser:(PFUser *)user {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(owner = %@) OR (%@ IN userIDs)",
                               user, user.objectId];

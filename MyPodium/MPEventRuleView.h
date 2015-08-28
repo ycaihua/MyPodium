@@ -18,6 +18,7 @@
 
 @property MPLabel* titleLabel;
 @property MPLabel* infoLabel;
+@property MPLabel* warningLabel;
 @property UITableView* rulesTable;
 @property UIButton* makeRuleButton;
 

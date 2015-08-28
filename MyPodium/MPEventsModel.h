@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MPEventTypeView.h"
 
 @class PFUser;
 @class PFObject;
@@ -15,6 +16,7 @@
 
 + (BOOL) deleteEvent: (PFObject*) event;
 + (BOOL) eventNameInUse: (NSString*) name forUser: (PFUser*) user;
++ (BOOL) createEventWithName: (NSString*) name withOwner: (PFObject*) user withType: (MPEventType) type withRule: (PFObject*) rule withParticipants: (NSArray*) participants;
 
 + (NSArray*) eventsOwnedByUser: (PFUser*) user;
 + (NSArray*) eventsWithParticipatingUser: (PFUser*) user;

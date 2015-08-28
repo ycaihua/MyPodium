@@ -35,6 +35,12 @@
     self.infoLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview: self.infoLabel];
     
+    //self.warningLabel
+    self.warningLabel = [[MPLabel alloc] initWithText:@""];
+    self.warningLabel.textColor = [UIColor MPRedColor];
+    self.warningLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [self addSubview: self.warningLabel];
+    
     //self.rulesTable
     self.rulesTable = [[UITableView alloc] init];
     self.rulesTable.backgroundColor = [UIColor clearColor];
@@ -97,6 +103,28 @@
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
+                           //self.warningLabel
+                           [NSLayoutConstraint constraintWithItem:self.warningLabel
+                                                        attribute:NSLayoutAttributeLeading
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeLeadingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.warningLabel
+                                                        attribute:NSLayoutAttributeTrailing
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self
+                                                        attribute:NSLayoutAttributeTrailingMargin
+                                                       multiplier:1.0f
+                                                         constant:0.0f],
+                           [NSLayoutConstraint constraintWithItem:self.warningLabel
+                                                        attribute:NSLayoutAttributeTop
+                                                        relatedBy:NSLayoutRelationEqual
+                                                           toItem:self.infoLabel
+                                                        attribute:NSLayoutAttributeBottom
+                                                       multiplier:1.0f
+                                                         constant:5.0f],
                            //self.rulesTable
                            [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeLeading
@@ -115,7 +143,7 @@
                            [NSLayoutConstraint constraintWithItem:self.rulesTable
                                                         attribute:NSLayoutAttributeTop
                                                         relatedBy:NSLayoutRelationEqual
-                                                           toItem:self.infoLabel
+                                                           toItem:self.warningLabel
                                                         attribute:NSLayoutAttributeBottom
                                                        multiplier:1.0f
                                                          constant:5.0f],
@@ -160,15 +188,14 @@
 }
 
 - (void) updateForEventType: (MPEventType) eventType {
-    NSString* defaultText = @"Every event needs a set of rules to go by. Select one below from your rules.";
     if(eventType == MPEventTypeLeague) {
-        self.infoLabel.text = [defaultText stringByAppendingString:@"\nPlease note that since you chose a league as your event type, you can only use rules that have 2 participants per match."];
+        self.warningLabel.text = @"Please note that since you chose a league as your event type, you can only use rules that have 2 participants per match.";
     }
     else if(eventType == MPEventTypeTournament) {
-        self.infoLabel.text = [defaultText stringByAppendingString:@"\nPlease note that since you chose a tournament as your event type, you can only use rules that have 2 participants per match."];
+        self.warningLabel.text = @"Please note that since you chose a tournament as your event type, you can only use rules that have 2 participants per match.";
     }
     else {
-        self.infoLabel.text = defaultText;
+        self.warningLabel.text = @"";
     }
 }
 @end

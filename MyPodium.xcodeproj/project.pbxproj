@@ -119,6 +119,7 @@
 		2DC36B261B8422FA000E6FA2 /* MPTeamInviteUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC36B251B8422FA000E6FA2 /* MPTeamInviteUsersView.m */; };
 		2DD285631B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD285621B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m */; };
 		2DD285661B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD285651B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m */; };
+		2DD701151B90F1FD00D8D36C /* MPMatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD701141B90F1FD00D8D36C /* MPMatchModel.m */; };
 		2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */; };
 		2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC911B194BB200F748C9 /* MPSidebarView.m */; };
 		2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC941B19D92100F748C9 /* MPSidebarViewCell.m */; };
@@ -135,6 +136,7 @@
 		2DE9FCFC1B2275F800F748C9 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFB1B2275F800F748C9 /* Reachability.m */; };
 		2DE9FCFF1B2283DF00F748C9 /* MPHelpView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */; };
 		2DE9FD021B2288C600F748C9 /* MPHelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */; };
+		2DEAA89B1B90D443002CAC57 /* MPEventParticipantsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEAA89A1B90D443002CAC57 /* MPEventParticipantsView.m */; };
 		2DEE90C01B72970500F61BE2 /* MPFormView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90BF1B72970500F61BE2 /* MPFormView.m */; };
 		2DEE90C41B72A54800F61BE2 /* MPRuleProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90C31B72A54800F61BE2 /* MPRuleProfileViewController.m */; };
 		2DEE90C81B72A66100F61BE2 /* MPRuleProfileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEE90C71B72A66100F61BE2 /* MPRuleProfileView.m */; };
@@ -345,6 +347,8 @@
 		2DD285621B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSelectMessageRecipientsView.m; sourceTree = "<group>"; };
 		2DD285641B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSelectMessageRecipientsViewController.h; sourceTree = "<group>"; };
 		2DD285651B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSelectMessageRecipientsViewController.m; sourceTree = "<group>"; };
+		2DD701131B90F1FD00D8D36C /* MPMatchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMatchModel.h; sourceTree = "<group>"; };
+		2DD701141B90F1FD00D8D36C /* MPMatchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMatchModel.m; sourceTree = "<group>"; };
 		2DE9FC8D1B190FE600F748C9 /* MPBoldColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBoldColorButton.h; sourceTree = "<group>"; };
 		2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBoldColorButton.m; sourceTree = "<group>"; };
 		2DE9FC901B194BB200F748C9 /* MPSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarView.h; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 		2DE9FCFE1B2283DF00F748C9 /* MPHelpView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpView.m; sourceTree = "<group>"; };
 		2DE9FD001B2288C600F748C9 /* MPHelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPHelpViewController.h; sourceTree = "<group>"; };
 		2DE9FD011B2288C600F748C9 /* MPHelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPHelpViewController.m; sourceTree = "<group>"; };
+		2DEAA8991B90D443002CAC57 /* MPEventParticipantsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPEventParticipantsView.h; sourceTree = "<group>"; };
+		2DEAA89A1B90D443002CAC57 /* MPEventParticipantsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPEventParticipantsView.m; sourceTree = "<group>"; };
 		2DEE90BE1B72970500F61BE2 /* MPFormView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPFormView.h; sourceTree = "<group>"; };
 		2DEE90BF1B72970500F61BE2 /* MPFormView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPFormView.m; sourceTree = "<group>"; };
 		2DEE90C21B72A54800F61BE2 /* MPRuleProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPRuleProfileViewController.h; sourceTree = "<group>"; };
@@ -846,6 +852,8 @@
 				2D7534B31B878B7D00BAAB20 /* MPEventTypeView.m */,
 				2D0B4B8A1B8B8F3D00EC9C65 /* MPEventRuleView.h */,
 				2D0B4B8B1B8B8F3D00EC9C65 /* MPEventRuleView.m */,
+				2DEAA8991B90D443002CAC57 /* MPEventParticipantsView.h */,
+				2DEAA89A1B90D443002CAC57 /* MPEventParticipantsView.m */,
 			);
 			name = FormSubviews;
 			sourceTree = "<group>";
@@ -988,6 +996,8 @@
 				2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */,
 				2D7534A31B8647F000BAAB20 /* MPEventsModel.h */,
 				2D7534A41B8647F000BAAB20 /* MPEventsModel.m */,
+				2DD701131B90F1FD00D8D36C /* MPMatchModel.h */,
+				2DD701141B90F1FD00D8D36C /* MPMatchModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1210,6 +1220,7 @@
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */,
 				2D58D74F1B696F7F00080F51 /* MPRuleScoreLimitView.m in Sources */,
+				2DD701151B90F1FD00D8D36C /* MPMatchModel.m in Sources */,
 				2D75349F1B8647BB00BAAB20 /* MPEventsView.m in Sources */,
 				2DB8E5851B583C4D00623F4E /* MPProfileControlBlock.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
@@ -1230,6 +1241,7 @@
 				2D94D0B51B27A10F006C500A /* MPTeamsViewController.m in Sources */,
 				2D33D5361B4AF343006AF4F9 /* MPMessageComposerViewController.m in Sources */,
 				2D7534A51B8647F000BAAB20 /* MPEventsModel.m in Sources */,
+				2DEAA89B1B90D443002CAC57 /* MPEventParticipantsView.m in Sources */,
 				2D2D5AC71B18D2A400C46B53 /* MPHomeViewController.m in Sources */,
 				2DD285631B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m in Sources */,
 				2DEE90C81B72A66100F61BE2 /* MPRuleProfileView.m in Sources */,

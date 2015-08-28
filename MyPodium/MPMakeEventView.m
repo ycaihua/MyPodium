@@ -13,6 +13,7 @@
 #import "MPEventNameView.h"
 #import "MPEventTypeView.h"
 #import "MPEventRuleView.h"
+#import "MPEventParticipantsView.h"
 #import "MPTextField.h"
 
 @implementation MPMakeEventView
@@ -72,7 +73,8 @@
 
 - (void) makeSlides {
     self.form.slideViews = @[[[MPEventNameView alloc] init], [[MPEventTypeView alloc] init],
-                             [[MPEventRuleView alloc] initWithEventType:MPEventTypeMatch]];
+                             [[MPEventRuleView alloc] initWithEventType:MPEventTypeMatch],
+                             [[MPEventParticipantsView alloc] init]];
     [self.form addSlideViews];
 }
 
