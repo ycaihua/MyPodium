@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 
 #import "MPTeamsModel.h"
+#import "MPMatchModel.h"
 #import "MPEventsModel.h"
 
 @implementation MPEventsModel
@@ -48,11 +49,11 @@
     newEvent[@"rule"] = rule;
     newEvent[@"participantIDs"] = @[];
     newEvent[@"invitedParticipantIDs"] = @[];
+    newEvent[@"userIDs"] = @[];
     for(PFUser* participant in participants) {
         [newEvent addObject:participant.objectId forKey:@"invitedParticipantIDs"];
     }
-    newEvent[@"testDict"] = @{@"test1": @"test2"};
-    return [newEvent save];
+    return [newEvent save] && [MPMatchModel createMatchesForEvent:newEvent];
 }
 
 + (NSInteger) countEventsForUser:(PFUser *)user {
@@ -80,8 +81,22 @@
     return [query findObjects];
 }
 
++ (MPEventType) typeOfEvent:(PFObject *)event {
+    NSString* typeString = event[@"eventType"];
+    if([typeString isEqualToString:@"Match"]) return MPEventTypeMatch;
+    if([typeString isEqualToString:@"League"]) return MPEventTypeLeague;
+    if([typeString isEqualToString:@"Ladder"]) return MPEventTypeLadder;
+    if([typeString isEqualToString:@"Tournament"]) return MPEventTypeTournament;
+    return -1;
+}
+
 + (NSArray*) eventsInvitingUser:(PFUser *)user {
-    return nil;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(%@ IN invitedParticipantIDs)",
+                              user.objectId];
+    PFQuery *query = [PFQuery queryWithClassName:[MPEventsModel tableName] predicate:predicate];
+    [query includeKey:@"owner"];
+    [query includeKey:@"rule"];
+    return [query findObjects];
 }
 
 + (NSString*) tableName { return @"Event"; }

@@ -24,4 +24,6 @@
 
 + (NSInteger) countEventsForUser: (PFUser*) user;
 
++ (MPEventType) typeOfEvent: (PFObject*) event;
+
 @end

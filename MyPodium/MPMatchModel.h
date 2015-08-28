@@ -12,6 +12,6 @@
 
 @interface MPMatchModel : NSObject
 
-+ (BOOL) createMatchesForEvent: (PFObject*) match;
++ (BOOL) createMatchesForEvent: (PFObject*) event;
 
 @end

@@ -215,7 +215,7 @@
     if(usesTeams)
         return [MPTeamsModel teamsVisibleToUser: [PFUser currentUser]];
     NSMutableArray* players = [MPFriendsModel friendsForUser:[PFUser currentUser]].mutableCopy;
-    [players addObject: [PFUser currentUser]];
+    [players insertObject:[PFUser currentUser] atIndex:0];
     return players;
 }
 
