@@ -1,5 +1,5 @@
 //
-//  MPMatchModel.h
+//  MPMatchesModel.h
 //  MyPodium
 //
 //  Created by Connor Neville on 8/28/15.
@@ -10,7 +10,7 @@
 
 @class PFObject;
 
-@interface MPMatchModel : NSObject
+@interface MPMatchesModel : NSObject
 
 + (BOOL) createMatchesForEvent: (PFObject*) event;
 

@@ -7,12 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MPEventTypeView.h"
 
 @class PFUser;
 @class PFObject;
 
 @interface MPEventsModel : NSObject
+
+typedef NS_ENUM(NSInteger, MPEventType) {
+    MPEventTypeMatch = 0,
+    MPEventTypeTournament = 1,
+    MPEventTypeLeague = 2,
+    MPEventTypeLadder = 3
+};
 
 + (BOOL) deleteEvent: (PFObject*) event;
 + (BOOL) eventNameInUse: (NSString*) name forUser: (PFUser*) user;

@@ -9,7 +9,7 @@
 #import <Parse/Parse.h>
 
 #import "MPTeamsModel.h"
-#import "MPMatchModel.h"
+#import "MPMatchesModel.h"
 #import "MPEventsModel.h"
 
 @implementation MPEventsModel
@@ -53,7 +53,7 @@
     for(PFUser* participant in participants) {
         [newEvent addObject:participant.objectId forKey:@"invitedParticipantIDs"];
     }
-    return [newEvent save] && [MPMatchModel createMatchesForEvent:newEvent];
+    return [newEvent save] && [MPMatchesModel createMatchesForEvent:newEvent];
 }
 
 + (NSInteger) countEventsForUser:(PFUser *)user {

@@ -1,5 +1,5 @@
 //
-//  MPMatchModel.m
+//  MPMatchesModel.m
 //  MyPodium
 //
 //  Created by Connor Neville on 8/28/15.
@@ -8,17 +8,17 @@
 
 #import <Parse/Parse.h>
 
-#import "MPMatchModel.h"
+#import "MPMatchesModel.h"
 #import "MPEventsModel.h"
 
 #import "MPEventTypeView.h"
 
-@implementation MPMatchModel
+@implementation MPMatchesModel
 
 + (BOOL) createMatchesForEvent:(PFObject *)event {
     MPEventType type = [MPEventsModel typeOfEvent: event];
     if(type == MPEventTypeMatch) {
-        PFObject* match = [[PFObject alloc] initWithClassName:[MPMatchModel tableName]];
+        PFObject* match = [[PFObject alloc] initWithClassName:[MPMatchesModel tableName]];
         PFObject* rule = event[@"rule"];
         match[@"parent"] = event;
         match[@"rule"] = rule;

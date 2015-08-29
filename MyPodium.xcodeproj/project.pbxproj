@@ -119,7 +119,7 @@
 		2DC36B261B8422FA000E6FA2 /* MPTeamInviteUsersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC36B251B8422FA000E6FA2 /* MPTeamInviteUsersView.m */; };
 		2DD285631B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD285621B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m */; };
 		2DD285661B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD285651B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m */; };
-		2DD701151B90F1FD00D8D36C /* MPMatchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD701141B90F1FD00D8D36C /* MPMatchModel.m */; };
+		2DD701151B90F1FD00D8D36C /* MPMatchesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DD701141B90F1FD00D8D36C /* MPMatchesModel.m */; };
 		2DE9FC8F1B190FE600F748C9 /* MPBoldColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */; };
 		2DE9FC921B194BB200F748C9 /* MPSidebarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC911B194BB200F748C9 /* MPSidebarView.m */; };
 		2DE9FC951B19D92100F748C9 /* MPSidebarViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DE9FC941B19D92100F748C9 /* MPSidebarViewCell.m */; };
@@ -347,8 +347,8 @@
 		2DD285621B4DBE6D00E4DA54 /* MPSelectMessageRecipientsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSelectMessageRecipientsView.m; sourceTree = "<group>"; };
 		2DD285641B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSelectMessageRecipientsViewController.h; sourceTree = "<group>"; };
 		2DD285651B4DC05000E4DA54 /* MPSelectMessageRecipientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPSelectMessageRecipientsViewController.m; sourceTree = "<group>"; };
-		2DD701131B90F1FD00D8D36C /* MPMatchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMatchModel.h; sourceTree = "<group>"; };
-		2DD701141B90F1FD00D8D36C /* MPMatchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMatchModel.m; sourceTree = "<group>"; };
+		2DD701131B90F1FD00D8D36C /* MPMatchesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPMatchesModel.h; sourceTree = "<group>"; };
+		2DD701141B90F1FD00D8D36C /* MPMatchesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPMatchesModel.m; sourceTree = "<group>"; };
 		2DE9FC8D1B190FE600F748C9 /* MPBoldColorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPBoldColorButton.h; sourceTree = "<group>"; };
 		2DE9FC8E1B190FE600F748C9 /* MPBoldColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPBoldColorButton.m; sourceTree = "<group>"; };
 		2DE9FC901B194BB200F748C9 /* MPSidebarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPSidebarView.h; sourceTree = "<group>"; };
@@ -996,8 +996,8 @@
 				2D4F4A4E1B5D74B200F7F393 /* MPRulesModel.m */,
 				2D7534A31B8647F000BAAB20 /* MPEventsModel.h */,
 				2D7534A41B8647F000BAAB20 /* MPEventsModel.m */,
-				2DD701131B90F1FD00D8D36C /* MPMatchModel.h */,
-				2DD701141B90F1FD00D8D36C /* MPMatchModel.m */,
+				2DD701131B90F1FD00D8D36C /* MPMatchesModel.h */,
+				2DD701141B90F1FD00D8D36C /* MPMatchesModel.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1220,7 +1220,7 @@
 				2D4487DD1B0656340061EF86 /* NSString+MPString.m in Sources */,
 				2D67BFDB1B49E9EE0043BD96 /* MPMessageReaderViewController.m in Sources */,
 				2D58D74F1B696F7F00080F51 /* MPRuleScoreLimitView.m in Sources */,
-				2DD701151B90F1FD00D8D36C /* MPMatchModel.m in Sources */,
+				2DD701151B90F1FD00D8D36C /* MPMatchesModel.m in Sources */,
 				2D75349F1B8647BB00BAAB20 /* MPEventsView.m in Sources */,
 				2DB8E5851B583C4D00623F4E /* MPProfileControlBlock.m in Sources */,
 				2D2D5ACE1B18DBCC00C46B53 /* NSMutableArray+Shuffling.m in Sources */,
