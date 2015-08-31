@@ -18,33 +18,36 @@
 + (BOOL) createMatchesForEvent:(PFObject *)event {
     MPEventType type = [MPEventsModel typeOfEvent: event];
     if(type == MPEventTypeMatch) {
-        PFObject* match = [[PFObject alloc] initWithClassName:[MPMatchesModel tableName]];
-        PFObject* rule = event[@"rule"];
-        match[@"parent"] = event;
-        match[@"rule"] = rule;
-        NSMutableDictionary* playerStats = @{}.mutableCopy;
-        for(NSString* playerStat in rule[@"playerStats"]) {
-            [playerStats setObject:@{} forKey:playerStat];
-        }
-        match[@"playerStats"] = playerStats;
-        NSMutableDictionary* teamStats = @{}.mutableCopy;
-        for(NSString* teamStat in rule[@"teamStats"]) {
-            [teamStats setObject:@{} forKey:teamStat];
-        }
-        match[@"teamStats"] = teamStats;
-        BOOL success = [match save];
-        if(success) {
-            event[@"matches"] = @[match.objectId];
-            return [event save];
-        }
-        return NO;
-            
+        return [MPMatchesModel createMatchWithParentEvent: event];
     }
     else if(type == MPEventTypeLadder) {
         event[@"matches"] = @[];
         return [event save];
     }
     return YES;
+}
+
++ (BOOL) createMatchWithParentEvent: (PFObject*) event {
+    PFObject* match = [[PFObject alloc] initWithClassName:[MPMatchesModel tableName]];
+    PFObject* rule = event[@"rule"];
+    match[@"parent"] = event;
+    match[@"rule"] = rule;
+    NSMutableDictionary* playerStats = @{}.mutableCopy;
+    for(NSString* playerStat in rule[@"playerStats"]) {
+        [playerStats setObject:@{} forKey:playerStat];
+    }
+    match[@"playerStats"] = playerStats;
+    NSMutableDictionary* teamStats = @{}.mutableCopy;
+    for(NSString* teamStat in rule[@"teamStats"]) {
+        [teamStats setObject:@{} forKey:teamStat];
+    }
+    match[@"teamStats"] = teamStats;
+    BOOL success = [match save];
+    if(success) {
+        event[@"matches"] = @[match.objectId];
+        return [event save];
+    }
+    return NO;
 }
 
 + (NSString*) tableName { return @"Match"; }

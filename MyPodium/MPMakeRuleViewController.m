@@ -164,7 +164,7 @@
     
     NSArray* playerStats = self.statNameData[0][@"PLAYER STATS"];
     NSArray* teamStats = @[];
-    if(usesTeamParticipants.boolValue) {
+    if(usesTeamParticipants.boolValue && self.statNameData.count > 0) {
         teamStats = self.statNameData[1][@"TEAM STATS"];
     }
     NSArray* winConditionStatPath = @[[NSNumber numberWithInteger:self.selectedPath.section], [NSNumber numberWithInteger:self.selectedPath.row]];
